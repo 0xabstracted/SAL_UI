@@ -14,7 +14,7 @@ export const MAGIC_STAKE_PROGRAM_ID = new PublicKey("CMftun186ypSsjsZM8eVfDA7AsP
 
 export const FARM_ID = new PublicKey("78yzdAb2quRrZWgQi114jdJrsroscWfV3AdVDQYsTFt8");
 
-export const MAHANOTHIA_FARM_ID = new PublicKey("78yzdAb2quRrZWgQi114jdJrsroscWfV3AdVDQYsTFt8");
+export const MAHANOTHIA_FARM_ID = new PublicKey("9oc6wxJwAkiB3rj6rSniAJYmtNbVjKmZkj4dLY7CjYvm");
 
 export const SAN_CHETOS_FARM_ID = new PublicKey("78yzdAb2quRrZWgQi114jdJrsroscWfV3AdVDQYsTFt8");
 
@@ -31,7 +31,7 @@ export const REWARD_MINT = new PublicKey('x4zmbszSajZe8Qg8H1J9s1hMsrDTYjPDe4qp8f
 
 export const FEE_WALLET = new PublicKey('Bi4UpEtKxnHwCw7b9xkMCouGT6xLNm8nixs2fTmxTevs');
 
-export const COLLECTION_ID = new PublicKey("BNZy4DXcGZRpkkgnQn5nfqnkMPjjh7NLk1KBTe8qqtmZ");
+export const COLLECTION_ID = new PublicKey("EtaEw6kTxgfSPNy1cWRXQ8DFcVCxQo9V1bjJqytMubfs");
 
 export const SYSVAR_CLOCK_PUBKEY = new PublicKey(
   "SysvarC1ock11111111111111111111111111111111"

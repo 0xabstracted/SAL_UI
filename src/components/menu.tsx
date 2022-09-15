@@ -2,7 +2,7 @@ import { useState } from "react";
 import Discord from "../assets/discord.png";
 import Twitter from "../assets/twitter_copy.png";
 import RightArrow from "../assets/right_arrow_menu.png";
-import "../App.css";
+import "../css/App.css";
 
 const MenuContent = (props: any) => {
   const [items] = useState(["VAULT", "TEAM", "ALPHA", "STAKE"]);

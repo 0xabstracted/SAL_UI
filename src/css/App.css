@@ -22,7 +22,7 @@ code {
 
 @font-face {
   font-family: "Jack Armstrong";
-  src: url("./fonts/jackarmstrong.ttf") format("truetype");
+  src: url("../fonts/jackarmstrong.ttf") format("truetype");
 }
 
 .test-div {
@@ -102,7 +102,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("./assets/light_bg_new.png");
+  background: url("../assets/light_bg_new.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -114,7 +114,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("./assets/light_bg_new.png");
+  background: url("../assets/light_bg_new.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -125,7 +125,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("./assets/vault_room_mobile.png");
+  background: url("../assets/vault_room_mobile.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -140,7 +140,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("./assets/stake_room_mobile.png");
+  background: url("../assets/stake_room_mobile.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -151,7 +151,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("./assets/team_room_mobile.png");
+  background: url("../assets/team_room_mobile.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -162,7 +162,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("./assets/Alpha_room_mobile.png");
+  background: url("../assets/Alpha_room_mobile.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -173,7 +173,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("./assets/room_with_no_items_but_doors.png");
+  background: url("../assets/room_with_no_items_but_doors.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -194,7 +194,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("./assets/alpha_room.png");
+  background: url("../assets/alpha_room.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -206,7 +206,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("./assets/team_room.png");
+  background: url("../assets/team_room.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -218,7 +218,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("./assets/stake_bg.png");
+  background: url("../assets/stake_bg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -272,7 +272,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("./assets/opened_door.png");
+  background: url("../assets/opened_door.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -391,6 +391,107 @@ body {
   box-sizing: border-box;
   text-transform: uppercase;
   margin: auto;
+}
+
+.city-one-farm {
+  border-width: 0;
+  border-radius: 6px;
+  background-color: #78eefc;
+  cursor: pointer;
+  color: #305759;
+  font-weight: 600;
+  font-size: 18px;
+  font-family: "Courier New", Courier, monospace;
+  padding: 0;
+  display: inline-block;
+  padding: 12px 15px;
+  height: 45px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.city-two-farm {
+  border-width: 0;
+  border-radius: 6px;
+  background-color: #78eefc;
+  cursor: pointer;
+  color: #305759;
+  font-weight: 600;
+  font-size: 18px;
+  font-family: "Courier New", Courier, monospace;
+  padding: 0;
+  display: inline-block;
+  padding: 12px 15px;
+  height: 45px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.city-three-farm {
+  border-width: 0;
+  border-radius: 6px;
+  background-color: #78eefc;
+  cursor: pointer;
+  color: #305759;
+  font-weight: 600;
+  font-size: 18px;
+  font-family: "Courier New", Courier, monospace;
+  padding: 0;
+  display: inline-block;
+  padding: 12px 15px;
+  height: 45px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.city-four-farm {
+  border-width: 0;
+  border-radius: 6px;
+  background-color: #78eefc;
+  cursor: pointer;
+  color: #305759;
+  font-weight: 600;
+  font-size: 18px;
+  font-family: "Courier New", Courier, monospace;
+  padding: 0;
+  display: inline-block;
+  padding: 12px 15px;
+  height: 45px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.city-five-farm {
+  border-width: 0;
+  border-radius: 6px;
+  background-color: #78eefc;
+  cursor: pointer;
+  color: #305759;
+  font-weight: 600;
+  font-size: 18px;
+  font-family: "Courier New", Courier, monospace;
+  padding: 0;
+  display: inline-block;
+  padding: 12px 15px;
+  height: 45px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.m-15 {
+  float: left;
+  width: 100%;
+  margin-top: 75px;
 }
 
 .Outside-Mint-btn {
@@ -530,7 +631,7 @@ body {
   bottom: 19%;
   height: 13%;
   cursor: pointer;
-  background: url("./assets/hologram_cropped.png");
+  background: url("../assets/hologram_cropped.png");
   background-size: 100% 100%;
   padding: 8px;
   z-index: 9999999;
@@ -543,7 +644,7 @@ body {
   bottom: 19%;
   height: 13%;
   cursor: pointer;
-  background: url("./assets/hologram_cropped.png");
+  background: url("../assets/hologram_cropped.png");
 }
 
 .katana-image {
@@ -589,7 +690,7 @@ body {
   width: 43%;
   bottom: 0;
   height: 270px;
-  /* background: url('./assets/sopha_sider.png'); */
+  /* background: url('../assets/sopha_sider.png'); */
 }
 
 .bean-bag-image {
@@ -634,7 +735,7 @@ body {
   width: 66%;
   height: 76vh;
   top: 12vh;
-  background: url(./assets/biggerholo_cropped.png);
+  background: url(../assets/biggerholo_cropped.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   z-index: 999999999999999;
@@ -646,7 +747,7 @@ body {
   width: 50%;
   height: 60vh;
   top: 20vh;
-  background: url(./assets/mint_bg.png);
+  background: url(../assets/mint_bg.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   z-index: 999999999999999;
@@ -749,7 +850,7 @@ body {
   top: 20%;
   max-height: 70%;
   /* overflow-y: auto; */
-  background: url(./assets/alpha_text_bg.png);
+  background: url(../assets/alpha_text_bg.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   z-index: 9999999999;
@@ -808,7 +909,7 @@ body {
   top: 33%;
   height: 75px;
   /* cursor: pointer; */
-  /* background: url(./assets/fan_spinning.mp4); */
+  /* background: url(../assets/fan_spinning.mp4); */
 }
 
 .light-flicker-image {
@@ -816,7 +917,7 @@ body {
   left: 19%;
   width: 138px;
   top: 34.2%;
-  background: url(./assets/cctvfile.gif);
+  background: url(../assets/cctvfile.gif);
   height: 100px;
   /* cursor: pointer; */
   /* z-index: 999999; */
@@ -895,7 +996,7 @@ body {
   position: absolute;
   left: 16%;
   bottom: -24px;
-  background: url(./assets/gun.png);
+  background: url(../assets/gun.png);
   height: 100px;
   width: 100px;
   background-size: cover;
@@ -1155,7 +1256,7 @@ body {
 
 @media screen and (max-width: 480px) {
   .main-bg {
-    background: url("./assets/light_bg_mobile.png") !important;
+    background: url("../assets/light_bg_mobile.png") !important;
     background-size: 100% 100% !important;
     background-repeat: no-repeat !important;
   }
@@ -1254,7 +1355,7 @@ body {
   }
 
   .alpha-room {
-    background: url("./assets/Alpha_wall_mobile.png") !important;
+    background: url("../assets/Alpha_wall_mobile.png") !important;
     background-size: 100% 100% !important;
     background-repeat: no-repeat !important;
   }
@@ -1266,7 +1367,7 @@ body {
   }
 
   .main-bg-after-door-open {
-    background: url("./assets/basement_mobile.png") !important;
+    background: url("../assets/basement_mobile.png") !important;
     background-size: 100% 100% !important;
     background-repeat: no-repeat !important;
   }
@@ -1310,7 +1411,7 @@ body {
     top: 100px!important;
     height: 76%!important;
     box-sizing: border-box;
-    background: url(./assets/mint_bg_mobile.png);
+    background: url(../assets/mint_bg_mobile.png);
     padding: 0 !important;
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -1455,7 +1556,7 @@ body {
   }
 
   .main-bg-with-opened-door {
-    background: url("./assets/opened_door_mobile.png") !important;
+    background: url("../assets/opened_door_mobile.png") !important;
     background-size: 100% 100% !important;
     background-repeat: no-repeat !important;
   }
@@ -1470,7 +1571,7 @@ body {
   }
 
   .main-bg-glitch {
-    background: url("./assets/light_bg_mobile.png") !important;
+    background: url("../assets/light_bg_mobile.png") !important;
     background-size: 100% 100% !important;
     background-repeat: no-repeat !important;
   }
@@ -1489,19 +1590,19 @@ body {
   }
 
   .glitchit {
-    background: url(./assets/light_bg_mobile.png) no-repeat 50% 0 !important;
+    background: url(../assets/light_bg_mobile.png) no-repeat 50% 0 !important;
     background-color: var(--blend-color-1) !important;
     background-size: 100% 100% !important;
   }
 
   .main-door-open-bg {
-    background: url("./assets/door_opening_mobile.mp4") !important;
+    background: url("../assets/door_opening_mobile.mp4") !important;
     background-size: 100% 100% !important;
     background-repeat: no-repeat !important;
   }
 
   .main-bg-dark {
-    background: url("./assets/dark_bg_mobile.png") !important;
+    background: url("../assets/dark_bg_mobile.png") !important;
     background-size: 100% 100% !important;
     background-repeat: no-repeat !important;
   }
@@ -1596,7 +1697,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("./assets/opened_door.png");
+  background: url("../assets/opened_door.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -1605,7 +1706,7 @@ body {
 }
 
 /* .main-bg-glitch {
-  background: linear-gradient(rgba(10,10,10,.6),rgba(0,0,0,.9)), repeating-linear-gradient(0, transparent, transparent 2px, black 3px, black 3px), url('./assets/light_bg_new.png');
+  background: linear-gradient(rgba(10,10,10,.6),rgba(0,0,0,.9)), repeating-linear-gradient(0, transparent, transparent 2px, black 3px, black 3px), url('../assets/light_bg_new.png');
   display: inline-block;
   height: 100vh;
   width: 100%;
@@ -1619,7 +1720,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("./assets/dark_bg_new.png");
+  background: url("../assets/dark_bg_new.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -1630,8 +1731,8 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  /* background: url('./assets/App.jpeg'); */
-  background: url("./assets/final_door_openingg.gif");
+  /* background: url('../assets/App.jpeg'); */
+  background: url("../assets/final_door_openingg.gif");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -1643,7 +1744,7 @@ body {
   height: 100vh;
   width: 100%;
   background: black;
-  /* background: url('./assets/door_opening.mp4'); */
+  /* background: url('../assets/door_opening.mp4'); */
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -1700,7 +1801,7 @@ body {
   height: 70%;
   width: 80%;
   left: 10%;
-  background: url(./assets/alpha_room.png);
+  background: url(../assets/alpha_room.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   z-index: 99999999999;
@@ -2207,7 +2308,7 @@ form .button {
   left: calc(-1 * var(--gap-horizontal));
   width: calc(100% + var(--gap-horizontal) * 2);
   height: calc(100% + var(--gap-vertical) * 2);
-  background: url(./assets/light_bg_new.png) no-repeat 50% 0;
+  background: url(../assets/light_bg_new.png) no-repeat 50% 0;
   background-color: var(--blend-color-1);
   background-size: 100% 100%;
   transform: translate3d(0, 0, 0);
@@ -3513,7 +3614,7 @@ form .button {
   height: 40px;
   width: 40px;
   z-index: 999999999;
-  /* background: url(./assets/turn-back.png); */
+  /* background: url(../assets/turn-back.png); */
   /* filter: invert(96%) sepia(3%) saturate(21%) hue-rotate(8deg) brightness(94%) contrast(90%); */
 }
 
@@ -3802,7 +3903,7 @@ form .button {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url(./assets/top_left_room.png);
+  background: url(../assets/top_left_room.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   z-index: 1;
@@ -3814,7 +3915,7 @@ form .button {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url(./assets/mid_top_room.png);
+  background: url(../assets/mid_top_room.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   z-index: 1;
@@ -3826,7 +3927,7 @@ form .button {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url(./assets/left_bottom_room.png);
+  background: url(../assets/left_bottom_room.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   z-index: 1;
@@ -3838,7 +3939,7 @@ form .button {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url(./assets/right_bottom_room.png);
+  background: url(../assets/right_bottom_room.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   z-index: 1;
@@ -3850,7 +3951,7 @@ form .button {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url(./assets/right_top_room.png);
+  background: url(../assets/right_top_room.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   z-index: 1;
@@ -3862,7 +3963,7 @@ form .button {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url(./assets/mid_bottom_room.png);
+  background: url(../assets/mid_bottom_room.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   z-index: 1;
@@ -3874,7 +3975,7 @@ form .button {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url(./assets/mid_mid_room.png);
+  background: url(../assets/mid_mid_room.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   z-index: 1;
@@ -3915,7 +4016,7 @@ form .button {
   padding: 30px;
   box-sizing: border-box;
   cursor: pointer;
-  background: url(./assets/mint_bg.png);
+  background: url(../assets/mint_bg.png);
   background-size: 100% 100%;
   box-sizing: border-box;
 }

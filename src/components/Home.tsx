@@ -3,36 +3,36 @@ import * as anchor from "@project-serum/anchor";
 import { PublicKey, SystemProgram, LAMPORTS_PER_SOL, sendAndConfirmTransaction, Transaction, Connection, GetProgramAccountsFilter, TokenAccountsFilter, clusterApiUrl } from "@solana/web3.js";
 import { Snackbar } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
-import MobileMenu from "./assets/mobile_menu.png";
+import MobileMenu from "../assets/mobile_menu.png";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletDialogButton } from "@solana/wallet-adapter-material-ui";
 import { AlertState } from "../utils/utils";
-import Twitter from "./assets/twitter_copy.png";
-import Discord from "./assets/discord.png";
-import LogoWhite from "./assets/Logowhite.png";
-import LogoWhiteCropped from "./assets/Logowhite_cropped.png";
-import KatanaImage from "./assets/katana.png";
-import PizzaImage from "./assets/pizza.png";
-import FanSpinning from "./assets/fan_spinning.mp4";
-import Sopha from "./assets/sopha.png";
-import Beanbag from "./assets/bean_bag.png";
-import SophaSider from "./assets/sopha_sider.png";
+import Twitter from "../assets/twitter_copy.png";
+import Discord from "../assets/discord.png";
+import LogoWhite from "../assets/Logowhite.png";
+import LogoWhiteCropped from "../assets/Logowhite_cropped.png";
+import KatanaImage from "../assets/katana.png";
+import PizzaImage from "../assets/pizza.png";
+import FanSpinning from "../assets/fan_spinning.mp4";
+import Sopha from "../assets/sopha.png";
+import Beanbag from "../assets/bean_bag.png";
+import SophaSider from "../assets/sopha_sider.png";
 import MenuContent from "../components/menu";
-import CloseAlpha from "./assets/turn-back.png";
-import Close from "./assets/close.png";
-import AlphaScroll from "./assets/down-arrow.png";
+import CloseAlpha from "../assets/turn-back.png";
+import Close from "../assets/close.png";
+import AlphaScroll from "../assets/down-arrow.png";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import Dev1 from "./assets/dev1.png";
-import Dev2 from "./assets/dev2.png";
-import Sashi from "./assets/sashi.png";
-import Wallace from "./assets/wallace.png";
-import Gabriel from "./assets/gabriel.png";
-import Kaizer from "./assets/kaizer.png";
-import Walter from "./assets/walter.png";
-import Yogantar from "./assets/yogantar.png";
-import { programs } from "@metaplex/js"
+import Dev1 from "../assets/dev1.png";
+import Dev2 from "../assets/dev2.png";
+import Sashi from "../assets/sashi.png";
+import Wallace from "../assets/wallace.png";
+import Gabriel from "../assets/gabriel.png";
+import Kaizer from "../assets/kaizer.png";
+import Walter from "../assets/walter.png";
+import Yogantar from "../assets/yogantar.png";
+import { programs } from "@metaplex/js";
 import {
   MAGIC_HAT_ID,
   pdaSeed,
@@ -70,9 +70,9 @@ import {
   mintOneToken,
   mintOneTokenWL,
 } from "../programs/candy-machine";
-import idl from "./magic_hat.json";
-import idlStake from "./magic_stake.json";
-import idlBank from "./gem_bank.json";
+import idl from "../idl/magic_hat.json";
+import idlStake from "../idl/magic_stake.json";
+import idlBank from "../idl/gem_bank.json";
 import { BN, Program } from "@project-serum/anchor";
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -345,7 +345,7 @@ const Home = (props: HomeProps) => {
   const [collectionIdMint, setCollectionIdMint] = useState<any>("");
 
   const wallet = useWallet();
-  wallet.connect();
+  // wallet.connect();
 
   const citys = [{
     name: "MAHANOTHIA",
@@ -1372,6 +1372,7 @@ const Home = (props: HomeProps) => {
         message: farm_str + "Farm has been created successfully at " + farm.publicKey.toBase58() + "\nPlease copy this id into the config file.",
         severity: "success",
       });
+      console.log(farm.publicKey.toBase58());
       // const whitelistConfigAccounts = await stakeProgram.account.farm.fetch(farm.publicKey);
       // console.log(whitelistConfigAccounts);
       console.log('init farm signature : ' + wallet_create);
@@ -1968,7 +1969,7 @@ const Home = (props: HomeProps) => {
       const stakeProgram = await getStakeProgram();
       try {
         const mahanothiaFarmVar:any = await stakeProgram.account.farm.fetch(MAHANOTHIA_FARM_ID);
-        console.log('Mahanothia Farm ');
+        console.log('Mahanothia Farm');
         console.log(mahanothiaFarmVar);
         setMahanothiaFarm(mahanothiaFarmVar);
       } catch (error) {
@@ -2050,7 +2051,7 @@ const Home = (props: HomeProps) => {
         const nft = allNfts[index];
         var creators = nft.data.creators;
         var is_ours = false;
-        if (nft.updateAuthority == "2LpGioZAG2GkzBpTye4e3jqQWiEL7mFBo74B6yvCmTaw") {
+        if (nft.updateAuthority == "TnC98o4aMW7bcXcZXEsFaTBGJy5KPscd1jfL7WuRf6x") {
           is_ours = true;
           for (let iindex = 0; iindex < creators.length; iindex++) {
             const element = creators[iindex];
@@ -4312,7 +4313,7 @@ const Home = (props: HomeProps) => {
             </div> 
             {!wallet.connected &&
             <div className="staking-room-six">
-              <WalletDialogButton className="Connect-Wallet-btn">
+              <WalletDialogButton className="Connect-Wallet-btn" onClick={closeStaking}>
                 Connect Wallet
               </WalletDialogButton>
             </div> 
@@ -4724,13 +4725,19 @@ const Home = (props: HomeProps) => {
                       {currentWl == "PUBLIC" && <span>---</span>}
                     </label>
                     } */}
-                    <h1 className="minted-out">Minted Out</h1>
-                    {!isMobile &&
+                    {/* <h4 className="minted-out">Minted Out</h4> */}
+                    <div className="m-15"></div>
+                    <button className="city-one-farm">Create City 1 Farm</button>
+                    <button className="city-two-farm">Create City 2 Farm</button>
+                    <button className="city-three-farm">Create City 3 Farm</button>
+                    <button className="city-four-farm">Create City 4 Farm</button>
+                    <button className="city-five-farm">Create City 5 Farm</button>
+                    {/* {!isMobile &&
                     <label className="completed-counts m-b-20">
                       4200 /4200
                     </label>
-                    }
-                    {!isMobile && (
+                    } */}
+                    {/* {!isMobile && (
                       <div className="battery">
                         {setBars.map(function (item, i) {
                           if (100 >= item) {
@@ -4750,7 +4757,7 @@ const Home = (props: HomeProps) => {
                     )}
                     {isMobile &&
                     <CircularProgressbar value={100} text={4200 + '/' + 4200} />
-                    }
+                    } */}
                     {/* <div className="mint-progress">
                       <ProgressBar bgcolor={"#6a1b9a"} completed={completed} />
                     </div> */}
