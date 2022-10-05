@@ -2,9 +2,14 @@ import {
     clusterApiUrl,
     Connection,
     Keypair,
+    Transaction,
   } from "@solana/web3.js";
   import {
-    createMint, getMint,
+    closeAccount,
+    createAssociatedTokenAccount,
+    createBurnCheckedInstruction,
+    createCloseAccountInstruction,
+    createMint, getAccount, getMint, mintToChecked, transferChecked,
   } from "@solana/spl-token";
   import * as bs58 from "bs58";
   
@@ -45,7 +50,57 @@ import {
     );
     let tokenAccount = await getAccount(connection, tokenAccountPubkey);
     let tokenAmount = await connection.getTokenAccountBalance(tokenAccountPubkey);
-
+    let txhash = await mintToChecked(
+      connection, // connection
+      feePayer, // fee payer
+      mintPubkey, // mint
+      tokenAccountPubkey, // receiver (sholud be a token account)
+      alice, // mint authority
+      1e8, // amount. if your decimals is 8, you mint 10^8 for 1 token.
+      8 // decimals
+    );
+    let txhash1 = await transferChecked(
+      connection, // connection
+      feePayer, // payer
+      tokenAccountXPubkey, // from (should be a token account)
+      mintPubkey, // mint
+      tokenAccountYPubkey, // to (should be a token account)
+      alice, // from's owner
+      1e8, // amount, if your deciamls is 8, send 10^8 for 1 token
+      8 // decimals
+    );      
+    let tx = new Transaction().add(
+      createBurnCheckedInstruction(
+        tokenAccountPubkey, // token account
+        mintPubkey, // mint
+        alice.publicKey, // owner of token account
+        1e8, // amount, if your deciamls is 8, 10^8 for 1 token
+        8 // decimals
+      )
+    );
+    {
+      let txhash = await closeAccount(
+        connection, // connection
+        feePayer, // payer
+        tokenAccountPubkey, // token account which you want to close
+        alice.publicKey, // destination
+        alice // owner of token account
+      );
+    }
+    
+    // or
+    
+    // 2) compose by yourself
+    {
+      let tx = new Transaction().add(
+        createCloseAccountInstruction(
+          tokenAccountPubkey, // token account which you want to close
+          alice.publicKey, // destination
+          alice.publicKey // owner of token account
+        )
+      );
+    }
+      
 
   })();
   
