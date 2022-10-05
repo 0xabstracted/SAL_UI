@@ -1,7 +1,7 @@
 import * as anchor from '@project-serum/anchor';
 
-import { MintLayout, Token } from '@solana/spl-token';
-import { PublicKey, SystemProgram } from '@solana/web3.js';
+import { MintLayout, createInitializeMintInstruction, createMintToInstruction, createApproveInstruction, createRevokeInstruction,} from '@solana/spl-token';
+import { SystemProgram } from '@solana/web3.js';
 import { sendTransactions } from '../config/connection';
 import idlMagicHat from '../idl/magic_hat.json';
 
@@ -11,7 +11,8 @@ import {
   getNetworkExpire,
   getNetworkToken
 } from '../utils/utils';
-import { SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID, TOKEN_PROGRAM_ID, MAGIC_HAT_ID } from '../config/config';
+import { TOKEN_PROGRAM_ID, MAGIC_HAT_ID } from '../config/config';
+import { SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID } from '../GrandProgramUtils/AssociatedTokenAccountProgram/constants';
 // import idl from "./wallet_whitelist.json";
 
 const TOKEN_METADATA_PROGRAM_ID = new anchor.web3.PublicKey(
@@ -282,8 +283,7 @@ export const mintOneToken = async (
         ),
       programId: TOKEN_PROGRAM_ID,
     }),
-    Token.createInitMintInstruction(
-      TOKEN_PROGRAM_ID,
+    createInitializeMintInstruction(
       mint.publicKey,
       0,
       payer,
@@ -295,13 +295,12 @@ export const mintOneToken = async (
       payer,
       mint.publicKey,
     ),
-    Token.createMintToInstruction(
-      TOKEN_PROGRAM_ID,
+    createMintToInstruction(
       mint.publicKey,
       userTokenAccountAddress,
       payer,
-      [],
       1,
+      [],
     )
   ];
 
@@ -365,18 +364,16 @@ export const mintOneToken = async (
         );
       if (exists) {
         instructions.push(
-          Token.createApproveInstruction(
-            TOKEN_PROGRAM_ID,
+          createApproveInstruction(
             whitelistToken,
             whitelistBurnAuthority.publicKey,
             payer,
-            [],
             1,
+            [],
           ),
         );
         cleanupInstructions.push(
-          Token.createRevokeInstruction(
-            TOKEN_PROGRAM_ID,
+          createRevokeInstruction(
             whitelistToken,
             payer,
             [],
@@ -407,18 +404,16 @@ export const mintOneToken = async (
     });
 
     instructions.push(
-      Token.createApproveInstruction(
-        TOKEN_PROGRAM_ID,
+      createApproveInstruction(
         userPayingAccountAddress,
         transferAuthority.publicKey,
         payer,
-        [],
         magicHat.state.price.toNumber(),
+        [],
       ),
     );
     cleanupInstructions.push(
-      Token.createRevokeInstruction(
-        TOKEN_PROGRAM_ID,
+      createRevokeInstruction(
         userPayingAccountAddress,
         payer,
         [],
@@ -500,8 +495,7 @@ export const mintOneTokenWL = async (
         ),
       programId: TOKEN_PROGRAM_ID,
     }),
-    Token.createInitMintInstruction(
-      TOKEN_PROGRAM_ID,
+    createInitializeMintInstruction(
       mint.publicKey,
       0,
       payer,
@@ -513,13 +507,12 @@ export const mintOneTokenWL = async (
       payer,
       mint.publicKey,
     ),
-    Token.createMintToInstruction(
-      TOKEN_PROGRAM_ID,
+    createMintToInstruction(
       mint.publicKey,
       userTokenAccountAddress,
       payer,
-      [],
       1,
+      [],
     )
   ];
 
@@ -583,18 +576,16 @@ export const mintOneTokenWL = async (
         );
       if (exists) {
         instructions.push(
-          Token.createApproveInstruction(
-            TOKEN_PROGRAM_ID,
+          createApproveInstruction(
             whitelistToken,
             whitelistBurnAuthority.publicKey,
             payer,
-            [],
             1,
+            [],
           ),
         );
         cleanupInstructions.push(
-          Token.createRevokeInstruction(
-            TOKEN_PROGRAM_ID,
+          createRevokeInstruction(
             whitelistToken,
             payer,
             [],
@@ -625,18 +616,16 @@ export const mintOneTokenWL = async (
     });
 
     instructions.push(
-      Token.createApproveInstruction(
-        TOKEN_PROGRAM_ID,
+      createApproveInstruction(
         userPayingAccountAddress,
         transferAuthority.publicKey,
         payer,
-        [],
         magicHat.state.price.toNumber(),
+        [],
       ),
     );
     cleanupInstructions.push(
-      Token.createRevokeInstruction(
-        TOKEN_PROGRAM_ID,
+      createRevokeInstruction(
         userPayingAccountAddress,
         payer,
         [],

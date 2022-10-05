@@ -1,13 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable eqeqeq */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useMemo, useState, useCallback } from "react";
-import * as anchor from "@project-serum/anchor";
-import { PublicKey, SystemProgram, LAMPORTS_PER_SOL, sendAndConfirmTransaction, Transaction, Connection, GetProgramAccountsFilter, TokenAccountsFilter, clusterApiUrl } from "@solana/web3.js";
-import { Snackbar } from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
-import MobileMenu from "../assets/mobile_menu.png";
+
 import OutsideClickHandler from "react-outside-click-handler";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import 'react-circular-progressbar/dist/styles.css';
+
+import * as anchor from "@project-serum/anchor";
+import { BN, Program } from "@project-serum/anchor";
+
+import { PublicKey, SystemProgram, Transaction, clusterApiUrl, Connection } from "@solana/web3.js";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletDialogButton } from "@solana/wallet-adapter-material-ui";
-import { AlertState } from "../utils/utils";
+
+import { Snackbar } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
+
+import { Metaplex } from "@metaplex-foundation/js"
+
+import MobileMenu from "../assets/mobile_menu.png";
 import Twitter from "../assets/twitter_copy.png";
 import Discord from "../assets/discord.png";
 import LogoWhite from "../assets/Logowhite.png";
@@ -18,12 +32,9 @@ import FanSpinning from "../assets/fan_spinning.mp4";
 import Sopha from "../assets/sopha.png";
 import Beanbag from "../assets/bean_bag.png";
 import SophaSider from "../assets/sopha_sider.png";
-import MenuContent from "../components/menu";
 import CloseAlpha from "../assets/turn-back.png";
 import Close from "../assets/close.png";
 import AlphaScroll from "../assets/down-arrow.png";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 import Dev1 from "../assets/dev1.png";
 import Dev2 from "../assets/dev2.png";
 import Sashi from "../assets/sashi.png";
@@ -32,24 +43,15 @@ import Gabriel from "../assets/gabriel.png";
 import Kaizer from "../assets/kaizer.png";
 import Walter from "../assets/walter.png";
 import Yogantar from "../assets/yogantar.png";
-import { programs } from "@metaplex/js";
+
 import {
-  MAGIC_HAT_ID,
   pdaSeed,
   pdaWhitelistSeed,
   MAGIC_HAT_CREATOR,
-  TOKEN_METADATA_PROGRAM_ID,
-  MAGIC_HAT_CREATOR_KEYPAIR,
   GOG_TIME,
   WL_TIME,
   PUBLIC_TIME,
   COMMUNITY_TIME,
-  GOG_PRICE,
-  OG_PRICE,
-  WL_PRICE,
-  PUBLIC_PRICE,
-  COMMUNITY_PRICE,
-  MAGIC_STAKE_PROGRAM_ID,
   FARM_ID,
   TOKEN_PROGRAM_ID,
   MAHANOTHIA_FARM_ID,
@@ -57,31 +59,32 @@ import {
   SAN_CHETOS_FARM_ID,
   MAGNEXIA_FARM_ID,
   RAUDCHERI_FARM_ID,
-  SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
-  GEM_BANK,
   COLLECTION_ID,
   REWARD_MINT,
-  FEE_WALLET
+  FEE_WALLET,
+  MAGIC_HAT_PROGRAM_V2_ID
 } from "../config/config";
+import { sendTransactions } from "../config/connection";
+
+import { AlertState } from "../utils/utils";
+
 import {
-  awaitTransactionSignatureConfirmation,
   MagicHatAccount,
   getMagicHatState,
-  mintOneToken,
-  mintOneTokenWL,
 } from "../programs/candy-machine";
-import idl from "../idl/magic_hat.json";
-import idlStake from "../idl/magic_stake.json";
-import idlBank from "../idl/gem_bank.json";
-import { BN, Program } from "@project-serum/anchor";
-import { CircularProgressbar } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
-import { sendTransactions } from "../config/connection";
-import { getParsedNftAccountsByOwner,isValidSolanaAddress, createConnectionConfig,} from "@nfteyez/sol-rayz";
 
-const MAGIC_HAT_PROGRAM_V2_ID = new anchor.web3.PublicKey(
-  "JBw14YzhNTQGqUX54MatDgxDrCPopKf4EGcJHoHfq5ha"
-);
+import idl from "../idl/magic_hat.json";
+
+
+import { findAssociatedTokenAddress } from "../GrandProgramUtils/AssociatedTokenAccountProgram/pda";
+import { MAGIC_STAKE_PROGRAM_ID, GEM_BANK_PROGRAM_ID, getBankProgram, getStakeProgram } from "../GrandProgramUtils/gemBank/getProgramObjects";
+import { FixedRateConfig, RarityConfig } from "../GrandProgramUtils/gemBank/interface";
+import { TOKEN_METADATA_PROGRAM_ID } from "../GrandProgramUtils/tokenMetadata/constants";
+
+import MenuContent from "./menu";
+import InitFarmAlpha from "./AlphaStaking/InitFarmAlpha";
+import AddToBankWhitelist from "./AlphaStaking/AddToBankWhitelist";
+import FundRewardAlpha from "./AlphaStaking/FundRewardAlpha";
 
 const responsive = {
   superLargeDesktop: {
@@ -102,53 +105,6 @@ const responsive = {
   },
 };
 
-interface NFT {
-  pubkey?: PublicKey
-  mint: PublicKey
-  onchainMetadata: programs.metadata.MetadataData
-  externalMetadata: {
-    attributes: Array<any>
-    collection: any
-    description: string
-    edition: number
-    external_url: string
-    image: string
-    name: string
-    properties: {
-      files: Array<string>
-      category: string
-      creators: Array<string>
-    }
-    seller_fee_basis_points: number
-  }
-}
-
-const RewardType = {
-  Probable: { probable: {} },
-  Fixed: { fixed: {} },
-};
-
-const LPType = {
-  RESPECT: { respect: {} }
-};
-
-interface FarmConfig {
-  minStakingPeriodSec: BN;
-  cooldownPeriodSec: BN;
-  unstakingFeePercent: BN;
-}
-
-interface MaxCounts {
-  maxFarmers: number;
-  maxGems: number;
-  maxRarityPoints: number;
-}
-
-interface TierConfig {
-  rewardRate: BN;
-  requiredTenure: BN;
-}
-
 interface LpTierConfig {
   lpTierRate: BN;
   lpRequiredTenure: BN;
@@ -168,14 +124,6 @@ interface ProbableRateScheduleStake {
   denominator: BN;
 }
 
-interface FixedRateScheduleStake {
-  baseRate: BN;
-  tier1: TierConfig | null;
-  tier2: TierConfig | null;
-  tier3: TierConfig | null;
-  denominator: BN;
-}
-
 interface LpRateScheduleStake {
   lpBaseRate: BN;
   lpTier1: LpTierConfig | null;
@@ -184,22 +132,6 @@ interface LpRateScheduleStake {
   lpDenominator: BN;
 }
 
-interface FixedRateSchedule {
-  maxFarmers: number;
-  maxGems: number;
-  maxRarityPoints: number;
-}
-
-interface FixedRateConfig {
-  schedule: FixedRateScheduleStake;
-  amount: BN;
-  durationSec: BN;
-}
-
-interface RarityConfig {
-  mint: PublicKey;
-  rarityPoints: BN;
-}
 
 interface LpRateConfig {
   lpSchedule: LpRateScheduleStake;
@@ -219,18 +151,7 @@ interface WhiteListType {
   start_time: any;
 }
 
-interface WhitelistSchedule {
-  wl_start_time_3: WhiteListType;
-  wl_start_time_2: WhiteListType;
-  wl_start_time_1: WhiteListType;
-  public_mint_start_time: WhiteListType;
-}
 
-interface WhitelistConfig {
-  whitelist_schedule: WhitelistSchedule;
-  magic_hat_creator: any;
-  bump: any;
-}
 
 export interface HomeProps {
   magicHatId?: anchor.web3.PublicKey;
@@ -407,391 +328,7 @@ const Home = (props: HomeProps) => {
     }
   }, [anchorWallet, props.magicHatId, props.connection]);
 
-  const onMint = async (id: number) => {
-    try {
-      setIsUserMinting(true);
-      document.getElementById("#identity")?.click();
-      if (wallet.connected && magicHat?.program && wallet.publicKey) {
-        const mintTxId: any = [];
-        console.log(magicHat.id.toBase58());
-        mintTxId[0] = (
-          await mintOneToken(magicHat, wallet.publicKey, wallet, id)
-        )[0];
-        if (id >= 2) {
-          mintTxId[1] = (
-            await mintOneToken(magicHat, wallet.publicKey, wallet, id)
-          )[0];
-        }
-        if (id >= 3) {
-          mintTxId[2] = (
-            await mintOneToken(magicHat, wallet.publicKey, wallet, id)
-          )[0];
-        }
-        let status: any = [];
-        // const wallet_t:any = wallet;
-        // const provider = new anchor.Provider(props.connection, wallet_t, anchor.Provider.defaultOptions())
-        // const meta_idl:any = anchor.Program.fetchIdl(TOKEN_METADATA_PROGRAM_ID, provider);
-        // const [metadata_pda] = await PublicKey.findProgramAddress(
-        //   [Buffer.from('metadata'),
-        //   TOKEN_METADATA_PROGRAM_ID.toBuffer(),
-        //   mint.publicKey.toBuffer(),],
-        //   MAGIC_HAT_PROGRAM_V2_ID
-        // )
-        // const program = new anchor.Program(meta_idl, TOKEN_METADATA_PROGRAM_ID, provider);
-        // const state: any = await program.account.magicHat.fetch(magicHatId);
-        // console.log(state.authority.toBase58());
-        if (mintTxId[0]) {
-          status[0] = await awaitTransactionSignatureConfirmation(
-            mintTxId[0],
-            props.txTimeout,
-            props.connection,
-            true
-          );
-        }
-        if (mintTxId[1]) {
-          status[1] = await awaitTransactionSignatureConfirmation(
-            mintTxId[1],
-            props.txTimeout,
-            props.connection,
-            true
-          );
-        }
-        if (mintTxId[2]) {
-          status[2] = await awaitTransactionSignatureConfirmation(
-            mintTxId[2],
-            props.txTimeout,
-            props.connection,
-            true
-          );
-        }
-        if (status[0] && !status[0].err && id >= 1) {
-          setMintSuccessMessage(true);
-          setMintResponseType("success");
-          setMintResponse("YOU'VE SHHUCCESSFULLY MINTED A HOODRAT!");
-          setTimeout(function () {
-            setMintSuccessMessage(true);
-            setMintSuccessMessage(false);
-            setMintResponseType("");
-            setMintResponse("");
-          }, 6000);
-        } else {
-          setMintSuccessMessage(true);
-          setMintResponseType("error");
-          setMintResponse("Mint failed! Please try again!");
-          setTimeout(function () {
-            setMintSuccessMessage(true);
-            setMintSuccessMessage(false);
-            setMintResponseType("");
-            setMintResponse("");
-          }, 6000);
-          // setAlertState({
-          //   open: true,
-          //   message: "Mint failed! Please try again!",
-          //   severity: "error",
-          // });
-        }
-        if (id >= 2) {
-          if (status[1] && !status[1].err) {
-            // setAlertState({
-            //   open: true,
-            //   message: "Congratulations! Mint succeeded!",
-            //   severity: "success",
-            // });
-            setMintSuccessMessage(true);
-            setMintResponseType("success");
-            setMintResponse("YOU'VE SHHUCCESSFULLY MINTED A HOODRAT!");
-            setTimeout(function () {
-              setMintSuccessMessage(true);
-              setMintSuccessMessage(false);
-              setMintResponseType("");
-              setMintResponse("");
-            }, 6000);
-          } else {
-            // setAlertState({
-            //   open: true,
-            //   message: "Mint failed! Please try again!",
-            //   severity: "error",
-            // });
-            setMintSuccessMessage(true);
-            setMintResponseType("error");
-            setMintResponse("Mint failed! Please try again!");
-            setTimeout(function () {
-              setMintSuccessMessage(true);
-              setMintSuccessMessage(false);
-              setMintResponseType("");
-              setMintResponse("");
-            }, 6000);
-          }
-        }
-        if (id >= 3) {
-          if (status[2] && !status[2].err) {
-            // setAlertState({
-            //   open: true,
-            //   message: "Congratulations! Mint succeeded!",
-            //   severity: "success",
-            // });
-            setMintSuccessMessage(true);
-            setMintResponseType("success");
-            setMintResponse("YOU'VE SHHUCCESSFULLY MINTED A HOODRAT!");
-            setTimeout(function () {
-              setMintSuccessMessage(true);
-              setMintSuccessMessage(false);
-              setMintResponseType("");
-              setMintResponse("");
-            }, 6000);
-          } else {
-            // setAlertState({
-            //   open: true,
-            //   message: "Mint failed! Please try again!",
-            //   severity: "error",
-            // });
-            setMintSuccessMessage(true);
-            setMintResponseType("error");
-            setMintResponse("Mint failed! Please try again!");
-            setTimeout(function () {
-              setMintSuccessMessage(true);
-              setMintSuccessMessage(false);
-              setMintResponseType("");
-              setMintResponse("");
-            }, 6000);
-          }
-        }
-      }
-    } catch (error: any) {
-      console.log(error);
-      let message = error.msg || "Minting failed! Please try again!";
-      if (!error.msg) {
-        if (!error.message) {
-          setMintResponse("Transaction Timeout! Please try again.");
-        } else if (error.message.indexOf("0x137")) {
-          setMintResponse(`SOLD OUT!`);
-        } else if (error.message.indexOf("0x135")) {
-          setMintResponse(
-            `Insufficient funds to mint. Please fund your wallet.`
-          );
-        }
-      } else {
-        if (error.code === 311) {
-          setMintResponse(`SOLD OUT!`);
-          window.location.reload();
-        } else if (error.code === 312) {
-          setMintResponse(`Minting period hasn't started yet.`);
-        }
-      }
-      setMintResponseType("error");
-      setMintSuccessMessage(true);
-      setTimeout(function () {
-        setMintResponseType("");
-        setMintSuccessMessage(false);
-        setMintResponse("");
-      }, 6000);
-      // setAlertState({
-      //   open: true,
-      //   message,
-      //   severity: "error",
-      // });
-    } finally {
-      setIsUserMinting(false);
-    }
-  };
 
-  const onMintWL = async (id: any, wallet_pda: any) => {
-    try {
-      setIsUserMinting(true);
-      document.getElementById("#identity")?.click();
-      if (wallet.connected && magicHat?.program && wallet.publicKey) {
-        const mintTxId: any = [];
-        console.log(magicHat.id.toBase58());
-        mintTxId[0] = (
-          await mintOneTokenWL(magicHat, wallet.publicKey, wallet_pda)
-        )[0];
-        if (id >= 2) {
-          mintTxId[1] = (
-            await mintOneTokenWL(magicHat, wallet.publicKey, wallet_pda)
-          )[0];
-        }
-        if (id >= 3) {
-          mintTxId[2] = (
-            await mintOneTokenWL(magicHat, wallet.publicKey, wallet_pda)
-          )[0];
-        }
-        let status: any = [];
-        if (mintTxId[0]) {
-          status[0] = await awaitTransactionSignatureConfirmation(
-            mintTxId[0],
-            props.txTimeout,
-            props.connection,
-            true
-          );
-        }
-        if (mintTxId[1]) {
-          status[1] = await awaitTransactionSignatureConfirmation(
-            mintTxId[1],
-            props.txTimeout,
-            props.connection,
-            true
-          );
-        }
-        if (mintTxId[2]) {
-          status[2] = await awaitTransactionSignatureConfirmation(
-            mintTxId[2],
-            props.txTimeout,
-            props.connection,
-            true
-          );
-        }
-        if (status[0] && !status[0].err && id >= 1) {
-          // setAlertState({
-          //   open: true,
-          //   message: "Congratulations! Mint succeeded!",
-          //   severity: "success",
-          // });
-          setMintSuccessMessage(true);
-          setMintResponseType("success");
-          setMintResponse("YOU'VE SHHUCCESSFULLY MINTED A HOODRAT!");
-          setTimeout(function () {
-            setMintSuccessMessage(true);
-            setMintSuccessMessage(false);
-            setMintResponseType("");
-            setMintResponse("");
-          }, 6000);
-        } else {
-          // setAlertState({
-          //   open: true,
-          //   message: "Mint failed! Please try again!",
-          //   severity: "error",
-          // });
-          setMintSuccessMessage(true);
-          setMintResponseType("error");
-          setMintResponse("Mint failed! Please try again!");
-          setTimeout(function () {
-            setMintSuccessMessage(true);
-            setMintSuccessMessage(false);
-            setMintResponseType("");
-            setMintResponse("");
-          }, 6000);
-        }
-        if (id >= 2) {
-          if (status[1] && !status[1].err) {
-            // setAlertState({
-            //   open: true,
-            //   message: "Congratulations! Mint succeeded!",
-            //   severity: "success",
-            // });
-            setMintSuccessMessage(true);
-            setMintResponseType("success");
-            setMintResponse("YOU'VE SHHUCCESSFULLY MINTED A HOODRAT!");
-            setTimeout(function () {
-              setMintSuccessMessage(true);
-              setMintSuccessMessage(false);
-              setMintResponseType("");
-              setMintResponse("");
-            }, 6000);
-          } else {
-            // setAlertState({
-            //   open: true,
-            //   message: "Mint failed! Please try again!",
-            //   severity: "error",
-            // });
-            setMintSuccessMessage(true);
-            setMintResponseType("error");
-            setMintResponse("Mint failed! Please try again!");
-            setTimeout(function () {
-              setMintSuccessMessage(true);
-              setMintSuccessMessage(false);
-              setMintResponseType("");
-              setMintResponse("");
-            }, 6000);
-          }
-        }
-        if (id >= 3) {
-          if (status[2] && !status[2].err) {
-            // setAlertState({
-            //   open: true,
-            //   message: "Congratulations! Mint succeeded!",
-            //   severity: "success",
-            // });
-            setMintSuccessMessage(true);
-            setMintResponseType("success");
-            setMintResponse("YOU'VE SHHUCCESSFULLY MINTED A HOODRAT!");
-            setTimeout(function () {
-              setMintSuccessMessage(true);
-              setMintSuccessMessage(false);
-              setMintResponseType("");
-              setMintResponse("");
-            }, 6000);
-          } else {
-            // setAlertState({
-            //   open: true,
-            //   message: "Mint failed! Please try again!",
-            //   severity: "error",
-            // });
-            setMintSuccessMessage(true);
-            setMintResponseType("error");
-            setMintResponse("Mint failed! Please try again!");
-            setTimeout(function () {
-              setMintSuccessMessage(true);
-              setMintSuccessMessage(false);
-              setMintResponseType("");
-              setMintResponse("");
-            }, 6000);
-          }
-        }
-      }
-    } catch (error: any) {
-      console.log(error);
-      let message = error.msg || "Minting failed! Please try again!";
-      if (error.InstructionError) {
-        if (
-          error.InstructionError[1].Custom &&
-          error.InstructionError[1].Custom == 6042
-        ) {
-          setMintResponse("Whitelist has not started yet!!!");
-        } else if (
-          error.InstructionError[1].Custom &&
-          error.InstructionError[1].Custom == 6043
-        ) {
-          setMintResponse("No whitelist spots left");
-        } else if (
-          error.InstructionError[1].Custom &&
-          error.InstructionError[1].Custom == 2001
-        ) {
-          setMintResponse("Please try again later");
-        }
-      } else if (!error.msg) {
-        if (!error.message) {
-          setMintResponse("Transaction Timeout! Please try again.");
-        } else if (error.message.indexOf("0x137")) {
-          setMintResponse(`SOLD OUT!`);
-        } else if (error.message.indexOf("0x135")) {
-          setMintResponse(
-            `Insufficient funds to mint. Please fund your wallet.`
-          );
-        }
-      } else {
-        if (error.code === 311) {
-          setMintResponse(`SOLD OUT!`);
-          window.location.reload();
-        } else if (error.code === 312) {
-          setMintResponse(`Minting period hasn't started yet.`);
-        }
-      }
-      setMintResponseType("error");
-      setMintSuccessMessage(true);
-      setTimeout(function () {
-        setMintResponseType("");
-        setMintSuccessMessage(false);
-        setMintResponse("");
-      }, 6000);
-      // setAlertState({
-      //   open: true,
-      //   message,
-      //   severity: "error",
-      // });
-    } finally {
-      setIsUserMinting(false);
-    }
-  };
 
   // const createVRFAccount = async () => {
   //   let payer = anchor.web3.Keypair.generate();
@@ -843,13 +380,6 @@ const Home = (props: HomeProps) => {
     setShowStaking(true);
   }
 
-  const hideStaking = async () => {
-    setNftStakeStep(0);
-    setStakedCity("");
-    setStakedNft(null);
-    setShowStakeRoom(true);
-    setShowStaking(false);
-  }
 
   let nftStakeStepCount = 0;
 
@@ -908,22 +438,6 @@ const Home = (props: HomeProps) => {
     }
   };
 
-  const decreaseWhitelistCount = async (count: any) => {
-    var obj: any = {
-      wallet: wallet.publicKey?.toBase58(),
-      count: count,
-    };
-    var xhr = new XMLHttpRequest();
-    xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
-        console.log(JSON.parse(JSON.parse(this.responseText).data));
-        setWhitelists(JSON.parse(JSON.parse(this.responseText).data));
-      }
-    });
-    xhr.open("POST", "https://www.secretalpha.io:8000/decreaseCount");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(JSON.stringify(obj));
-  };
 
   const getWhitelists = async () => {
     if (whitelists === null && wallet && wallet.publicKey) {
@@ -992,40 +506,7 @@ const Home = (props: HomeProps) => {
     }
   };
 
-  const increaseMintCount = async () => {
-    if (currentWl == 'GOG + OG') {
-      setMaxCount(3);
-    } else if (currentWl == 'WL') {
-      setMaxCount(1);
-    } else if(currentWl == 'PUBLIC') {
-      setMaxCount(5);
-    } else if(currentWl == 'COMMUNITY') {
-      setMaxCount(4);
-    }
-    if (mintCount >= maxCount) {
-    } else {
-      var k = mintCount + 1;
-      setMintCount(k);
-    }
-  };
 
-  const decreaseMintCount = async () => {
-    let l;
-    if (currentWl == 'GOG + OG') {
-      l = 3;
-    } else if (currentWl == 'WL') {
-      l = 1;
-    } else if(currentWl == 'PUBLIC') {
-      l = 5;
-    } else if(currentWl == 'COMMUNITY') {
-      l = 4;
-    }
-    if (mintCount <= 1) {
-    } else {
-      var k = mintCount - 1;
-      setMintCount(k);
-    }
-  };
 
   useEffect(() => {
     // anchor.Wallet.C;
@@ -1118,29 +599,6 @@ const Home = (props: HomeProps) => {
     return new Program(idl_o, MAGIC_HAT_PROGRAM_V2_ID, provider);
   };
 
-  const getStakeProgram = async () => {
-    const wallet_t: any = wallet;
-    const provider = new anchor.Provider(
-      props.connection,
-      wallet_t,
-      anchor.Provider.defaultOptions()
-    );
-    const idl_o: any = idlStake;
-    console.log(MAGIC_STAKE_PROGRAM_ID.toBase58())
-    return new Program(idl_o, MAGIC_STAKE_PROGRAM_ID, provider);
-  };
-
-  const getBankProgram = async () => {
-    const wallet_t: any = wallet;
-    const provider = new anchor.Provider(
-      props.connection,
-      wallet_t,
-      anchor.Provider.defaultOptions()
-    );
-    const idl_o: any = idlBank;
-    return new Program(idl_o, GEM_BANK, provider);
-  };
-
   const findFarmAuthorityPDA = async (farm: PublicKey) => {
     return PublicKey.findProgramAddress([farm.toBytes()], MAGIC_STAKE_PROGRAM_ID);
   };
@@ -1183,42 +641,42 @@ const Home = (props: HomeProps) => {
   const farmerVaultPDA = (bank: PublicKey, creator: PublicKey) => {
     return PublicKey.findProgramAddress(
       [Buffer.from('vault'), bank.toBytes(), creator.toBytes()],
-      GEM_BANK
+      GEM_BANK_PROGRAM_ID
     );
   };
 
   const gemBoxPda = (vault: PublicKey, gem_mint: PublicKey) => {
     return PublicKey.findProgramAddress(
       [Buffer.from('gem_box'), vault.toBytes(), gem_mint.toBytes()],
-      GEM_BANK
+      GEM_BANK_PROGRAM_ID
     );
   };
 
   const gemDepositBoxPda = (vault: PublicKey, gem_mint: PublicKey) => {
     return PublicKey.findProgramAddress(
       [Buffer.from('gem_deposit_receipt'), vault.toBytes(), gem_mint.toBytes()],
-      GEM_BANK
+      GEM_BANK_PROGRAM_ID
     );
   };
 
   const gemBoxRarityPda = (bank: PublicKey, gem_mint: PublicKey) => {
     return PublicKey.findProgramAddress(
       [Buffer.from('gem_rarity'), bank.toBytes(), gem_mint.toBytes()],
-      GEM_BANK
+      GEM_BANK_PROGRAM_ID
     );
   };
   
   const vaultAuthorityPda = (valut: PublicKey) => {
     return PublicKey.findProgramAddress(
       [valut.toBytes()],
-      GEM_BANK
+      GEM_BANK_PROGRAM_ID
     );
   };
   
   const whitelistProofPda = (bank: PublicKey, address_to_whitelist: PublicKey) => {
     return PublicKey.findProgramAddress(
       [Buffer.from('whitelist'),bank.toBytes(), address_to_whitelist.toBytes()],
-      GEM_BANK
+      GEM_BANK_PROGRAM_ID
     );
   };
 
@@ -1229,36 +687,11 @@ const Home = (props: HomeProps) => {
     );
   };
 
-  async function getTokensByOwner(owner: any) {
-    let conn:any = props.connection;
-    const tokens = await conn.getParsedTokenAccountsByOwner(owner, {
-      programId: TOKEN_PROGRAM_ID,
-    });
-  
-    // initial filter - only tokens with 0 decimals & of which 1 is present in the wallet
-    return tokens.value
-      .filter((t:any) => {
-        const amount = t.account.data.parsed.info.tokenAmount;
-        return amount.decimals === 0 && amount.uiAmount === 1;
-      })
-      .map((t:any) => {
-        return { pubkey: t.pubkey, mint: t.account.data.parsed.info.mint };
-      });
-  }
 
-  async function getTokensByOwnerAll(owner: any) {
-    let conn:any = props.connection;
-    const tokens = await conn.getParsedTokenAccountsByOwner(owner, {
-      programId: TOKEN_PROGRAM_ID,
-    });
-    console.log(tokens);
-  }
 
   async function getStakedNfts() {
     if (wallet && wallet.connected) {
-      const bankProgram = await getBankProgram();
-      const stakeProgram = await getStakeProgram();
-      const farms:any = await stakeProgram.account.farm.fetch(FARM_ID);
+      const bankProgram = await getBankProgram(wallet);
       // const [farmerVaultPda] = await farmerVaultPDA(
       //   farms.bank,
       //   wallet.publicKey!
@@ -1268,21 +701,22 @@ const Home = (props: HomeProps) => {
       var array:any = [];
       for (let index = 0; index < gdprs.length; index++) {
         const element = gdprs[index];
-        let tokenmetaPubkey = await programs.metadata.Metadata.getPDA(element.account.gemMint);
-        const tokenmeta = await programs.metadata.Metadata.load(props.connection, tokenmetaPubkey);
-        if (tokenmeta.data.updateAuthority == "2LpGioZAG2GkzBpTye4e3jqQWiEL7mFBo74B6yvCmTaw" && tokenmeta!.data!.data!.creators![0].address == "BNZy4DXcGZRpkkgnQn5nfqnkMPjjh7NLk1KBTe8qqtmZ") {
+        const connection = new Connection(clusterApiUrl("devnet"));
+        const metaplex = new Metaplex(connection);
+        let nft = await metaplex.nfts().findByMint(element.account.gemMint).run();
+        if (nft.updateAuthorityAddress == new PublicKey("2LpGioZAG2GkzBpTye4e3jqQWiEL7mFBo74B6yvCmTaw") && nft.creators[0].address == new PublicKey("BNZy4DXcGZRpkkgnQn5nfqnkMPjjh7NLk1KBTe8qqtmZ")) {
           var xhr = new XMLHttpRequest();
           xhr.addEventListener("readystatechange", function() {
             if(this.readyState === 4) {
               var obj:any = {
-                name: tokenmeta.data.data.name,
+                name: nft.name,
                 link: JSON.parse(this.responseText).image,
               }
               // console.log(obj);
               array.push(obj);
             }
           });
-          xhr.open("GET", tokenmeta.data.data.uri);
+          xhr.open("GET", nft.uri);
           xhr.send();
         }
       }
@@ -1295,163 +729,11 @@ const Home = (props: HomeProps) => {
     }
   }
 
-  const findAssociatedTokenAddress = async(walletAddress: PublicKey, tokenMintAddress: PublicKey) => {
-    return (await PublicKey.findProgramAddress([
-        walletAddress.toBuffer(),
-        TOKEN_PROGRAM_ID.toBuffer(),
-        tokenMintAddress.toBuffer(),
-      ],
-      SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
-    ))[0];
-  }
+  
 
   // Farm Manager Should call this
-  const initFixedFarm = async (id:any) => {
-    // getFarms();
-    const stakeProgram = await getStakeProgram();
-    try {
-      const farm = anchor.web3.Keypair.generate();
-      const bank = anchor.web3.Keypair.generate();
-      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(farm.publicKey);
-      const [farmTreasury, farmTreasuryBump] = await findFarmTreasuryPDA(
-        farm.publicKey
-      );
-      const [rewardAPot, rewardAPotBump] = await findRewardsPotPDA(
-        farm.publicKey,
-        REWARD_MINT
-      );
-      const [farmTreasuryToken, farmTreasuryTokenBump] = await findFarmTreasuryTokenPDA(
-        farm.publicKey,
-        REWARD_MINT
-      );
-      const farm_config:FarmConfig = {
-        minStakingPeriodSec: new BN(600),
-        cooldownPeriodSec: new BN(600),
-        unstakingFeePercent: new BN(5)
-      }
-      const max_counts:MaxCounts = {
-        maxFarmers: Number(4200),
-        maxGems: Number(4200),
-        maxRarityPoints: Number(65000)
-      }
-      // console.log(farm.publicKey.toBase58());
-      // console.log(bank.publicKey.toBase58());
-      const signers = [farm, bank];
-      // let config_t:any = Borsh.struct(JSON.stringify(config));
-      const wallet_create = await stakeProgram.rpc.initFixedFarm(farmAuthBump,farmTreasuryBump,LPType.RESPECT,farm_config,max_counts,
-        {
-          accounts: {
-            farm: farm.publicKey,
-            farmManager: wallet.publicKey,
-            farmAuthority: farmAuth,
-            rewardAPot: rewardAPot,
-            rewardAMint: REWARD_MINT,
-            farmTreasuryToken: farmTreasuryToken,
-            bank: bank.publicKey,
-            gemBank: GEM_BANK,
-            payer: wallet.publicKey,
-            rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-            tokenProgram: TOKEN_PROGRAM_ID,
-            systemProgram: SystemProgram.programId,
-          },
-          signers: signers
-        }
-      );
-      let farm_str = '';
-      if(id == 1) {
-        farm_str = 'MAHANOTHIA';
-      }
-      else if(id == 4) {
-        farm_str = 'MAGNEXIA';
-      }
-      else if(id == 5) {
-        farm_str = 'THE BASEMENT';
-      }
-      setAlertState({
-        open: true,
-        message: farm_str + "Farm has been created successfully at " + farm.publicKey.toBase58() + "\nPlease copy this id into the config file.",
-        severity: "success",
-      });
-      console.log(farm.publicKey.toBase58());
-      // const whitelistConfigAccounts = await stakeProgram.account.farm.fetch(farm.publicKey);
-      // console.log(whitelistConfigAccounts);
-      console.log('init farm signature : ' + wallet_create);
-    } catch (error) {
-      console.log("Transaction error: ", error);
-    }
-  }
 
   // Farm Manager Should call this
-  const initProbableFarm = async (id:any) => {
-    // getFarms();
-    const stakeProgram = await getStakeProgram();
-    try {
-      const farm = anchor.web3.Keypair.generate();
-      const bank = anchor.web3.Keypair.generate();
-      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(farm.publicKey);
-      const [farmTreasury, farmTreasuryBump] = await findFarmTreasuryPDA(
-        farm.publicKey
-      );
-      const [rewardAPot, rewardAPotBump] = await findRewardsPotPDA(
-        farm.publicKey,
-        REWARD_MINT
-      );
-      const [farmTreasuryToken, farmTreasuryTokenBump] = await findFarmTreasuryTokenPDA(
-        farm.publicKey,
-        REWARD_MINT
-      );
-      const farm_config:FarmConfig = {
-        minStakingPeriodSec: new BN(600),
-        cooldownPeriodSec: new BN(600),
-        unstakingFeePercent: new BN(5)
-      }
-      const max_counts:MaxCounts = {
-        maxFarmers: Number(4200),
-        maxGems: Number(4200),
-        maxRarityPoints: Number(65000)
-      }
-      // console.log(farm.publicKey.toBase58());
-      // console.log(bank.publicKey.toBase58());
-      const signers = [farm, bank];
-      // let config_t:any = Borsh.struct(JSON.stringify(config));
-      const wallet_create = await stakeProgram.rpc.initProbableFarm(farmAuthBump,farmTreasuryBump,LPType.RESPECT,farm_config,max_counts,
-        {
-          accounts: {
-            farm: farm.publicKey,
-            farmManager: wallet.publicKey,
-            farmAuthority: farmAuth,
-            rewardAPot: rewardAPot,
-            rewardAMint: REWARD_MINT,
-            farmTreasuryToken: farmTreasuryToken,
-            bank: bank.publicKey,
-            gemBank: GEM_BANK,
-            payer: wallet.publicKey,
-            rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-            tokenProgram: TOKEN_PROGRAM_ID,
-            systemProgram: SystemProgram.programId,
-          },
-          signers: signers
-        }
-      );
-      let farm_str = '';
-      if(id == 2) {
-        farm_str = 'RAUDCHERI';
-      }
-      else if(id == 3) {
-        farm_str = 'SAN CHETOS';
-      }
-      setAlertState({
-        open: true,
-        message: farm_str + "Farm has been created successfully at " + farm.publicKey.toBase58() + "\nPlease copy this id into the config file.",
-        severity: "success",
-      });
-      // const whitelistConfigAccounts = await stakeProgram.account.farm.fetch(farm.publicKey);
-      // console.log(whitelistConfigAccounts);
-      console.log('init farm signature : ' + wallet_create);
-    } catch (error) {
-      console.log("Transaction error: ", error);
-    }
-  }
 
 
   const closeFarming = async () => {
@@ -1464,96 +746,10 @@ const Home = (props: HomeProps) => {
   }
 
   // Farm Manager should call this
-  const authorizeFunder = async (id:any) => {
-    let funder_var = '';
-    let farm_id:any;
-    if (id == 1) {
-      funder_var = funderOne;
-      farm_id = MAHANOTHIA_FARM_ID;
-    }
-    else if (id == 2) {
-      funder_var = funderTwo;
-      farm_id = RAUDCHERI_FARM_ID;
-    }
-    else if (id == 3) {
-      funder_var = funderThree;
-      farm_id = SAN_CHETOS_FARM_ID;
-    }
-    else if (id == 4) {
-      funder_var = funderFour;
-      farm_id = MAGNEXIA_FARM_ID;
-    }
-    else if (id == 5) {
-      funder_var = funderFive;
-      farm_id = BASEMENT_FARM_ID;
-    }
-    if (funder_var && funder_var.length > 0) {
-      try {
-        const funder_to_authorize = new PublicKey(funder_var);
-        if (funder_to_authorize) {
-          const stakeProgram = await getStakeProgram();
-          try {
-            const [authorizationProof] = await funderToAuthorizePDA(
-              farm_id,
-              funder_to_authorize
-            );
-            console.log(authorizationProof.toBase58());
-            const farms = await stakeProgram.account.farm.fetch(farm_id);
-            console.log('farm with ' + farm_id.toBase58() + ' ' + farms);
-            console.log(farms);
-            const wallet_create = await stakeProgram.rpc.authorizeFunder(
-              {
-                accounts: {
-                  farm: farm_id,
-                  farmManager: wallet.publicKey,
-                  funderToAuthorize: funder_to_authorize,
-                  authorizationProof: authorizationProof,
-                  systemProgram: SystemProgram.programId,
-                }
-              }
-            );
-            setAlertState({
-              open: true,
-              message: "Funder has been authorized successfully",
-              severity: "success",
-            });
-            console.log('authorize funder signature : ' + wallet_create);
-            setFunderOne('');
-            setFunderTwo('');
-            setFunderThree('');
-            setFunderFour('');
-            setFunderFive('');
-          } catch (error) {
-            console.log("Transaction error: ", error);
-          }
-        }
-        else {
-          setAlertState({
-            open: true,
-            message: "Funder is not a valid public key",
-            severity: "error",
-          });
-        }
-      } catch (error) {
-        setAlertState({
-          open: true,
-          message: "Funder is not a valid public key",
-          severity: "error",
-        });
-      }
-    }
-    else {
-      setAlertState({
-        open: true,
-        message: "Funder is empty",
-        severity: "error",
-      });
-    }
-  }
 
   // funder to authorize should call this
   const fundReward = async (id:any) => {
-    const stakeProgram = await getStakeProgram();
+    const stakeProgram = await getStakeProgram(wallet);
     try {
       let farm_id:any;
       if (id == 1) {
@@ -1581,7 +777,7 @@ const Home = (props: HomeProps) => {
         wallet.publicKey!
       );
       console.log(authorizationProof.toBase58());
-      const rewardSource = await findAssociatedTokenAddress(wallet.publicKey!,REWARD_MINT);
+      const [rewardSource, rewardSourceBump] = await findAssociatedTokenAddress(wallet.publicKey!,REWARD_MINT);
       console.log(rewardSource.toBase58());
       // const rewardSource = new PublicKey("511ZCh4sKsZhAtytqiVheeK2KZK6Tr96S8sTabudL2aT");
       const farms = await stakeProgram.account.farm.fetch(farm_id);
@@ -1688,10 +884,6 @@ const Home = (props: HomeProps) => {
         },
         lpDurationSec: new BN(8640000),
       };
-      const prob1Config: ProbTierConfig = {
-        probableRewardRate: new BN(1),
-        probability: new BN(1)
-      }
       const probConfigFixed: ProbableRateConfig = {
         probableSchedule: {
           prob1:null,
@@ -1856,7 +1048,7 @@ const Home = (props: HomeProps) => {
 
   const getFarmers = async () => {
     if(wallet && wallet.connected) {
-      const stakeProgram = await getStakeProgram();
+      const stakeProgram = await getStakeProgram(wallet);
       try {
         const [mahanothiaFarmerVar] = await farmerPDA(
           MAHANOTHIA_FARM_ID,
@@ -1966,7 +1158,7 @@ const Home = (props: HomeProps) => {
 
   const getFarms = async () => {
     if(wallet && wallet.connected) {
-      const stakeProgram = await getStakeProgram();
+      const stakeProgram = await getStakeProgram(wallet);
       try {
         const mahanothiaFarmVar:any = await stakeProgram.account.farm.fetch(MAHANOTHIA_FARM_ID);
         console.log('Mahanothia Farm');
@@ -2029,29 +1221,20 @@ const Home = (props: HomeProps) => {
     // console.log(nftsmetadata)
     setCollectionId(COLLECTION_ID);
     if (wallet && wallet.connected && !gotNfts) {
-      const wallet_t:any = wallet;
-      const connect = createConnectionConfig(clusterApiUrl("devnet"));
-      const provider = new anchor.Provider(
-        props.connection,
-        wallet_t,
-        anchor.Provider.defaultOptions()
-      );
-      // const provider = getProvider();
-      let ownerToken = wallet_t.publicKey;
-      const result = isValidSolanaAddress(ownerToken);
-      console.log("result", result);
-      const allNfts = await getParsedNftAccountsByOwner({
-        publicAddress: ownerToken,
-        connection: connect,
-        // serialization: true,
-      });
+      const connection = new Connection(clusterApiUrl("devnet"));
+
+      const metaplex = Metaplex.make(connection)
+      const allNfts = await metaplex
+                          .nfts()
+                          .findAllByOwner({ owner: metaplex.identity().publicKey })
+                          .run();
       let temp_nfts:any = [];
       // console.log(allNfts);
       for (let index = 0; index < allNfts.length; index++) {
         const nft = allNfts[index];
-        var creators = nft.data.creators;
+        var creators = nft.creators;
         var is_ours = false;
-        if (nft.updateAuthority == "TnC98o4aMW7bcXcZXEsFaTBGJy5KPscd1jfL7WuRf6x") {
+        if (nft.updateAuthorityAddress == new PublicKey("TnC98o4aMW7bcXcZXEsFaTBGJy5KPscd1jfL7WuRf6x")) {
           is_ours = true;
           for (let iindex = 0; iindex < creators.length; iindex++) {
             const element = creators[iindex];
@@ -2067,18 +1250,18 @@ const Home = (props: HomeProps) => {
               // console.log(this.responseText);
               var obj:any = {
                 id:temp_nfts.length,
-                name: nft.data.name,
+                name: nft.name,
                 link: JSON.parse(this.responseText).image,
-                mint: nft.mint,
-                updateAuthority: nft.updateAuthority,
-                creator: nft.data.creators[0].address
+                mint: nft.address,
+                updateAuthority: nft.updateAuthorityAddress,
+                creator: nft.creators[0].address
               }
               temp_nfts.push(obj);
               setNFts(temp_nfts!);
               // console.log(allNfts);
             }
           });
-          xhr.open("GET", nft.data.uri);
+          xhr.open("GET", nft.uri);
           xhr.send();
         }
       }
@@ -2119,7 +1302,7 @@ const Home = (props: HomeProps) => {
             identity: wallet.publicKey,
             bank: farms.bank,
             vault: farmerVaultPda,
-            gemBank: GEM_BANK,
+            gemBank: GEM_BANK_PROGRAM_ID,
             payer: wallet.publicKey,
             systemProgram: SystemProgram.programId,
           }
@@ -2147,7 +1330,7 @@ const Home = (props: HomeProps) => {
             identity: wallet.publicKey,
             bank: farms.bank,
             vault: farmerVaultPda,
-            gemBank: GEM_BANK,
+            gemBank: GEM_BANK_PROGRAM_ID,
             payer: wallet.publicKey,
             systemProgram: SystemProgram.programId,
           }
@@ -2166,7 +1349,6 @@ const Home = (props: HomeProps) => {
     else if (id == 3) {
       farm_id = SAN_CHETOS_FARM_ID;
     }
-    const farmers =await stakeProgram.account.farmer.all();
     // console.log(farmers);
     try {
       const [farmerPda] = await farmerPDA(
@@ -2189,7 +1371,7 @@ const Home = (props: HomeProps) => {
             identity: wallet.publicKey,
             bank: farms.bank,
             vault: farmerVaultPda,
-            gemBank: GEM_BANK,
+            gemBank: GEM_BANK_PROGRAM_ID,
             payer: wallet.publicKey,
             systemProgram: SystemProgram.programId,
           }
@@ -2197,75 +1379,21 @@ const Home = (props: HomeProps) => {
       ));
       return stake_instructions;
     } catch (error) {
+      console.log("Transaction error: ", error);
       return stake_instructions;
-      console.log("Transaction error: ", error);
     }
   }
 
   // Farmer should call this
-  const refreshFarmers = async () => {
-    const stakeProgram = await getStakeProgram();
-    const farmers = await stakeProgram.account.farmer.all();
-    console.log(farmers);
-    try {
-
-      const [farmerPda, farmerBump] = await farmerPDA(
-        FARM_ID,
-        wallet.publicKey!
-      );
-      const farms:any = await stakeProgram.account.farm.fetch(FARM_ID);
-      console.log('farm with ' + FARM_ID.toBase58());
-      const wallet_create = await stakeProgram.rpc.refreshFarmer(farmerBump,
-        {
-          accounts: {
-            farm: FARM_ID,
-            farmer: farmerPda,
-            identity: wallet.publicKey
-          }
-        }
-      );
-      getFarmers();
-      console.log('refresh farmer signature : ' + wallet_create);
-    } catch (error) {
-      console.log("Transaction error: ", error);
-    }
-  }
 
   // Farmer should call this
-  const refreshFarmerSigned = async () => {
-    const stakeProgram = await getStakeProgram();
-    const farmers = await stakeProgram.account.farmer.all();
-    console.log(farmers);
-    try {
-      const [farmerPda, farmerBump] = await farmerPDA(
-        FARM_ID,
-        wallet.publicKey!
-      );
-      const farms:any =
-        await stakeProgram.account.farm.fetch(FARM_ID);
-      console.log('farm with ' + FARM_ID.toBase58());
-      const wallet_create = await stakeProgram.rpc.refreshFarmerSigned(farmerBump,true,
-        {
-          accounts: {
-            farm: FARM_ID,
-            farmer: farmerPda,
-            identity: wallet.publicKey
-          }
-        }
-      );
-      getFarmers();
-      console.log('refresh farmer signed signature : ' + wallet_create);
-    } catch (error) {
-      console.log("Transaction error: ", error);
-    }
-  }
 
   // Farm Manager should call this
   const addRaritiesToBank = async () => {
     if (nftMint && nftMint.length > 0) {
       const nft_mint = new PublicKey(nftMint);
       try {
-        const stakeProgram = await getStakeProgram();
+        const stakeProgram = await getStakeProgram(wallet);
         const farmers = await stakeProgram.account.farmer.all();
         console.log(farmers);
         try {
@@ -2309,7 +1437,7 @@ const Home = (props: HomeProps) => {
                 farmManager: farms.farmManager,
                 farmAuthority: farmAuth,
                 bank: farms.bank,
-                gemBank: GEM_BANK,
+                gemBank: GEM_BANK_PROGRAM_ID,
                 farmer: farmerPda,
                 systemProgram: SystemProgram.programId
               },
@@ -2385,10 +1513,8 @@ const Home = (props: HomeProps) => {
           farm_id = MAGNEXIA_FARM_ID;
         }
         let stake_instructions:any = [];
-        const stakeProgram:any = await getStakeProgram();
-        const bankProgram = await getBankProgram();
-        let tokens = await getTokensByOwner(wallet.publicKey!);
-        const farmers = await stakeProgram.account.farmer.all();
+        const stakeProgram:any = await getStakeProgram(wallet);
+        const bankProgram = await getBankProgram(wallet);
         if (add_init_mahanothia && stakedCity == 'MAHANOTHIA') {
           stake_instructions = initFixedFarmerInst(1,stake_instructions,stakeProgram);
         }
@@ -2442,7 +1568,6 @@ const Home = (props: HomeProps) => {
         // const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
         const [mintWhitelistProofPdaVal] = await whitelistProofPda(farms.bank,new PublicKey(nft.mint));
         const [creatorWhitelistProofPdaVal] = await whitelistProofPda(farms.bank,new PublicKey(nft.creator));
-        const gem_source_old = await findAssociatedTokenAddress(wallet.publicKey!,new PublicKey(nft.mint));
         const gem_source_obj = await props.connection.getParsedTokenAccountsByOwner(wallet.publicKey!, {
           mint: new PublicKey(nft.mint),
         });
@@ -2488,7 +1613,7 @@ const Home = (props: HomeProps) => {
               tokenProgram: TOKEN_PROGRAM_ID,
               systemProgram: SystemProgram.programId,
               rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-              gemBank: GEM_BANK,
+              gemBank: GEM_BANK_PROGRAM_ID,
               feeAcc: FEE_WALLET
             },
             remainingAccounts
@@ -2506,7 +1631,7 @@ const Home = (props: HomeProps) => {
               identity: wallet.publicKey,
               bank: farms.bank,
               vault: farmerVaultPda,
-              gemBank: GEM_BANK,
+              gemBank: GEM_BANK_PROGRAM_ID,
               feeAcc: FEE_WALLET,
               systemProgram: SystemProgram.programId,
             }
@@ -2548,304 +1673,20 @@ const Home = (props: HomeProps) => {
   }
 
   // Farmer should call this
-  const flashDeposit = async () => {
-    const stakeProgram = await getStakeProgram();
-    const bankProgram = await getBankProgram();
-    let tokens = await getTokensByOwner(wallet.publicKey!);
-    const farmers = await stakeProgram.account.farmer.all();
-    try {
-      const [farmerPda, farmerBump] = await farmerPDA(
-        FARM_ID,
-        wallet.publicKey!
-      );
-      const farms:any = await stakeProgram.account.farm.fetch(FARM_ID);
-      const [farmerVaultPda, farmerVaultBump] = await farmerVaultPDA(
-        farms.bank,
-        wallet.publicKey!
-      );
-      let nft;
-      if (stakedNft) {
-        nft = stakedNft;
-      }
-      else {
-        nft = nfts[0];
-      }
-      const vaults = await bankProgram.account.vault.all();
-      console.log(vaults[0].account.authoritySeed.toBase58());
-      const [gemBoxPdaVal] = await gemBoxPda(
-        farmerVaultPda,
-        new PublicKey(nft.mint)
-      );
-      const [gemDepositBoxPdaVal] = await gemDepositBoxPda(
-        farmerVaultPda,
-        new PublicKey(nft.mint)
-      );
-      const [gemBoxRarityPdaVal, gemBoxrarityBump] = await gemBoxRarityPda(
-        farms.bank,
-        new PublicKey(nft.mint)
-      );
-      const [vaultAuthorityPdaVal, vaultAuthorityBump] = await vaultAuthorityPda(
-        farmerVaultPda
-      );
-      const gem_mint = new PublicKey(nft.mint);
-      // const address_to_whitelist = new PublicKey(collectionId);
-      // const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
-      const [mintWhitelistProofPdaVal] = await whitelistProofPda(farms.bank,new PublicKey(nft.mint));
-      const [creatorWhitelistProofPdaVal] = await whitelistProofPda(farms.bank,new PublicKey(nft.creator));
-      const gem_source_old = await findAssociatedTokenAddress(wallet.publicKey!,new PublicKey(nft.mint));
-      console.log(gem_source_old.toBase58());
-      const gem_source_obj = await props.connection.getParsedTokenAccountsByOwner(wallet.publicKey!, {
-        mint: new PublicKey(nft.mint),
-      });
-      console.log(gem_source_obj.value[0].pubkey.toBase58());
-      const gem_source = gem_source_obj.value[0].pubkey;
-      const [gem_metadata] = await tokenMetadataPda(gem_mint);
-      console.log(gem_metadata);
-      const remainingAccounts = [];
-      if (mintWhitelistProofPdaVal)
-      remainingAccounts.push({
-        pubkey: mintWhitelistProofPdaVal,
-        isWritable: false,
-        isSigner: false,
-      });
-      if (gem_metadata)
-      remainingAccounts.push({
-        pubkey: gem_metadata,
-        isWritable: false,
-        isSigner: false,
-      });
-      console.log(nft.creator);
-      // console.log(whitelistProofPdaVal.toBase58());
-      if (creatorWhitelistProofPdaVal) {
-        remainingAccounts.push({
-          pubkey: creatorWhitelistProofPdaVal,
-          isWritable: false,
-          isSigner: false,
-        });
-      }
-      console.log(vaults[0].account.authority.toBase58());
-      console.log(vaultAuthorityPdaVal.toBase58());
-      console.log(farmerBump);
-      console.log(vaultAuthorityBump);
-      console.log(gemBoxrarityBump);
-      const wallet_create = await stakeProgram.rpc.flashDeposit(farmerBump, vaultAuthorityBump,gemBoxrarityBump, new BN(1), 
-        {
-          accounts: {
-            farm: FARM_ID,
-            farmAuthority: farms.farmAuthority,
-            farmer: farmerPda,
-            identity: wallet.publicKey,
-            bank: farms.bank,
-            vault: farmerVaultPda,
-            vaultAuthority: vaultAuthorityPdaVal,
-            gemBox: gemBoxPdaVal,
-            gemDepositReceipt: gemDepositBoxPdaVal,
-            gemSource: gem_source,
-            gemMint: gem_mint,
-            gemRarity: gemBoxRarityPdaVal,
-            tokenProgram: TOKEN_PROGRAM_ID,
-            systemProgram: SystemProgram.programId,
-            rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-            gemBank: GEM_BANK,
-            feeAcc: FEE_WALLET
-          },
-          remainingAccounts
-        }
-      );
-      console.log('flash deposit signature : ' + wallet_create);
-    } catch (error) {
-      console.log("Transaction error: ", error);
-    }
-  }
 
   // Farm Manager should call this
-  const addToBankWhitelist = async (id:any) => {
-    let farm_id:any;
-    let collectInputVar = '';
-    if (id == 1) {
-      farm_id = MAHANOTHIA_FARM_ID;
-      collectInputVar = collectionIdInputOne;
-    }
-    else if (id == 2) {
-      farm_id = RAUDCHERI_FARM_ID;
-      collectInputVar = collectionIdInputTwo;
-    }
-    else if (id == 3) {
-      farm_id = SAN_CHETOS_FARM_ID;
-      collectInputVar = collectionIdInputThree;
-    }
-    else if (id == 4) {
-      farm_id = MAGNEXIA_FARM_ID;
-      collectInputVar = collectionIdInputFour;
-    }
-    else if (id == 5) {
-      farm_id = BASEMENT_FARM_ID;
-      collectInputVar = collectionIdInputFive;
-    }
-    if (collectInputVar && collectInputVar.length > 0) {
-      try {
-        const address_to_whitelist = new PublicKey(collectionId);
-        const stakeProgram = await getStakeProgram();
-        try {
-          const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(farm_id);
-          const farms:any = await stakeProgram.account.farm.fetch(farm_id);
-          let nft;
-          if (stakedNft) {
-            nft = stakedNft;
-          }
-          else {
-            nft = nfts[0];
-          }
-          const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
-          const wallet_create = await stakeProgram.rpc.addToBankWhitelist(farmAuthBump, 1, 
-            {
-              accounts: {
-                farm: farm_id,
-                farmManager: farms.farmManager,
-                farmAuthority: farmAuth,
-                bank: farms.bank,
-                addressToWhitelist: address_to_whitelist,
-                whitelistProof: whitelistProofPdaVal,
-                systemProgram: SystemProgram.programId,
-                gemBank: GEM_BANK
-              }
-            }
-          );
-          console.log('add to whitelist bank signature : ' + wallet_create);
-          setAlertState({
-            open: true,
-            message: "Collection Id has beed added to bank whitelist",
-            severity: "success",
-          });
-        } catch (error) {
-          console.log("Transaction error: ", error);
-        }
-      } catch (error) {
-        setAlertState({
-          open: true,
-          message: "Collection Id is not a valid public key",
-          severity: "error",
-        });
-      }
-    }
-    else {
-      setAlertState({
-        open: true,
-        message: "Collection Id is empty",
-        severity: "error",
-      });
-    }
-  }
 
   // Farm Manager should call this
-  const addToBankWhitelistMint = async () => {
-    if (collectionIdMint && collectionIdMint.length > 0) {
-      try {
-        const address_to_whitelist = new PublicKey(collectionIdMint);
-        const stakeProgram = await getStakeProgram();
-        try {
-          const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(MAGNEXIA_FARM_ID);
-          const farms:any = await stakeProgram.account.farm.fetch(MAGNEXIA_FARM_ID);
-          let nft;
-          if (stakedNft) {
-            nft = stakedNft;
-          }
-          else {
-            nft = nfts[0];
-          }
-          const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
-          const wallet_create = await stakeProgram.rpc.addToBankWhitelist(farmAuthBump, 1, 
-            {
-              accounts: {
-                farm: MAGNEXIA_FARM_ID,
-                farmManager: farms.farmManager,
-                farmAuthority: farmAuth,
-                bank: farms.bank,
-                addressToWhitelist: address_to_whitelist,
-                whitelistProof: whitelistProofPdaVal,
-                systemProgram: SystemProgram.programId,
-                gemBank: GEM_BANK
-              }
-            }
-          );
-          console.log('add to whitelist bank signature : ' + wallet_create);
-          setAlertState({
-            open: true,
-            message: "Collection Id has beed added to bank whitelist",
-            severity: "success",
-          });
-        } catch (error) {
-          console.log("Transaction error: ", error);
-        }
-      } catch (error) {
-        setAlertState({
-          open: true,
-          message: "Collection Id is not a valid public key",
-          severity: "error",
-        });
-      }
-    }
-    else {
-      setAlertState({
-        open: true,
-        message: "Collection Id is empty",
-        severity: "error",
-      });
-    }
-  }
 
   // Farmer should call this
-  const stakeNft = async () => {
-    const stakeProgram = await getStakeProgram();
-    try {
-      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(FARM_ID);
-      const farms:any = await stakeProgram.account.farm.fetch(FARM_ID);
-      let nft;
-      if (stakedNft) {
-        nft = stakedNft;
-      }
-      else {
-        nft = nfts[0];
-      }
-      const [farmerPda, farmerBump] = await farmerPDA(
-        FARM_ID,
-        wallet.publicKey!
-      );
-      const [farmerVaultPda, farmerVaultBump] = await farmerVaultPDA(
-        farms.bank,
-        wallet.publicKey!
-      );
-      const address_to_whitelist = new PublicKey(collectionId);
-      const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
-      const wallet_create = await stakeProgram.rpc.stake(farmAuthBump, farmerBump, 
-        {
-          accounts: {
-            farm: FARM_ID,
-            farmAuthority: farms.farmAuthority,
-            farmer: farmerPda,
-            identity: wallet.publicKey,
-            bank: farms.bank,
-            vault: farmerVaultPda,
-            gemBank: GEM_BANK,
-            feeAcc: FEE_WALLET,
-            systemProgram: SystemProgram.programId,
-          }
-        }
-      );
-      console.log('stake signature : ' + wallet_create);
-    } catch (error) {
-      console.log("Transaction error: ", error);
-    }
-  }
 
   // Farmer should call this
   const UnStakeNft = async () => {
-    const stakeProgram = await getStakeProgram();
+    const stakeProgram = await getStakeProgram(wallet);
     const [farmerPda, farmerBump] = await farmerPDA(
       FARM_ID,
       wallet.publicKey!
     );
-    const farmers = await stakeProgram.account.farmer.all();
     try {
       const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(FARM_ID);
       const farms:any = await stakeProgram.account.farm.fetch(FARM_ID);
@@ -2881,7 +1722,7 @@ const Home = (props: HomeProps) => {
             identity: wallet.publicKey,
             bank: farms.bank,
             vault: farmerVaultPda,
-            gemBank: GEM_BANK,
+            gemBank: GEM_BANK_PROGRAM_ID,
             feeAcc: FEE_WALLET,
             tokenProgram: TOKEN_PROGRAM_ID,
             systemProgram: SystemProgram.programId,
@@ -2955,120 +1796,15 @@ const Home = (props: HomeProps) => {
     }
   };
 
-  const whiteListCheckMint = async () => {
-    try {
-      const walletProgram = await getProgram();
-      const [wallet_pda, wallet_bump] = await PublicKey.findProgramAddress(
-        [
-          Buffer.from(pdaSeed),
-          wallet.publicKey!.toBuffer(),
-          MAGIC_HAT_CREATOR!.toBuffer(),
-        ],
-        MAGIC_HAT_PROGRAM_V2_ID
-      );
-      const whitelistAccounts: any = await walletProgram.account.walletWhitelist.fetch(wallet_pda);
-      if (
-        wallet &&
-        wallet.publicKey &&
-        wallet.publicKey.toBase58().length > 0
-      ) {
-        var k = false;
-        if (mintCount > 1) {
-        } else {
-          setMintCount(1);
-        }
-        if (whitelistAccounts) {
-          let wl_type = Object.keys(whitelistAccounts.whitelistType)[0];
-          if (
-            wl_type &&
-            (wl_type == "three" ||
-              wl_type == "two" ||
-              wl_type == "one" ||
-              wl_type == "four")
-          ) {
-            let spots =
-              whitelistAccounts.numberOfWhitelistSpotsPerUser.toNumber();
-            if (spots >= mintCount) {
-              setShouldMint(true);
-              k = true;
-              onMintWL(mintCount, wallet_pda);
-            } else {
-              const date = new Date();
-              const time: any = parseInt((date.getTime() / 1000).toFixed(0));
-              if (time >= PUBLIC_TIME) {
-                setShouldMint(true);
-                k = true;
-                onMint(mintCount);
-              }
-            }
-          }
-          if (!k) {
-            // setAlertState({
-            //   open: true,
-            //   message: "You are not whitelisted for " + mintCount + " NFTs!!!",
-            //   severity: "error",
-            // });
-            setShouldMint(true);
-            k = true;
-            onMint(mintCount);
-          }
-        }
-        // const element = whitelists;
-        // if (element.number > 0 && mintCount <= element.number) {
-        //   setShouldMint(true);
-        //   k = true;
-        //   onMint(mintCount);
-        // }
-      }
-    } catch (error) {
-      console.log(error);
-      setShouldMint(true);
-      k = true;
-      onMint(mintCount);
-    }
-  };
 
-  const getWhitelistConfig = async () => {
-    try {
-      const walletProgram = await getProgram();
-      const [whitelist_config_pda, bump] = await PublicKey.findProgramAddress(
-        [Buffer.from(pdaWhitelistSeed), wallet.publicKey!.toBuffer()],
-        MAGIC_HAT_PROGRAM_V2_ID
-      );
-      const whitelistConfigAccounts = await walletProgram.account.whitelistConfig.fetch(whitelist_config_pda);
-    } catch (error) {}
-  };
 
   const createWhitelistConfig = async () => {
-    const walletProgram = await getProgram();
     try {
       const [whitelist_config_pda, bump] = await PublicKey.findProgramAddress(
         [Buffer.from(pdaWhitelistSeed), wallet.publicKey!.toBuffer()],
         MAGIC_HAT_PROGRAM_V2_ID
       );
       // let config_t:any = Borsh.struct(JSON.stringify(config));
-      const wallet_create = await walletProgram.rpc.createWhitelistConfig(
-        new BN(100),
-        new BN(COMMUNITY_PRICE * LAMPORTS_PER_SOL),
-        new BN(COMMUNITY_TIME),
-        new BN(369),
-        new BN(GOG_PRICE * LAMPORTS_PER_SOL),
-        new BN(GOG_TIME),
-        new BN(1380),
-        new BN(OG_PRICE * LAMPORTS_PER_SOL),
-        new BN(GOG_TIME),
-        new BN(5000),
-        new BN(WL_PRICE * LAMPORTS_PER_SOL),
-        new BN(WL_TIME),
-        {
-          accounts: {
-            whitelistConfig: whitelist_config_pda,
-            magicHatCreator: wallet.publicKey,
-            systemProgram: SystemProgram.programId,
-          },
-        }
-      );
-      const whitelistConfigAccounts = await walletProgram.account.whitelistConfig.fetch(whitelist_config_pda);
       // return { whitelistConfigAccounts };
     } catch (error) {
       console.log("Transaction error: ", error);
@@ -3076,213 +1812,26 @@ const Home = (props: HomeProps) => {
   };
 
   const updateWhitelistConfig = async () => {
-    const walletProgram = await getProgram();
     try {
       const [whitelist_config_pda, bump] = await PublicKey.findProgramAddress(
         [Buffer.from(pdaWhitelistSeed), wallet.publicKey!.toBuffer()],
         MAGIC_HAT_PROGRAM_V2_ID
       );
-      const wallet_create = await walletProgram.rpc.updateWhitelistConfig(
-        new BN(100),
-        new BN(COMMUNITY_PRICE * LAMPORTS_PER_SOL),
-        new BN(COMMUNITY_TIME),
-        new BN(369),
-        new BN(GOG_PRICE * LAMPORTS_PER_SOL),
-        new BN(GOG_TIME),
-        new BN(1380),
-        new BN(OG_PRICE * LAMPORTS_PER_SOL),
-        new BN(GOG_TIME),
-        new BN(5000),
-        new BN(WL_PRICE * LAMPORTS_PER_SOL),
-        new BN(WL_TIME),
-        {
-          accounts: {
-            whitelistConfig: whitelist_config_pda,
-            magicHatCreator: wallet.publicKey,
-          },
-        }
-      );
-      const whitelistConfigAccounts = await walletProgram.account.whitelistConfig.fetch(whitelist_config_pda);
       // return { whitelistConfigAccounts };
     } catch (error) {
       console.log("Transaction error: ", error);
     }
   };
 
-  const setCollection = async () => {
-    const walletProgram = await getProgram();
-    try {
-      const mint = anchor.web3.Keypair.generate();
-      const [collection_pda] = await PublicKey.findProgramAddress(
-        [Buffer.from("collection"), MAGIC_HAT_ID.toBuffer()],
-        MAGIC_HAT_PROGRAM_V2_ID
-      );
-      const [metadata_pda] = await PublicKey.findProgramAddress(
-        [
-          Buffer.from("metadata"),
-          TOKEN_METADATA_PROGRAM_ID.toBuffer(),
-          mint.publicKey.toBuffer(),
-        ],
-        MAGIC_HAT_PROGRAM_V2_ID
-      );
-      const [edition_pda] = await PublicKey.findProgramAddress(
-        [
-          Buffer.from("metadata"),
-          TOKEN_METADATA_PROGRAM_ID.toBuffer(),
-          mint.publicKey.toBuffer(),
-          Buffer.from("edition"),
-        ],
-        MAGIC_HAT_PROGRAM_V2_ID
-      );
-      const [collection_authority_pda] = await PublicKey.findProgramAddress(
-        [
-          Buffer.from("metadata"),
-          TOKEN_METADATA_PROGRAM_ID.toBuffer(),
-          mint.publicKey.toBuffer(),
-          Buffer.from("collection_authority"),
-          wallet.publicKey?.toBuffer()!
-        ],
-        MAGIC_HAT_PROGRAM_V2_ID
-      );
-      // let config_t:any = Borsh.struct(JSON.stringify(config));
-      const wallet_create = await walletProgram.rpc.setCollection({
-        accounts: {
-          magicHat: MAGIC_HAT_ID,
-          authority: wallet.publicKey,
-          collectionPda: collection_pda,
-          payer: wallet.publicKey,
-          systemProgram: SystemProgram.programId,
-          rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-          metadata: metadata_pda,
-          mint: mint.publicKey,
-          edition: edition_pda,
-          collectionAuthorityRecord: collection_authority_pda,
-          tokenMetadataProgram: TOKEN_METADATA_PROGRAM_ID,
-        },
-      });
-      // return { whitelistConfigAccounts };
-    } catch (error) {
-      console.log("Transaction error: ", error);
-    }
-  };
 
-  const setCollectionDuringMint = async () => {
-    const walletProgram = await getProgram();
-    try {
-      const mint = anchor.web3.Keypair.generate();
-      const [collection_pda] = await PublicKey.findProgramAddress(
-        [Buffer.from("collection"), MAGIC_HAT_ID.toBuffer()],
-        MAGIC_HAT_PROGRAM_V2_ID
-      );
-      const [metadata_pda] = await PublicKey.findProgramAddress(
-        [
-          Buffer.from("metadata"),
-          TOKEN_METADATA_PROGRAM_ID.toBuffer(),
-          mint.publicKey.toBuffer(),
-        ],
-        MAGIC_HAT_PROGRAM_V2_ID
-      );
-      const [edition_pda] = await PublicKey.findProgramAddress(
-        [
-          Buffer.from("metadata"),
-          TOKEN_METADATA_PROGRAM_ID.toBuffer(),
-          mint.publicKey.toBuffer(),
-          Buffer.from("edition"),
-        ],
-        MAGIC_HAT_PROGRAM_V2_ID
-      );
-      // let config_t:any = Borsh.struct(JSON.stringify(config));
-      const wallet_create = await walletProgram.rpc.setCollection({
-        accounts: {
-          magicHat: MAGIC_HAT_ID,
-          metadata: metadata_pda,
-          payer: wallet.publicKey,
-          collectionPda: collection_pda,
-          tokenMetadataProgram: TOKEN_METADATA_PROGRAM_ID,
-          systemProgram: SystemProgram.programId,
-          rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-          mint: mint.publicKey,
-          edition: edition_pda,
-          authority: wallet.publicKey,
-          collectionAuthorityRecord: wallet.publicKey,
-        },
-      });
-      // return { whitelistConfigAccounts };
-    } catch (error) {
-      console.log("Transaction error: ", error);
-    }
-  };
 
-  const createWhitelistAccount = async () => {
-    const walletProgram = await getProgram();
-    try {
-      const whitelisting_address = new PublicKey(
-        "UXX91ApKnrc1NyATPYqMJaDeJBQ3r9kSva1a4XTY3FD"
-      );
-      const [wallet_pda, wallet_bump] = await PublicKey.findProgramAddress(
-        [
-          Buffer.from(pdaSeed),
-          whitelisting_address.toBuffer(),
-          wallet.publicKey!.toBuffer(),
-        ],
-        MAGIC_HAT_PROGRAM_V2_ID
-      );
-      const [whitelist_config_pda, bump] = await PublicKey.findProgramAddress(
-        [Buffer.from(pdaWhitelistSeed), wallet.publicKey!.toBuffer()],
-        MAGIC_HAT_PROGRAM_V2_ID
-      );
-      const wallet_create = await walletProgram.rpc.createWhitelistAccount(
-        "Four",
-        {
-          accounts: {
-            walletWhitelist: wallet_pda,
-            whitelistConfig: whitelist_config_pda,
-            whitelistedAddress: whitelisting_address,
-            magicHatCreator: wallet.publicKey,
-            systemProgram: SystemProgram.programId,
-          },
-        }
-      );
-      const whitelistAccounts = await walletProgram.account.walletWhitelist.fetch(wallet_pda);
-      // return { whitelistAccounts };
-    } catch (error) {
-      console.log("Transaction error: ", error);
-    }
-  };
 
-  const deleteWhitelistAccount = async () => {
-    const walletProgram = await getProgram();
-    try {
-      const whitelisting_address = new PublicKey(
-        "7cinbPtGLyZWkmXUanWJd372gyPQwMTa9vgiJrACaSjW"
-      );
-      const [wallet_pda, wallet_bump] = await PublicKey.findProgramAddress(
-        [
-          Buffer.from(pdaSeed),
-          whitelisting_address.toBuffer(),
-          wallet.publicKey!.toBuffer(),
-        ],
-        MAGIC_HAT_PROGRAM_V2_ID
-      );
-      const wallet_create = await walletProgram.rpc.deleteWhitelistAccount({
-        accounts: {
-          walletWhitelist: wallet_pda,
-          magicHatCreator: wallet.publicKey,
-        },
-      });
-      const whitelistAccounts = await walletProgram.account.walletWhitelist.fetch(wallet_pda);
-      // return { whitelistAccounts };
-    } catch (error) {
-      console.log("Transaction error: ", error);
-    }
-  };
 
   let currentWltype: String;
 
   const getTimeToMInt = async () => {
     const date = new Date();
     const time: any = parseInt((date.getTime() / 1000).toFixed(0));
-    let k = date.getTimezoneOffset();
     if (time >= PUBLIC_TIME) {
       setCurrentWl("PUBLIC");
       currentWltype = "PUBLIC";
@@ -3333,7 +1882,7 @@ const Home = (props: HomeProps) => {
       } else if (currentWltype == "GOG + OG") {
         const date = new Date();
         const time: any = parseInt((date.getTime() / 1000).toFixed(0));
-        var delta = Math.abs(time - WL_TIME);
+        delta = Math.abs(time - WL_TIME);
         if (delta <= 0) {
           setCurrentWl("WL");
           currentWltype = "WL";
@@ -3364,7 +1913,7 @@ const Home = (props: HomeProps) => {
       } else if (currentWltype == "WL") {
         const date = new Date();
         const time: any = parseInt((date.getTime() / 1000).toFixed(0));
-        var delta = Math.abs(time - PUBLIC_TIME);
+        delta = Math.abs(time - PUBLIC_TIME);
         if (delta <= 0) {
           setCurrentWl("PUBLIC");
           currentWltype = "PUBLIC";
@@ -3397,7 +1946,7 @@ const Home = (props: HomeProps) => {
       } else {
         const date = new Date();
         const time: any = parseInt((date.getTime() / 1000).toFixed(0));
-        var delta = Math.abs(time - COMMUNITY_TIME);
+        delta = Math.abs(time - COMMUNITY_TIME);
         if (delta <= 0) {
           setCurrentWl("COMMUNITY");
           currentWltype = "COMMUNITY";
@@ -3429,45 +1978,7 @@ const Home = (props: HomeProps) => {
     }
   };
 
-  const deleteWhitelistConfig = async () => {
-    const walletProgram = await getProgram();
-    try {
-      const [whitelist_config_pda, bump] = await PublicKey.findProgramAddress(
-        [Buffer.from(pdaWhitelistSeed), wallet.publicKey!.toBuffer()],
-        MAGIC_HAT_PROGRAM_V2_ID
-      );
-      const wallet_create = await walletProgram.rpc.deleteWhitelistConfig({
-        accounts: {
-          whitelistConfig: whitelist_config_pda,
-          magicHatCreator: wallet.publicKey,
-        },
-      });
-      const whitelistConfigAccounts = await walletProgram.account.whitelistConfig.fetch(whitelist_config_pda);
-      // return { whitelistConfigAccounts };
-    } catch (error) {
-      console.log("Transaction error: ", error);
-    }
-  };
 
-  const withdrawFunds = async () => {
-    const walletProgram = await getProgram();
-    try {
-      const [collection_pda] = await PublicKey.findProgramAddress(
-        [Buffer.from("collection"), MAGIC_HAT_ID.toBuffer()],
-        MAGIC_HAT_PROGRAM_V2_ID
-      );
-      const wallet_create = await walletProgram.rpc.withdrawFunds({
-        accounts: {
-          magicHat: MAGIC_HAT_ID,
-          authority: wallet.publicKey,
-          collectionPda: collection_pda,
-        },
-      });
-      // return { whitelistConfigAccounts };
-    } catch (error) {
-      console.log("Transaction error: ", error);
-    }
-  };
 
   const closeForm = async () => {
     setClassNameState("main-bg-after-door-open");
@@ -3510,12 +2021,8 @@ const Home = (props: HomeProps) => {
     setShowStaking(true);
   }
 
-  const closeStakeRoom = async (id:any) => {
-    setShowStakeCity(false);
-    setShowStaking(false);
-  };
 
-  const closeStakeCity = async (id:any) => {
+  const closeStakeCity = async () => {
     setShowStakeCity(false);
     setShowStaking(false);
   };
@@ -3650,16 +2157,6 @@ const Home = (props: HomeProps) => {
     setTeamInfoMember(null);
   };
 
-  const openTeamRoom = async () => {
-    setClassNameState("main-bg-after-door-open black-bg");
-    setLogoAlphaLoading(true);
-    setTimeout(function () {
-      setClassNameState("team-room");
-      setLogoAlphaLoading(false);
-      setShowTeamRoom(true);
-      setShowMobileDoor(false);
-    }, 600);
-  };
 
   const scrollStory = async () => {
     var elem: HTMLElement | null = document.getElementById("alpha-scroll");
@@ -3674,9 +2171,6 @@ const Home = (props: HomeProps) => {
     setShowUpdates(true);
   };
 
-  const openWhitelist = async () => {
-    setShowWhitelist(true);
-  }
 
   const openFirstPhilAlphaRoom = async () => {
     setShowFirstPhil(true);
@@ -4336,7 +2830,7 @@ const Home = (props: HomeProps) => {
                       <h2>NFT Selection</h2>
                     </div>
                     <div className="nft-parent-div">
-                      {nfts && nfts.length > 0 && nfts.map(function (item:any, i:any) {
+                      {nfts && nfts.length > 0 && nfts.map(function (item:any) {
                         return (
                           <div className="nft-div" style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
                             <img src={item.link} />
@@ -4358,7 +2852,7 @@ const Home = (props: HomeProps) => {
                       <h2>City Selection</h2>
                     </div>
                     <div className="nft-parent-div">
-                      {citys.map(function (item:any, i) {
+                      {citys.map(function (item:any) {
                         return (
                           <div className="nft-div" style={{borderColor: stakedCity == item.name ? "white": "transparent"}} onClick={() => setStakedCity(item.name)}>
                             <img src={item.link} />
@@ -4455,7 +2949,7 @@ const Home = (props: HomeProps) => {
                       <h2>{stakedNfts.length} {unstakedNft != null && <button className="nft-select-button" onClick={UnStakeNft}>Unstake</button>}</h2>
                     </div>
                     <div className="gen-dashboard-stats-right">
-                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
+                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any) {
                         return (
                           <div className="nft-small-div" style={{borderColor: unstakedNft == item ? "white": "transparent"}} onClick={() => setUnstakedNft(item)}>
                             <img src={item.link} />
@@ -4471,7 +2965,7 @@ const Home = (props: HomeProps) => {
                       <h2>{stakedTokens}</h2>
                     </div>
                     <div className="gen-dashboard-stats-right">
-                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
+                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any) {
                         return (
                           <div className="nft-small-div">
                             <img src={item.link} />
@@ -4487,7 +2981,7 @@ const Home = (props: HomeProps) => {
                       <h2>{respectEarned}</h2>
                     </div>
                     <div className="gen-dashboard-stats-right">
-                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
+                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any) {
                         return (
                           <div className="nft-small-div">
                             <img src={item.link} />
@@ -4503,7 +2997,7 @@ const Home = (props: HomeProps) => {
                       <h2>{multiplierLevel}</h2>
                     </div>
                     <div className="gen-dashboard-stats-right">
-                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
+                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any) {
                         return (
                           <div className="nft-small-div">
                             <img src={item.link} />
@@ -4861,7 +3355,10 @@ const Home = (props: HomeProps) => {
               <div className="bigger-holo">
                 <div className="stake-room-farm">
                   <div className="gen-dashboard-scroller">
-                    <div className="gen-farm-stats">
+                    <InitFarmAlpha/>
+                    <FundRewardAlpha/>
+                    <AddToBankWhitelist/>
+                    {/* <div className="gen-farm-stats">
                       <div className="gen-farm-stats-left">
                         <button className="Inside-Farm-btn" onClick={() => initFixedFarm(1)}>Start MAHANOTHIA Farm</button>
                       </div>
@@ -4900,8 +3397,8 @@ const Home = (props: HomeProps) => {
                       <div className="gen-farm-stats-right">
                         {basementFarm && <label>BASEMENT FARM ID : {BASEMENT_FARM_ID.toBase58()}</label>}
                       </div>
-                    </div>
-                    <div className="gen-farm-stats">
+                    </div> */}
+                    {/* <div className="gen-farm-stats">
                       <div className="gen-farm-stats-left">
                         <input className="authorize-funder-reward-input" placeholder="Funder to Authorize" value={funderOne} onChange={event => setFunderOne(event.target.value)} />
                       </div>
@@ -4940,7 +3437,7 @@ const Home = (props: HomeProps) => {
                       <div className="gen-farm-stats-right">
                         <button className="Inside-Farm-btn" onClick={() => authorizeFunder(5)}>Authorize Funder For Basement</button>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="gen-farm-stats">
                       <div className="gen-farm-stats-left">
                         <input className="authorize-funder-reward-input" placeholder="NFT Mint" value={nftMint} onChange={event => setNftMint(event.target.value)} />
@@ -4949,7 +3446,7 @@ const Home = (props: HomeProps) => {
                         <button className="Inside-Farm-btn" onClick={addRaritiesToBank}>Add Rarities to Bank</button>
                       </div>
                     </div>
-                    <div className="gen-farm-stats">
+                    {/* <div className="gen-farm-stats">
                       <div className="gen-farm-stats-left">
                         <input className="authorize-funder-reward-input" placeholder="Collection Id" value={collectionIdInputOne} onChange={event => setCollectionIdInputOne(event.target.value)} />
                       </div>
@@ -4996,7 +3493,7 @@ const Home = (props: HomeProps) => {
                       <div className="gen-farm-stats-right">
                         <button className="Inside-Farm-btn" onClick={addToBankWhitelistMint}>Add Mint To Bank Whitelist</button>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="gen-farm-stats">
                       <div className="gen-farm-stats-left">
                         <button className="Inside-Farm-btn" onClick={fundReward}>Fund Reward</button>
