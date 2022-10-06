@@ -23,9 +23,9 @@ module.exports = function override(webpackConfig) {
   webpackConfig.resolve.fallback = {
     crypto: require.resolve("crypto-browserify"),
     stream: require.resolve("stream-browserify"),
+    os: require.resolve("os-browserify/browser"),
     util: require.resolve("util"),
     assert: require.resolve("assert"),
-    os: require.resolve("os-browserify/browser"),
     fs: false,
     process: false,
     path: false,

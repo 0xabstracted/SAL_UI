@@ -43,6 +43,8 @@ import Gabriel from "../assets/gabriel.png";
 import Kaizer from "../assets/kaizer.png";
 import Walter from "../assets/walter.png";
 import Yogantar from "../assets/yogantar.png";
+import ProgressBar from "./progress-bar";
+import 'react-circular-progressbar/dist/styles.css';
 
 import {
   pdaSeed,
@@ -64,9 +66,21 @@ import {
   FEE_WALLET,
   MAGIC_HAT_PROGRAM_V2_ID
 } from "../config/config";
-import { sendTransactions } from "../config/connection";
+import { sendTransaction, sendTransactions } from "../config/connection";
 
 import { AlertState } from "../utils/utils";
+import {
+  closeAccount,
+  createAssociatedTokenAccount,
+  createBurnCheckedInstruction,
+  createCloseAccountInstruction,
+  createMint, getAccount, getMint, mintToChecked, transferChecked,
+  createInitializeMintInstruction,
+  MINT_SIZE,
+  getMinimumBalanceForRentExemptMint,
+} from "@solana/spl-token";
+
+import * as mpl from "@metaplex-foundation/mpl-token-metadata";
 
 import {
   MagicHatAccount,
@@ -264,6 +278,7 @@ const Home = (props: HomeProps) => {
   const [collectionIdInputFour, setCollectionIdInputFour] = useState<any>("");
   const [collectionIdInputFive, setCollectionIdInputFive] = useState<any>("");
   const [collectionIdMint, setCollectionIdMint] = useState<any>("");
+  const [showFixedStakingRoom, setShowFixedStakingRoom] = useState(false);
 
   const wallet = useWallet();
   // wallet.connect();
@@ -1222,19 +1237,19 @@ const Home = (props: HomeProps) => {
     setCollectionId(COLLECTION_ID);
     if (wallet && wallet.connected && !gotNfts) {
       const connection = new Connection(clusterApiUrl("devnet"));
-
       const metaplex = Metaplex.make(connection)
       const allNfts = await metaplex
                           .nfts()
-                          .findAllByOwner({ owner: metaplex.identity().publicKey })
+                          .findAllByOwner({ owner: wallet?.publicKey! })
                           .run();
       let temp_nfts:any = [];
-      // console.log(allNfts);
+      console.log(allNfts);
       for (let index = 0; index < allNfts.length; index++) {
-        const nft = allNfts[index];
+        const nft:any = allNfts[index];
         var creators = nft.creators;
         var is_ours = false;
-        if (nft.updateAuthorityAddress == new PublicKey("TnC98o4aMW7bcXcZXEsFaTBGJy5KPscd1jfL7WuRf6x")) {
+        console.log(nft.updateAuthorityAddress.toBase58(), nft.name);
+        if (nft.updateAuthorityAddress.toBase58() == "abSzV5zXTKCbkjzN2hzrg2BPTbkYAQ7tt4jQPett2jX") {
           is_ours = true;
           for (let iindex = 0; iindex < creators.length; iindex++) {
             const element = creators[iindex];
@@ -1248,13 +1263,43 @@ const Home = (props: HomeProps) => {
           xhr.addEventListener("readystatechange", function() {
             if(this.readyState === 4) {
               // console.log(this.responseText);
+              var attributes = JSON.parse(this.responseText).attributes;
+              var is_human;
+              var is_cyborg;
+              var is_pet;
+              var trait_type;
+              for (let index = 0; index < attributes.length; index++) {
+                const element = attributes[index];
+                if (element.trait_type == 'BaseBody' && element.value == 'Human') {
+                  is_human = true;
+                }
+                else if (element.trait_type == 'BaseBody' && element.value == 'Cyborg') {
+                  is_cyborg = true;
+                }
+                if (element.trait_type == 'Pets' && element.value && element.value.length > 0) {
+                  is_pet = true;
+                }
+              }
+              if (is_human && is_pet) {
+                trait_type = 'Human Pet';
+              }
+              else if (is_cyborg && !is_pet) {
+                trait_type = 'Human';
+              }
+              else if (is_cyborg && is_pet) {
+                trait_type = 'Cyborg Pet';
+              }
+              else if (is_cyborg && !is_pet) {
+                trait_type = 'Cyborg';
+              }
               var obj:any = {
                 id:temp_nfts.length,
                 name: nft.name,
                 link: JSON.parse(this.responseText).image,
-                mint: nft.address,
-                updateAuthority: nft.updateAuthorityAddress,
-                creator: nft.creators[0].address
+                mint: nft.mintAddress,
+                updateAuthority: nft.updateAuthority,
+                creator: nft.creators[0].address,
+                trait_type: trait_type
               }
               temp_nfts.push(obj);
               setNFts(temp_nfts!);
@@ -2027,6 +2072,78 @@ const Home = (props: HomeProps) => {
     setShowStaking(false);
   };
 
+  const openFixedStaking = async (id:any) => {
+    console.log('1');
+    setClassNameState("main-bg-after-door-open black-bg");
+    setLogoAlphaLoading(true);
+    setTimeout(function () {
+    setLogoAlphaLoading(false);
+      setClassNameState("fixed-staking-room");
+      setShowTeamRoom(false);
+      setShowAlphaRoom(false);
+      setShowStakeRoom(false);
+      setShowMobileDoor(false);
+      setShowFixedStakingRoom(true)
+    }, 600);
+  };
+
+  const createToken = async (params:any) => {
+    const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
+    const alice = anchor.web3.Keypair.generate();
+    const mint = anchor.web3.Keypair.generate();
+    const seed1 = Buffer.from(anchor.utils.bytes.utf8.encode("metadata"));
+    const seed2 = Buffer.from(mpl.PROGRAM_ID.toBytes());
+    const seed3 = Buffer.from(mint.publicKey.toBytes());
+    const [metadataPDA, _bump] = anchor.web3.PublicKey.findProgramAddressSync([seed1, seed2, seed3], mpl.PROGRAM_ID);
+    const accounts:any = {
+        metadata: metadataPDA,
+        mint,
+        mintAuthority: wallet.publicKey,
+        payer: wallet.publicKey,
+        updateAuthority: wallet.publicKey,
+    }
+    const dataV2:any = {
+        name: "Fake USD Token",
+        symbol: "FUD",
+        uri: "https://shdw-drive.genesysgo.net/ArP7jjhVZsp7vkzteU7mpKA1fyHRhv4ZBz6gR7MJ1JTC/metadata.json",
+        // we don't need that
+        sellerFeeBasisPoints: 0,
+        creators: null,
+        collection: null,
+        uses: null
+    }  
+    const args:any =  {
+      updateMetadataAccountArgsV2: {
+          data: dataV2,
+          isMutable: true,
+          updateAuthority: wallet.publicKey,
+          primarySaleHappened: true
+      }
+    };
+    let tx:any = new Transaction().add(
+      // create mint account
+      SystemProgram.createAccount({
+        fromPubkey: wallet?.publicKey!,
+        newAccountPubkey: mint.publicKey,
+        space: MINT_SIZE,
+        lamports: await getMinimumBalanceForRentExemptMint(connection),
+        programId: TOKEN_PROGRAM_ID,
+      }),
+      // init mint account
+      createInitializeMintInstruction(
+        mint.publicKey, // mint pubkey
+        8, // decimals
+        alice.publicKey, // mint authority
+        alice.publicKey // freeze authority (you can use `null` to disable it. when you disable it, you can't turn it on again)
+      )
+      // ,mpl.createUpdateMetadataAccountV2Instruction(accounts, args)
+    );
+    const sig_token = await sendTransaction(connection, wallet, tx.instructions, [mint]);
+    console.log(sig_token);
+    console.log(mint.publicKey.toBase58());
+    // const myKeypair = loadWalletKey("AndXYwDqSeoZHqk95TUC1pPdp93musGfCo1KztNFNBhd.json");
+  }
+
   const openAlphaRoom = async (key:string) => {
     if (isMobile) {
       if (mobileDoor === "ALPHA") {
@@ -2109,7 +2226,7 @@ const Home = (props: HomeProps) => {
         setClassNameState("main-bg-after-door-open black-bg");
         setLogoAlphaLoading(true);
         setTimeout(function () {
-          setClassNameState("stake-room");
+          setClassNameState("alphazen-room");
           setLogoAlphaLoading(false);
           setShowAlphaRoom(false);
           setShowTeamRoom(false);
@@ -2229,6 +2346,7 @@ const Home = (props: HomeProps) => {
           !showAlphaRoom &&
           !showStakeRoom &&
           !showTeamRoom &&
+          !showFixedStakingRoom &&
           !isMobile && (
             <div className="white-paper-div">
               <a
@@ -2246,6 +2364,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
+          !showFixedStakingRoom &&
           !isMobile && (
             <div
               onClick={() => openAlphaRoom('stake')}
@@ -2281,6 +2400,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
+          !showFixedStakingRoom &&
           !isMobile && (
             <div
               onClick={() => showToaster(5)}
@@ -2292,6 +2412,7 @@ const Home = (props: HomeProps) => {
           !showTeamRoom &&
           !showStakeRoom &&
           !logoAlphaLoading &&
+          !showFixedStakingRoom &&
           !isMobile && (
             <div
               onClick={() => openAlphaRoom('alpha')}
@@ -2303,6 +2424,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
+          !showFixedStakingRoom &&
           !isMobile && (
             <div onClick={() => openAlphaRoom('team')} className="team-room-div"></div>
           )}
@@ -2311,6 +2433,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
+          !showFixedStakingRoom &&
           !isMobile && (
             <div onClick={closeForm} className="alpha-logo-div"></div>
           )}
@@ -2319,6 +2442,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
+          !showFixedStakingRoom &&
           !showMobileDoor && (
             <div className="hologram-div">
               {/* onClick={openUpdates} */}
@@ -2363,6 +2487,7 @@ const Home = (props: HomeProps) => {
           !showAlphaRoom &&
           !showStakeRoom &&
           !showTeamRoom &&
+          !showFixedStakingRoom &&
           !logoAlphaLoading &&
           !isMobile && <div className="hologram-setup-div"></div>}
         {!logoLoading &&
@@ -2370,6 +2495,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
+          !showFixedStakingRoom &&
           !isMobile && (
             <div>
               <img
@@ -2386,6 +2512,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
+          !showFixedStakingRoom &&
           !isMobile && (
             <div>
               <img
@@ -2401,6 +2528,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
+          !showFixedStakingRoom &&
           !isMobile && (
             <div>
               <img
@@ -2416,6 +2544,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
+          !showFixedStakingRoom &&
           !isMobile && (
             <div>
               <div
@@ -2434,6 +2563,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
+          !showFixedStakingRoom &&
           !isMobile && (
             <video autoPlay={true} loop muted className="fan-spinning-image">
               <source
@@ -2453,6 +2583,7 @@ const Home = (props: HomeProps) => {
           !showAlphaRoom &&
           !showStakeRoom &&
           !showTeamRoom &&
+          !showFixedStakingRoom &&
           !logoAlphaLoading &&
           !isMobile && (
             // <div onClick={setCollection} className="light-flicker-image"></div>
@@ -2463,6 +2594,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
+          !showFixedStakingRoom &&
           !isMobile && (
             <img
               alt="Sider"
@@ -2480,6 +2612,7 @@ const Home = (props: HomeProps) => {
           !showAlphaRoom &&
           !showStakeRoom &&
           !showTeamRoom &&
+          !showFixedStakingRoom &&
           !logoAlphaLoading &&
           !isMobile && (
             <div className="social-media-links">
@@ -2503,6 +2636,7 @@ const Home = (props: HomeProps) => {
           !logoAlphaLoading &&
           !logoLoading &&
           !showMobileDoor &&
+          !showFixedStakingRoom &&
           !isMobile && (
             <div className="close-alpha-room" onClick={closeAlphaRoom}>
               <img alt="close" src={CloseAlpha} />
@@ -2515,6 +2649,7 @@ const Home = (props: HomeProps) => {
           !logoAlphaLoading &&
           !logoLoading &&
           !showMobileDoor &&
+          !showFixedStakingRoom &&
           !isMobile && (
             <div className="close-stake-room" onClick={closeAlphaRoom}>
               <img alt="close" src={CloseAlpha} />
@@ -2524,6 +2659,7 @@ const Home = (props: HomeProps) => {
           !logoAlphaLoading &&
           !logoLoading &&
           !showMobileDoor &&
+          !showFixedStakingRoom &&
           !isMobile && (
             <div className="close-team-room" onClick={closeAlphaRoom}>
               <img alt="close" src={CloseAlpha} />
@@ -2763,48 +2899,62 @@ const Home = (props: HomeProps) => {
             </div>
           </div>
         )}
+        {showFixedStakingRoom && (
+          <div className="Backdrop-other">
+            <div className="fixed-staking-main-bg">
+              <div className="pull-left full-width">
+                <div className="stake-progress">
+                  <ProgressBar bgcolor={"#6a1b9a"} completed={63} />
+                </div>
+                <div className="staking-process-parent">
+                  <div className="unstaked-nfts-div">
+                    <div className="staking-nft-display">
+                    <div className="nft-parent-div">
+                      {nfts && nfts.length > 0 && nfts.map(function (item:any, i:any) {
+                        return (
+                          <div className="nft-div" style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
+                            <img src={item.link} />
+                            <label>{item.name}</label>
+                            <label>{item.trait_type}</label>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    {stakedNft && 
+                    <div className="stake-button-div"> 
+                      <button className="nft-select-button" onClick={nextStepStake}>Next</button>
+                    </div>}
+                    </div>
+                  </div>
+                  <div className="staked-nfts-div">
+                    <div className="staking-nft-display">
+
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            </div>
+          </div>
+        )}
         {!showAlphaRoom && !showTeamRoom && showStakeRoom && !logoAlphaLoading && !logoLoading && !showMobileDoor && (
           <div className="">
-            <div className="stake-room-1"></div>
-            <div className="stake-room-2"></div>
-            <div className="stake-room-3"></div>
-            <div className="stake-room-4"></div>
-            <div className="stake-room-5"></div>
-            <div className="stake-room-6"></div>
-            <div className="stake-room-7"></div>
-            <div className="staking-room-one" onClick={() => openStakeRoom(1)}>
-              <div className={roomOneInfoClass}>
-                <h2>Mahanothia</h2>
-                {/* <label>The oldest of the cities, ruled by the wisest and most trusted royal family in the whole of Alphazex, the Avrupans. The culture, the architecture style, the communities, the military, all designed so perfectly that even after a thousand years, they stand the test of time. Crime doesn't exist in Mahanothia and so, once your character enters this stoic city for their mission they are sure to leave it with guaranteed rewards.</label> */}
+            <div className="raffle-cave">
+
+            </div>
+            <div className="token-swapping">
+
+            </div>
+            <div className="staking-portal">
+              <div className="staking-portal-parent">
+              
+              </div>
+              <div className="adventure-staking-div">
+
+              </div>
+              <div className="fixed-staking-div" onClick={openFixedStaking}>
+
               </div>
             </div>
-            <div className="staking-room-two" onClick={() => openStakeRoom(2)}>
-              <div className={roomThreeInfoClass}>
-                <h2>San Chetos</h2>
-                {/* <label>Ancestors of Jesse might refer to this city as a mix of Las Vegas, Monte Carlo, Cuba and Dubai. Filled with dazzling lights, gorgeous people and most importantly fuck tons of money, but equally surrounded with gambling dens, mafia and drugs. Just as quickly you can rise to top of the world in this city, you'll fall even quicker if you don't mind your steps. If you have guts enough to send your character to this city, you could become filthy fucking rich or dead fucking poor.</label> */}
-              </div>
-            </div>
-            <div className="staking-room-three" onClick={() => openStakeRoom(3)}>
-              <div className={roomThreeInfoClass}>
-                <h2>The Basement</h2>
-                {/* <label>You can either choose to send your character on a mission or let them meditate in the silence of Alpha Basement.<br/>While in the basement, as meditation relaxes the body and strengthens the mind, the whole process takes a long amount of time, but remember, its rewards are simply unimaginable!<br/>The character doesn't earn any $GLCH token but they earn 2000 +RESPECT/ week.<br/>Since the whole process requires tons of focus and full commitment of the body and the soul, should you choose to send your character here, he'll only earn his rewards after a week. If you pull him out before the week ends, there'll be no rewards.</label> */}
-              </div>
-            </div>
-            <div className="staking-room-four" onClick={() => openStakeRoom(4)}>
-              <div className={roomFourInfoClass}>
-                <h2>Magnexia</h2>
-                {/* <label>Not much is known about this mysterious city, except that no human has been known to have entered this city after its formation during the Great Cywar of 3333. Rumours say that only cyborgs live here and even that the city doesn't really follow a set of physical laws. You can only choose to send your character on a mission here if he is a cyborg (trait).</label> */}
-              </div>
-            </div>
-            <div className="staking-room-five" onClick={() => openStakeRoom(5)}>
-              <div className={roomTwoInfoClass}>
-                <h2>Raudcheri</h2>
-                {/* <label>Once the most glowing and growing hub of Alphazex, Raudcheri has seen equal shares of glorious glamours and glitchy glooms. Ruled by the Nichas, the city structure and people were divided in the early riots of 4242. The north sporting the worst of the worst, the most corrupt and evil and the south blessed with angels, the most kind hearted. So if you choose to send your character on a mission in this city, there's no telling to what kind of adventures and people he'll have to deal with and so no guarantees of the amount of rewards.</label> */}
-              </div>
-            </div>
-            <div className="staking-room-seven" onClick={() => setShowStakeDashboard(true)}>
-            <button className="outside-stake-btn">General Dashboard</button>
-            </div> 
             {!wallet.connected &&
             <div className="staking-room-six">
               <WalletDialogButton className="Connect-Wallet-btn" onClick={closeStaking}>
@@ -2812,11 +2962,11 @@ const Home = (props: HomeProps) => {
               </WalletDialogButton>
             </div> 
             }
-            {wallet.connected &&
+            {/* {wallet.connected &&
             <div className="staking-room-six" onClick={openStaking}>
               <button className="outside-stake-btn">Stake Now</button>
             </div> 
-            }
+            } */}
           </div>
         )}
         {showStaking && (
@@ -2830,7 +2980,7 @@ const Home = (props: HomeProps) => {
                       <h2>NFT Selection</h2>
                     </div>
                     <div className="nft-parent-div">
-                      {nfts && nfts.length > 0 && nfts.map(function (item:any) {
+                      {nfts && nfts.length > 0 && nfts.map(function (item:any, i:any) {
                         return (
                           <div className="nft-div" style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
                             <img src={item.link} />
@@ -2852,7 +3002,7 @@ const Home = (props: HomeProps) => {
                       <h2>City Selection</h2>
                     </div>
                     <div className="nft-parent-div">
-                      {citys.map(function (item:any) {
+                      {citys.map(function (item:any, i) {
                         return (
                           <div className="nft-div" style={{borderColor: stakedCity == item.name ? "white": "transparent"}} onClick={() => setStakedCity(item.name)}>
                             <img src={item.link} />
@@ -2949,7 +3099,7 @@ const Home = (props: HomeProps) => {
                       <h2>{stakedNfts.length} {unstakedNft != null && <button className="nft-select-button" onClick={UnStakeNft}>Unstake</button>}</h2>
                     </div>
                     <div className="gen-dashboard-stats-right">
-                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any) {
+                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
                         return (
                           <div className="nft-small-div" style={{borderColor: unstakedNft == item ? "white": "transparent"}} onClick={() => setUnstakedNft(item)}>
                             <img src={item.link} />
@@ -2965,7 +3115,7 @@ const Home = (props: HomeProps) => {
                       <h2>{stakedTokens}</h2>
                     </div>
                     <div className="gen-dashboard-stats-right">
-                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any) {
+                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
                         return (
                           <div className="nft-small-div">
                             <img src={item.link} />
@@ -2981,7 +3131,7 @@ const Home = (props: HomeProps) => {
                       <h2>{respectEarned}</h2>
                     </div>
                     <div className="gen-dashboard-stats-right">
-                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any) {
+                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
                         return (
                           <div className="nft-small-div">
                             <img src={item.link} />
@@ -2997,7 +3147,7 @@ const Home = (props: HomeProps) => {
                       <h2>{multiplierLevel}</h2>
                     </div>
                     <div className="gen-dashboard-stats-right">
-                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any) {
+                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
                         return (
                           <div className="nft-small-div">
                             <img src={item.link} />
@@ -3499,6 +3649,7 @@ const Home = (props: HomeProps) => {
                         <button className="Inside-Farm-btn" onClick={fundReward}>Fund Reward</button>
                       </div>
                       <div className="gen-farm-stats-right">
+                        <button className="Inside-Farm-btn" onClick={createToken}>Create Token</button>
                         {/* {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
                           return (
                             <div className="nft-small-div">

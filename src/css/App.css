@@ -173,7 +173,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("../assets/room_with_no_items_but_doors.png");
+  background: url("../assets/room_with_no_items_but_doors_updated.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -225,6 +225,108 @@ body {
   max-height: 100vh;
   animation: fadeIn 0.8s;
   /* background-color: black; */
+}
+
+.fixed-staking-room {
+  display: inline-block;
+  height: 100vh;
+  width: 100%;
+  background: url("../assets/Fixed_Staking.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  overflow-y: hidden;
+  max-height: 100vh;
+  animation: fadeIn 0.8s;
+}
+
+.fixed-staking-main-bg {
+  float: left;
+  width: 100%;
+  height: 100vh;
+  /* background: rgba(0,0,0,0.4); */
+}
+
+.alphazen-room {
+  display: inline-block;
+  height: 100vh;
+  width: 100%;
+  background: url("../assets/alphazex_bg.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  overflow-y: hidden;
+  max-height: 100vh;
+  animation: fadeIn 0.8s;
+  /* background-color: black; */
+}
+
+.raffle-cave {
+  display: inline-block;
+  height: 100vh;
+  width: 100%;
+  background: url("../assets/raffle_cave_new.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  overflow-y: hidden;
+  max-height: 100vh;
+  animation: fadeIn 0.8s;
+  width: 45%;
+  height: 60%;
+  position: absolute;
+  top: 1%;
+  left: 33%;
+  cursor: pointer;
+}
+
+.staking-portal {
+  display: inline-block;
+  height: 100vh;
+  width: 100%;
+  background: url("../assets/staking_portal_new.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  overflow-y: hidden;
+  max-height: 100vh;
+  animation: fadeIn 0.8s;
+  width: 32%;
+  height: 60%;
+  position: absolute;
+  bottom: 1%;
+  left: 1%;
+  /* cursor: pointer; */
+}
+
+.staking-portal-parent {
+  float: left;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.fixed-staking-div {
+  position: absolute;
+  width: 26%;
+  right: 40%;
+  bottom: 32%;
+  height: 26%;
+  cursor: pointer;
+}
+
+.token-swapping {
+  display: inline-block;
+  height: 100vh;
+  width: 100%;
+  background: url("../assets/token_swapping_new.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  overflow-y: hidden;
+  max-height: 100vh;
+  animation: fadeIn 0.8s;
+  width: 33%;
+  height: 55%;
+  position: absolute;
+  bottom: 1%;
+  right: 3%;
+  cursor: pointer;
 }
 
 @keyframes fadeIn {
@@ -768,6 +870,17 @@ body {
   text-align: right !important;
 }
 
+.stake-progress > div {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  font-size: 12px !important;
+  /* padding: 3px !important; */
+  line-height: 20px !important;
+  text-align: right !important;
+}
+
 .mint-count {
   display: inline-block;
   /* height: 40px; */
@@ -840,6 +953,46 @@ body {
   margin-left: 10%;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.staking-process-parent {
+  float: left;
+  width: 70%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  margin-left: 15%;
+}
+
+.unstaked-nfts-div {
+  width: 50%;
+  float: left;
+  padding: 10px;
+  padding-left: 0px;
+}
+
+.staking-nft-display {
+  float: left;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.5);
+  min-height: 420px;
+}
+
+.staked-nfts-div {
+  width: 50%;
+  float: left;
+  padding: 10px;
+  padding-right: 0;
+}
+
+.stake-progress {
+  float: left;
+  width: 70%;
+  margin-left: 15%;
+  margin-top: 150px;
+  margin-bottom: 0px;
 }
 
 .alpha-holo {
@@ -3715,7 +3868,7 @@ form .button {
     width: 100%;
     margin-left: 0;
     margin-right: 10%;
-    height: calc(100% - 110px);
+    height: calc(100% - 60px);
     overflow-y: auto;
 }
 
@@ -3738,6 +3891,7 @@ form .button {
   padding-top: 8px;
   padding-bottom: 8px;
   box-sizing: border-box;
+  padding-right: 15px;
 }
 
 .nft-select-button {
@@ -3854,7 +4008,7 @@ form .button {
 .nft-div img {
   float: left;
   width: 100%;
-  height: 120px;
+  height: 90px;
   margin-top: 5px;
   border-radius: 4px;
   margin-bottom: 5px;
