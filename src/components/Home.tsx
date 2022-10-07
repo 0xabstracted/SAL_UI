@@ -78,6 +78,9 @@ import {
   createInitializeMintInstruction,
   MINT_SIZE,
   getMinimumBalanceForRentExemptMint,
+  getAssociatedTokenAddress,
+  createAssociatedTokenAccountInstruction,
+  createMintToCheckedInstruction,
 } from "@solana/spl-token";
 
 import * as mpl from "@metaplex-foundation/mpl-token-metadata";
@@ -2087,6 +2090,27 @@ const Home = (props: HomeProps) => {
     }, 600);
   };
 
+  const mintToCheckedFn =async (params:any) => {
+    const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
+    let mint = new PublicKey('57vavPcanGNxm9WYVnWyDNiwofxGniQHmTTocAeco3dk');
+    let ata = await getAssociatedTokenAddress(
+      mint, // mint
+      wallet?.publicKey! // owner
+    );
+    let tx:any = new Transaction().add(
+      createMintToCheckedInstruction(
+        mint, // mint
+        ata, // receiver (sholud be a token account)
+        wallet?.publicKey!, // mint authority
+        1e15, // amount. if your decimals is 8, you mint 10^8 for 1 token.
+        8 // decimals
+        // [signer1, signer2 ...], // only multisig account will use
+      )
+    )
+    const sig_token = await sendTransaction(connection, wallet, tx.instructions, []);
+    console.log(sig_token);
+  }
+
   const createToken = async (params:any) => {
     const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
     const alice = anchor.web3.Keypair.generate();
@@ -2120,6 +2144,11 @@ const Home = (props: HomeProps) => {
           primarySaleHappened: true
       }
     };
+    let ata = await getAssociatedTokenAddress(
+      mint.publicKey, // mint
+      wallet?.publicKey! // owner
+    );
+    console.log(`ATA: ${ata.toBase58()}`);
     let tx:any = new Transaction().add(
       // create mint account
       SystemProgram.createAccount({
@@ -2133,8 +2162,22 @@ const Home = (props: HomeProps) => {
       createInitializeMintInstruction(
         mint.publicKey, // mint pubkey
         8, // decimals
-        alice.publicKey, // mint authority
-        alice.publicKey // freeze authority (you can use `null` to disable it. when you disable it, you can't turn it on again)
+        wallet?.publicKey!, // mint authority
+        wallet?.publicKey! // freeze authority (you can use `null` to disable it. when you disable it, you can't turn it on again)
+      ),
+      createAssociatedTokenAccountInstruction(
+        wallet?.publicKey!, // payer
+        ata, // ata
+        wallet?.publicKey!, // owner
+        mint.publicKey // mint
+      ),
+      createMintToCheckedInstruction(
+        mint.publicKey, // mint
+        ata, // receiver (sholud be a token account)
+        wallet?.publicKey!, // mint authority
+        1e8, // amount. if your decimals is 8, you mint 10^8 for 1 token.
+        8 // decimals
+        // [signer1, signer2 ...], // only multisig account will use
       )
       // ,mpl.createUpdateMetadataAccountV2Instruction(accounts, args)
     );
@@ -3650,6 +3693,22 @@ const Home = (props: HomeProps) => {
                       </div>
                       <div className="gen-farm-stats-right">
                         <button className="Inside-Farm-btn" onClick={createToken}>Create Token</button>
+                        {/* {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
+                          return (
+                            <div className="nft-small-div">
+                              <img src={item.link} />
+                              <label>{item.name}</label>
+                            </div>
+                          );
+                        })} */}
+                      </div>
+                    </div>
+                    <div className="gen-farm-stats">
+                      <div className="gen-farm-stats-left">
+                        <button className="Inside-Farm-btn" onClick={mintToCheckedFn}>Mint Token</button>
+                      </div>
+                      <div className="gen-farm-stats-right">
+                        {/* <button className="Inside-Farm-btn" onClick={createToken}>Create Token</button> */}
                         {/* {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
                           return (
                             <div className="nft-small-div">

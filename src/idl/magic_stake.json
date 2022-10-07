@@ -76,12 +76,6 @@
           "type": "u8"
         },
         {
-          "name": "rewardTypeA",
-          "type": {
-            "defined": "RewardType"
-          }
-        },
-        {
           "name": "farmConfig",
           "type": {
             "defined": "FarmConfig"
@@ -517,11 +511,6 @@
           "name": "payer",
           "isMut": true,
           "isSigner": true
-        },
-        {
-          "name": "feeAcc",
-          "isMut": true,
-          "isSigner": false
         },
         {
           "name": "systemProgram",

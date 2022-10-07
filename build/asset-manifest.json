@@ -1,16 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.4e71468c.css",
-    "main.js": "/static/js/main.59b679cc.js",
+    "main.css": "/static/css/main.e22a5d5f.css",
+    "main.js": "/static/js/main.dfa4a2d5.js",
     "static/js/787.4aa03071.chunk.js": "/static/js/787.4aa03071.chunk.js",
+    "static/media/Fixed_Staking.png": "/static/media/Fixed_Staking.af7dcb9a49420e4a12a3.png",
     "static/media/stake_bg.png": "/static/media/stake_bg.71ae6eb955ef813f0a85.png",
     "static/media/team_room.png": "/static/media/team_room.476aa6deab646689996b.png",
+    "static/media/alphazex_bg.png": "/static/media/alphazex_bg.10b03954eb2c412a563d.png",
     "static/media/light_bg_new.png": "/static/media/light_bg_new.3fb4307e86107593bc80.png",
     "static/media/opened_door.png": "/static/media/opened_door.7c585746f95c33ab50eb.png",
-    "static/media/room_with_no_items_but_doors.png": "/static/media/room_with_no_items_but_doors.503811d6a44e264e484d.png",
     "static/media/alpha_room.png": "/static/media/alpha_room.3e73302d9ab7b4800fda.png",
     "static/media/dark_bg_new.png": "/static/media/dark_bg_new.3430cc15946d6f84697c.png",
+    "static/media/room_with_no_items_but_doors_updated.png": "/static/media/room_with_no_items_but_doors_updated.04df16e610719b09a6e5.png",
     "static/media/walter.png": "/static/media/walter.6fdf002b75196181724a.png",
+    "static/media/staking_portal_new.png": "/static/media/staking_portal_new.43fe9f3c43b566d15225.png",
     "static/media/light_bg_mobile.png": "/static/media/light_bg_mobile.2bbae6bb7fb326d0eb42.png",
     "static/media/Alpha_wall_mobile.png": "/static/media/Alpha_wall_mobile.7d6a55352ddc7890f0ce.png",
     "static/media/sashi.png": "/static/media/sashi.c2d72d604cd51531340f.png",
@@ -20,10 +23,12 @@
     "static/media/yogantar.png": "/static/media/yogantar.83931a5df7f472240f27.png",
     "static/media/team_room_mobile.png": "/static/media/team_room_mobile.a43f279e22f1f6b38403.png",
     "static/media/wallace.png": "/static/media/wallace.fcf69542151da8089079.png",
+    "static/media/raffle_cave_new.png": "/static/media/raffle_cave_new.755627d5ddc050565230.png",
     "static/media/vault_room_mobile.png": "/static/media/vault_room_mobile.ffbc1073946ef42deded.png",
     "static/media/Alpha_room_mobile.png": "/static/media/Alpha_room_mobile.0040a165111c33f0377a.png",
     "static/media/stake_room_mobile.png": "/static/media/stake_room_mobile.dac8ebd9b7c842a3fe1a.png",
     "static/media/basement_mobile.png": "/static/media/basement_mobile.e35bac14f87af875a6e8.png",
+    "static/media/token_swapping_new.png": "/static/media/token_swapping_new.532193644943f2260ae3.png",
     "static/media/dark_bg_mobile.png": "/static/media/dark_bg_mobile.019ec9703bc8d11815a6.png",
     "static/media/fan_spinning.mp4": "/static/media/fan_spinning.0261b6ecf2d82efdfeeb.mp4",
     "static/media/final_door_openingg.gif": "/static/media/final_door_openingg.db4755bb82fec418b127.gif",
@@ -57,12 +62,12 @@
     "static/media/revicons.ttf": "/static/media/revicons.57fd05d4ae650374c8de.ttf",
     "static/media/revicons.woff": "/static/media/revicons.e8746a624ed098489406.woff",
     "index.html": "/index.html",
-    "main.4e71468c.css.map": "/static/css/main.4e71468c.css.map",
-    "main.59b679cc.js.map": "/static/js/main.59b679cc.js.map",
+    "main.e22a5d5f.css.map": "/static/css/main.e22a5d5f.css.map",
+    "main.dfa4a2d5.js.map": "/static/js/main.dfa4a2d5.js.map",
     "787.4aa03071.chunk.js.map": "/static/js/787.4aa03071.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4e71468c.css",
-    "static/js/main.59b679cc.js"
+    "static/css/main.e22a5d5f.css",
+    "static/js/main.dfa4a2d5.js"
   ]
 }
