@@ -7,7 +7,7 @@ import * as mpl from "@metaplex-foundation/mpl-token-metadata";
 import * as anchor from '@project-serum/anchor';
 import * as web3 from "@solana/web3.js";
 import { CreateFungibleTokenArgs } from './TokenInterface';
-import { alphaFungTokenArgs } from './AlphaTokenConfig';
+import { alphaFungTokenArgs, glitchFungTokenArgs } from './AlphaTokenConfig';
 import { sendTransactions } from '../../config/connection';
 import { findAssociatedTokenAddress } from '../../GrandProgramUtils/AssociatedTokenAccountProgram/pda';
 
