@@ -43,6 +43,7 @@ import Gabriel from "../assets/gabriel.png";
 import Kaizer from "../assets/kaizer.png";
 import Walter from "../assets/walter.png";
 import Yogantar from "../assets/yogantar.png";
+import SwappingIcon from "../assets/swapping_icon.png";
 import ProgressBar from "./progress-bar";
 import 'react-circular-progressbar/dist/styles.css';
 
@@ -102,6 +103,8 @@ import MenuContent from "./menu";
 import InitFarmAlpha from "./AlphaStaking/InitFarmAlpha";
 import AddToBankWhitelist from "./AlphaStaking/AddToBankWhitelist";
 import FundRewardAlpha from "./AlphaStaking/FundRewardAlpha";
+
+import { REWARD_MINT_ALPHA } from "./AlphaStaking/StakeConfig";
 
 const responsive = {
   superLargeDesktop: {
@@ -282,6 +285,9 @@ const Home = (props: HomeProps) => {
   const [collectionIdInputFive, setCollectionIdInputFive] = useState<any>("");
   const [collectionIdMint, setCollectionIdMint] = useState<any>("");
   const [showFixedStakingRoom, setShowFixedStakingRoom] = useState(false);
+  const [showTokenSwapping, setShowTokenSwapping] = useState(false);
+  const [glitchTokenVal, setGlitchTokenVal] = useState(0);
+  const [alphaTokenVal, setAlphaTokenVal] = useState(0);
 
   const wallet = useWallet();
   // wallet.connect();
@@ -1240,7 +1246,15 @@ const Home = (props: HomeProps) => {
     setCollectionId(COLLECTION_ID);
     if (wallet && wallet.connected && !gotNfts) {
       const connection = new Connection(clusterApiUrl("devnet"));
-      const metaplex = Metaplex.make(connection)
+      let ata = await getAssociatedTokenAddress(
+        REWARD_MINT_ALPHA, // mint
+        wallet?.publicKey! // owner
+      );
+  
+      let tokenAmount = await connection.getTokenAccountBalance(ata);
+      console.log(`amount: ${tokenAmount.value.amount}`);
+      console.log(`decimals: ${tokenAmount.value.decimals}`);
+      const metaplex = Metaplex.make(connection);
       const allNfts = await metaplex
                           .nfts()
                           .findAllByOwner({ owner: wallet?.publicKey! })
@@ -1251,7 +1265,7 @@ const Home = (props: HomeProps) => {
         const nft:any = allNfts[index];
         var creators = nft.creators;
         var is_ours = false;
-        console.log(nft.updateAuthorityAddress.toBase58(), nft.name);
+        // console.log(nft.updateAuthorityAddress.toBase58(), nft.name);
         if (nft.updateAuthorityAddress.toBase58() == "abSzV5zXTKCbkjzN2hzrg2BPTbkYAQ7tt4jQPett2jX") {
           is_ours = true;
           for (let iindex = 0; iindex < creators.length; iindex++) {
@@ -2090,6 +2104,21 @@ const Home = (props: HomeProps) => {
     }, 600);
   };
 
+  const openTokenSwapping =async (params:any) => {
+    setClassNameState("main-bg-after-door-open black-bg");
+    setLogoAlphaLoading(true);
+    setTimeout(function () {
+    setLogoAlphaLoading(false);
+      setClassNameState("token-swapping-room");
+      setShowTeamRoom(false);
+      setShowAlphaRoom(false);
+      setShowStakeRoom(false);
+      setShowMobileDoor(false);
+      setShowFixedStakingRoom(false);
+      setShowTokenSwapping(true);
+    }, 600);
+  }
+
   const mintToCheckedFn =async (params:any) => {
     const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
     let mint = new PublicKey('57vavPcanGNxm9WYVnWyDNiwofxGniQHmTTocAeco3dk');
@@ -2341,6 +2370,33 @@ const Home = (props: HomeProps) => {
     setShowAlphaRoom(true);
   };
 
+  const changeGlitchToken = async (val:any) => {
+    setGlitchTokenVal(val);
+    setAlphaTokenVal(val);
+  };
+
+  const swapFn =async (params:any) => {
+    const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
+    let mint = new PublicKey('57vavPcanGNxm9WYVnWyDNiwofxGniQHmTTocAeco3dk');
+    let farm_manager = new PublicKey('UXX91ApKnrc1NyATPYqMJaDeJBQ3r9kSva1a4XTY3FD');
+    let ata = await getAssociatedTokenAddress(
+      mint, // mint
+      wallet?.publicKey! // owner
+    );
+    let tx:any = new Transaction().add(
+      createMintToCheckedInstruction(
+        mint, // mint
+        ata, // receiver (sholud be a token account)
+        wallet?.publicKey!, // mint authority
+        1e15, // amount. if your decimals is 8, you mint 10^8 for 1 token.
+        8 // decimals
+        // [signer1, signer2 ...], // only multisig account will use
+      )
+    )
+    const sig_token = await sendTransaction(connection, wallet, tx.instructions, []);
+    console.log(sig_token);
+  }
+
   // const getFreeSol = async () => {
   //   var data = JSON.stringify({
   //     "jsonrpc": "2.0",
@@ -2389,7 +2445,7 @@ const Home = (props: HomeProps) => {
           !showAlphaRoom &&
           !showStakeRoom &&
           !showTeamRoom &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <div className="white-paper-div">
               <a
@@ -2407,7 +2463,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <div
               onClick={() => openAlphaRoom('stake')}
@@ -2443,7 +2499,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <div
               onClick={() => showToaster(5)}
@@ -2455,7 +2511,7 @@ const Home = (props: HomeProps) => {
           !showTeamRoom &&
           !showStakeRoom &&
           !logoAlphaLoading &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <div
               onClick={() => openAlphaRoom('alpha')}
@@ -2467,7 +2523,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <div onClick={() => openAlphaRoom('team')} className="team-room-div"></div>
           )}
@@ -2476,7 +2532,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <div onClick={closeForm} className="alpha-logo-div"></div>
           )}
@@ -2485,7 +2541,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !showMobileDoor && (
             <div className="hologram-div">
               {/* onClick={openUpdates} */}
@@ -2530,7 +2586,7 @@ const Home = (props: HomeProps) => {
           !showAlphaRoom &&
           !showStakeRoom &&
           !showTeamRoom &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !logoAlphaLoading &&
           !isMobile && <div className="hologram-setup-div"></div>}
         {!logoLoading &&
@@ -2538,7 +2594,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <div>
               <img
@@ -2555,7 +2611,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <div>
               <img
@@ -2571,7 +2627,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <div>
               <img
@@ -2587,7 +2643,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <div>
               <div
@@ -2606,7 +2662,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <video autoPlay={true} loop muted className="fan-spinning-image">
               <source
@@ -2626,7 +2682,7 @@ const Home = (props: HomeProps) => {
           !showAlphaRoom &&
           !showStakeRoom &&
           !showTeamRoom &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !logoAlphaLoading &&
           !isMobile && (
             // <div onClick={setCollection} className="light-flicker-image"></div>
@@ -2637,7 +2693,7 @@ const Home = (props: HomeProps) => {
           !showStakeRoom &&
           !showTeamRoom &&
           !logoAlphaLoading &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <img
               alt="Sider"
@@ -2655,7 +2711,7 @@ const Home = (props: HomeProps) => {
           !showAlphaRoom &&
           !showStakeRoom &&
           !showTeamRoom &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !logoAlphaLoading &&
           !isMobile && (
             <div className="social-media-links">
@@ -2679,7 +2735,7 @@ const Home = (props: HomeProps) => {
           !logoAlphaLoading &&
           !logoLoading &&
           !showMobileDoor &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <div className="close-alpha-room" onClick={closeAlphaRoom}>
               <img alt="close" src={CloseAlpha} />
@@ -2692,7 +2748,7 @@ const Home = (props: HomeProps) => {
           !logoAlphaLoading &&
           !logoLoading &&
           !showMobileDoor &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <div className="close-stake-room" onClick={closeAlphaRoom}>
               <img alt="close" src={CloseAlpha} />
@@ -2702,7 +2758,7 @@ const Home = (props: HomeProps) => {
           !logoAlphaLoading &&
           !logoLoading &&
           !showMobileDoor &&
-          !showFixedStakingRoom &&
+          !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <div className="close-team-room" onClick={closeAlphaRoom}>
               <img alt="close" src={CloseAlpha} />
@@ -2984,7 +3040,7 @@ const Home = (props: HomeProps) => {
             <div className="raffle-cave">
 
             </div>
-            <div className="token-swapping">
+            <div className="token-swapping" onClick={openTokenSwapping}>
 
             </div>
             <div className="staking-portal">
@@ -3010,6 +3066,49 @@ const Home = (props: HomeProps) => {
               <button className="outside-stake-btn">Stake Now</button>
             </div> 
             } */}
+          </div>
+        )}
+        {showTokenSwapping && (
+          <div className="Backdrop-other">
+            <div className="fixed-staking-main-bg">
+              <div className="pull-left full-width">
+                <div className="swapping-process-parent">
+                  <div className="swapping-box">
+                    <label className="swapping-label">Trade</label>
+                    <div className="from-token-box">
+                      <div className="token-image-parent">
+                        <img className="token-image" src="https://dgnvzn3x5fqusqpvst65sizekrfhwtklzokfk7usi64h7erzb7iq.arweave.net/GZtct3fpYUlB9ZT92SMkVEp7TUvLlFV-kke4f5I5D9E?ext=jpg" alt="" />
+                      </div>
+                      <div className="token-name-parent">
+                        <h2 className="token-name">GLITCH</h2>
+                      </div>
+                      <div className="token-count-parent">
+                        <input type="number" max={1000000} className="token-count-input" value={glitchTokenVal} onChange={event => changeGlitchToken(parseInt(event.target.value))}/>
+                      </div>
+                    </div>
+                    <div className="pull-left full-width">
+                      <div className="swap-icon-parent">
+                        <img src={SwappingIcon} className="swap-icon" alt="" />
+                      </div>
+                    </div>
+                    <div className="to-token-box">
+                      <div className="token-image-parent">
+                        <img className="token-image" src="https://dgnvzn3x5fqusqpvst65sizekrfhwtklzokfk7usi64h7erzb7iq.arweave.net/GZtct3fpYUlB9ZT92SMkVEp7TUvLlFV-kke4f5I5D9E?ext=jpg" alt="" />
+                      </div>
+                      <div className="token-name-parent">
+                        <h2 className="token-name">ALPHA</h2>
+                      </div>
+                      <div className="token-count-parent">
+                        <input type="number" max={1000000} className="token-count-input" value={alphaTokenVal} onChange={event => changeGlitchToken(parseInt(event.target.value))}/>
+                      </div>
+                    </div>
+                    <div className="pull-left full-width text-center">
+                      <button className="swap-btn" onClick={swapFn} disabled={glitchTokenVal <= 0}>Swap</button>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            </div>
           </div>
         )}
         {showStaking && (
@@ -3080,7 +3179,7 @@ const Home = (props: HomeProps) => {
             </OutsideClickHandler>
           </div>
         )}
-        {showStakeCity && (
+        {/* {showStakeCity && (
           <div className="Backdrop-other-mint">
             <OutsideClickHandler onOutsideClick={closeStakeCity}>
               <div className="stake-room-opened">
@@ -3126,8 +3225,8 @@ const Home = (props: HomeProps) => {
               </div>
             </OutsideClickHandler>
           </div>
-        )}
-        {showStakeDashboard && (
+        )} */}
+        {/* {showStakeDashboard && (
           <div className="Backdrop-other-mint">
             <OutsideClickHandler onOutsideClick={() => setShowStakeDashboard(false)}>
               <div className="stake-room-opened">
@@ -3205,7 +3304,7 @@ const Home = (props: HomeProps) => {
               </div>
             </OutsideClickHandler>
           </div>
-        )}
+        )} */}
         {showFirstPhil && (
           <div className="Backdrop-other">
             <OutsideClickHandler onOutsideClick={closeAlphaUpdates}>
@@ -3247,7 +3346,7 @@ const Home = (props: HomeProps) => {
             </OutsideClickHandler>
           </div>
         )}
-        {showWhitelist && 
+        {/* {showWhitelist && 
         <div>
           <div className="Backdrop-other-mint">
             <OutsideClickHandler onOutsideClick={closeUpdates}>
@@ -3264,283 +3363,14 @@ const Home = (props: HomeProps) => {
                     <button className="whitelist-create-button m-t-15" onClick={createWhitelistConfig}>Create Whitelist Config</button>
                     <div className="pull-left full-width text-center m-t-15 m-b-15">
                       <label className="whitelist-texts">Created Whitelist Accounts : {createdWlCounts}</label>
-                      {/* <button className="whitelist-account-create" onClick={createWhitelistAccountMultiple}>Create 10 Accounts</button> */}
+                      <button className="whitelist-account-create" onClick={createWhitelistAccountMultiple}>Create 10 Accounts</button>
                     </div>
                   </div>
                 </div>
               </div>
             </OutsideClickHandler>
           </div>
-        </div>}
-        {showUpdates && (
-          <div className="Backdrop-other-mint">
-            <OutsideClickHandler onOutsideClick={closeUpdates}>
-              {wallet.connected && 
-              <div className="bigger-holo">
-                <div className="holo-updates">
-                  {currentWl != '' &&
-                  <div className="mint-inside-div">
-                    {/* {!isMobile && 
-                    <img
-                      src={InfoMint}
-                      onMouseOver={() => setShowMintInfo(true)}
-                      onMouseLeave={() => setShowMintInfo(false)}
-                      className={
-                        showMintInfo
-                          ? "mint-info opacity-0"
-                          : "mint-info opacity-1"
-                      }
-                    />
-                    }
-                    {isMobile && 
-                    <img
-                      src={InfoMint}
-                      onClick={() => setShowMintInfo(!showMintInfo)}
-                      className={
-                        showMintInfo
-                          ? "mint-info opacity-0"
-                          : "mint-info opacity-1"
-                      }
-                    />
-                    } */}
-                    {!isMobile && 
-                    <div className={showMintInfo ? "mint-info-total opacity-1" : "mint-info-total opacity-0"}>
-                      <h2 className="pull-left full-width text-center m-t-5 m-b-10">
-                        Details
-                      </h2>
-                      <label className="pull-left full-width m-t-3 m-b-3">
-                        GOG <b>123</b>
-                        <span className="mint-info-dot"></span>MAX{" "}
-                        <b>3 TOKENS</b>
-                        <span className="mint-info-dot"></span>PRICE <b>1.69</b>
-                      </label>
-                      <label className="pull-left full-width m-t-3 m-b-3">
-                        OG <b>690</b>
-                        <span className="mint-info-dot"></span>MAX{" "}
-                        <b>2 TOKENS</b>
-                        <span className="mint-info-dot"></span>PRICE <b>1.90</b>
-                      </label>
-                      <label className="pull-left full-width m-t-3 m-b-3">
-                        WL <b>5500</b>
-                        <span className="mint-info-dot"></span>MAX{" "}
-                        <b>1 TOKEN</b>
-                        <span className="mint-info-dot"></span>PRICE <b>1.90</b>
-                      </label>
-                      <label className="pull-left full-width m-t-3 m-b-3">
-                        PUBLIC <span className="mint-info-dot"></span>{" "}
-                        <b>UNLIMITED</b> <span className="mint-info-dot"></span>{" "}
-                        PRICE <b>2.29</b>
-                      </label>
-                    </div>
-                    }
-                    {isMobile && showMintInfo && 
-                    <div className="Backdrop-mobile">
-                      <OutsideClickHandler onOutsideClick={() => setShowMintInfo(false)}>
-                        <div className={showMintInfo ? "mint-info-total opacity-1" : "mint-info-total opacity-0"}>
-                        <span className="close-nft-success-message" onClick={() => setShowMintInfo(false)}>X</span>
-                          <h2 className="pull-left full-width text-center m-t-5 m-b-10">
-                            Details
-                          </h2>
-                          <label className="pull-left full-width m-t-3 m-b-3">
-                            GOG <b>123</b>
-                            <span className="mint-info-dot"></span>MAX{" "}
-                            <b>3 TOKENS</b>
-                            <span className="mint-info-dot"></span>PRICE <b>1.69</b>
-                          </label>
-                          <label className="pull-left full-width m-t-3 m-b-3">
-                            OG <b>690</b>
-                            <span className="mint-info-dot"></span>MAX{" "}
-                            <b>2 TOKENS</b>
-                            <span className="mint-info-dot"></span>PRICE <b>1.90</b>
-                          </label>
-                          <label className="pull-left full-width m-t-3 m-b-3">
-                            WL <b>5500</b>
-                            <span className="mint-info-dot"></span>MAX{" "}
-                            <b>1 TOKEN</b>
-                            <span className="mint-info-dot"></span>PRICE <b>1.90</b>
-                          </label>
-                          <label className="pull-left full-width m-t-3 m-b-3">
-                            PUBLIC <span className="mint-info-dot"></span>{" "}
-                            <b>UNLIMITED</b> <span className="mint-info-dot"></span>{" "}
-                            PRICE <b>2.29</b>
-                          </label>
-                        </div>
-                      </OutsideClickHandler>
-                    </div>
-                    }
-                    {/* {!isMobile && 
-                    <div className="pull-left full-width">
-                      <div className="Items-available-div">
-                        <label className="items-available-text">
-                          {currentWl == "COMMUNITY" && <span>GOG + OG - Mint in</span>}
-                          {currentWl == "GOG + OG" && <span>WL - Mint in</span>}
-                          {currentWl == "WL" && <span>PUBLIC - Mint in</span>}
-                          {currentWl == "" && <span>COMMUNITY - Mint in</span>}
-                          {currentWl == "PUBLIC" && <span>PUBLIC MINT</span>}
-                        </label>
-                        <label className="items-available-text">
-                          {currentWl != "PUBLIC" && (
-                            <span className="fs-36-i">{time}</span>
-                          )}
-                          {currentWl == "PUBLIC" && <span>---</span>}
-                        </label>
-                      </div>
-                      <div className="Current-whitelist-div">
-                        <label className="items-available-text text-center-i m-t-b-5">
-                          {currentWl} Mint
-                        </label>
-                      </div>
-                    </div>
-                    } */}
-                    {/* {isMobile && 
-                    <div className="current-whitelist">{currentWl}</div>
-                    } */}
-                    {/* {isMobile && 
-                    <label className="pull-left full-width text-center m-t-15 m-b-10 courier mint-text-color">
-                      {currentWl == "COMMUNITY" && <span>GOG + OG - Mint in</span>}
-                      {currentWl == "GOG + OG" && <span>WL - Mint in</span>}
-                      {currentWl == "WL" && <span>PUBLIC - Mint in</span>}
-                      {currentWl == "" && <span>COMMUNITY - Mint in</span>}
-                      {currentWl == "PUBLIC" && <span>PUBLIC MINT</span>}
-                    </label>
-                    }
-                    {isMobile &&
-                    <label className="pull-left full-width text-center m-t-0 m-b-10 courier mint-text-color">
-                      {currentWl != "PUBLIC" && (
-                        <span className="fs-36-i">{time}</span>
-                      )}
-                      {currentWl == "PUBLIC" && <span>---</span>}
-                    </label>
-                    } */}
-                    {/* <h4 className="minted-out">Minted Out</h4> */}
-                    <div className="m-15"></div>
-                    <button className="city-one-farm">Create City 1 Farm</button>
-                    <button className="city-two-farm">Create City 2 Farm</button>
-                    <button className="city-three-farm">Create City 3 Farm</button>
-                    <button className="city-four-farm">Create City 4 Farm</button>
-                    <button className="city-five-farm">Create City 5 Farm</button>
-                    {/* {!isMobile &&
-                    <label className="completed-counts m-b-20">
-                      4200 /4200
-                    </label>
-                    } */}
-                    {/* {!isMobile && (
-                      <div className="battery">
-                        {setBars.map(function (item, i) {
-                          if (100 >= item) {
-                            return (
-                              <div
-                                className="bar active"
-                                data-power={item}
-                              ></div>
-                            );
-                          } else {
-                            return (
-                              <div className="bar" data-power={item}></div>
-                            );
-                          }
-                        })}
-                      </div>
-                    )}
-                    {isMobile &&
-                    <CircularProgressbar value={100} text={4200 + '/' + 4200} />
-                    } */}
-                    {/* <div className="mint-progress">
-                      <ProgressBar bgcolor={"#6a1b9a"} completed={completed} />
-                    </div> */}
-                    {/* <div className="remaining-time-div m-t-0 m-b-15 spacing-counts">
-                      <div className="mint-count">
-                        <button
-                          className="decrease-count"
-                          onClick={decreaseMintCount}
-                        >
-                          -
-                        </button>
-                        <label>{mintCount}</label>
-                        <button
-                          className="increase-count"
-                          onClick={increaseMintCount}
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div> */}
-                    {/* <div className="remaining-time-div m-t-0 m-b-15">
-                      {!wallet.connected ? (
-                        <div className="Top-connected red">
-                          <WalletDialogButton className="Inside-Connect-btn">
-                            Connect
-                          </WalletDialogButton>
-                        </div>
-                      ) : (
-                        <div
-                          className={
-                            isUserMinting
-                              ? "Top-connected green disabled-btn"
-                              : "Top-connected green"
-                          }
-                        >
-                          <button
-                            className={
-                              shouldMint
-                                ? "Inside-Mint-btn w-200"
-                                : "Mint-btn-disabled w-200"
-                            }
-                            onClick={whiteListCheckMint}
-                          >
-                            {isUserMinting ? "Minting" : "Mint Now"}
-                          </button>
-                        </div>
-                      )}
-                    </div> */}
-                    {/* {mintSuccessMessage && (
-                      <div className="nft-success-mint-message">
-                        <span
-                          className="close-nft-success-message"
-                          onClick={() => setMintSuccessMessage(false)}
-                        >
-                          X
-                        </span>
-                        {mintResponseType == 'error' && 
-                        <h2 className="pull-left full-width text-center m-t-10 m-b-10">
-                          Error
-                        </h2>
-                        }
-                        {mintResponseType == 'success' && 
-                        <h2 className="pull-left full-width text-center m-t-10 m-b-10">
-                          Congratulations
-                        </h2>
-                        }
-                        <label className="nft-message-success">
-                          {mintResponse}
-                        </label>
-                      </div>
-                    )} */}
-                  </div>
-                  }
-                  {currentWl == '' &&
-                  <div className="before-mint-text">
-                    <label>SHH!!! You're early Mint starts in</label>
-                    <h1>{time}</h1>
-                  </div>
-                  }
-                </div>
-              </div>
-              }
-              {!wallet.connected &&
-              <div className="bigger-holo">
-                <div className="holo-updates">
-                  <div className="mint-inside-div">
-                    <WalletDialogButton className="Connect-Wallet-btn">
-                      Connect Wallet
-                    </WalletDialogButton>
-                  </div>
-                </div>
-              </div>
-              }
-            </OutsideClickHandler>
-          </div>
-        )}
+        </div>} */}
         {showFarming && (
           <div className="Backdrop-other-mint">
             <OutsideClickHandler onOutsideClick={() =>closeFarming()}>

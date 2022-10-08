@@ -1,9 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.e22a5d5f.css",
-    "main.js": "/static/js/main.dfa4a2d5.js",
+    "main.css": "/static/css/main.ff05b9a8.css",
+    "main.js": "/static/js/main.353852d1.js",
     "static/js/787.4aa03071.chunk.js": "/static/js/787.4aa03071.chunk.js",
     "static/media/Fixed_Staking.png": "/static/media/Fixed_Staking.af7dcb9a49420e4a12a3.png",
+    "static/media/Token_Swapping_room.png": "/static/media/Token_Swapping_room.fda9b0f749944b9165e5.png",
     "static/media/stake_bg.png": "/static/media/stake_bg.71ae6eb955ef813f0a85.png",
     "static/media/team_room.png": "/static/media/team_room.476aa6deab646689996b.png",
     "static/media/alphazex_bg.png": "/static/media/alphazex_bg.10b03954eb2c412a563d.png",
@@ -60,14 +61,15 @@
     "static/media/twitter_copy.png": "/static/media/twitter_copy.894988327f8d68209e91.png",
     "static/media/revicons.eot": "/static/media/revicons.a77de540a38981833f9e.eot",
     "static/media/revicons.ttf": "/static/media/revicons.57fd05d4ae650374c8de.ttf",
+    "static/media/swapping_icon.png": "/static/media/swapping_icon.e6a18eb589f9bac57b87.png",
     "static/media/revicons.woff": "/static/media/revicons.e8746a624ed098489406.woff",
     "index.html": "/index.html",
-    "main.e22a5d5f.css.map": "/static/css/main.e22a5d5f.css.map",
-    "main.dfa4a2d5.js.map": "/static/js/main.dfa4a2d5.js.map",
+    "main.ff05b9a8.css.map": "/static/css/main.ff05b9a8.css.map",
+    "main.353852d1.js.map": "/static/js/main.353852d1.js.map",
     "787.4aa03071.chunk.js.map": "/static/js/787.4aa03071.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e22a5d5f.css",
-    "static/js/main.dfa4a2d5.js"
+    "static/css/main.ff05b9a8.css",
+    "static/js/main.353852d1.js"
   ]
 }
