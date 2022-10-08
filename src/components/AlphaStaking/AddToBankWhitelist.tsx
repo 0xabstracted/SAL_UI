@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useWallet } from '@solana/wallet-adapter-react';
 import { PublicKey, SystemProgram } from '@solana/web3.js';
 
@@ -146,7 +147,7 @@ function AddToBankWhitelist() {
             <input className="authorize-funder-reward-input" placeholder="Collection Id" value={collectionIdInputOne} onChange={event => setCollectionIdInputOne(event.target.value)} />
             </div>
             <div className="gen-farm-stats-right">
-            <button className="Inside-Farm-btn" onClick={() => addToBankWhitelist(HUMANS_FARM_ID)}>Add To Mahanothia Bank Whitelist</button>
+            <button className="Inside-Farm-btn" onClick={() => addToBankWhitelist(HUMANS_FARM_ID)}>Add To Humans Farm Bank Whitelist</button>
             </div>
         </div>
         <div className="gen-farm-stats">
@@ -154,7 +155,7 @@ function AddToBankWhitelist() {
             <input className="authorize-funder-reward-input" placeholder="Collection Id" value={collectionIdInputTwo} onChange={event => setCollectionIdInputTwo(event.target.value)} />
             </div>
             <div className="gen-farm-stats-right">
-            <button className="Inside-Farm-btn" onClick={() => addToBankWhitelist(HUMANPETS_FARM_ID)}>Add To Raudcheri Bank Whitelist</button>
+            <button className="Inside-Farm-btn" onClick={() => addToBankWhitelist(HUMANPETS_FARM_ID)}>Add To Humanpets Farm Bank Whitelist</button>
             </div>
         </div>
         <div className="gen-farm-stats">
@@ -162,7 +163,7 @@ function AddToBankWhitelist() {
             <input className="authorize-funder-reward-input" placeholder="Collection Id" value={collectionIdInputThree} onChange={event => setCollectionIdInputThree(event.target.value)} />
             </div>
             <div className="gen-farm-stats-right">
-            <button className="Inside-Farm-btn" onClick={() => addToBankWhitelist(CYBORG_FARM_ID)}>Add To San Chetos Bank Whitelist</button>
+            <button className="Inside-Farm-btn" onClick={() => addToBankWhitelist(CYBORG_FARM_ID)}>Add To Cyborg Farm Bank Whitelist</button>
             </div>
         </div>
         <div className="gen-farm-stats">
@@ -170,15 +171,7 @@ function AddToBankWhitelist() {
             <input className="authorize-funder-reward-input" placeholder="Collection Id" value={collectionIdInputFour} onChange={event => setCollectionIdInputFour(event.target.value)} />
             </div>
             <div className="gen-farm-stats-right">
-            <button className="Inside-Farm-btn" onClick={() => addToBankWhitelist(CYBORGPET_FARM_ID)}>Add To Magnexia Bank Whitelist</button>
-            </div>
-        </div>
-        <div className="gen-farm-stats">
-            <div className="gen-farm-stats-left">
-            <input className="authorize-funder-reward-input" placeholder="Collection Id" value={collectionIdMint} onChange={event => setCollectionIdMint(event.target.value)} />
-            </div>
-            <div className="gen-farm-stats-right">
-            <button className="Inside-Farm-btn" onClick={addToBankWhitelistMint}>Add Mint To Bank Whitelist</button>
+            <button className="Inside-Farm-btn" onClick={() => addToBankWhitelist(CYBORGPET_FARM_ID)}>Add To Cyborgpet Farm Bank Whitelist</button>
             </div>
         </div>
     </div>
