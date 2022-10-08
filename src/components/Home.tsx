@@ -71,11 +71,6 @@ import { sendTransaction, sendTransactions } from "../config/connection";
 
 import { AlertState } from "../utils/utils";
 import {
-  closeAccount,
-  createAssociatedTokenAccount,
-  createBurnCheckedInstruction,
-  createCloseAccountInstruction,
-  createMint, getAccount, getMint, mintToChecked, transferChecked,
   createInitializeMintInstruction,
   MINT_SIZE,
   getMinimumBalanceForRentExemptMint,
@@ -103,8 +98,11 @@ import MenuContent from "./menu";
 import InitFarmAlpha from "./AlphaStaking/InitFarmAlpha";
 import AddToBankWhitelist from "./AlphaStaking/AddToBankWhitelist";
 import FundRewardAlpha from "./AlphaStaking/FundRewardAlpha";
+import CreateFungibleToken from "./TokenCreation/CreateFungibleToken";
 
 import { REWARD_MINT_ALPHA } from "./AlphaStaking/StakeConfig";
+import { REWARD_MINT_GLITCH } from "./TokenCreation/AlphaTokenConfig";
+import MintNewFungibleToken from "./TokenCreation/MintNewFungibleToken";
 
 const responsive = {
   superLargeDesktop: {
@@ -1247,11 +1245,13 @@ const Home = (props: HomeProps) => {
     if (wallet && wallet.connected && !gotNfts) {
       const connection = new Connection(clusterApiUrl("devnet"));
       let ata = await getAssociatedTokenAddress(
-        REWARD_MINT_ALPHA, // mint
+        REWARD_MINT_GLITCH, // mint
         wallet?.publicKey! // owner
       );
   
       let tokenAmount = await connection.getTokenAccountBalance(ata);
+      setGlitchTokenVal(parseInt(tokenAmount.value.amount));
+      setAlphaTokenVal(parseInt(tokenAmount.value.amount));
       console.log(`amount: ${tokenAmount.value.amount}`);
       console.log(`decimals: ${tokenAmount.value.decimals}`);
       const metaplex = Metaplex.make(connection);
@@ -3073,39 +3073,7 @@ const Home = (props: HomeProps) => {
             <div className="fixed-staking-main-bg">
               <div className="pull-left full-width">
                 <div className="swapping-process-parent">
-                  <div className="swapping-box">
-                    <label className="swapping-label">Trade</label>
-                    <div className="from-token-box">
-                      <div className="token-image-parent">
-                        <img className="token-image" src="https://dgnvzn3x5fqusqpvst65sizekrfhwtklzokfk7usi64h7erzb7iq.arweave.net/GZtct3fpYUlB9ZT92SMkVEp7TUvLlFV-kke4f5I5D9E?ext=jpg" alt="" />
-                      </div>
-                      <div className="token-name-parent">
-                        <h2 className="token-name">GLITCH</h2>
-                      </div>
-                      <div className="token-count-parent">
-                        <input type="number" max={1000000} className="token-count-input" value={glitchTokenVal} onChange={event => changeGlitchToken(parseInt(event.target.value))}/>
-                      </div>
-                    </div>
-                    <div className="pull-left full-width">
-                      <div className="swap-icon-parent">
-                        <img src={SwappingIcon} className="swap-icon" alt="" />
-                      </div>
-                    </div>
-                    <div className="to-token-box">
-                      <div className="token-image-parent">
-                        <img className="token-image" src="https://dgnvzn3x5fqusqpvst65sizekrfhwtklzokfk7usi64h7erzb7iq.arweave.net/GZtct3fpYUlB9ZT92SMkVEp7TUvLlFV-kke4f5I5D9E?ext=jpg" alt="" />
-                      </div>
-                      <div className="token-name-parent">
-                        <h2 className="token-name">ALPHA</h2>
-                      </div>
-                      <div className="token-count-parent">
-                        <input type="number" max={1000000} className="token-count-input" value={alphaTokenVal} onChange={event => changeGlitchToken(parseInt(event.target.value))}/>
-                      </div>
-                    </div>
-                    <div className="pull-left full-width text-center">
-                      <button className="swap-btn" onClick={swapFn} disabled={glitchTokenVal <= 0}>Swap</button>
-                    </div>
-                  </div>
+                  <MintNewFungibleToken></MintNewFungibleToken>
                 </div>
               </div> 
             </div>
@@ -3378,175 +3346,16 @@ const Home = (props: HomeProps) => {
               <div className="bigger-holo">
                 <div className="stake-room-farm">
                   <div className="gen-dashboard-scroller">
+                    <CreateFungibleToken/>
                     <InitFarmAlpha/>
                     <FundRewardAlpha/>
                     <AddToBankWhitelist/>
-                    {/* <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <button className="Inside-Farm-btn" onClick={() => initFixedFarm(1)}>Start MAHANOTHIA Farm</button>
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        {mahanothiaFarm && <label>MAHANOTHIA FARM ID : {MAHANOTHIA_FARM_ID.toBase58()}</label>}
-                      </div>
-                    </div>
-                    <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <button className="Inside-Farm-btn" onClick={() => initProbableFarm(2)}>Start RAUDCHERI Farm</button>
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        {raudcheriFarm && <label>RAUDCHERI FARM ID : {RAUDCHERI_FARM_ID.toBase58()}</label>}
-                      </div>
-                    </div>
-                    <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <button className="Inside-Farm-btn" onClick={() => initProbableFarm(3)}>Start SAN CHETOS Farm</button>
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        {sanChetosFarm && <label>SAN CHETOS FARM ID : {SAN_CHETOS_FARM_ID.toBase58()}</label>}
-                      </div>
-                    </div>
-                    <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <button className="Inside-Farm-btn" onClick={() => initFixedFarm(4)}>Start MAGNEXIA Farm</button>
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        {magnexiaFarm && <label>MAGNEXIA FARM ID : {MAGNEXIA_FARM_ID.toBase58()}</label>}
-                      </div>
-                    </div>
-                    <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <button className="Inside-Farm-btn" onClick={() => initFixedFarm(5)}>Start BASEMENT Farm</button>
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        {basementFarm && <label>BASEMENT FARM ID : {BASEMENT_FARM_ID.toBase58()}</label>}
-                      </div>
-                    </div> */}
-                    {/* <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <input className="authorize-funder-reward-input" placeholder="Funder to Authorize" value={funderOne} onChange={event => setFunderOne(event.target.value)} />
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        <button className="Inside-Farm-btn" onClick={() => authorizeFunder(1)}>Authorize Funder For Mahanothia</button>
-                      </div>
-                    </div>
-                    <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <input className="authorize-funder-reward-input" placeholder="Funder to Authorize" value={funderTwo} onChange={event => setFunderTwo(event.target.value)} />
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        <button className="Inside-Farm-btn" onClick={() => authorizeFunder(2)}>Authorize Funder For Raudcheri</button>
-                      </div>
-                    </div>
-                    <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <input className="authorize-funder-reward-input" placeholder="Funder to Authorize" value={funderThree} onChange={event => setFunderThree(event.target.value)} />
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        <button className="Inside-Farm-btn" onClick={() => authorizeFunder(3)}>Authorize Funder For San Chetos</button>
-                      </div>
-                    </div>
-                    <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <input className="authorize-funder-reward-input" placeholder="Funder to Authorize" value={funderFour} onChange={event => setFunderFour(event.target.value)} />
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        <button className="Inside-Farm-btn" onClick={() => authorizeFunder(4)}>Authorize Funder For Magnexia</button>
-                      </div>
-                    </div>
-                    <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <input className="authorize-funder-reward-input" placeholder="Funder to Authorize" value={funderFive} onChange={event => setFunderFive(event.target.value)} />
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        <button className="Inside-Farm-btn" onClick={() => authorizeFunder(5)}>Authorize Funder For Basement</button>
-                      </div>
-                    </div> */}
                     <div className="gen-farm-stats">
                       <div className="gen-farm-stats-left">
                         <input className="authorize-funder-reward-input" placeholder="NFT Mint" value={nftMint} onChange={event => setNftMint(event.target.value)} />
                       </div>
                       <div className="gen-farm-stats-right">
                         <button className="Inside-Farm-btn" onClick={addRaritiesToBank}>Add Rarities to Bank</button>
-                      </div>
-                    </div>
-                    {/* <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <input className="authorize-funder-reward-input" placeholder="Collection Id" value={collectionIdInputOne} onChange={event => setCollectionIdInputOne(event.target.value)} />
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        <button className="Inside-Farm-btn" onClick={() => addToBankWhitelist(1)}>Add To Mahanothia Bank Whitelist</button>
-                      </div>
-                    </div>
-                    <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <input className="authorize-funder-reward-input" placeholder="Collection Id" value={collectionIdInputTwo} onChange={event => setCollectionIdInputTwo(event.target.value)} />
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        <button className="Inside-Farm-btn" onClick={() => addToBankWhitelist(2)}>Add To Raudcheri Bank Whitelist</button>
-                      </div>
-                    </div>
-                    <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <input className="authorize-funder-reward-input" placeholder="Collection Id" value={collectionIdInputThree} onChange={event => setCollectionIdInputThree(event.target.value)} />
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        <button className="Inside-Farm-btn" onClick={() => addToBankWhitelist(3)}>Add To San Chetos Bank Whitelist</button>
-                      </div>
-                    </div>
-                    <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <input className="authorize-funder-reward-input" placeholder="Collection Id" value={collectionIdInputFour} onChange={event => setCollectionIdInputFour(event.target.value)} />
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        <button className="Inside-Farm-btn" onClick={() => addToBankWhitelist(4)}>Add To Magnexia Bank Whitelist</button>
-                      </div>
-                    </div>
-                    <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <input className="authorize-funder-reward-input" placeholder="Collection Id" value={collectionIdInputFive} onChange={event => setCollectionIdInputFive(event.target.value)} />
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        <button className="Inside-Farm-btn" onClick={() => addToBankWhitelist(5)}>Add To Basement Bank Whitelist</button>
-                      </div>
-                    </div>
-                    <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <input className="authorize-funder-reward-input" placeholder="Collection Id" value={collectionIdMint} onChange={event => setCollectionIdMint(event.target.value)} />
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        <button className="Inside-Farm-btn" onClick={addToBankWhitelistMint}>Add Mint To Bank Whitelist</button>
-                      </div>
-                    </div> */}
-                    <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <button className="Inside-Farm-btn" onClick={fundReward}>Fund Reward</button>
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        <button className="Inside-Farm-btn" onClick={createToken}>Create Token</button>
-                        {/* {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
-                          return (
-                            <div className="nft-small-div">
-                              <img src={item.link} />
-                              <label>{item.name}</label>
-                            </div>
-                          );
-                        })} */}
-                      </div>
-                    </div>
-                    <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <button className="Inside-Farm-btn" onClick={mintToCheckedFn}>Mint Token</button>
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        {/* <button className="Inside-Farm-btn" onClick={createToken}>Create Token</button> */}
-                        {/* {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
-                          return (
-                            <div className="nft-small-div">
-                              <img src={item.link} />
-                              <label>{item.name}</label>
-                            </div>
-                          );
-                        })} */}
                       </div>
                     </div>
                   </div>
