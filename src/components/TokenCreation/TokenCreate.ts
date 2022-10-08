@@ -62,9 +62,9 @@ import {
     let txhash1 = await transferChecked(
       connection, // connection
       feePayer, // payer
-      tokenAccountXPubkey, // from (should be a token account)
+      tokenAccountPubkey, // from (should be a token account)
       mintPubkey, // mint
-      tokenAccountYPubkey, // to (should be a token account)
+      tokenAccountPubkey, // to (should be a token account)
       alice, // from's owner
       1e8, // amount, if your deciamls is 8, send 10^8 for 1 token
       8 // decimals
