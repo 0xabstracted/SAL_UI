@@ -14,6 +14,7 @@ import { mintNewFungibleTokenArgs, REWARD_MINT_GLITCH } from "./AlphaTokenConfig
 import { MintNewFungibleTokenArgs } from "./TokenInterface";
 import SwappingIcon from "../../assets/swapping_icon.png";
 import { sendTransactions } from '../../config/connection';
+import LogoWhite from "../../assets/Logowhite.png";
 
 function MintNewFungibleToken() {
   const [glitchTokenVal, setGlitchTokenVal] = useState(0);
@@ -119,6 +120,9 @@ function MintNewFungibleToken() {
   };
   return (
     <div>
+      <div className="swapping-logo-parent">
+        <img src={LogoWhite} className="swapping-logo" alt="" />
+      </div>
       <div className="swapping-box">
         <label className="swapping-label">Trade</label>
         <div className="from-token-box">
