@@ -1,7 +1,12 @@
 {
   "files": {
+<<<<<<< Updated upstream
     "main.css": "/static/css/main.69a2ce3f.css",
     "main.js": "/static/js/main.a4980fa5.js",
+=======
+    "main.css": "/static/css/main.e22a5d5f.css",
+    "main.js": "/static/js/main.bcd462eb.js",
+>>>>>>> Stashed changes
     "static/js/787.4aa03071.chunk.js": "/static/js/787.4aa03071.chunk.js",
     "static/media/Fixed_Staking.png": "/static/media/Fixed_Staking.af7dcb9a49420e4a12a3.png",
     "static/media/Token_Swapping_room.png": "/static/media/Token_Swapping_room.fda9b0f749944b9165e5.png",
@@ -64,6 +69,7 @@
     "static/media/swapping_icon.png": "/static/media/swapping_icon.e6a18eb589f9bac57b87.png",
     "static/media/revicons.woff": "/static/media/revicons.e8746a624ed098489406.woff",
     "index.html": "/index.html",
+<<<<<<< Updated upstream
     "main.69a2ce3f.css.map": "/static/css/main.69a2ce3f.css.map",
     "main.a4980fa5.js.map": "/static/js/main.a4980fa5.js.map",
     "787.4aa03071.chunk.js.map": "/static/js/787.4aa03071.chunk.js.map"
@@ -71,5 +77,14 @@
   "entrypoints": [
     "static/css/main.69a2ce3f.css",
     "static/js/main.a4980fa5.js"
+=======
+    "main.e22a5d5f.css.map": "/static/css/main.e22a5d5f.css.map",
+    "main.bcd462eb.js.map": "/static/js/main.bcd462eb.js.map",
+    "787.4aa03071.chunk.js.map": "/static/js/787.4aa03071.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e22a5d5f.css",
+    "static/js/main.bcd462eb.js"
+>>>>>>> Stashed changes
   ]
 }

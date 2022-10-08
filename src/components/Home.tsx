@@ -3021,7 +3021,7 @@ const Home = (props: HomeProps) => {
                     </div>
                     {stakedNft && 
                     <div className="stake-button-div"> 
-                      <button className="nft-select-button" onClick={nextStepStake}>Next</button>
+                      <button className="nft-select-button" onClick={completeStake}>Next</button>
                     </div>}
                     </div>
                   </div>
