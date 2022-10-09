@@ -1453,7 +1453,6 @@ const Home = (props: HomeProps) => {
           accounts: {
             farm: FARM_ID,
             farmAuthority: farms.farmAuthority,
-            farmTreasury: farmTreasury,
             farmTreasuryToken: farmTreasuryToken,
             farmer: farmerPda,
             identity: wallet.publicKey,

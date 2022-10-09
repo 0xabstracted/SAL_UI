@@ -96,6 +96,7 @@ function InitFarmAlpha() {
           farmTreasuryTokenBump,
           args.farmConfig,
           args.maxCounts, 
+          farmTreasuryToken,
           {
             accounts: {
               farm: farm.publicKey.toBase58(),
