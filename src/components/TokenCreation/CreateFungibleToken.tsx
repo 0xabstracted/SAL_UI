@@ -10,6 +10,9 @@ import { CreateFungibleTokenArgs } from './TokenInterface';
 import { alphaFungTokenArgs, glitchFungTokenArgs } from './AlphaTokenConfig';
 import { sendTransactions } from '../../config/connection';
 import { findAssociatedTokenAddress } from '../../GrandProgramUtils/AssociatedTokenAccountProgram/pda';
+import { BN, Program } from "@project-serum/anchor";
+import { getStakeProgram } from "../../GrandProgramUtils/gemBank/getProgramObjects";
+import { alphaTokenSwapPda,alphaPotPda } from "../../GrandProgramUtils/AssociatedTokenAccountProgram/pda"
 
 function CreateFungibleToken() {
     const wallet = useWallet()
@@ -22,7 +25,15 @@ function CreateFungibleToken() {
         let  [ata, ataBump]  = await findAssociatedTokenAddress(
             wallet?.publicKey!, // owner
             mint.publicKey, // mint
-          );
+        );
+        console.log('ata : ', ata.toBase58());
+        let stakeProgram = await getStakeProgram(wallet);
+        let stake_instructions: any = [];
+        let k = 1 * (10 ** 15);
+        console.log(k);
+        let amount = new BN(k);
+        const [alpha_token_swap_pda] = await alphaTokenSwapPda(wallet.publicKey!, mint.publicKey);
+        const [alpha_pot_pda] = await alphaPotPda(alpha_token_swap_pda, mint.publicKey);
         console.log(`ATA: ${ata.toBase58()}`);
         if (wallet.publicKey) {
             let create_fung_token_ix:any = [];
@@ -62,7 +73,21 @@ function CreateFungibleToken() {
                     args.amount, // amount. if your decimals is 8, you mint 10^8 for 1 token.
                     args.decimals // decimals
                     // [signer1, signer2 ...], // only multisig account will use
-                  )
+                )
+            )
+            create_fung_token_ix.push(
+                stakeProgram.instruction.createAlphaTokenswap(amount,{
+                    accounts: {
+                      alphaTokenswap: alpha_token_swap_pda,
+                      alphaCreator: wallet.publicKey,
+                      alphaPot: alpha_pot_pda,
+                      alphaOwnerSource: ata,
+                      alphaMint: mint.publicKey,
+                      systemProgram: SystemProgram.programId,
+                      tokenProgram: TOKEN_PROGRAM_ID,
+                      rent: anchor.web3.SYSVAR_RENT_PUBKEY
+                    }
+                })
             )
             const seed1 = Buffer.from(anchor.utils.bytes.utf8.encode("metadata"));
             const seed2 = Buffer.from(mpl.PROGRAM_ID.toBytes());
@@ -99,7 +124,8 @@ function CreateFungibleToken() {
                 [create_fung_token_ix],
                 [[mint]]
             )
-            console.log(`cft_sig: ${cft_sig}`)
+            console.log(`cft_sig: ${cft_sig}`);
+            console.log(cft_sig);
         }
         else {
             throw new WalletNotConnectedError()
