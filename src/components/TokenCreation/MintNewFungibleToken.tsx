@@ -152,10 +152,7 @@ function MintNewFungibleToken() {
         args.newMint, // mint
         wallet.publicKey // owner
       );
-      let userNewTokenAccount = await getAccount(
-        connection,
-        userNewTokenAccountPDA
-      );
+      
 
       console.log(
         `userOldTokenAccountPDA ATA: ${userOldTokenAccountPDA.toBase58()}`
@@ -182,16 +179,25 @@ function MintNewFungibleToken() {
           args.decimalsOld // decimals
         )
       );
-      if (!userNewTokenAccount) {
-        token_swap_instructions.push(
-          createAssociatedTokenAccountInstruction(
-            wallet.publicKey, // payer
-            userNewTokenAccount, // ata
-            wallet.publicKey, // owner
-            args.newMint // mint
-          )
+      let userNewTokenAccount;
+      try {
+        userNewTokenAccount = await getAccount(
+          connection,
+          userNewTokenAccountPDA
         );
-      }
+      } catch (error) {
+        if (!userNewTokenAccount) {
+          token_swap_instructions.push(
+            createAssociatedTokenAccountInstruction(
+              wallet.publicKey, // payer
+              userNewTokenAccountPDA, // ata
+              wallet.publicKey, // owner
+              args.newMint // mint
+            )
+          );
+        }
+      }    
+      
       token_swap_instructions.push(stakeProgram.instruction.transferAlphaTokens(bumpAlphaTokenSwap, bumpAlphaPot, amount,{
         accounts: {
           alphaTokenswap: alpha_token_swap_pda,
