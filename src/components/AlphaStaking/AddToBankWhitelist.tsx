@@ -100,7 +100,7 @@ function AddToBankWhitelist() {
 
       for (let index = 0; index < allNfts.length; index++) {
         const nft:any = allNfts[index];
-        if (nft.updateAuthorityAddress.toBase58() === "abSzV5zXTKCbkjzN2hzrg2BPTbkYAQ7tt4jQPett2jX") {
+        if (nft.updateAuthorityAddress.toBase58() === "TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq") {
           console.log(`count1: ${count++}`)
           let xhr = new XMLHttpRequest();
           xhr.open("GET", nft.uri);

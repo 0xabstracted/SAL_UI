@@ -845,7 +845,7 @@ const Home = (props: HomeProps) => {
         var creators = nft.creators;
         var is_ours = false;
         // console.log(nft.updateAuthorityAddress.toBase58(), nft.name);
-        if (nft.updateAuthorityAddress.toBase58() == "abSzV5zXTKCbkjzN2hzrg2BPTbkYAQ7tt4jQPett2jX") {
+        if (nft.updateAuthorityAddress.toBase58() == "TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq") {
           is_ours = true;
           for (let iindex = 0; iindex < creators.length; iindex++) {
             const element = creators[iindex];

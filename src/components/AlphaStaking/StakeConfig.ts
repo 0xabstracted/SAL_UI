@@ -5,7 +5,7 @@ import { REWARD_MINT_ALPHA } from "../TokenCreation/AlphaTokenConfig";
 import { AuthorizeFunderAlphaArgs, InitFarmAlphaArgs } from "./StakeConfigInterface";
 import * as anchor from '@project-serum/anchor'
 
-export const UPDATE_AUTHORITY_ALPHA = new anchor.web3.PublicKey("abSzV5zXTKCbkjzN2hzrg2BPTbkYAQ7tt4jQPett2jX")
+export const UPDATE_AUTHORITY_ALPHA = new anchor.web3.PublicKey("TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq")
 
 export const farmConfigAlpha:FarmConfig = {
     minStakingPeriodSec: new BN(0),
@@ -50,10 +50,10 @@ export const HUMANPETS_FARM_ID = new PublicKey("F9op6Pf9NJbowmk7oVsfkjfAkofGCNEm
 export const CYBORG_FARM_ID = new PublicKey("AFoJsBkC99Z5DfRXQTG2sB26yTRxh1qPazcmB3wGyAhG");
 export const CYBORGPET_FARM_ID = new PublicKey("21xq97XydC5gSLhQwySJ3oQbqK8eNfL1sZc1i6kfE1ob");
 
-export const FUNDER_HUMANS_FARM = new PublicKey('abSzV5zXTKCbkjzN2hzrg2BPTbkYAQ7tt4jQPett2jX');
-export const FUNDER_HUMANPETS_FARM = new PublicKey('abSzV5zXTKCbkjzN2hzrg2BPTbkYAQ7tt4jQPett2jX');
-export const FUNDER_CYBORG_FARM = new PublicKey('abSzV5zXTKCbkjzN2hzrg2BPTbkYAQ7tt4jQPett2jX');
-export const FUNDER_CYBORGPET_FARM = new PublicKey('abSzV5zXTKCbkjzN2hzrg2BPTbkYAQ7tt4jQPett2jX');
+export const FUNDER_HUMANS_FARM = new PublicKey('TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq');
+export const FUNDER_HUMANPETS_FARM = new PublicKey('TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq');
+export const FUNDER_CYBORG_FARM = new PublicKey('TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq');
+export const FUNDER_CYBORGPET_FARM = new PublicKey('TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq');
 
 export const authorizeFunderAlphaHumansArgs: AuthorizeFunderAlphaArgs = {
     farmId: HUMANS_FARM_ID,
