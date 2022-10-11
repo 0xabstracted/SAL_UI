@@ -20,9 +20,9 @@ export const findRewardsPotPDA = (farm: PublicKey, rewardMint: PublicKey) => {
     );
 };
 
-export const findFarmTreasuryTokenPDA = (farm: PublicKey, rewardMint: PublicKey) => {
+export const findFarmTreasuryTokenPDA = (farm: PublicKey) => {
     return PublicKey.findProgramAddress(
-        [Buffer.from('token_treasury'), farm.toBytes(), rewardMint.toBytes()],
+        [Buffer.from('token_treasury'), farm.toBytes()],
         MAGIC_STAKE_PROGRAM_ID
     );
 };

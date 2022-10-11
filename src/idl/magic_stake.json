@@ -31,11 +31,6 @@
           "isSigner": false
         },
         {
-          "name": "farmTreasuryToken",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
           "name": "bank",
           "isMut": true,
           "isSigner": true
@@ -72,14 +67,8 @@
           "type": "u8"
         },
         {
-          "name": "bumpTreasury",
+          "name": "bumpTreasuryToken",
           "type": "u8"
-        },
-        {
-          "name": "rewardTypeA",
-          "type": {
-            "defined": "RewardType"
-          }
         },
         {
           "name": "farmConfig",
@@ -94,6 +83,10 @@
               "defined": "MaxCounts"
             }
           }
+        },
+        {
+          "name": "farmTreasuryToken",
+          "type": "publicKey"
         }
       ]
     },
@@ -167,7 +160,7 @@
           "type": "u8"
         },
         {
-          "name": "bumpTreasury",
+          "name": "bumpTreasuryToken",
           "type": "u8"
         },
         {
@@ -262,7 +255,7 @@
           "type": "u8"
         },
         {
-          "name": "bumpTreasury",
+          "name": "bumpTreasuryToken",
           "type": "u8"
         },
         {
@@ -345,8 +338,8 @@
           "isSigner": false
         },
         {
-          "name": "farmTreasury",
-          "isMut": false,
+          "name": "farmTreasuryToken",
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -366,7 +359,7 @@
           "type": "u8"
         },
         {
-          "name": "bumpTreasury",
+          "name": "bumpTreasuryToken",
           "type": "u8"
         },
         {
@@ -517,11 +510,6 @@
           "name": "payer",
           "isMut": true,
           "isSigner": true
-        },
-        {
-          "name": "feeAcc",
-          "isMut": true,
-          "isSigner": false
         },
         {
           "name": "systemProgram",
@@ -747,11 +735,6 @@
           "isSigner": false
         },
         {
-          "name": "farmTreasury",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
           "name": "farmTreasuryToken",
           "isMut": false,
           "isSigner": false
@@ -798,7 +781,7 @@
           "type": "u8"
         },
         {
-          "name": "bumpTreasury",
+          "name": "bumpTreasuryToken",
           "type": "u8"
         },
         {
@@ -825,13 +808,8 @@
           "isSigner": false
         },
         {
-          "name": "farmTreasury",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
           "name": "farmTreasuryToken",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -876,7 +854,7 @@
           "type": "u8"
         },
         {
-          "name": "bumpTreasury",
+          "name": "bumpTreasuryToken",
           "type": "u8"
         },
         {
@@ -1639,6 +1617,14 @@
               "defined": "FixedRateConfig"
             }
           }
+        },
+        {
+          "name": "fixedRateMultiplierConfig",
+          "type": {
+            "option": {
+              "defined": "FixedRateMultiplierConfig"
+            }
+          }
         }
       ]
     },
@@ -1783,6 +1769,111 @@
       ]
     },
     {
+      "name": "createAlphaTokenswap",
+      "accounts": [
+        {
+          "name": "alphaTokenswap",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "alphaCreator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "alphaPot",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "alphaOwnerSource",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "alphaMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "transferAlphaTokens",
+      "accounts": [
+        {
+          "name": "alphaTokenswap",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "alphaCreator",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "alphaPot",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "alphaMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "bumpAlphaTokenswap",
+          "type": "u8"
+        },
+        {
+          "name": "bumpAlphaPot",
+          "type": "u8"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "initState",
       "accounts": [
         {
@@ -1922,6 +2013,26 @@
   ],
   "accounts": [
     {
+      "name": "AlphaTokenswap",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "alphaCreator",
+            "type": "publicKey"
+          },
+          {
+            "name": "alphaMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "alphaPot",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
       "name": "AuthorizationProof",
       "type": {
         "kind": "struct",
@@ -1960,7 +2071,7 @@
             "type": "publicKey"
           },
           {
-            "name": "farmTreasury",
+            "name": "farmTreasuryToken",
             "type": "publicKey"
           },
           {
@@ -2390,6 +2501,14 @@
             "type": "u64"
           },
           {
+            "name": "numberOfNfts",
+            "type": "u64"
+          },
+          {
+            "name": "extraReward",
+            "type": "u64"
+          },
+          {
             "name": "reserved",
             "type": {
               "array": [
@@ -2602,6 +2721,22 @@
       }
     },
     {
+      "name": "FixedRateMultiplierConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "numberOfNfts",
+            "type": "u64"
+          },
+          {
+            "name": "extraReward",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "FixedRateReward",
       "type": {
         "kind": "struct",
@@ -2614,6 +2749,14 @@
           },
           {
             "name": "reservedAmount",
+            "type": "u64"
+          },
+          {
+            "name": "numberOfNfts",
+            "type": "u64"
+          },
+          {
+            "name": "extraReward",
             "type": "u64"
           },
           {
@@ -3057,8 +3200,5 @@
         }
       ]
     }
-  ],
-  "metadata": {
-    "address": "ETiwBTiVf2wNApe5Qc1sGozV3nkUDKNRVuCWzJSFWWfV"
-  }
+  ]
 }

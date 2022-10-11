@@ -21,7 +21,7 @@ code {
 }
 
 @font-face {
-  font-family: "Jack Armstrong";
+  font-family: "Ubuntu Mono", monospace;
   src: url("../fonts/jackarmstrong.ttf") format("truetype");
 }
 
@@ -38,7 +38,7 @@ code {
 body {
   overflow-y: hidden;
   overflow-x: hidden;
-  font-family: "Jack Armstrong" !important;
+  font-family: "Ubuntu Mono", monospace !important;
   --color-text: #fff;
   --color-bg: #000;
   --color-link: #555;
@@ -239,6 +239,72 @@ body {
   animation: fadeIn 0.8s;
 }
 
+.token-swapping-room {
+  display: inline-block;
+  height: 100vh;
+  width: 100%;
+  background: url("../assets/Token_Swapping_room.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  overflow-y: hidden;
+  max-height: 100vh;
+  animation: fadeIn 0.8s;
+  background-position-x: right;
+}
+
+.stake-logo {
+  height: 100px;
+  width: 100px;
+  display: inline-block;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  filter: brightness(0);
+}
+
+.stake-logo-parent {
+  padding-left: 35px;
+  padding-right: 35px;
+  box-sizing: border-box;
+  float: left;
+  width: 100%;
+  text-align: center;
+}
+
+.swapping-logo-parent {
+  width: 70%;
+  text-align: center;
+}
+
+.swap-close-logo {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  right: 30px;
+  top: 30px;
+  cursor: pointer;
+  filter: contrast(0.1);
+}
+
+.swapping-logo {
+  height: 100px;
+  width: 100px;
+  display: inline-block;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  /* filter: brightness(0); */
+}
+
+.stake-close-logo {
+  height: 40px;
+  width: 40px;
+  /* display: inline-block; */
+  margin-top: 45px;
+  margin-bottom: 15px;
+  filter: brightness(0);
+  float: left;
+  cursor: pointer;
+}
+
 .fixed-staking-main-bg {
   float: left;
   width: 100%;
@@ -274,7 +340,7 @@ body {
   position: absolute;
   top: 1%;
   left: 33%;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .staking-portal {
@@ -459,7 +525,7 @@ body {
   font-weight: 600;
   font-size: 18px;
   margin: 0;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Ubuntu Mono", monospace;;
   padding: 0;
   display: inline-block;
   margin-top: 0px;
@@ -484,7 +550,7 @@ body {
   font-weight: 600;
   font-size: 18px;
   margin: 0;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Ubuntu Mono", monospace;;
   padding: 0;
   display: inline-block;
   margin-top: 0px;
@@ -503,7 +569,7 @@ body {
   color: #305759;
   font-weight: 600;
   font-size: 18px;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Ubuntu Mono", monospace;;
   padding: 0;
   display: inline-block;
   padding: 12px 15px;
@@ -522,7 +588,7 @@ body {
   color: #305759;
   font-weight: 600;
   font-size: 18px;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Ubuntu Mono", monospace;;
   padding: 0;
   display: inline-block;
   padding: 12px 15px;
@@ -541,7 +607,7 @@ body {
   color: #305759;
   font-weight: 600;
   font-size: 18px;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Ubuntu Mono", monospace;;
   padding: 0;
   display: inline-block;
   padding: 12px 15px;
@@ -560,7 +626,7 @@ body {
   color: #305759;
   font-weight: 600;
   font-size: 18px;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Ubuntu Mono", monospace;;
   padding: 0;
   display: inline-block;
   padding: 12px 15px;
@@ -579,7 +645,7 @@ body {
   color: #305759;
   font-weight: 600;
   font-size: 18px;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Ubuntu Mono", monospace;;
   padding: 0;
   display: inline-block;
   padding: 12px 15px;
@@ -918,7 +984,7 @@ body {
   color: black;
   margin-left: 15px;
   margin-right: 15px;
-  font-family: "Ubuntu Mono";
+  font-family: "Ubuntu Mono", monospace;
   -webkit-text-stroke: 2px #78eefc;
   color: transparent;
   width: 90px;
@@ -964,6 +1030,162 @@ body {
   margin-left: 15%;
 }
 
+.swapping-process-parent {
+  float: left;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  display: flex;
+  margin-left: 0;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
+}
+
+.swapping-box {
+  width: 40%;
+  margin-left: 15%;
+  border-radius: 24px;
+  margin-top: calc(25vh - 150px);
+  padding: 20px 25px;
+  font-size: 24px;
+  background-color: rgb(56, 71, 165);
+  height: 60vh;
+  box-sizing: border-box;
+}
+
+.token-image-parent {
+  float: left;
+  width: 60px;
+  text-align: center;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  box-sizing: border-box;
+  margin-right: 10px;
+}
+
+.token-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  max-width: 100%;
+  /* float: left; */
+}
+
+.token-name-parent {
+  width: calc(65% - 70px);
+  float: left;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  box-sizing: border-box;
+}
+
+.token-name {
+  font-size: 36px;
+  color: white;
+  float: left;
+  width: 100%;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-transform: uppercase;
+  margin-top: 5px;
+  margin-bottom: 0;
+  font-family: "Ubuntu Mono", monospace;
+}
+
+.token-count-parent {
+  width: 35%;
+  float: left;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  box-sizing: border-box;
+}
+
+.token-count-input {
+  width: 90%;
+  background-color: rgba(13, 15, 53, 0.6);
+  color: rgb(255, 255, 255);
+  border-radius: 13px;
+  border-style: none;
+  text-align: right;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  height: 50px;
+  font-size: 24px;
+  float: right;
+}
+
+.token-count-input:focus-visible {
+  outline: -webkit-focus-ring-color auto 1px;
+}
+
+.from-token-box {
+  float: left;
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.to-token-box {
+  float: left;
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.swap-btn {
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+  /* background-color: #78eefc; */
+  border-style: none;
+  border-radius: 50px;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+  padding: 10px 15px;
+  font-family: "Ubuntu Mono", monospace;
+  width: 80%;
+  /* margin-left: 10%; */
+  box-sizing: border-box;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  height: 45px;
+  font-size: 18px;
+}
+
+.swap-icon-parent {
+  float: left;
+  width: 60px;
+  margin-left: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: rgba(0,0,0,0.4);
+  padding: 10px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.swap-icon {
+  height: 30px;
+  display: inline-block;
+  margin-top: 3px;
+}
+
+.swapping-label {
+  font-size: 18px;
+  font-weight: 400;
+  text-transform: capitalize;
+  color: white;
+  font-family: "Ubuntu Mono", monospace;
+}
+
 .unstaked-nfts-div {
   width: 50%;
   float: left;
@@ -991,7 +1213,7 @@ body {
   float: left;
   width: 70%;
   margin-left: 15%;
-  margin-top: 150px;
+  margin-top: 15px;
   margin-bottom: 0px;
 }
 
@@ -2045,7 +2267,7 @@ body {
   padding: 8px;
   width: 225px;
   font-size: 10px;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Ubuntu Mono", monospace;;
   color: #38f1ff;
   font-weight: 500;
   transition: visibility 0s, opacity 0.3s linear;
@@ -2058,7 +2280,7 @@ body {
   margin-top: 120px;
   color: #38f1ff;
   margin-bottom: 20px;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Ubuntu Mono", monospace;;
 }
 
 .m-t-10 {
@@ -2416,7 +2638,7 @@ form .button {
   transform: rotate(-25deg);
   /* display: none; */
   position: absolute;
-  font-family: "Jack Armstrong";
+  font-family: "Ubuntu Mono", monospace;
   opacity: 1;
   animation: fade-out 0.8s 0.1s forwards cubic-bezier(0.11, 0, 0.5, 0);
   user-select: none;
@@ -3991,6 +4213,7 @@ form .button {
   box-sizing: border-box;
   border: 1px solid transparent;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .nft-small-div {
@@ -4884,7 +5107,7 @@ form .button {
   font-size: 16px;
   font-weight: 600;
   color: #78eefc;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Ubuntu Mono", monospace;;
 }
 
 .m-t-b-5 {
@@ -4926,7 +5149,7 @@ form .button {
   left: 0;
   float: left;
   width: 100%;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Ubuntu Mono", monospace;;
 }
 
 .bar {
@@ -5018,7 +5241,7 @@ form .button {
   font-weight: 600;
   font-size: 14px;
   margin: 0;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Ubuntu Mono", monospace;;
   padding: 0;
   display: inline-block;
   margin-top: 10px;
@@ -5038,7 +5261,7 @@ form .button {
   font-weight: 600;
   font-size: 14px;
   margin: 0;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Ubuntu Mono", monospace;;
   padding: 0;
   display: inline-block;
   margin-top: 10px;
@@ -5055,7 +5278,7 @@ form .button {
   text-align: center;
   color: #78eefc;
   font-size: 14px;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Ubuntu Mono", monospace;;
   margin-top: 15px;
   margin-bottom: 15px;
   font-weight: 600;

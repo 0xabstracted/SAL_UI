@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { PublicKey, SystemProgram } from '@solana/web3.js';
 
 import React from 'react';
@@ -16,8 +17,6 @@ import {
 } from './StakeConfig';
 
 import { AuthorizeFunderAlphaArgs } from './StakeConfigInterface';
-
-import FundRewardAlpha from './FundRewardAlpha';
 
 import { InitFarmAlphaContext } from './InitFarmAlpha';
 
@@ -119,13 +118,6 @@ function AuthorizeFunderAlpha() {
           <button className="Inside-Farm-btn" onClick={() => authorizeFunderAlpha(authorizeFunderAlphaCyborgPetArgs)}>Authorize Funder For CyborgPet</button>
         </div>
       </div>   
-      {/* {
-        funderHumans && funderHumanPets && funderCyborg && funderCyborgPet && 
-        authorizationProofHumans && authorizationProofHumanPets && authorizationProofCyborg && authorizationProofCyborgPet &&
-        <AuthorizeFunderAlphaContext.Provider value={{funderHumans, funderHumanPets, funderCyborg, funderCyborgPet}}>
-          <FundRewardAlpha/>
-        </AuthorizeFunderAlphaContext.Provider>
-      } */}
     </div>
   )
 }

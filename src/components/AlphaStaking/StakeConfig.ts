@@ -1,10 +1,11 @@
 import { BN } from "@project-serum/anchor";
 import { PublicKey } from "@solana/web3.js";
 import { FarmConfig, FixedRateConfig, MaxCounts } from "../../GrandProgramUtils/gemBank/interface";
-import * as web3 from "@solana/web3.js"
+import { REWARD_MINT_ALPHA } from "../TokenCreation/AlphaTokenConfig";
 import { AuthorizeFunderAlphaArgs, InitFarmAlphaArgs } from "./StakeConfigInterface";
+import * as anchor from '@project-serum/anchor'
 
-export const REWARD_MINT_ALPHA = new PublicKey('x4zmbszSajZe8Qg8H1J9s1hMsrDTYjPDe4qp8fJcgMa');
+export const UPDATE_AUTHORITY_ALPHA = new anchor.web3.PublicKey("abSzV5zXTKCbkjzN2hzrg2BPTbkYAQ7tt4jQPett2jX")
 
 export const farmConfigAlpha:FarmConfig = {
     minStakingPeriodSec: new BN(0),
@@ -42,10 +43,12 @@ export const  initFarmAlphaCyborgPetArgs: InitFarmAlphaArgs = {
     id: "cp",
 }
 
-export const HUMANS_FARM_ID = new PublicKey("7MudLqxS7gJVhWBWjPwBqsdCrmwx2ttrjdTzHAiwAGew");
-export const HUMANPETS_FARM_ID = new PublicKey("8hJFn4fZLtyw8VUExDPFEchD8SFXr5gMMz97yw2Yxc7z");
-export const CYBORG_FARM_ID = new PublicKey("6w9bDLhSkQ76R7mPRwhizEQ5ZgeoGg92eAZdL5gmPzp8");
-export const CYBORGPET_FARM_ID = new PublicKey("D5ovbCKctoxRBCbaaRGzuekxZxTUTGvzNGo8b5wCoKuG");
+export const DEFAULT_PUBLIC_KEY =  new PublicKey('abstractedabstractedabstractedabstractedabs');
+
+export const HUMANS_FARM_ID = new PublicKey("6e7HuZnhQWGtsH8pSy32Ap5NEJc9SWLeUff9hAwNEeUW");
+export const HUMANPETS_FARM_ID = new PublicKey("F9op6Pf9NJbowmk7oVsfkjfAkofGCNEmai1fL4ftDrTJ");
+export const CYBORG_FARM_ID = new PublicKey("AFoJsBkC99Z5DfRXQTG2sB26yTRxh1qPazcmB3wGyAhG");
+export const CYBORGPET_FARM_ID = new PublicKey("21xq97XydC5gSLhQwySJ3oQbqK8eNfL1sZc1i6kfE1ob");
 
 export const FUNDER_HUMANS_FARM = new PublicKey('abSzV5zXTKCbkjzN2hzrg2BPTbkYAQ7tt4jQPett2jX');
 export const FUNDER_HUMANPETS_FARM = new PublicKey('abSzV5zXTKCbkjzN2hzrg2BPTbkYAQ7tt4jQPett2jX');
@@ -72,7 +75,6 @@ export const authorizeFunderAlphaCyborgPetArgs: AuthorizeFunderAlphaArgs = {
     funderToAuthorize: FUNDER_CYBORGPET_FARM,
     id: "cp",
 }
-
 const fixedrateConfigHumans: FixedRateConfig = {
     schedule: {
         baseRate: new BN(5),
@@ -81,7 +83,7 @@ const fixedrateConfigHumans: FixedRateConfig = {
         tier3:null,
         denominator: new BN(86400)
     },
-    amount: new BN(4.2 * 1000000 * 1000000),
+    amount: new BN(1e14),
     durationSec: new BN(8640000),
 };
 const fixedrateConfigHumanPets: FixedRateConfig = {
@@ -92,7 +94,7 @@ const fixedrateConfigHumanPets: FixedRateConfig = {
         tier3:null,
         denominator: new BN(86400)
     },
-    amount: new BN(2.52 * 1000000 * 1000000),
+    amount: new BN(1e14),
     durationSec: new BN(8640000),
 };
 const fixedrateConfigCyborg: FixedRateConfig = {
@@ -103,7 +105,7 @@ const fixedrateConfigCyborg: FixedRateConfig = {
         tier3:null,
         denominator: new BN(86400)
     },
-    amount: new BN(0),
+    amount: new BN(1e14),
     durationSec: new BN(8640000),
 };
 const fixedrateConfigCyborgPet: FixedRateConfig = {
@@ -114,7 +116,7 @@ const fixedrateConfigCyborgPet: FixedRateConfig = {
         tier3:null,
         denominator: new BN(86400)
     },
-    amount: new BN(0),
+    amount: new BN(1e14),
     durationSec: new BN(8640000),
 };
 
