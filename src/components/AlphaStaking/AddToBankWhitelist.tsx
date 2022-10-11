@@ -11,53 +11,59 @@ import { findFarmAuthorityPDA, whitelistProofPda } from '../../GrandProgramUtils
 
 import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, DEFAULT_PUBLIC_KEY, HUMANPETS_FARM_ID, HUMANS_FARM_ID, UPDATE_AUTHORITY_ALPHA } from './StakeConfig';
 import { Metaplex } from '@metaplex-foundation/js';
+import { setTimeout } from 'timers';
+import { sendTransactions } from '../../config/connection';
+import { BANK_WL_OBJECT } from "../AlphaStaking/StakeConfig";
 
 function AddToBankWhitelist() {
   const wallet = useWallet();
+  let stack_opener = 0;
 
   const getFarmIfFromAttributes = (attributes: any) => {
-    let is_human;
+    let body;
     let is_cyborg;
     let is_pet;
 
     for (let index = 0; index < attributes.length; index++) {
       const element = attributes[index];
+      // console.log(element);
       if (element.trait_type === 'BaseBody' && element.value === 'Human') {
-        is_human = true;
+        body = 'human';
       }
       else if (element.trait_type === 'BaseBody' && element.value === 'Cyborg') {
-        is_cyborg = true;
+        body = 'cyborg';
       }
       if (element.trait_type === 'Pets' && element.value && element.value.length > 0) {
         is_pet = true;
       }
     }
 
-    if (is_human && is_pet) {
+    if (body == 'human' && is_pet) {
       return HUMANPETS_FARM_ID 
     }
-    else if (is_cyborg && !is_pet) {
+    else if (body == 'human' && !is_pet) {
       return HUMANS_FARM_ID
     }
-    else if (is_cyborg && is_pet) {
+    else if (body == 'cyborg' && is_pet) {
       return  CYBORGPET_FARM_ID
     }
-    else if (is_cyborg && !is_pet) {
+    else if (body == 'cyborg' && !is_pet) {
       return  CYBORG_FARM_ID
     }
     return DEFAULT_PUBLIC_KEY
   }
 
-  const sendAddtoBankWhitelistInstruction  = async (farmId: PublicKey, mint: PublicKey) => {
-      console.log(`farmId: ${farmId}`)
-      const myKeypair = web3.Keypair.fromSecretKey(new Uint8Array([236,35,125,15,184,98,170,93,245,91,234,165,3,54,0,180,142,100,16,191,246,119,76,165,198,213,25,233,208,63,67,20,8,155,30,8,104,196,143,170,188,27,225,142,108,115,152,245,37,32,121,148,60,55,148,73,62,232,234,178,128,194,190,14]))
+  const sendAddtoBankWhitelistInstruction  = async (farmId: any, mint: string) => {
+      // console.log(`farmId: ${farmId}`)
+      // const myKeypair = web3.Keypair.fromSecretKey(new Uint8Array([236,35,125,15,184,98,170,93,245,91,234,165,3,54,0,180,142,100,16,191,246,119,76,165,198,213,25,233,208,63,67,20,8,155,30,8,104,196,143,170,188,27,225,142,108,115,152,245,37,32,121,148,60,55,148,73,62,232,234,178,128,194,190,14]))
       const address_to_whitelist = new anchor.web3.PublicKey(mint);
+      farmId = new anchor.web3.PublicKey(farmId);
       const stakeProgram = await getStakeProgram(wallet);
       try {
         const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(farmId);
         const farms:any = await stakeProgram.account.farm.fetch(farmId);
         const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
-        const wallet_create = await stakeProgram.rpc.addToBankWhitelist(farmAuthBump, 2, 
+        return stakeProgram.instruction.addToBankWhitelist(farmAuthBump, 2, 
           {
             accounts: {
               farm: farmId,
@@ -73,17 +79,20 @@ function AddToBankWhitelist() {
             // signers: [myKeypair]
           }
         );
-        console.log(`add to whitelist bank signature : ${wallet_create} `);
+        // console.log(`add to whitelist bank signature : ${wallet_create} `);
       } catch (error) {
         console.log("Transaction error: ", error);
+        return null;
       }
     // }
   }
+
   interface ATBWl{
     farmId: any, 
     mint: PublicKey, 
     id: number,
   }
+
   const addToBankWhitelistAlpha = async () => {
     if (wallet && wallet.connected) {
       const connection = new Connection(clusterApiUrl("devnet"));
@@ -97,7 +106,8 @@ function AddToBankWhitelist() {
       
       let obj_list :ATBWl[] = [];
       let count = 0
-
+      console.log(allNfts);
+      let index = 0;
       for (let index = 0; index < allNfts.length; index++) {
         const nft:any = allNfts[index];
         if (nft.updateAuthorityAddress.toBase58() === "TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq") {
@@ -106,35 +116,61 @@ function AddToBankWhitelist() {
           xhr.open("GET", nft.uri);
           xhr.onreadystatechange = async () => {
             if(xhr.readyState === 4) {
-              let farmId = getFarmIfFromAttributes(JSON.parse(xhr.responseText).attributes)
-              
-              if (farmId === HUMANPETS_FARM_ID ||  farmId === HUMANS_FARM_ID || farmId === CYBORGPET_FARM_ID || farmId === CYBORG_FARM_ID){
+              try {
+                let farmId = getFarmIfFromAttributes(JSON.parse(xhr.responseText).attributes)
+                if (farmId === HUMANPETS_FARM_ID ||  farmId === HUMANS_FARM_ID || farmId === CYBORGPET_FARM_ID || farmId === CYBORG_FARM_ID){
+                  let obj : ATBWl = {
+                    mint: nft.mintAddress,
+                    farmId: farmId,
+                    id:obj_list.length,
+                  }
+                  obj_list.push(obj);
+                  if (index == allNfts.length - 1) {
+                    console.log(obj_list);
+                  }
+                }
+              } catch (error) {
+                console.log(1);
+                console.log(nft);
                 let obj : ATBWl = {
                   mint: nft.mintAddress,
-                  farmId: farmId,
+                  farmId: HUMANS_FARM_ID,
                   id:obj_list.length,
-              }
-              console.log("index: ",index);
-              console.log("farmid: ",obj.farmId.toBase58());
-              console.log("mint:", obj.mint.toBase58());
-              console.log("length:",allNfts.length);
-              obj_list.push(obj);
-              // await sendAddtoBankWhitelistInstruction(farmId, nft.mintAddress)
+                }
+                obj_list.push(obj);
               }
             }
           };
           xhr.send();
         }
       }
-      console.log(obj_list)
+      console.log(obj_list);
     }
+  }
+
+  const parseArrayToBankWhitelist =async () => {
+    const connection = new Connection(clusterApiUrl("devnet"));
+    let bank_instruction:any = [];
+    for (let index = stack_opener; index < stack_opener + 8; index++) {
+      let k = await sendAddtoBankWhitelistInstruction(BANK_WL_OBJECT[index]['farmId'], BANK_WL_OBJECT[index]['mint']);
+      bank_instruction.push(k)
+      // const element = BANK_WL_OBJECT[index];
+    }
+    console.log(bank_instruction);
+    const add_to_bank_wl_sig = await sendTransactions(
+      connection,
+      wallet,
+      [bank_instruction],
+      [[]]
+    )
+    console.log(add_to_bank_wl_sig);
   }
   
   return (
     <div>
       <div className="gen-farm-stats">
             <div className="gen-farm-stats-right">
-            <button className="Inside-Farm-btn" onClick={() => addToBankWhitelistAlpha()}>Add To Bank Whitelist</button>
+            <button className="Inside-Farm-btn" onClick={() => parseArrayToBankWhitelist()}>Add To Bank Whitelist</button>
             </div>
         </div>
     </div>
