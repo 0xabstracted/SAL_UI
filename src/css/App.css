@@ -1049,38 +1049,71 @@ body {
   padding: 20px 25px;
   font-size: 24px;
   background-color: rgb(56, 71, 165);
-  height: 60vh;
+  height: 62vh;
   box-sizing: border-box;
 }
 
 .token-image-parent {
   float: left;
-  width: 60px;
+  width: 40px;
   text-align: center;
   padding-top: 4px;
   padding-bottom: 4px;
   box-sizing: border-box;
   margin-right: 10px;
+  height: 40px;
 }
 
 .token-image {
-  width: 50px;
-  height: 50px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   max-width: 100%;
   /* float: left; */
+  border: 2px solid #05727a;
 }
 
 .token-name-parent {
-  width: calc(65% - 70px);
+  width: 100px;
   float: left;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding-top: 0px;
+  padding-bottom: 0px;
   box-sizing: border-box;
+  height: 40px;
+}
+
+.from-token-text {
+  float: left;
+  width: 50%;
+  text-align: left;
+  max-width: 50%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: white;
+  font-size: 12px;
+}
+
+.from-token-bal {
+  float: right;
+  width: 50%;
+  text-align: right;
+  max-width: 50%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: white;
+  font-size: 12px;
+}
+
+.from-token-header {
+  float: left;
+  width: 100%;
+  text-align: center;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .token-name {
-  font-size: 36px;
+  font-size: 24px;
   color: white;
   float: left;
   width: 100%;
@@ -1089,13 +1122,15 @@ body {
   white-space: nowrap;
   overflow-x: hidden;
   text-transform: uppercase;
-  margin-top: 5px;
+  margin-top: 0px;
   margin-bottom: 0;
   font-family: "Ubuntu Mono", monospace;
+  line-height: 40px;
+  vertical-align: middle;
 }
 
 .token-count-parent {
-  width: 35%;
+  width: calc(100% - 150px);
   float: left;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1103,21 +1138,49 @@ body {
 }
 
 .token-count-input {
-  width: 90%;
-  background-color: rgba(13, 15, 53, 0.6);
+  width: calc(100% - 90px);
+  background-color: transparent;
   color: rgb(255, 255, 255);
   border-radius: 13px;
   border-style: none;
   text-align: right;
   box-sizing: border-box;
-  padding: 8px 12px;
-  height: 50px;
+  padding: 0;
+  height: 40px;
   font-size: 24px;
   float: right;
+  font-family: "Ubuntu Mono", monospace;
+}
+
+.bal-half-btn {
+  float: left;
+  font-size: 12px;
+  height: 28px;
+  margin-top: 6px;
+  margin-left: 0;
+  margin-right: 2px;
+  background-color: #222;
+  color: white;
+  padding: 4px 6px;
+  border: 0;
+  font-family: "Ubuntu Mono", monospace;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .token-count-input:focus-visible {
-  outline: -webkit-focus-ring-color auto 1px;
+  outline: none;
+}
+
+.token-count-input::-webkit-outer-spin-button,
+.token-count-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.token-count-input {
+  -moz-appearance: textfield;
 }
 
 .from-token-box {
@@ -1125,17 +1188,21 @@ body {
   width: 100%;
   margin-top: 15px;
   margin-bottom: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  border: 1px solid #fff;
+  border-radius: 6px;
+  padding: 8px 12px;
+  box-sizing: border-box;
 }
 
 .to-token-box {
   float: left;
   width: 100%;
-  margin-top: 15px;
+  margin-top: 5px;
   margin-bottom: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  border: 1px solid #fff;
+  border-radius: 6px;
+  padding: 8px 12px;
+  box-sizing: border-box;
 }
 
 .swap-btn {
@@ -1159,21 +1226,21 @@ body {
 }
 
 .swap-icon-parent {
-  float: left;
-  width: 60px;
-  margin-left: 40px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  height: 60px;
+  width: 50px;
+  /* margin-left: 40px; */
+  margin-top: 15px;
+  margin-bottom: 15px;
+  height: 50px;
   border-radius: 50%;
   background-color: rgba(0,0,0,0.4);
-  padding: 10px;
+  padding: 8px;
   text-align: center;
   box-sizing: border-box;
+  display: inline-block;
 }
 
 .swap-icon {
-  height: 30px;
+  height: 26px;
   display: inline-block;
   margin-top: 3px;
 }
