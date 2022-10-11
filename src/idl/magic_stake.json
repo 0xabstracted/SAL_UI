@@ -31,11 +31,6 @@
           "isSigner": false
         },
         {
-          "name": "farmTreasuryToken",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
           "name": "bank",
           "isMut": true,
           "isSigner": true
@@ -3205,8 +3200,5 @@
         }
       ]
     }
-  ],
-  "metadata": {
-    "address": "ETiwBTiVf2wNApe5Qc1sGozV3nkUDKNRVuCWzJSFWWfV"
-  }
+  ]
 }

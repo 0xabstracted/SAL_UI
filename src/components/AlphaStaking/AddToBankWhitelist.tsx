@@ -1,177 +1,140 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useWallet } from '@solana/wallet-adapter-react';
-import { PublicKey, SystemProgram } from '@solana/web3.js';
+import { clusterApiUrl, Connection, PublicKey, SystemProgram } from '@solana/web3.js';
+
+import * as web3 from "@solana/web3.js";
 
 import * as anchor from '@project-serum/anchor'
-
-import { useState } from 'react'
 
 import { getStakeProgram, GEM_BANK_PROGRAM_ID } from '../../GrandProgramUtils/gemBank/getProgramObjects';
 import { findFarmAuthorityPDA, whitelistProofPda } from '../../GrandProgramUtils/gemBank/pda';
 
-import { MAGNEXIA_FARM_ID } from '../../config/config';
-import { readTraits } from '../../nft-utilities/readTraits';
 
-import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, HUMANPETS_FARM_ID, HUMANS_FARM_ID } from './StakeConfig';
-
-const dirName = "/Users/bhargavveepuri/Downloads/metadata"
+import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, DEFAULT_PUBLIC_KEY, HUMANPETS_FARM_ID, HUMANS_FARM_ID, UPDATE_AUTHORITY_ALPHA } from './StakeConfig';
+import { Metaplex } from '@metaplex-foundation/js';
 
 function AddToBankWhitelist() {
   const wallet = useWallet();
-  const [collectionIdInputOne, setCollectionIdInputOne] = useState<string>();
-  const [collectionIdInputTwo, setCollectionIdInputTwo] = useState<string>();
-  const [collectionIdInputThree, setCollectionIdInputThree] = useState<string>();
-  const [collectionIdInputFour, setCollectionIdInputFour] = useState<string>();
-  const [collectionIdMint, setCollectionIdMint] = useState<string>();
 
-  const addToBankWhitelist = async (farmId : PublicKey) => {
-    var fs = require('fs');
-    fs.readdir(dirName, function(err: any, filenames: any[]) {
-      if (err) {
-      return;
+  const getFarmIfFromAttributes = (attributes: any) => {
+    let is_human;
+    let is_cyborg;
+    let is_pet;
+
+    for (let index = 0; index < attributes.length; index++) {
+      const element = attributes[index];
+      if (element.trait_type === 'BaseBody' && element.value === 'Human') {
+        is_human = true;
       }
-      filenames.forEach(function(filename: string) {
-      fs.readFile(dirName + filename, 'utf-8', async function(err: any, content: any) {
-          if (err) {
-              return;
-          }
-          var metadata = JSON.parse(content);
-          var uriObj:any = readTraits(metadata.uri, filename)
-          
-          console.log(uriObj);
-          if (uriObj.mint && uriObj.mint.length > 0) {
-              try {
-                const address_to_whitelist = new anchor.web3.PublicKey(uriObj.mint);
-                const stakeProgram = await getStakeProgram(wallet);
-                try {
-                  const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(farmId);
-                  const farms:any = await stakeProgram.account.farm.fetch(farmId);
-                  const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
-                  const wallet_create = await stakeProgram.rpc.addToBankWhitelist(farmAuthBump, 2, 
-                    {
-                      accounts: {
-                        farm: farmId,
-                        farmManager: farms.farmManager,
-                        farmAuthority: farmAuth,
-                        bank: farms.bank,
-                        addressToWhitelist: address_to_whitelist,
-                        whitelistProof: whitelistProofPdaVal,
-                        systemProgram: SystemProgram.programId,
-                        gemBank: GEM_BANK_PROGRAM_ID
-                      }
-                    }
-                  );
-                  console.log('add to whitelist bank signature : ' + wallet_create);
-                //   setAlertState({
-                //     open: true,
-                //     message: "Collection Id has beed added to bank whitelist",
-                //     severity: "success",
-                //   });
-                } catch (error) {
-                  console.log("Transaction error: ", error);
-                }
-              } catch (error) {
-                // setAlertState({
-                //   open: true,
-                //   message: "Collection Id is not a valid public key",
-                //   severity: "error",
-                // });
-              }
-            }
-            else {
-            //   setAlertState({
-            //     open: true,
-            //     message: "Collection Id is empty",
-            //     severity: "error",
-            //   });
-            }
-        });
-      });
-    });  
+      else if (element.trait_type === 'BaseBody' && element.value === 'Cyborg') {
+        is_cyborg = true;
+      }
+      if (element.trait_type === 'Pets' && element.value && element.value.length > 0) {
+        is_pet = true;
+      }
+    }
+
+    if (is_human && is_pet) {
+      return HUMANPETS_FARM_ID 
+    }
+    else if (is_cyborg && !is_pet) {
+      return HUMANS_FARM_ID
+    }
+    else if (is_cyborg && is_pet) {
+      return  CYBORGPET_FARM_ID
+    }
+    else if (is_cyborg && !is_pet) {
+      return  CYBORG_FARM_ID
+    }
+    return DEFAULT_PUBLIC_KEY
   }
 
-  // Farm Manager should call this
-  const addToBankWhitelistMint = async () => {
-    if (collectionIdMint && collectionIdMint.length > 0) {
+  const sendAddtoBankWhitelistInstruction  = async (farmId: PublicKey, mint: PublicKey) => {
+      console.log(`farmId: ${farmId}`)
+      const myKeypair = web3.Keypair.fromSecretKey(new Uint8Array([236,35,125,15,184,98,170,93,245,91,234,165,3,54,0,180,142,100,16,191,246,119,76,165,198,213,25,233,208,63,67,20,8,155,30,8,104,196,143,170,188,27,225,142,108,115,152,245,37,32,121,148,60,55,148,73,62,232,234,178,128,194,190,14]))
+      const address_to_whitelist = new anchor.web3.PublicKey(mint);
+      const stakeProgram = await getStakeProgram(wallet);
       try {
-        const address_to_whitelist = new anchor.web3.PublicKey(collectionIdMint);
-        const stakeProgram = await getStakeProgram(wallet);
-        try {
-          const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(MAGNEXIA_FARM_ID);
-          const farms:any = await stakeProgram.account.farm.fetch(MAGNEXIA_FARM_ID);
-          const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
-          const wallet_create = await stakeProgram.rpc.addToBankWhitelist(farmAuthBump, 1, 
-            {
-              accounts: {
-                farm: MAGNEXIA_FARM_ID,
-                farmManager: farms.farmManager,
-                farmAuthority: farmAuth,
-                bank: farms.bank,
-                addressToWhitelist: address_to_whitelist,
-                whitelistProof: whitelistProofPdaVal,
-                systemProgram: SystemProgram.programId,
-                gemBank: GEM_BANK_PROGRAM_ID
+        const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(farmId);
+        const farms:any = await stakeProgram.account.farm.fetch(farmId);
+        const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
+        const wallet_create = await stakeProgram.rpc.addToBankWhitelist(farmAuthBump, 2, 
+          {
+            accounts: {
+              farm: farmId,
+              // farmManager: myKeypair.publicKey,
+              farmManager: farms.farmManager,
+              farmAuthority: farmAuth,
+              bank: farms.bank,
+              addressToWhitelist: address_to_whitelist,
+              whitelistProof: whitelistProofPdaVal,
+              systemProgram: SystemProgram.programId,
+              gemBank: GEM_BANK_PROGRAM_ID
+            },
+            // signers: [myKeypair]
+          }
+        );
+        console.log(`add to whitelist bank signature : ${wallet_create} `);
+      } catch (error) {
+        console.log("Transaction error: ", error);
+      }
+    // }
+  }
+  interface ATBWl{
+    farmId: any, 
+    mint: PublicKey, 
+    id: number,
+  }
+  const addToBankWhitelistAlpha = async () => {
+    if (wallet && wallet.connected) {
+      const connection = new Connection(clusterApiUrl("devnet"));
+
+      const metaplex = Metaplex.make(connection);
+      
+      const allNfts = await metaplex
+                          .nfts()
+                          .findAllByUpdateAuthority({updateAuthority: UPDATE_AUTHORITY_ALPHA})
+                          .run();
+      
+      let obj_list :ATBWl[] = [];
+      let count = 0
+
+      for (let index = 0; index < allNfts.length; index++) {
+        const nft:any = allNfts[index];
+        if (nft.updateAuthorityAddress.toBase58() === "abSzV5zXTKCbkjzN2hzrg2BPTbkYAQ7tt4jQPett2jX") {
+          console.log(`count1: ${count++}`)
+          let xhr = new XMLHttpRequest();
+          xhr.open("GET", nft.uri);
+          xhr.onreadystatechange = async () => {
+            if(xhr.readyState === 4) {
+              let farmId = getFarmIfFromAttributes(JSON.parse(xhr.responseText).attributes)
+              
+              if (farmId === HUMANPETS_FARM_ID ||  farmId === HUMANS_FARM_ID || farmId === CYBORGPET_FARM_ID || farmId === CYBORG_FARM_ID){
+                let obj : ATBWl = {
+                  mint: nft.mintAddress,
+                  farmId: farmId,
+                  id:obj_list.length,
+              }
+              console.log("index: ",index);
+              console.log("farmid: ",obj.farmId.toBase58());
+              console.log("mint:", obj.mint.toBase58());
+              console.log("length:",allNfts.length);
+              obj_list.push(obj);
+              // await sendAddtoBankWhitelistInstruction(farmId, nft.mintAddress)
               }
             }
-          );
-          console.log('add to whitelist bank signature : ' + wallet_create);
-        //   setAlertState({
-        //     open: true,
-        //     message: "Collection Id has beed added to bank whitelist",
-        //     severity: "success",
-        //   });
-        } catch (error) {
-          console.log("Transaction error: ", error);
+          };
+          xhr.send();
         }
-      } catch (error) {
-        // setAlertState({
-        //   open: true,
-        //   message: "Collection Id is not a valid public key",
-        //   severity: "error",
-        // });
       }
-    }
-    else {
-    //   setAlertState({
-    //     open: true,
-    //     message: "Collection Id is empty",
-    //     severity: "error",
-    //   });
+      console.log(obj_list)
     }
   }
-
+  
   return (
     <div>
       <div className="gen-farm-stats">
-            <div className="gen-farm-stats-left">
-            <input className="authorize-funder-reward-input" placeholder="Collection Id" value={collectionIdInputOne} onChange={event => setCollectionIdInputOne(event.target.value)} />
-            </div>
             <div className="gen-farm-stats-right">
-            <button className="Inside-Farm-btn" onClick={() => addToBankWhitelist(HUMANS_FARM_ID)}>Add To Humans Farm Bank Whitelist</button>
-            </div>
-        </div>
-        <div className="gen-farm-stats">
-            <div className="gen-farm-stats-left">
-            <input className="authorize-funder-reward-input" placeholder="Collection Id" value={collectionIdInputTwo} onChange={event => setCollectionIdInputTwo(event.target.value)} />
-            </div>
-            <div className="gen-farm-stats-right">
-            <button className="Inside-Farm-btn" onClick={() => addToBankWhitelist(HUMANPETS_FARM_ID)}>Add To Humanpets Farm Bank Whitelist</button>
-            </div>
-        </div>
-        <div className="gen-farm-stats">
-            <div className="gen-farm-stats-left">
-            <input className="authorize-funder-reward-input" placeholder="Collection Id" value={collectionIdInputThree} onChange={event => setCollectionIdInputThree(event.target.value)} />
-            </div>
-            <div className="gen-farm-stats-right">
-            <button className="Inside-Farm-btn" onClick={() => addToBankWhitelist(CYBORG_FARM_ID)}>Add To Cyborg Farm Bank Whitelist</button>
-            </div>
-        </div>
-        <div className="gen-farm-stats">
-            <div className="gen-farm-stats-left">
-            <input className="authorize-funder-reward-input" placeholder="Collection Id" value={collectionIdInputFour} onChange={event => setCollectionIdInputFour(event.target.value)} />
-            </div>
-            <div className="gen-farm-stats-right">
-            <button className="Inside-Farm-btn" onClick={() => addToBankWhitelist(CYBORGPET_FARM_ID)}>Add To Cyborgpet Farm Bank Whitelist</button>
+            <button className="Inside-Farm-btn" onClick={() => addToBankWhitelistAlpha()}>Add To Bank Whitelist</button>
             </div>
         </div>
     </div>

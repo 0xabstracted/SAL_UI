@@ -82,7 +82,7 @@ function InitFarmAlpha() {
       console.log("rewardAPot:",rewardAPot);
       console.log("rewardAPot.toBase58():",rewardAPot.toBase58());
       
-      const [farmTreasuryToken, farmTreasuryTokenBump] = await findFarmTreasuryTokenPDA(farm.publicKey, args.rewardMintId);
+      const [farmTreasuryToken, farmTreasuryTokenBump] = await findFarmTreasuryTokenPDA(farm.publicKey);
       console.log("farmAuthority:",farmAuthorityBump);
       console.log("rewardAPot:",rewardAPot);
       console.log("rewardAPot.toBase58():",rewardAPot.toBase58());

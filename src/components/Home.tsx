@@ -97,9 +97,10 @@ import AddToBankWhitelist from "./AlphaStaking/AddToBankWhitelist";
 import FundRewardAlpha from "./AlphaStaking/FundRewardAlpha";
 import CreateFungibleToken from "./TokenCreation/CreateFungibleToken";
 
-import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, HUMANPETS_FARM_ID, HUMANS_FARM_ID, REWARD_MINT_ALPHA } from "./AlphaStaking/StakeConfig";
+import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, HUMANPETS_FARM_ID, HUMANS_FARM_ID } from "./AlphaStaking/StakeConfig";
 import { REWARD_MINT_GLITCH } from "./TokenCreation/AlphaTokenConfig";
 import MintNewFungibleToken from "./TokenCreation/MintNewFungibleToken";
+import { findFarmTreasuryTokenPDA } from "../GrandProgramUtils/gemBank/pda";
 
 const responsive = {
   superLargeDesktop: {
@@ -527,13 +528,6 @@ const Home = (props: HomeProps) => {
   const findRewardsPotPDA = (farm: PublicKey, rewardMint: PublicKey) => {
     return PublicKey.findProgramAddress(
       [Buffer.from('reward_pot'), farm.toBytes(), rewardMint.toBytes()],
-      MAGIC_STAKE_PROGRAM_ID
-    );
-  };
-
-  const findFarmTreasuryTokenPDA = (farm: PublicKey, rewardMint: PublicKey) => {
-    return PublicKey.findProgramAddress(
-      [Buffer.from('token_treasury'), farm.toBytes(), rewardMint.toBytes()],
       MAGIC_STAKE_PROGRAM_ID
     );
   };
@@ -1444,10 +1438,7 @@ const Home = (props: HomeProps) => {
       const [farmTreasury, farmTreasuryBump] = await findFarmTreasuryPDA(
         FARM_ID
       );
-      const [farmTreasuryToken, farmTreasuryTokenBump] = await findFarmTreasuryTokenPDA(
-        FARM_ID,
-        REWARD_MINT
-      );
+      const [farmTreasuryToken, farmTreasuryTokenBump] = await findFarmTreasuryTokenPDA(FARM_ID);
       const wallet_create = await stakeProgram.rpc.unstakeAlpha(farmAuthBump, farmTreasuryTokenBump, farmerBump, false,
         {
           accounts: {
@@ -2016,7 +2007,7 @@ const Home = (props: HomeProps) => {
         },3000) 
       }
       else {
-        var arr = [
+        var arr1 = [
           "Patience is key",
           "Shh...",
           "Not yet, the time will come",
@@ -2025,7 +2016,7 @@ const Home = (props: HomeProps) => {
         ];
         const k: number | undefined = Math.floor(Math.random() * 5);
         setShowMessage(true);
-        setMessageText(arr[k as number]);
+        setMessageText(arr1[k as number]);
         setTimeout(function () {
           setShowMessage(false);
           setMessageText("");
