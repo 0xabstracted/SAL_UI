@@ -1158,6 +1158,55 @@ body {
   font-size: 18px;
 }
 
+.user-profile-box {
+  float: right;
+  margin-right: 15px;
+  height: 40px;
+  width: 40px;
+}
+
+.user-profile-img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.user-menu-parent {
+  position: absolute;
+  right: 15px;
+  max-width: 300px;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 1pt 6pt rgb(0 0 0 / 15%);
+}
+
+.user-menu-parent ul {
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.refresh-farmer-icon {
+  float: right;
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+}
+
+.user-menu-parent>ul>li {
+  float: left;
+  width: 100%;
+  padding: 8px 12px;
+  line-height: 24px;
+  vertical-align: middle;
+  text-align: left;
+  font-size: 16px;
+  color: black;
+}
+
 .swap-icon-parent {
   float: left;
   width: 60px;

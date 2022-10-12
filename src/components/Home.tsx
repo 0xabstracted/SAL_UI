@@ -44,6 +44,8 @@ import Kaizer from "../assets/kaizer.png";
 import Walter from "../assets/walter.png";
 import Yogantar from "../assets/yogantar.png";
 import SwappingIcon from "../assets/swapping_icon.png";
+import User from "../assets/user.png";
+import Refresh from "../assets/refresh.png";
 import ProgressBar from "./progress-bar";
 import 'react-circular-progressbar/dist/styles.css';
 
@@ -268,6 +270,8 @@ const Home = (props: HomeProps) => {
   const [showTokenSwapping, setShowTokenSwapping] = useState(false);
   const [glitchTokenVal, setGlitchTokenVal] = useState(0);
   const [alphaTokenVal, setAlphaTokenVal] = useState(0);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [stakedBal, setStakedBal] = useState(0);
 
   const wallet = useWallet();
   // wallet.connect();
@@ -2680,6 +2684,17 @@ const Home = (props: HomeProps) => {
                 <div className="stake-logo-parent">
                   <img src={LogoWhite} className="stake-logo" alt="" />
                   <img src={CloseAlpha} onClick={closeFixedStaking} className="stake-close-logo" alt="" />
+                  <div className="user-profile-box" onClick={() => setShowUserMenu(!showUserMenu)}>
+                    <img src={User} className="user-profile-img" alt="" />
+                  </div>
+                  {showUserMenu && 
+                  <div className="user-menu-parent">
+                    <ul>
+                      <li>Staked Bal : {} <img src={Refresh} className="refresh-farmer-icon" alt="" /></li>
+                      <li>Claim</li>
+                    </ul>
+                  </div>
+                  }
                 </div>
                 <div className="stake-progress">
                   <ProgressBar bgcolor={"#6a1b9a"} completed={63} />
