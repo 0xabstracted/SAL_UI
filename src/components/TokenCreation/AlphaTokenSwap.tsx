@@ -107,7 +107,7 @@ function AlphaTokenSwap() {
         }
       }    
       
-      token_swap_instructions.push(stakeProgram.rpc.transferAlphaTokens(bumpAlphaTokenSwap, bumpAlphaPot, amount,{
+      token_swap_instructions.push(stakeProgram.instruction.transferAlphaTokens(bumpAlphaTokenSwap, bumpAlphaPot, amount,{
         accounts: {
           alphaTokenswap: alpha_token_swap_pda,
           alphaCreator: args.ownerOldMint,

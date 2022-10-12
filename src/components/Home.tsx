@@ -371,22 +371,23 @@ const Home = (props: HomeProps) => {
   const nextStepStake = async () => {
     nftStakeStepCount = nftStakeStep;
     console.log(nftStakeStepCount);
-    if(nftStakeStepCount == 0) {
-      nftStakeStepCount = nftStakeStepCount + 1;
-      setNftStakeStep(nftStakeStepCount);
-      completeStake();
-    }
-    else {
-      if (stakedCity && stakedCity.length > 0 && nftStakeStepCount == 0) {
-        nftStakeStepCount = nftStakeStepCount + 2;
-        setNftStakeStep(nftStakeStepCount);
-        completeStake();
-      }
-      else {
-        nftStakeStepCount = nftStakeStepCount + 1;
-        setNftStakeStep(nftStakeStepCount);
-      }
-    }
+    completeStake();
+    // if(nftStakeStepCount == 0) {
+    //   nftStakeStepCount = nftStakeStepCount + 1;
+    //   setNftStakeStep(nftStakeStepCount);
+    //   completeStake();
+    // }
+    // else {
+    //   if (stakedCity && stakedCity.length > 0 && nftStakeStepCount == 0) {
+    //     nftStakeStepCount = nftStakeStepCount + 2;
+    //     setNftStakeStep(nftStakeStepCount);
+    //     completeStake();
+    //   }
+    //   else {
+    //     nftStakeStepCount = nftStakeStepCount + 1;
+    //     setNftStakeStep(nftStakeStepCount);
+    //   }
+    // }
   }
 
   const closeStaking = async () => {
@@ -665,7 +666,7 @@ const Home = (props: HomeProps) => {
         );
         const farmersHuman:any = await stakeProgram.account.farmer.fetch(humanFarmerVar);
         if (farmersHuman != null) {
-          console.log('Farmer ');
+          console.log('Human Farmer ');
           console.log(farmersHuman);
           setStakedTokens(farmersHuman.gemsStaked!.toNumber());
           setRespectEarned(farmersHuman.lpPoints.lpAccrued.toNumber());
@@ -686,7 +687,7 @@ const Home = (props: HomeProps) => {
         );
         const farmersHumanPets:any = await stakeProgram.account.farmer.fetch(humanPetsFarmerVar);
         if (farmersHumanPets != null) {
-          console.log('Farmer ');
+          console.log('Human Pet Farmer ');
           console.log(farmersHumanPets);
           setStakedTokens(farmersHumanPets.gemsStaked!.toNumber());
           setRespectEarned(farmersHumanPets.lpPoints.lpAccrued.toNumber());
@@ -707,7 +708,7 @@ const Home = (props: HomeProps) => {
         );
         const farmersCyborg:any = await stakeProgram.account.farmer.fetch(cyborgFarmerVar);
         if (farmersCyborg != null) {
-          console.log('Farmer ');
+          console.log('Cyborg Farmer ');
           console.log(farmersCyborg);
           setStakedTokens(farmersCyborg.gemsStaked!.toNumber());
           setRespectEarned(farmersCyborg.lpPoints.lpAccrued.toNumber());
@@ -728,7 +729,7 @@ const Home = (props: HomeProps) => {
         );
         const farmersCyborgPets:any = await stakeProgram.account.farmer.fetch(cyborgPetFarmerVar);
         if (farmersCyborgPets != null) {
-          console.log('Farmer ');
+          console.log('Cyborg Pet Farmer ');
           console.log(farmersCyborgPets);
           setStakedTokens(farmersCyborgPets.gemsStaked!.toNumber());
           setRespectEarned(farmersCyborgPets.lpPoints.lpAccrued.toNumber());
@@ -879,7 +880,7 @@ const Home = (props: HomeProps) => {
               if (is_human && is_pet) {
                 trait_type = 'Human Pet';
               }
-              else if (is_cyborg && !is_pet) {
+              else if (is_human && !is_pet) {
                 trait_type = 'Human';
               }
               else if (is_cyborg && is_pet) {
@@ -1007,7 +1008,7 @@ const Home = (props: HomeProps) => {
       farms.bank,
       wallet.publicKey!
     );
-    stake_instructions.push(stakeProgram.rpc.initFixedFarmer(
+    stake_instructions.push(stakeProgram.instruction.initFixedFarmer(
       {
         accounts: {
           farm: farm_id,
@@ -1221,16 +1222,16 @@ const Home = (props: HomeProps) => {
     var add_init_cyborg = true;
     var add_init_cyborg_pets = true;
     // var add_init_basement = true;
-    if (farmerHuman! != null) {
+    if (farmerHuman != null) {
       add_init_human = false;
     }
-    else if (farmerHumanPet! != null) {
+    else if (farmerHumanPet != null) {
       add_init_human_pets = false;
     }
-    else if (farmerCyborg! != null) {
+    else if (farmerCyborg != null) {
       add_init_cyborg = false;
     }
-    else if (farmerCyborgPet! != null) {
+    else if (farmerCyborgPet != null) {
       add_init_cyborg_pets = false;
     }
     // else if (farmerBasement! != null) {
@@ -1254,6 +1255,7 @@ const Home = (props: HomeProps) => {
         const stakeProgram:any = await getStakeProgram(wallet);
         const bankProgram = await getBankProgram(wallet);
         // let tokens = await getTokensByOwner(wallet.publicKey!);
+        console.log(stakedNft);
         const farmers = await stakeProgram.account.farmer.all();
         if (add_init_human && stakedNft.trait_type == 'Human') {
           stake_instructions = await initFixedFarmerAlpha(1,stake_instructions,stakeProgram);
@@ -1334,7 +1336,7 @@ const Home = (props: HomeProps) => {
           });
         }
         console.log(stake_instructions);
-        stake_instructions.push(await stakeProgram.rpc.flashDeposit(farmerBump, vaultAuthorityBump,gemBoxrarityBump, new BN(1), 
+        stake_instructions.push(await stakeProgram.instruction.flashDeposit(farmerBump, vaultAuthorityBump,gemBoxrarityBump, new BN(1), 
           {
             accounts: {
               farm: farm_id,
@@ -1360,7 +1362,7 @@ const Home = (props: HomeProps) => {
         const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(farm_id);
         const address_to_whitelist = new anchor.web3.PublicKey(collectionId);
         const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
-        stake_instructions.push(stakeProgram.rpc.stake(farmAuthBump, farmerBump, 
+        stake_instructions.push(stakeProgram.instruction.stake(farmAuthBump, farmerBump, 
           {
             accounts: {
               farm: farm_id,
@@ -1439,7 +1441,7 @@ const Home = (props: HomeProps) => {
         FARM_ID
       );
       const [farmTreasuryToken, farmTreasuryTokenBump] = await findFarmTreasuryTokenPDA(FARM_ID);
-      const wallet_create = await stakeProgram.rpc.unstake(farmAuthBump, farmTreasuryTokenBump, farmerBump, false,
+      const wallet_create = await stakeProgram.instruction.unstake(farmAuthBump, farmTreasuryTokenBump, farmerBump, false,
         {
           accounts: {
             farm: FARM_ID,

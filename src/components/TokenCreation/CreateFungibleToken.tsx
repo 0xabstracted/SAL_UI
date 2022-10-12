@@ -73,7 +73,7 @@ function CreateFungibleToken() {
             console.log("args.pot_transfer_amount: ",args.pot_transfer_amount.toNumber())
             if (args.pot_transfer_amount.toNumber() > 0 ){
                 create_fung_token_ix.push(
-                    stakeProgram.rpc.createAlphaTokenswap(args.pot_transfer_amount,{
+                    stakeProgram.instruction.createAlphaTokenswap(args.pot_transfer_amount,{
                         accounts: {
                         alphaTokenswap: alpha_token_swap_pda,
                         alphaCreator: wallet.publicKey,

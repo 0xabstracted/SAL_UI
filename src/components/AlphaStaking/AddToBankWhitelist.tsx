@@ -15,7 +15,7 @@ import { sendTransactions } from '../../config/connection';
 
 function AddToBankWhitelist() {
   const wallet = useWallet();
-  let stack_opener = 352;
+  let stack_opener = 0;
 
   const getFarmIfFromAttributes = (attributes: any) => {
     let body;
@@ -50,7 +50,7 @@ function AddToBankWhitelist() {
     return DEFAULT_PUBLIC_KEY
   }
 
-  const sendAddtoBankWhitelistInstruction  = async (farmId: any, mint: string) => {
+  const sendAddtoBankWhitelistInstruction  = async (farmId: any, mint: string, arr:any) => {
       // console.log(`farmId: ${farmId}`)
       // const myKeypair = web3.Keypair.fromSecretKey(new Uint8Array([236,35,125,15,184,98,170,93,245,91,234,165,3,54,0,180,142,100,16,191,246,119,76,165,198,213,25,233,208,63,67,20,8,155,30,8,104,196,143,170,188,27,225,142,108,115,152,245,37,32,121,148,60,55,148,73,62,232,234,178,128,194,190,14]))
       const address_to_whitelist = new anchor.web3.PublicKey(mint);
@@ -60,7 +60,7 @@ function AddToBankWhitelist() {
         const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(farmId);
         const farms:any = await stakeProgram.account.farm.fetch(farmId);
         const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
-        return stakeProgram.rpc.addToBankWhitelist(farmAuthBump, 2, 
+        let k = await stakeProgram.instruction.addToBankWhitelist(farmAuthBump, 2, 
           {
             accounts: {
               farm: farmId,
@@ -76,6 +76,8 @@ function AddToBankWhitelist() {
             // signers: [myKeypair]
           }
         );
+        arr.push(k);
+        return arr;
         // console.log(`add to whitelist bank signature : ${wallet_create} `);
       } catch (error) {
         console.log("Transaction error: ", error);
@@ -145,12 +147,13 @@ function AddToBankWhitelist() {
     }
   }
 
-  const parseArrayToBankWhitelist =async () => {
+  const parseArrayToBankWhitelist = async () => {
     const connection = new Connection(clusterApiUrl("devnet"));
     let bank_instruction:any = [];
-    for (let index = stack_opener; index < stack_opener + 8; index++) {
-      let k = await sendAddtoBankWhitelistInstruction(BANK_WL_OBJECT[index]['farmId'], BANK_WL_OBJECT[index]['mint']);
-      bank_instruction.push(k)
+    console.log(stack_opener)
+    for (let index = stack_opener; index < stack_opener + 7; index++) {
+      bank_instruction = await sendAddtoBankWhitelistInstruction(BANK_WL_OBJECT[index]['farmId'], BANK_WL_OBJECT[index]['mint'], bank_instruction);
+      // bank_instruction.push(k)
       // const element = BANK_WL_OBJECT[index];
     }
     console.log(bank_instruction);
@@ -160,7 +163,13 @@ function AddToBankWhitelist() {
       [bank_instruction],
       [[]]
     )
+
+    console.log(stack_opener)
     console.log(add_to_bank_wl_sig);
+    if (stack_opener < 360){
+      stack_opener = stack_opener + 7
+      parseArrayToBankWhitelist()
+    }
   }
   
   return (
