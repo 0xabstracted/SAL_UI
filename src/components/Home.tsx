@@ -91,7 +91,7 @@ import idl from "../idl/magic_hat.json";
 import { findAssociatedTokenAddress } from "../GrandProgramUtils/AssociatedTokenAccountProgram/pda";
 import { MAGIC_STAKE_PROGRAM_ID, GEM_BANK_PROGRAM_ID, getBankProgram, getStakeProgram } from "../GrandProgramUtils/gemBank/getProgramObjects";
 import { FixedRateConfig, RarityConfig } from "../GrandProgramUtils/gemBank/interface";
-import { TOKEN_METADATA_PROGRAM_ID } from "../GrandProgramUtils/tokenMetadata/constants";
+import { TOKEN_METADATA_PROGRAM_ID, SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID } from "../GrandProgramUtils/tokenMetadata/constants";
 
 import MenuContent from "./menu";
 import InitFarmAlpha from "./AlphaStaking/InitFarmAlpha";
@@ -100,7 +100,7 @@ import FundRewardAlpha from "./AlphaStaking/FundRewardAlpha";
 import CreateFungibleToken from "./TokenCreation/CreateFungibleToken";
 
 import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, HUMANPETS_FARM_ID, HUMANS_FARM_ID } from "./AlphaStaking/StakeConfig";
-import { REWARD_MINT_GLITCH } from "./TokenCreation/AlphaTokenConfig";
+import { REWARD_MINT_GLITCH, REWARD_MINT_GLTCH } from "./TokenCreation/AlphaTokenConfig";
 import AlphaTokenSwap from "./TokenCreation/AlphaTokenSwap";
 import { findFarmTreasuryTokenPDA } from "../GrandProgramUtils/gemBank/pda";
 
@@ -442,6 +442,7 @@ const Home = (props: HomeProps) => {
       getWhitelistAccounts();
       getNFTs();
       getStakedNfts();
+      getStakedVaults();
       getFarms();
       getFarmers();
       getTimeToMInt();
@@ -599,9 +600,74 @@ const Home = (props: HomeProps) => {
     );
   };
 
+  const getStakedVaults = async () => {
+    if (wallet && wallet.connected) {
+      const bankProgram = await getBankProgram(wallet);
+      const stakeProgram = await getStakeProgram(wallet);
+      try {
+        const humanFarm:any =
+          await stakeProgram.account.farm.fetch(HUMANS_FARM_ID);
+        console.log('farm with ' + HUMANS_FARM_ID.toBase58());
+        const [farmerVaultHumanPda] = await farmerVaultPDA(
+          humanFarm.bank,
+          wallet.publicKey!
+        );
+        const humanVaults:any = await bankProgram.account.vault.fetch(farmerVaultHumanPda);
+        console.log("human vaults");
+        console.log(humanVaults);
+      } catch (error) {
+        
+      }
+      
+      try {
+        const humanPetFarm:any =
+          await stakeProgram.account.farm.fetch(HUMANPETS_FARM_ID);
+        console.log('farm with ' + HUMANPETS_FARM_ID.toBase58());
+        const [farmerVaultHumanPetPda] = await farmerVaultPDA(
+          humanPetFarm.bank,
+          wallet.publicKey!
+        );
+        const humanPetVaults:any = await bankProgram.account.vault.fetch(farmerVaultHumanPetPda);
+        console.log("human pet vaults");
+        console.log(humanPetVaults);
+      } catch (error) {
+        
+      }
+      
+      try {
+        const cyborgFarm:any =
+          await stakeProgram.account.farm.fetch(CYBORG_FARM_ID);
+        console.log('farm with ' + CYBORG_FARM_ID.toBase58());
+        const [farmerVaultCyborgPda] = await farmerVaultPDA(
+          cyborgFarm.bank,
+          wallet.publicKey!
+        );
+        const cyborgVaults:any = await bankProgram.account.vault.fetch(farmerVaultCyborgPda);
+        console.log("cyborg vaults");
+        console.log(cyborgVaults);
+      } catch (error) {
+        
+      }
+      
+      try {
+        const cyborgPetFarm:any =
+          await stakeProgram.account.farm.fetch(CYBORGPET_FARM_ID);
+        console.log('farm with ' + CYBORGPET_FARM_ID.toBase58());
+        const [farmerVaultCyborgPetPda] = await farmerVaultPDA(
+          cyborgPetFarm.bank,
+          wallet.publicKey!
+        );
+        const cyborgPetVaults:any = await bankProgram.account.vault.fetch(farmerVaultCyborgPetPda);
+        console.log("cyborg pet vaults");
+        console.log(cyborgPetVaults);
+      } catch (error) {
+        
+      }
+      
+    }
+  }
 
-
-  async function getStakedNfts() {
+  const getStakedNfts = async () => {
     if (wallet && wallet.connected) {
       const bankProgram = await getBankProgram(wallet);
       // const [farmerVaultPda] = await farmerVaultPDA(
@@ -615,24 +681,21 @@ const Home = (props: HomeProps) => {
         const element = gdprs[index];
         const connection = new Connection(clusterApiUrl("devnet"));
         const metaplex = new Metaplex(connection);
-        let nft = await metaplex.nfts().findByMint(element.account.gemMint).run();
-        if (nft.updateAuthorityAddress == new anchor.web3.PublicKey("2LpGioZAG2GkzBpTye4e3jqQWiEL7mFBo74B6yvCmTaw") && nft.creators[0].address == new anchor.web3.PublicKey("BNZy4DXcGZRpkkgnQn5nfqnkMPjjh7NLk1KBTe8qqtmZ")) {
-          var xhr = new XMLHttpRequest();
-          xhr.addEventListener("readystatechange", function() {
-            if(this.readyState === 4) {
-              var obj:any = {
-                name: nft.name,
-                link: JSON.parse(this.responseText).image,
-              }
-              // console.log(obj);
-              array.push(obj);
-            }
-          });
-          xhr.open("GET", nft.uri);
-          xhr.send();
+        // console.log(element.account.gemMint.toBase58());
+        let nft:any = await metaplex.nfts().findByMint({ mintAddress: element.account.gemMint }).run();
+        // console.log(nft);
+        if (nft.updateAuthorityAddress.toBase58() == "TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq") {
+          var obj:any = {
+            name: nft.name,
+            link: nft.json.image,
+            auth: nft.updateAuthorityAddress.toBase58()
+          }
+          // console.log(obj);
+          array.push(obj);
         }
       }
       if (array && array.length > 0) {
+        console.log(array);
         setStakedNfts(array);
         // setStakedTokens(array.length * 100);
         // setRespectEarned(array.length * 100);
@@ -669,11 +732,13 @@ const Home = (props: HomeProps) => {
         );
         const farmersHuman:any = await stakeProgram.account.farmer.fetch(humanFarmerVar);
         if (farmersHuman != null) {
-          console.log('Farmer ');
+          console.log('Human Farmer ');
           console.log(farmersHuman);
-          setStakedTokens(farmersHuman.gemsStaked!.toNumber());
-          setRespectEarned(farmersHuman.lpPoints.lpAccrued.toNumber());
-          setMultiplierLevel(farmersHuman.lpPoints.lpLevel.toNumber());
+          setFarmerHuman(farmersHuman);
+          setStakedBal(stakedBal + farmersHuman.rewardA.accruedReward.toNumber());
+          // setStakedTokens(farmersHuman.gemsStaked!.toNumber());
+          // setRespectEarned(farmersHuman.lpPoints.lpAccrued.toNumber());
+          // setMultiplierLevel(farmersHuman.lpPoints.lpLevel.toNumber());
           setFarmerHuman(farmersHuman);
         }
       } catch (error) {
@@ -690,12 +755,13 @@ const Home = (props: HomeProps) => {
         );
         const farmersHumanPets:any = await stakeProgram.account.farmer.fetch(humanPetsFarmerVar);
         if (farmersHumanPets != null) {
-          console.log('Farmer ');
+          console.log('Human Pet Farmer ');
           console.log(farmersHumanPets);
-          setStakedTokens(farmersHumanPets.gemsStaked!.toNumber());
-          setRespectEarned(farmersHumanPets.lpPoints.lpAccrued.toNumber());
-          setMultiplierLevel(farmersHumanPets.lpPoints.lpLevel.toNumber());
           setFarmerHumanPet(farmersHumanPets);
+          setStakedBal(stakedBal + farmersHumanPets.rewardA.accruedReward.toNumber());
+          // setStakedTokens(farmersHumanPets.gemsStaked!.toNumber());
+          // setRespectEarned(farmersHumanPets.lpPoints.lpAccrued.toNumber());
+          // setMultiplierLevel(farmersHumanPets.lpPoints.lpLevel.toNumber());
         }
       } catch (error) {
         setStakedTokens(0);
@@ -711,12 +777,13 @@ const Home = (props: HomeProps) => {
         );
         const farmersCyborg:any = await stakeProgram.account.farmer.fetch(cyborgFarmerVar);
         if (farmersCyborg != null) {
-          console.log('Farmer ');
+          console.log('Cyborg Farmer ');
           console.log(farmersCyborg);
-          setStakedTokens(farmersCyborg.gemsStaked!.toNumber());
-          setRespectEarned(farmersCyborg.lpPoints.lpAccrued.toNumber());
-          setMultiplierLevel(farmersCyborg.lpPoints.lpLevel.toNumber());
           setFarmerCyborg(farmersCyborg);
+          // setStakedTokens(farmersCyborg.gemsStaked!.toNumber());
+          setStakedBal(stakedBal + farmersCyborg.rewardA.accruedReward.toNumber());
+          // setRespectEarned(farmersCyborg.lpPoints.lpAccrued.toNumber());
+          // setMultiplierLevel(farmersCyborg.lpPoints.lpLevel.toNumber());
         }
       } catch (error) {
         setStakedTokens(0);
@@ -732,39 +799,19 @@ const Home = (props: HomeProps) => {
         );
         const farmersCyborgPets:any = await stakeProgram.account.farmer.fetch(cyborgPetFarmerVar);
         if (farmersCyborgPets != null) {
-          console.log('Farmer ');
+          console.log('Cyborg Pet Farmer ');
           console.log(farmersCyborgPets);
-          setStakedTokens(farmersCyborgPets.gemsStaked!.toNumber());
-          setRespectEarned(farmersCyborgPets.lpPoints.lpAccrued.toNumber());
-          setMultiplierLevel(farmersCyborgPets.lpPoints.lpLevel.toNumber());
           setFarmerCyborgPet(farmersCyborgPets);
+          // setStakedTokens(farmersCyborgPets.gemsStaked!.toNumber());
+          setStakedBal(stakedBal + farmersCyborgPets.rewardA.accruedReward.toNumber());
+          // setRespectEarned(farmersCyborgPets.lpPoints.lpAccrued.toNumber());
+          // setMultiplierLevel(farmersCyborgPets.lpPoints.lpLevel.toNumber());
         }
       } catch (error) {
         setStakedTokens(0);
         setRespectEarned(0);
         setMultiplierLevel(0);
         setFarmerCyborgPet(null);
-      }
-
-      try {
-        const [basementFarmerVar] = await farmerPDA(
-          BASEMENT_FARM_ID,
-          wallet.publicKey!
-        );
-        const farmersBasement:any = await stakeProgram.account.farmer.fetch(basementFarmerVar);
-        if (farmersBasement != null) {
-          console.log('Farmer ');
-          console.log(farmersBasement);
-          setStakedTokens(farmersBasement.gemsStaked!.toNumber());
-          setRespectEarned(farmersBasement.lpPoints.lpAccrued.toNumber());
-          setMultiplierLevel(farmersBasement.lpPoints.lpLevel.toNumber());
-          setFarmerBasement(farmersBasement);
-        }
-      } catch (error) {
-        setStakedTokens(0);
-        setRespectEarned(0);
-        setMultiplierLevel(0);
-        setFarmerBasement(null);
       }
     }
   }
@@ -831,86 +878,91 @@ const Home = (props: HomeProps) => {
         REWARD_MINT_GLITCH, // mint
         wallet?.publicKey! // owner
       );
-  
-      let tokenAmount = await connection.getTokenAccountBalance(ata);
-      setGlitchTokenVal(parseInt(tokenAmount.value.amount));
-      setAlphaTokenVal(parseInt(tokenAmount.value.amount));
-      console.log(`amount: ${tokenAmount.value.amount}`);
-      console.log(`decimals: ${tokenAmount.value.decimals}`);
+      try {
+        let tokenAmount = await connection.getTokenAccountBalance(ata);
+        setGlitchTokenVal(parseInt(tokenAmount.value.amount));
+        setAlphaTokenVal(parseInt(tokenAmount.value.amount));
+        console.log(`amount: ${tokenAmount.value.amount}`);
+        console.log(`decimals: ${tokenAmount.value.decimals}`);
+        
+      } catch (error) {
+        setGlitchTokenVal(0);
+        setAlphaTokenVal(0);
+      }
       const metaplex = Metaplex.make(connection);
       const allNfts = await metaplex
                           .nfts()
-                          .findAllByOwner({ owner: wallet?.publicKey! })
-                          .run();
+                            .findAllByOwner({ owner: wallet?.publicKey! })
+                            .run();
       let temp_nfts:any = [];
-      console.log(allNfts);
+      // console.log(allNfts);
       for (let index = 0; index < allNfts.length; index++) {
-        const nft:any = allNfts[index];
-        var creators = nft.creators;
-        var is_ours = false;
-        // console.log(nft.updateAuthorityAddress.toBase58(), nft.name);
-        if (nft.updateAuthorityAddress.toBase58() == "TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq") {
-          is_ours = true;
-          for (let iindex = 0; iindex < creators.length; iindex++) {
-            const element = creators[iindex];
-            if (element.share == 0) {
-              // setCollectionId(element.address);
+          const nft:any = allNfts[index];
+          var creators = nft.creators;
+          var is_ours = false;
+          // console.log(nft.updateAuthorityAddress.toBase58(), nft.name);
+          if (nft.updateAuthorityAddress.toBase58() == "TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq") {
+            is_ours = true;
+            for (let iindex = 0; iindex < creators.length; iindex++) {
+              const element = creators[iindex];
+              if (element.share == 0) {
+                // setCollectionId(element.address);
+              }
             }
           }
-        }
-        if (is_ours) {
-          var xhr = new XMLHttpRequest();
-          xhr.addEventListener("readystatechange", function() {
-            if(this.readyState === 4) {
-              // console.log(this.responseText);
-              var attributes = JSON.parse(this.responseText).attributes;
-              var is_human;
-              var is_cyborg;
-              var is_pet;
-              var trait_type;
-              for (let index = 0; index < attributes.length; index++) {
-                const element = attributes[index];
-                if (element.trait_type == 'BaseBody' && element.value == 'Human') {
-                  is_human = true;
+          if (is_ours) {
+            var xhr = new XMLHttpRequest();
+            xhr.addEventListener("readystatechange", function() {
+              if(this.readyState === 4) {
+                // console.log(this.responseText);
+                var attributes = JSON.parse(this.responseText).attributes;
+                var is_human;
+                var is_cyborg;
+                var is_pet;
+                var trait_type;
+                for (let index = 0; index < attributes.length; index++) {
+                  const element = attributes[index];
+                  if (element.trait_type == 'BaseBody' && element.value == 'Human') {
+                    is_human = true;
+                  }
+                  else if (element.trait_type == 'BaseBody' && element.value == 'Cyborg') {
+                    is_cyborg = true;
+                  }
+                  if (element.trait_type == 'Pets' && element.value && element.value.length > 0) {
+                    is_pet = true;
+                  }
                 }
-                else if (element.trait_type == 'BaseBody' && element.value == 'Cyborg') {
-                  is_cyborg = true;
+                if (is_human && is_pet) {
+                  trait_type = 'Human Pet';
                 }
-                if (element.trait_type == 'Pets' && element.value && element.value.length > 0) {
-                  is_pet = true;
+                else if (is_human && !is_pet) {
+                  trait_type = 'Human';
                 }
+                else if (is_cyborg && is_pet) {
+                  trait_type = 'Cyborg Pet';
+                }
+                else if (is_cyborg && !is_pet) {
+                  trait_type = 'Cyborg';
+                }
+                var obj:any = {
+                  id:temp_nfts.length,
+                  name: nft.name,
+                  link: JSON.parse(this.responseText).image,
+                  mint: nft.mintAddress,
+                  updateAuthority: nft.updateAuthority,
+                  creator: nft.creators[0].address,
+                  trait_type: trait_type
+                }
+                temp_nfts.push(obj);
+                setNFts(temp_nfts!);
+                // console.log(allNfts);
               }
-              if (is_human && is_pet) {
-                trait_type = 'Human Pet';
-              }
-              else if (is_cyborg && !is_pet) {
-                trait_type = 'Human';
-              }
-              else if (is_cyborg && is_pet) {
-                trait_type = 'Cyborg Pet';
-              }
-              else if (is_cyborg && !is_pet) {
-                trait_type = 'Cyborg';
-              }
-              var obj:any = {
-                id:temp_nfts.length,
-                name: nft.name,
-                link: JSON.parse(this.responseText).image,
-                mint: nft.mintAddress,
-                updateAuthority: nft.updateAuthority,
-                creator: nft.creators[0].address,
-                trait_type: trait_type
-              }
-              temp_nfts.push(obj);
-              setNFts(temp_nfts!);
-              // console.log(allNfts);
-            }
-          });
-          xhr.open("GET", nft.uri);
-          xhr.send();
-        }
+            });
+            xhr.open("GET", nft.uri);
+            xhr.send();
+          }
       }
-      // console.log(temp_nfts);
+        // console.log(temp_nfts);
       setGotNfts(true);
     }
   }
@@ -1011,7 +1063,7 @@ const Home = (props: HomeProps) => {
       farms.bank,
       wallet.publicKey!
     );
-    stake_instructions.push(stakeProgram.rpc.initFixedFarmer(
+    stake_instructions.push(stakeProgram.instruction.initFixedFarmer(
       {
         accounts: {
           farm: farm_id,
@@ -1028,33 +1080,237 @@ const Home = (props: HomeProps) => {
     return stake_instructions;
   }
 
-  // Farmer should call this
-  const refreshFarmers = async () => {
+  const claimReward =async () => {
     const stakeProgram = await getStakeProgram(wallet);
-    const farmers = await stakeProgram.account.farmer.all();
-    console.log(farmers);
-    try {
-
+    const claim_instructions:any = [];
+    let userNewTokenAccountPDA = await getAssociatedTokenAddress(
+      REWARD_MINT_GLTCH, // mint
+      wallet.publicKey! // owner
+    );
+    if (farmerHuman != null) {
       const [farmerPda, farmerBump] = await farmerPDA(
-        FARM_ID,
+        HUMANS_FARM_ID,
         wallet.publicKey!
       );
-      const farms:any = await stakeProgram.account.farm.fetch(FARM_ID);
-      console.log('farm with ' + FARM_ID.toBase58());
-      const wallet_create = await stakeProgram.rpc.refreshFarmer(farmerBump,
+      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(HUMANS_FARM_ID);
+      const farmsH:any = await stakeProgram.account.farm.fetch(HUMANS_FARM_ID);
+      let [rewardAPot, rewardAPotBump] = await findRewardsPotPDA(HUMANS_FARM_ID, REWARD_MINT_GLTCH);
+      let inst = await stakeProgram.instruction.claim(farmAuthBump,farmerBump,rewardAPotBump,rewardAPotBump,
         {
           accounts: {
-            farm: FARM_ID,
+            farm: HUMANS_FARM_ID,
+            farmAuthority: farmAuth,
             farmer: farmerPda,
-            identity: wallet.publicKey
+            identity: wallet.publicKey,
+            rewardAPot:rewardAPot,
+            rewardAMint: REWARD_MINT_GLTCH,
+            rewardADestination: userNewTokenAccountPDA,
+            tokenProgram: TOKEN_PROGRAM_ID,
+            associatedTokenProgram:SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
+            systemProgram: SystemProgram.programId,
+            rent: anchor.web3.SYSVAR_RENT_PUBKEY,
           }
         }
       );
-      getFarmers();
-      console.log('refresh farmer signature : ' + wallet_create);
-    } catch (error) {
-      console.log("Transaction error: ", error);
+      claim_instructions.push(inst);
     }
+    if (farmerHumanPet != null) {
+      const [farmerHPPda, farmerBumpHP] = await farmerPDA(
+        HUMANPETS_FARM_ID,
+        wallet.publicKey!
+      );
+      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(HUMANPETS_FARM_ID);
+      const farmsHP:any = await stakeProgram.account.farm.fetch(HUMANPETS_FARM_ID);
+      let [rewardAPot, rewardAPotBump] = await findRewardsPotPDA(HUMANPETS_FARM_ID, REWARD_MINT_GLTCH);
+      let inst = await stakeProgram.instruction.claim(farmAuthBump,farmerBumpHP,rewardAPotBump,rewardAPotBump,
+        {
+          accounts: {
+            farm: HUMANPETS_FARM_ID,
+            farmAuthority: farmsHP.farmAuthority,
+            farmer: farmerHPPda,
+            identity: wallet.publicKey,
+            rewardAPot:rewardAPot,
+            rewardAMint: REWARD_MINT_GLTCH,
+            rewardADestination: userNewTokenAccountPDA,
+            tokenProgram: TOKEN_PROGRAM_ID,
+            associatedTokenProgram:SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
+            systemProgram: SystemProgram.programId,
+            rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+          }
+        }
+      );
+      claim_instructions.push(inst);
+    }
+    if (farmerCyborg != null) {
+      const [farmerCPda, farmerBumpC] = await farmerPDA(
+        CYBORG_FARM_ID,
+        wallet.publicKey!
+      );
+      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(CYBORG_FARM_ID);
+      const farmsC:any = await stakeProgram.account.farm.fetch(CYBORG_FARM_ID);
+      let [rewardAPot, rewardAPotBump] = await findRewardsPotPDA(CYBORG_FARM_ID, REWARD_MINT_GLTCH);
+      let inst = await stakeProgram.instruction.claim(farmAuthBump,farmerBumpC,rewardAPotBump,rewardAPotBump,
+        {
+          accounts: {
+            farm: CYBORG_FARM_ID,
+            farmAuthority: farmsC.farmAuthority,
+            farmer: farmerCPda,
+            identity: wallet.publicKey,
+            rewardAPot:rewardAPot,
+            rewardAMint: REWARD_MINT_GLTCH,
+            rewardADestination: userNewTokenAccountPDA,
+            tokenProgram: TOKEN_PROGRAM_ID,
+            associatedTokenProgram:SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
+            systemProgram: SystemProgram.programId,
+            rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+          }
+        }
+      );
+      claim_instructions.push(inst);
+    }
+    if (farmerCyborgPet != null) {
+      const [farmerCPPda, farmerBumpCP] = await farmerPDA(
+        CYBORGPET_FARM_ID,
+        wallet.publicKey!
+      );
+      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(CYBORGPET_FARM_ID);
+      const farmsCP:any = await stakeProgram.account.farm.fetch(CYBORGPET_FARM_ID);
+      let [rewardAPot, rewardAPotBump] = await findRewardsPotPDA(CYBORGPET_FARM_ID, REWARD_MINT_GLTCH);
+      let inst = await stakeProgram.instruction.claim(farmAuthBump,farmerBumpCP,rewardAPotBump,rewardAPotBump,
+        {
+          accounts: {
+            farm: CYBORGPET_FARM_ID,
+            farmAuthority: farmsCP.farmAuthority,
+            farmer: farmerCPPda,
+            identity: wallet.publicKey,
+            rewardAPot:rewardAPot,
+            rewardAMint: REWARD_MINT_GLTCH,
+            rewardADestination: userNewTokenAccountPDA,
+            tokenProgram: TOKEN_PROGRAM_ID,
+            associatedTokenProgram:SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
+            systemProgram: SystemProgram.programId,
+            rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+          }
+        }
+      );
+      claim_instructions.push(inst);
+    }
+    console.log(claim_instructions);
+    const claim_farmer_sig = await sendTransactions(
+      props.connection,
+      wallet,
+      [claim_instructions],
+      [[]]
+    )
+    console.log(claim_farmer_sig);
+  }
+
+  // Farmer should call this
+  const refreshFarmers = async () => {
+    console.log(farmerHuman);
+    console.log(farmerHumanPet);
+    console.log(farmerCyborg);
+    console.log(farmerCyborgPet);
+    const stakeProgram = await getStakeProgram(wallet);
+    const farmers = await stakeProgram.account.farmer.all();
+    console.log(farmers);
+    let fresh_instructions: any = [];
+    if (farmerHuman != null) {
+      try {
+        const [farmerPda, farmerBump] = await farmerPDA(
+          HUMANS_FARM_ID,
+          wallet.publicKey!
+        );
+        const farms:any = await stakeProgram.account.farm.fetch(HUMANS_FARM_ID);
+        console.log('farm with ' + HUMANS_FARM_ID.toBase58());
+        const wallet_create = await stakeProgram.instruction.refreshFarmer(farmerBump,
+          {
+            accounts: {
+              farm: HUMANS_FARM_ID,
+              farmer: farmerPda,
+              identity: wallet.publicKey
+            }
+          }
+        );
+        fresh_instructions.push(wallet_create);
+      } catch (error) {
+        console.log("Transaction error: ", error);
+      }
+    }
+    if (farmerHumanPet != null) {
+      try {
+        const [farmerPdaO, farmerBumpO] = await farmerPDA(
+          HUMANPETS_FARM_ID,
+          wallet.publicKey!
+        );
+        const farms:any = await stakeProgram.account.farm.fetch(HUMANPETS_FARM_ID);
+        console.log('farm with ' + HUMANPETS_FARM_ID.toBase58());
+        const wallet_create_o = await stakeProgram.instruction.refreshFarmer(farmerBumpO,
+          {
+            accounts: {
+              farm: HUMANPETS_FARM_ID,
+              farmer: farmerPdaO,
+              identity: wallet.publicKey
+            }
+          }
+        );
+        fresh_instructions.push(wallet_create_o);
+      } catch (error) {
+        
+      }
+    }
+    if (farmerCyborg != null) {
+      try {
+        const [farmerPdaT, farmerBumpT] = await farmerPDA(
+          CYBORG_FARM_ID,
+          wallet.publicKey!
+        );
+        const farms:any = await stakeProgram.account.farm.fetch(CYBORG_FARM_ID);
+        console.log('farm with ' + CYBORG_FARM_ID.toBase58());
+        const wallet_create_t = await stakeProgram.instruction.refreshFarmer(farmerBumpT,
+          {
+            accounts: {
+              farm: CYBORG_FARM_ID,
+              farmer: farmerPdaT,
+              identity: wallet.publicKey
+            }
+          }
+        );
+        fresh_instructions.push(wallet_create_t);
+      } catch (error) {
+        console.log("Transaction error: ", error);
+      }
+    }
+    if (farmerCyborgPet != null) {
+      try {
+        const [farmerPdaF, farmerBumpF] = await farmerPDA(
+          CYBORGPET_FARM_ID,
+          wallet.publicKey!
+        );
+        const farms:any = await stakeProgram.account.farm.fetch(CYBORGPET_FARM_ID);
+        console.log('farm with ' + CYBORGPET_FARM_ID.toBase58());
+        const wallet_create_f = await stakeProgram.instruction.refreshFarmer(farmerBumpF,
+          {
+            accounts: {
+              farm: CYBORGPET_FARM_ID,
+              farmer: farmerPdaF,
+              identity: wallet.publicKey
+            }
+          }
+        );
+        fresh_instructions.push(wallet_create_f);
+      } catch (error) {
+        console.log("Transaction error: ", error);
+      }
+    }
+    console.log(fresh_instructions);
+    const refresh_farmer_sig = await sendTransactions(
+      props.connection,
+      wallet,
+      [fresh_instructions],
+      [[]]
+    )
+    console.log(refresh_farmer_sig);
   }
 
   // Farmer should call this
@@ -1338,7 +1594,7 @@ const Home = (props: HomeProps) => {
           });
         }
         console.log(stake_instructions);
-        stake_instructions.push(await stakeProgram.rpc.flashDeposit(farmerBump, vaultAuthorityBump,gemBoxrarityBump, new BN(1), 
+        stake_instructions.push(await stakeProgram.instruction.flashDeposit(farmerBump, vaultAuthorityBump,gemBoxrarityBump, new BN(1), 
           {
             accounts: {
               farm: farm_id,
@@ -1364,7 +1620,7 @@ const Home = (props: HomeProps) => {
         const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(farm_id);
         const address_to_whitelist = new anchor.web3.PublicKey(collectionId);
         const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
-        stake_instructions.push(stakeProgram.rpc.stake(farmAuthBump, farmerBump, 
+        stake_instructions.push(stakeProgram.instruction.stake(farmAuthBump, farmerBump, 
           {
             accounts: {
               farm: farm_id,
@@ -2690,8 +2946,8 @@ const Home = (props: HomeProps) => {
                   {showUserMenu && 
                   <div className="user-menu-parent">
                     <ul>
-                      <li>Staked Bal : {} <img src={Refresh} className="refresh-farmer-icon" alt="" /></li>
-                      <li>Claim</li>
+                      <li>Claimed Tokens : {stakedBal} <img src={Refresh} onClick={refreshFarmers} className="refresh-farmer-icon" alt="" /></li>
+                      <li className="pointer" onClick={claimReward}>Claim</li>
                     </ul>
                   </div>
                   }
@@ -2705,7 +2961,7 @@ const Home = (props: HomeProps) => {
                     <div className="nft-parent-div">
                       {nfts && nfts.length > 0 && nfts.map(function (item:any, i:any) {
                         return (
-                          <div className="nft-div" style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
+                          <div className="nft-div" key={i} style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
                             <img src={item.link} />
                             <label>{item.name}</label>
                             {/* <label>{item.trait_type}</label> */}
@@ -2721,7 +2977,15 @@ const Home = (props: HomeProps) => {
                   </div>
                   <div className="staked-nfts-div">
                     <div className="staking-nft-display">
-
+                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
+                        return (
+                          <div className="nft-div" key={i} style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
+                            <img src={item.link} />
+                            <label>{item.name}</label>
+                            {/* <label>{item.trait_type}</label> */}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>

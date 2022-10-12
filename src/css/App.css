@@ -1163,6 +1163,7 @@ body {
   margin-right: 15px;
   height: 40px;
   width: 40px;
+  margin-top: 45px;
 }
 
 .user-profile-img {
@@ -1174,7 +1175,8 @@ body {
 
 .user-menu-parent {
   position: absolute;
-  right: 15px;
+  top: 95px;
+  right: 50px;
   max-width: 300px;
   background: white;
   border-radius: 6px;
@@ -1194,17 +1196,19 @@ body {
   height: 16px;
   width: 16px;
   cursor: pointer;
+  margin-top: 4px;
 }
 
 .user-menu-parent>ul>li {
   float: left;
   width: 100%;
-  padding: 8px 12px;
+  padding: 10px 15px;
   line-height: 24px;
   vertical-align: middle;
   text-align: left;
   font-size: 16px;
   color: black;
+  box-sizing: border-box;
 }
 
 .swap-icon-parent {
@@ -4141,6 +4145,8 @@ form .button {
     margin-right: 10%;
     height: calc(100% - 60px);
     overflow-y: auto;
+    max-height: 500px;
+    overflow-x: hidden;
 }
 
 .nft-deal-div {
