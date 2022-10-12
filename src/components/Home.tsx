@@ -2737,7 +2737,7 @@ const Home = (props: HomeProps) => {
             </div>
             {!wallet.connected &&
             <div className="staking-room-six">
-              <WalletDialogButton className="Connect-Wallet-btn" onClick={closeStaking}>
+              <WalletDialogButton className="Connect-Wallet-btn" onClick={() => openAlphaRoom('stake')}>
                 Connect Wallet
               </WalletDialogButton>
             </div> 

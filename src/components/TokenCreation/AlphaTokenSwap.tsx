@@ -6,9 +6,9 @@ import {
 } from "@solana/spl-token";
 import { WalletNotConnectedError } from "@solana/wallet-adapter-base";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { clusterApiUrl, Connection } from "@solana/web3.js";
-import { useState } from "react";
-import { mintNewFungibleTokenArgs, REWARD_MINT_GLITCH } from "./AlphaTokenConfig";
+import { clusterApiUrl, Connection, SystemProgram } from "@solana/web3.js";
+import React, { useState } from "react";
+import { mintNewFungibleTokenArgs, REWARD_MINT_GLITCH, ALPHA_OWNER_ATA, REWARD_MINT_GLTCH } from "./AlphaTokenConfig";
 import { AlphaTokenSwapArgs } from "./TokenInterface";
 import SwappingIcon from "../../assets/swapping_icon.png";
 import { sendTransactions } from '../../config/connection';
@@ -20,7 +20,9 @@ import { alphaTokenSwapPda,alphaPotPda } from "../../GrandProgramUtils/Associate
 
 function AlphaTokenSwap() {
   const [glitchTokenVal, setGlitchTokenVal] = useState(0);
+  const [glitchTokenBal, setGlitchTokenBal] = useState(0);
   const [alphaTokenVal, setAlphaTokenVal] = useState(0);
+  const [alphaTokenBal, setAlphaTokenBal] = useState(0);
   const wallet = useWallet();
 
   const changeGlitchToken = async (val:any) => {
@@ -33,14 +35,35 @@ function AlphaTokenSwap() {
       REWARD_MINT_GLITCH, // mint
       wallet?.publicKey! // owner
     );
-  
-    let tokenAmount = await connection.getTokenAccountBalance(ata);
-    if (glitchTokenVal === 0) {
-      setGlitchTokenVal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
-      setAlphaTokenVal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
-    }
+
+    let alpha_ata = await getAssociatedTokenAddress(
+      REWARD_MINT_GLTCH, // mint
+      wallet?.publicKey! // owner
+    );
+    try {
+      let tokenAmount = await connection.getTokenAccountBalance(ata);
+      let tokenAmountAlpha = await connection.getTokenAccountBalance(alpha_ata);
+      if (glitchTokenVal == 0) {
+        // setGlitchTokenVal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
+        setGlitchTokenBal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
+        // setAlphaTokenVal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
+        setAlphaTokenBal(parseInt(tokenAmountAlpha.value.amount) / 10 ** tokenAmountAlpha.value.decimals);
+      }
+    } catch (error) {
+      
+    }  
   }
   getTokenAccountBalanceFn();
+
+  const percentageBtn =async (str:string) => {
+    if (str == '50') {
+      let k = parseInt((glitchTokenBal / 2).toFixed(0));
+      setGlitchTokenVal(k);
+    }
+    else if (str == '100') {
+      setGlitchTokenVal(glitchTokenBal);
+    }
+  }
 
   const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
 
@@ -138,6 +161,10 @@ function AlphaTokenSwap() {
       <div className="swapping-box">
         <label className="swapping-label">Trade</label>
         <div className="from-token-box">
+          <div className="from-token-header">
+            <label className="from-token-text">From</label>
+            <label className="from-token-bal">Bal : {glitchTokenBal}</label>
+          </div>
           <div className="token-image-parent">
             <img
               className="token-image"
@@ -149,23 +176,33 @@ function AlphaTokenSwap() {
             <h2 className="token-name">GLITCH</h2>
           </div>
           <div className="token-count-parent">
+            <button className="bal-half-btn" onClick={() => percentageBtn('50')}>50%</button>
+            <button className="bal-half-btn" onClick={() => percentageBtn('100')}>100%</button>
             <input
               type="number"
               max={100000000}
               className="token-count-input"
               value={glitchTokenVal}
+              pattern="^[0-9]*[.,]?[0-9]{0,9}$"
+              inputMode='numeric'
+              min="0"
+              step="1e-9"
               onChange={(event) =>
                 changeGlitchToken(parseInt(event.target.value))
               }
             />
           </div>
         </div>
-        <div className="pull-left full-width">
+        <div className="pull-left full-width text-center">
           <div className="swap-icon-parent">
             <img src={SwappingIcon} className="swap-icon" alt="" />
           </div>
         </div>
         <div className="to-token-box">
+          <div className="from-token-header">
+            <label className="from-token-text">To</label>
+            <label className="from-token-bal">Bal : {alphaTokenBal}</label>
+          </div>
           <div className="token-image-parent">
             <img
               className="token-image"
@@ -196,6 +233,11 @@ function AlphaTokenSwap() {
           >
             Swap
           </button>
+          {/* <button className="swap-btn"
+            onClick={() => testingBtn(mintNewFungibleTokenArgs)}
+          >
+            Testing
+          </button> */}
         </div>
       </div>
     </div>
