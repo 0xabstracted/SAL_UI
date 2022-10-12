@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 // Farm Manager Should call this
 
 import * as anchor from "@project-serum/anchor"
@@ -78,7 +76,7 @@ function InitFarmAlpha() {
       // console.log("farmTreasury.toBase58():",farmTreasury.toBase58());
       
       const [rewardAPot, rewardAPotBump] = await findRewardsPotPDA(farm.publicKey, args.rewardMintId);
-      console.log("farmAuthority:",farmAuthorityBump);
+      console.log("farmAuthority:",rewardAPotBump);
       console.log("rewardAPot:",rewardAPot);
       console.log("rewardAPot.toBase58():",rewardAPot.toBase58());
       
@@ -91,9 +89,8 @@ function InitFarmAlpha() {
       
       const stakeProgram = await getStakeProgram(wallet);
 
-      const ifaSig = await stakeProgram.rpc.initFarmAlpha(
+      const ifaSig = await stakeProgram.rpc.initFixedFarm(
           farmAuthorityBump, 
-          farmTreasuryTokenBump,
           args.farmConfig,
           args.maxCounts, 
           farmTreasuryToken,

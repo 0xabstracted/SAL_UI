@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Connection, clusterApiUrl } from '@solana/web3.js';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletNotConnectedError } from '@solana/wallet-adapter-base';
@@ -8,7 +7,6 @@ import * as web3 from "@solana/web3.js";
 import { UpdateTokenMetadataArgs } from './TokenInterface';
 import { updateAlphaFungTokenMetadataArgs } from './AlphaTokenConfig';
 import { sendTransactions } from '../../config/connection';
-import React from 'react';
 
 function UpdateTokenMetadata() {
     const wallet = useWallet()
@@ -23,7 +21,7 @@ function UpdateTokenMetadata() {
                 const seed1 = Buffer.from(anchor.utils.bytes.utf8.encode("metadata"));
                 const seed2 = Buffer.from(mpl.PROGRAM_ID.toBytes());
                 const seed3 = Buffer.from(args.mint.toBytes());
-                const [metadataPDA, _bump] = web3.PublicKey.findProgramAddressSync([seed1, seed2, seed3], mpl.PROGRAM_ID);
+                const [metadataPDA, metadataBump] = web3.PublicKey.findProgramAddressSync([seed1, seed2, seed3], mpl.PROGRAM_ID);
     
                 const accounts = {
                     metadata: metadataPDA,
@@ -57,6 +55,7 @@ function UpdateTokenMetadata() {
                     [update_metadata_token_ix],
                     [[]]
                 )
+                console.log(cft_sig)
         }
         else {
             throw new WalletNotConnectedError()

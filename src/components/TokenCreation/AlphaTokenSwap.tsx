@@ -1,27 +1,24 @@
 import {
   createAssociatedTokenAccountInstruction,
-  createMintToCheckedInstruction,
   createTransferCheckedInstruction,
   getAccount,
   getAssociatedTokenAddress,
-  getOrCreateAssociatedTokenAccount,
 } from "@solana/spl-token";
 import { WalletNotConnectedError } from "@solana/wallet-adapter-base";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { clusterApiUrl, Connection, SystemProgram } from "@solana/web3.js";
-import React, { useState } from "react";
-import { mintNewFungibleTokenArgs, REWARD_MINT_GLITCH, ALPHA_OWNER_ATA } from "./AlphaTokenConfig";
-import { MintNewFungibleTokenArgs } from "./TokenInterface";
+import { clusterApiUrl, Connection } from "@solana/web3.js";
+import { useState } from "react";
+import { mintNewFungibleTokenArgs, REWARD_MINT_GLITCH } from "./AlphaTokenConfig";
+import { AlphaTokenSwapArgs } from "./TokenInterface";
 import SwappingIcon from "../../assets/swapping_icon.png";
 import { sendTransactions } from '../../config/connection';
 import LogoWhite from "../../assets/Logowhite.png";
-import * as anchor from "@project-serum/anchor";
-import { BN, Program } from "@project-serum/anchor";
+import { BN } from "@project-serum/anchor";
 import { getStakeProgram } from "../../GrandProgramUtils/gemBank/getProgramObjects";
 import { TOKEN_PROGRAM_ID } from "../../config/config";
 import { alphaTokenSwapPda,alphaPotPda } from "../../GrandProgramUtils/AssociatedTokenAccountProgram/pda"
 
-function MintNewFungibleToken() {
+function AlphaTokenSwap() {
   const [glitchTokenVal, setGlitchTokenVal] = useState(0);
   const [alphaTokenVal, setAlphaTokenVal] = useState(0);
   const wallet = useWallet();
@@ -38,7 +35,7 @@ function MintNewFungibleToken() {
     );
   
     let tokenAmount = await connection.getTokenAccountBalance(ata);
-    if (glitchTokenVal == 0) {
+    if (glitchTokenVal === 0) {
       setGlitchTokenVal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
       setAlphaTokenVal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
     }
@@ -47,91 +44,7 @@ function MintNewFungibleToken() {
 
   const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
 
-  const mintNewFungibleToken = async (args: MintNewFungibleTokenArgs) => {
-    if (wallet.publicKey) {
-      // let stakeProgram = await getStakeProgram(wallet);
-      let mint_new_fung_token_ix: any = [];
-      let userOldTokenAccountPDA = await getAssociatedTokenAddress(
-        args.oldMint, // mint
-        wallet.publicKey // owner
-      );
-      let ownerOldTokenAccountPDA = await getAssociatedTokenAddress(
-        args.oldMint, // mint
-        args.ownerOldMint // owner
-      );
-      let ownerNewTokenAccountPDA = await getAssociatedTokenAddress(
-        args.newMint, // mint
-        args.ownerOldMint // owner
-      );
-      let userNewTokenAccountPDA = await getAssociatedTokenAddress(
-        args.newMint, // mint
-        wallet.publicKey // owner
-      );
-      let userNewTokenAccount = await getAccount(
-        connection,
-        userNewTokenAccountPDA
-      );
-
-      console.log(
-        `userOldTokenAccountPDA ATA: ${userOldTokenAccountPDA.toBase58()}`
-      );
-      console.log(
-        `ownerOldTokenAccountPDA ATA: ${ownerOldTokenAccountPDA.toBase58()}`
-      );
-      console.log(
-        `userNewTokenAccountPDA ATA: ${userNewTokenAccountPDA.toBase58()}`
-      );
-      let amount = glitchTokenVal * (10 ** args.decimalsOld);
-      console.log('amount : '+ amount);
-      mint_new_fung_token_ix.push(
-        createTransferCheckedInstruction(
-          userOldTokenAccountPDA, // from (should be a token account)
-          args.oldMint, // mint
-          ownerOldTokenAccountPDA, // to (should be a token account)
-          wallet.publicKey, // from's owner
-          amount, // amount, if your deciamls is 8, send 10^8 for 1 token
-          args.decimalsOld // decimals
-        )
-      );
-      if (!userNewTokenAccount) {
-        mint_new_fung_token_ix.push(
-          createAssociatedTokenAccountInstruction(
-            wallet.publicKey, // payer
-            userNewTokenAccountPDA, // ata
-            wallet.publicKey, // owner
-            args.newMint // mint
-          )
-        );
-      }
-      // mint_new_fung_token_ix.push(
-      //   createTransferCheckedInstruction(
-      //     ownerNewTokenAccountPDA, // from (should be a token account)
-      //     args.newMint, // mint
-      //     userNewTokenAccountPDA, // to (should be a token account)
-      //     args.ownerOldMint, // from's owner
-      //     amount, // amount, if your deciamls is 8, send 10^8 for 1 token
-      //     args.decimalsOld
-      //   )
-      // );
-      const mint_new_fung_token_sig = await sendTransactions(
-        connection,
-        wallet,
-        [mint_new_fung_token_ix],
-        [[]]
-    )
-    console.log(mint_new_fung_token_sig)
-    } else {
-      throw new WalletNotConnectedError();
-    }
-  };
-
-  const testingBtn =async (args: MintNewFungibleTokenArgs) => {
-    const [alpha_token_swap_pda, bumpAlphaTokenSwap] = await alphaTokenSwapPda(args.ownerOldMint, args.newMint);
-    const [alpha_pot_pda, bumpAlphaPot] = await alphaPotPda(alpha_token_swap_pda, args.newMint);
-    console.log(alpha_pot_pda.toBase58());
-  }
-
-  const alphaTokenSwap =async (args: MintNewFungibleTokenArgs) => {
+  const alphaTokenSwap =async (args: AlphaTokenSwapArgs) => {
     if (wallet.publicKey) {
       let stakeProgram = await getStakeProgram(wallet);
       let token_swap_instructions: any = [];
@@ -142,10 +55,6 @@ function MintNewFungibleToken() {
       );
       let ownerOldTokenAccountPDA = await getAssociatedTokenAddress(
         args.oldMint, // mint
-        args.ownerOldMint // owner
-      );
-      let ownerNewTokenAccountPDA = await getAssociatedTokenAddress(
-        args.newMint, // mint
         args.ownerOldMint // owner
       );
       let userNewTokenAccountPDA = await getAssociatedTokenAddress(
@@ -198,7 +107,7 @@ function MintNewFungibleToken() {
         }
       }    
       
-      token_swap_instructions.push(stakeProgram.instruction.transferAlphaTokens(bumpAlphaTokenSwap, bumpAlphaPot, amount,{
+      token_swap_instructions.push(stakeProgram.rpc.transferAlphaTokens(bumpAlphaTokenSwap, bumpAlphaPot, amount,{
         accounts: {
           alphaTokenswap: alpha_token_swap_pda,
           alphaCreator: args.ownerOldMint,
@@ -242,7 +151,7 @@ function MintNewFungibleToken() {
           <div className="token-count-parent">
             <input
               type="number"
-              max={1000000}
+              max={100000000}
               className="token-count-input"
               value={glitchTokenVal}
               onChange={(event) =>
@@ -270,7 +179,7 @@ function MintNewFungibleToken() {
           <div className="token-count-parent">
             <input
               type="number"
-              max={1000000}
+              max={100000000}
               className="token-count-input"
               value={alphaTokenVal}
               onChange={(event) =>
@@ -287,25 +196,10 @@ function MintNewFungibleToken() {
           >
             Swap
           </button>
-          <button className="swap-btn"
-            onClick={() => testingBtn(mintNewFungibleTokenArgs)}
-          >
-            Testing
-          </button>
         </div>
       </div>
-      {/* <div className="gen-farm-stats">
-        <div className="gen-farm-stats-left">
-          <button
-            className="Inside-Farm-btn"
-            onClick={() => mintNewFungibleToken(mintNewFungibleTokenArgs)}
-          >
-            Swap
-          </button>
-        </div>
-      </div> */}
     </div>
   );
 }
 
-export default MintNewFungibleToken;
+export default AlphaTokenSwap;

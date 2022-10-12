@@ -30,6 +30,8 @@ export interface FixedRateScheduleStake {
     tier2: TierConfig | null;
     tier3: TierConfig | null;
     denominator: BN;
+    numberOfNfts: number;
+    extraReward: number;
 }
   
 export interface FixedRateConfig {

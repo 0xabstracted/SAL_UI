@@ -1,7 +1,5 @@
 import { useWallet } from '@solana/wallet-adapter-react';
-import { clusterApiUrl, Connection, PublicKey, SystemProgram } from '@solana/web3.js';
-
-import * as web3 from "@solana/web3.js";
+import { clusterApiUrl, Connection, SystemProgram } from '@solana/web3.js';
 
 import * as anchor from '@project-serum/anchor'
 
@@ -9,19 +7,18 @@ import { getStakeProgram, GEM_BANK_PROGRAM_ID } from '../../GrandProgramUtils/ge
 import { findFarmAuthorityPDA, whitelistProofPda } from '../../GrandProgramUtils/gemBank/pda';
 
 
-import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, DEFAULT_PUBLIC_KEY, HUMANPETS_FARM_ID, HUMANS_FARM_ID, UPDATE_AUTHORITY_ALPHA } from './StakeConfig';
+import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, DEFAULT_PUBLIC_KEY, HUMANPETS_FARM_ID, HUMANS_FARM_ID, UPDATE_AUTHORITY_OF_TOKEN, UPDATE_AUTHORITY_OF_TOKEN_STRING, BANK_WL_OBJECT } from './StakeConfig';
+
 import { Metaplex } from '@metaplex-foundation/js';
-import { setTimeout } from 'timers';
+
 import { sendTransactions } from '../../config/connection';
-import { BANK_WL_OBJECT } from "../AlphaStaking/StakeConfig";
 
 function AddToBankWhitelist() {
   const wallet = useWallet();
-  let stack_opener = 0;
+  let stack_opener = 352;
 
   const getFarmIfFromAttributes = (attributes: any) => {
     let body;
-    let is_cyborg;
     let is_pet;
 
     for (let index = 0; index < attributes.length; index++) {
@@ -38,16 +35,16 @@ function AddToBankWhitelist() {
       }
     }
 
-    if (body == 'human' && is_pet) {
+    if (body === 'human' && is_pet) {
       return HUMANPETS_FARM_ID 
     }
-    else if (body == 'human' && !is_pet) {
+    else if (body === 'human' && !is_pet) {
       return HUMANS_FARM_ID
     }
-    else if (body == 'cyborg' && is_pet) {
+    else if (body === 'cyborg' && is_pet) {
       return  CYBORGPET_FARM_ID
     }
-    else if (body == 'cyborg' && !is_pet) {
+    else if (body === 'cyborg' && !is_pet) {
       return  CYBORG_FARM_ID
     }
     return DEFAULT_PUBLIC_KEY
@@ -63,7 +60,7 @@ function AddToBankWhitelist() {
         const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(farmId);
         const farms:any = await stakeProgram.account.farm.fetch(farmId);
         const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
-        return stakeProgram.instruction.addToBankWhitelist(farmAuthBump, 2, 
+        return stakeProgram.rpc.addToBankWhitelist(farmAuthBump, 2, 
           {
             accounts: {
               farm: farmId,
@@ -89,11 +86,11 @@ function AddToBankWhitelist() {
 
   interface ATBWl{
     farmId: any, 
-    mint: PublicKey, 
+    mint: any, 
     id: number,
   }
 
-  const addToBankWhitelistAlpha = async () => {
+  const getFramIdFromUpdateAuthority = async () => {
     if (wallet && wallet.connected) {
       const connection = new Connection(clusterApiUrl("devnet"));
 
@@ -101,16 +98,16 @@ function AddToBankWhitelist() {
       
       const allNfts = await metaplex
                           .nfts()
-                          .findAllByUpdateAuthority({updateAuthority: UPDATE_AUTHORITY_ALPHA})
+                          .findAllByUpdateAuthority({updateAuthority: UPDATE_AUTHORITY_OF_TOKEN})
                           .run();
       
       let obj_list :ATBWl[] = [];
       let count = 0
       console.log(allNfts);
-      let index = 0;
+
       for (let index = 0; index < allNfts.length; index++) {
         const nft:any = allNfts[index];
-        if (nft.updateAuthorityAddress.toBase58() === "TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq") {
+        if (nft.updateAuthorityAddress.toBase58() === UPDATE_AUTHORITY_OF_TOKEN_STRING) {
           console.log(`count1: ${count++}`)
           let xhr = new XMLHttpRequest();
           xhr.open("GET", nft.uri);
@@ -125,7 +122,7 @@ function AddToBankWhitelist() {
                     id:obj_list.length,
                   }
                   obj_list.push(obj);
-                  if (index == allNfts.length - 1) {
+                  if (index === allNfts.length - 1) {
                     console.log(obj_list);
                   }
                 }
@@ -170,7 +167,10 @@ function AddToBankWhitelist() {
     <div>
       <div className="gen-farm-stats">
             <div className="gen-farm-stats-right">
-            <button className="Inside-Farm-btn" onClick={() => parseArrayToBankWhitelist()}>Add To Bank Whitelist</button>
+              <button className="Inside-Farm-btn" onClick={() => getFramIdFromUpdateAuthority()}>Get FarmId List</button>
+            </div>
+            <div className="gen-farm-stats-left">
+              <button className="Inside-Farm-btn" onClick={() => parseArrayToBankWhitelist()}>Whitelist NFTs</button>
             </div>
         </div>
     </div>

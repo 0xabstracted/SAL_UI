@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { PublicKey, SystemProgram } from '@solana/web3.js';
+import { SystemProgram } from '@solana/web3.js';
 
 import React from 'react';
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 
 import { useWallet } from '@solana/wallet-adapter-react';
 
@@ -23,16 +22,6 @@ import { InitFarmAlphaContext } from './InitFarmAlpha';
 export const AuthorizeFunderAlphaContext = React.createContext({})
 
 function AuthorizeFunderAlpha() {
-  const [funderHumans, setFunderHumans] = useState<PublicKey>();
-  const [funderHumanPets, setFunderHumanPets] = useState<PublicKey>();
-  const [funderCyborg, setFunderCyborg] = useState<PublicKey>();
-  const [funderCyborgPet, setFunderCyborgPet] = useState<PublicKey>();
-
-  const [authorizationProofHumans, setAuthorizationProofHumans] = useState<PublicKey>();
-  const [authorizationProofHumanPets, setAuthorizationProofHumanPets] = useState<PublicKey>();
-  const [authorizationProofCyborg, setAuthorizationProofCyborg] = useState<PublicKey>();
-  const [authorizationProofCyborgPet, setAuthorizationProofCyborgPet] = useState<PublicKey>();
-  
   const wallet = useWallet();
   
   const farms = useContext(InitFarmAlphaContext)
@@ -45,27 +34,8 @@ function AuthorizeFunderAlpha() {
         const [authorizationProof] = await funderToAuthorizePDA(args.farmId,args.funderToAuthorize);
         console.log("authorizationProof: ",authorizationProof.toBase58());
 
-        if (args.id === "hu") {
-          setFunderHumans(args.funderToAuthorize);
-          setAuthorizationProofHumans(authorizationProof);
-        }
-        else if (args.id === "hp") {
-          setFunderHumanPets(args.funderToAuthorize);
-          setAuthorizationProofHumanPets(authorizationProof);
-        }
-        else if (args.id === "cy") {
-          setFunderCyborg(args.funderToAuthorize);
-          setAuthorizationProofCyborg(authorizationProof);
-        }
-        else if (args.id === "cp") {
-          setFunderCyborgPet(args.funderToAuthorize);
-          setAuthorizationProofCyborgPet(authorizationProof);
-        }
-    
+        
         const stakeProgram = await getStakeProgram(wallet);
-
-        const farmB = await stakeProgram.account.farm.fetch(args.farmId);
-        console.log('farm account fetched from blockchain: ' + args.farmId.toBase58() + ' account: ' + farmB);
 
         const afaSig = await stakeProgram.rpc.authorizeFunder({
             accounts: {

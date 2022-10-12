@@ -1,8 +1,11 @@
 import { PublicKey } from "@solana/web3.js";
 
+import * as anchor from '@project-serum/anchor'
+
 export interface CreateFungibleTokenArgs{
     decimals: number,
     amount: number,
+    pot_transfer_amount: anchor.BN,
     name: string,
     symbol: string,
     uri: string,
@@ -18,17 +21,9 @@ export interface UpdateTokenMetadataArgs{
     primarySaleHappened: boolean,
 }
 
-export interface MintNewFungibleTokenArgs{
+export interface AlphaTokenSwapArgs{
     oldMint: PublicKey,
     newMint: PublicKey,
     ownerOldMint: PublicKey,
-    amountOld: number,
     decimalsOld: number,
-    decimalsNew: number,
-}
-
-export interface MintFungibleTokenArgs{
-    mint: PublicKey,
-    amount: number,
-    decimals: number,
 }

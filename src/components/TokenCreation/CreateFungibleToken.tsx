@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { createAssociatedTokenAccountInstruction, createInitializeMintInstruction, createMintToCheckedInstruction, getAssociatedTokenAddress, getMinimumBalanceForRentExemptMint, getMint, MINT_SIZE, TOKEN_PROGRAM_ID } from '@solana/spl-token';
-import { SystemProgram, Keypair, Connection, clusterApiUrl } from '@solana/web3.js';
+import { createAssociatedTokenAccountInstruction, createInitializeMintInstruction, createMintToCheckedInstruction, getMinimumBalanceForRentExemptMint, MINT_SIZE, TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import { SystemProgram, Connection, clusterApiUrl } from '@solana/web3.js';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletNotConnectedError } from '@solana/wallet-adapter-base';
 import * as mpl from "@metaplex-foundation/mpl-token-metadata";
 import * as anchor from '@project-serum/anchor';
 import * as web3 from "@solana/web3.js";
 import { CreateFungibleTokenArgs } from './TokenInterface';
-import { alphaFungTokenArgs, glitchFungTokenArgs } from './AlphaTokenConfig';
+import { glthFungTokenArgs, glitchFungTokenArgs } from './AlphaTokenConfig';
 import { sendTransactions } from '../../config/connection';
 import { findAssociatedTokenAddress } from '../../GrandProgramUtils/AssociatedTokenAccountProgram/pda';
-import { BN, Program } from "@project-serum/anchor";
 import { getStakeProgram } from "../../GrandProgramUtils/gemBank/getProgramObjects";
 import { alphaTokenSwapPda,alphaPotPda } from "../../GrandProgramUtils/AssociatedTokenAccountProgram/pda"
 
@@ -28,10 +27,6 @@ function CreateFungibleToken() {
         );
         console.log('ata : ', ata.toBase58());
         let stakeProgram = await getStakeProgram(wallet);
-        let stake_instructions: any = [];
-        let k = 1 * (10 ** 15);
-        console.log(k);
-        let amount = new BN(k);
         const [alpha_token_swap_pda] = await alphaTokenSwapPda(wallet.publicKey!, mint.publicKey);
         const [alpha_pot_pda] = await alphaPotPda(alpha_token_swap_pda, mint.publicKey);
         console.log(`ATA: ${ata.toBase58()}`);
@@ -75,24 +70,27 @@ function CreateFungibleToken() {
                     // [signer1, signer2 ...], // only multisig account will use
                 )
             )
-            create_fung_token_ix.push(
-                stakeProgram.instruction.createAlphaTokenswap(amount,{
-                    accounts: {
-                      alphaTokenswap: alpha_token_swap_pda,
-                      alphaCreator: wallet.publicKey,
-                      alphaPot: alpha_pot_pda,
-                      alphaOwnerSource: ata,
-                      alphaMint: mint.publicKey,
-                      systemProgram: SystemProgram.programId,
-                      tokenProgram: TOKEN_PROGRAM_ID,
-                      rent: anchor.web3.SYSVAR_RENT_PUBKEY
-                    }
-                })
-            )
+            console.log("args.pot_transfer_amount: ",args.pot_transfer_amount.toNumber())
+            if (args.pot_transfer_amount.toNumber() > 0 ){
+                create_fung_token_ix.push(
+                    stakeProgram.rpc.createAlphaTokenswap(args.pot_transfer_amount,{
+                        accounts: {
+                        alphaTokenswap: alpha_token_swap_pda,
+                        alphaCreator: wallet.publicKey,
+                        alphaPot: alpha_pot_pda,
+                        alphaOwnerSource: ata,
+                        alphaMint: mint.publicKey,
+                        systemProgram: SystemProgram.programId,
+                        tokenProgram: TOKEN_PROGRAM_ID,
+                        rent: anchor.web3.SYSVAR_RENT_PUBKEY
+                        }
+                    })
+                )
+            }
             const seed1 = Buffer.from(anchor.utils.bytes.utf8.encode("metadata"));
             const seed2 = Buffer.from(mpl.PROGRAM_ID.toBytes());
             const seed3 = Buffer.from(mint.publicKey.toBytes());
-            const [metadataPDA, _bump] = web3.PublicKey.findProgramAddressSync([seed1, seed2, seed3], mpl.PROGRAM_ID);
+            const [metadataPDA, metadataBump] = web3.PublicKey.findProgramAddressSync([seed1, seed2, seed3], mpl.PROGRAM_ID);
 
             const accounts:any = {
                 metadata: metadataPDA,
@@ -135,7 +133,10 @@ function CreateFungibleToken() {
     <div>
       <div className='gen-farm-stats'>
         <div className='gen-farm-stats-left'>
-            <button className='Inside-Farm-btn' onClick={() => createFungibleToken(alphaFungTokenArgs)}> Create Whitelist Token</button>
+            <button className='Inside-Farm-btn' onClick={() => createFungibleToken(glitchFungTokenArgs)}> Create GLITCH Token</button>
+        </div>
+        <div className='gen-farm-stats-right'>
+            <button className='Inside-Farm-btn' onClick={() => createFungibleToken(glthFungTokenArgs)}> Create GLTCH Token</button>
         </div>
       </div>
     </div>
