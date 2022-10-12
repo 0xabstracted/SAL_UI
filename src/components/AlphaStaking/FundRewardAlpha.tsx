@@ -44,7 +44,7 @@ function FundRewardAlpha() {
             const farmB = await stakeProgram.account.farm.fetch(args.farmId);
             console.log('farm account fetched from blockchain: ' + args.farmId.toBase58() + ' account: ' + farmB);
 
-            const fraSig = await stakeProgram.rpc.fundRewardAlpha(
+            const fraSig = await stakeProgram.rpc.fundReward(
                 authorizationProofBump, 
                 rewardAPotBump, 
                 args.fixedrateConfig,

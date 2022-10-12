@@ -4,11 +4,10 @@ import * as anchor from "@project-serum/anchor"
 import idlStake from "../../idl/magic_stake.json";
 import idlBank from "../../idl/gem_bank.json";
 
-import { PublicKey } from "@solana/web3.js";
 import { WalletContextState } from "@solana/wallet-adapter-react";
 
-export const MAGIC_STAKE_PROGRAM_ID = new PublicKey("ETiwBTiVf2wNApe5Qc1sGozV3nkUDKNRVuCWzJSFWWfV");
-export const GEM_BANK_PROGRAM_ID = new PublicKey('A3uMghFkMxJasxd7JDiTAZwBCMZhyhtxiZxxWY6pNpMK');
+export const MAGIC_STAKE_PROGRAM_ID = new anchor.web3.PublicKey("45eAzw1V8BPznoTejeqtMvNP6suKDn9NWs4t5gRyK9TM");
+export const GEM_BANK_PROGRAM_ID = new anchor.web3.PublicKey('AjkkPAMBzpJ1M4yGPjdLomRSZkQHUgL9YNp9ksfKebGm');
 
 export const getStakeProgram = async (wallet: WalletContextState) => {
   const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST!;

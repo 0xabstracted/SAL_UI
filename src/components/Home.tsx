@@ -99,7 +99,7 @@ import CreateFungibleToken from "./TokenCreation/CreateFungibleToken";
 
 import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, HUMANPETS_FARM_ID, HUMANS_FARM_ID } from "./AlphaStaking/StakeConfig";
 import { REWARD_MINT_GLITCH } from "./TokenCreation/AlphaTokenConfig";
-import MintNewFungibleToken from "./TokenCreation/MintNewFungibleToken";
+import AlphaTokenSwap from "./TokenCreation/AlphaTokenSwap";
 import { findFarmTreasuryTokenPDA } from "../GrandProgramUtils/gemBank/pda";
 
 const responsive = {
@@ -612,7 +612,7 @@ const Home = (props: HomeProps) => {
         const connection = new Connection(clusterApiUrl("devnet"));
         const metaplex = new Metaplex(connection);
         let nft = await metaplex.nfts().findByMint(element.account.gemMint).run();
-        if (nft.updateAuthorityAddress == new PublicKey("2LpGioZAG2GkzBpTye4e3jqQWiEL7mFBo74B6yvCmTaw") && nft.creators[0].address == new PublicKey("BNZy4DXcGZRpkkgnQn5nfqnkMPjjh7NLk1KBTe8qqtmZ")) {
+        if (nft.updateAuthorityAddress == new anchor.web3.PublicKey("2LpGioZAG2GkzBpTye4e3jqQWiEL7mFBo74B6yvCmTaw") && nft.creators[0].address == new anchor.web3.PublicKey("BNZy4DXcGZRpkkgnQn5nfqnkMPjjh7NLk1KBTe8qqtmZ")) {
           var xhr = new XMLHttpRequest();
           xhr.addEventListener("readystatechange", function() {
             if(this.readyState === 4) {
@@ -911,75 +911,75 @@ const Home = (props: HomeProps) => {
     }
   }
 
-  // Farmer should call this
-  const initFixedFarmerInst = async (id:any,stake_instructions:any, stakeProgram:any) => {
-    let farm_id:any;
-    if (id == 1) {
-      farm_id = HUMANS_FARM_ID;
-    }
-    else if (id == 4) {
-      farm_id = CYBORGPET_FARM_ID;
-    }
-    else if (id == 5) {
-      farm_id = BASEMENT_FARM_ID;
-    }
-    if (id == 1) {
-      const [farmerPda] = await farmerPDA(
-        farm_id,
-        wallet.publicKey!
-      );
-      const farms:any =
-        await stakeProgram.account.farm.fetch(farm_id);
-      console.log('farm with ' + farm_id.toBase58());
-      const [farmerVaultPda] = await farmerVaultPDA(
-        farms.bank,
-        wallet.publicKey!
-      );
-      stake_instructions.push(stakeProgram.instruction.initFixedFarmer(
-        {
-          accounts: {
-            farm: farm_id,
-            farmer: farmerPda,
-            identity: wallet.publicKey,
-            bank: farms.bank,
-            vault: farmerVaultPda,
-            gemBank: GEM_BANK_PROGRAM_ID,
-            payer: wallet.publicKey,
-            systemProgram: SystemProgram.programId,
-          }
-        }
-      ));
-      return stake_instructions;
-    }
-    else if (id == 2) {
-      const [farmerPda] = await farmerPDA(
-        FARM_ID,
-        wallet.publicKey!
-      );
-      const farms:any =
-        await stakeProgram.account.farm.fetch(FARM_ID);
-      console.log('farm with ' + FARM_ID.toBase58());
-      const [farmerVaultPda] = await farmerVaultPDA(
-        farms.bank,
-        wallet.publicKey!
-      );
-      stake_instructions.push(stakeProgram.instruction.initFixedFarmer(
-        {
-          accounts: {
-            farm: FARM_ID,
-            farmer: farmerPda,
-            identity: wallet.publicKey,
-            bank: farms.bank,
-            vault: farmerVaultPda,
-            gemBank: GEM_BANK_PROGRAM_ID,
-            payer: wallet.publicKey,
-            systemProgram: SystemProgram.programId,
-          }
-        }
-      ));
-      return stake_instructions;
-    }
-  }
+  // // Farmer should call this
+  // const initFixedFarmerInst = async (id:any,stake_instructions:any, stakeProgram:any) => {
+  //   let farm_id:any;
+  //   if (id == 1) {
+  //     farm_id = HUMANS_FARM_ID;
+  //   }
+  //   else if (id == 4) {
+  //     farm_id = CYBORGPET_FARM_ID;
+  //   }
+  //   else if (id == 5) {
+  //     farm_id = BASEMENT_FARM_ID;
+  //   }
+  //   if (id == 1) {
+  //     const [farmerPda] = await farmerPDA(
+  //       farm_id,
+  //       wallet.publicKey!
+  //     );
+  //     const farms:any =
+  //       await stakeProgram.account.farm.fetch(farm_id);
+  //     console.log('farm with ' + farm_id.toBase58());
+  //     const [farmerVaultPda] = await farmerVaultPDA(
+  //       farms.bank,
+  //       wallet.publicKey!
+  //     );
+  //     stake_instructions.push(stakeProgram.rpc.initFixedFarmer(
+  //       {
+  //         accounts: {
+  //           farm: farm_id,
+  //           farmer: farmerPda,
+  //           identity: wallet.publicKey,
+  //           bank: farms.bank,
+  //           vault: farmerVaultPda,
+  //           gemBank: GEM_BANK_PROGRAM_ID,
+  //           payer: wallet.publicKey,
+  //           systemProgram: SystemProgram.programId,
+  //         }
+  //       }
+  //     ));
+  //     return stake_instructions;
+  //   }
+  //   else if (id == 2) {
+  //     const [farmerPda] = await farmerPDA(
+  //       FARM_ID,
+  //       wallet.publicKey!
+  //     );
+  //     const farms:any =
+  //       await stakeProgram.account.farm.fetch(FARM_ID);
+  //     console.log('farm with ' + FARM_ID.toBase58());
+  //     const [farmerVaultPda] = await farmerVaultPDA(
+  //       farms.bank,
+  //       wallet.publicKey!
+  //     );
+  //     stake_instructions.push(stakeProgram.rpc.initFixedFarmer(
+  //       {
+  //         accounts: {
+  //           farm: FARM_ID,
+  //           farmer: farmerPda,
+  //           identity: wallet.publicKey,
+  //           bank: farms.bank,
+  //           vault: farmerVaultPda,
+  //           gemBank: GEM_BANK_PROGRAM_ID,
+  //           payer: wallet.publicKey,
+  //           systemProgram: SystemProgram.programId,
+  //         }
+  //       }
+  //     ));
+  //     return stake_instructions;
+  //   }
+  // }
 
   //Farmer should call this
   const initFixedFarmerAlpha = async (id:any,stake_instructions:any, stakeProgram:any) => {
@@ -1007,7 +1007,7 @@ const Home = (props: HomeProps) => {
       farms.bank,
       wallet.publicKey!
     );
-    stake_instructions.push(stakeProgram.instruction.initFarmerAlpha(
+    stake_instructions.push(stakeProgram.rpc.initFixedFarmer(
       {
         accounts: {
           farm: farm_id,
@@ -1037,7 +1037,7 @@ const Home = (props: HomeProps) => {
       );
       const farms:any = await stakeProgram.account.farm.fetch(FARM_ID);
       console.log('farm with ' + FARM_ID.toBase58());
-      const wallet_create = await stakeProgram.rpc.refreshFarmerAlpha(farmerBump,
+      const wallet_create = await stakeProgram.rpc.refreshFarmer(farmerBump,
         {
           accounts: {
             farm: FARM_ID,
@@ -1066,7 +1066,7 @@ const Home = (props: HomeProps) => {
       const farms:any =
         await stakeProgram.account.farm.fetch(FARM_ID);
       console.log('farm with ' + FARM_ID.toBase58());
-      const wallet_create = await stakeProgram.rpc.refreshFarmerSignedAlpha(farmerBump,true,
+      const wallet_create = await stakeProgram.rpc.refreshFarmerSigned(farmerBump,true,
         {
           accounts: {
             farm: FARM_ID,
@@ -1082,136 +1082,136 @@ const Home = (props: HomeProps) => {
     }
   }
 
-  // Farmer should call this
-  const initProbableFarmerInst = async (id:any,stake_instructions:any, stakeProgram:any) => {
-    let farm_id:any;
-    if (id == 2) {
-      farm_id = HUMANPETS_FARM_ID;
-    }
-    else if (id == 3) {
-      farm_id = CYBORG_FARM_ID;
-    }
-    // console.log(farmers);
-    try {
-      const [farmerPda] = await farmerPDA(
-        farm_id,
-        wallet.publicKey!
-      );
-      const farms:any =
-        await stakeProgram.account.farm.fetch(farm_id);
-      console.log('farm with ' + farm_id.toBase58());
-      const [farmerVaultPda] = await farmerVaultPDA(
-        farms.bank,
-        wallet.publicKey!
-      );
-      // console.log(JSON.parse(farms).bank);
-      stake_instructions.push(await stakeProgram.rpc.initProbableFarmer(
-        {
-          accounts: {
-            farm: farm_id,
-            farmer: farmerPda,
-            identity: wallet.publicKey,
-            bank: farms.bank,
-            vault: farmerVaultPda,
-            gemBank: GEM_BANK_PROGRAM_ID,
-            payer: wallet.publicKey,
-            systemProgram: SystemProgram.programId,
-          }
-        }
-      ));
-      return stake_instructions;
-    } catch (error) {
-      console.log("Transaction error: ", error);
-      return stake_instructions;
-    }
-  }
+  // // Farmer should call this
+  // const initProbableFarmerInst = async (id:any,stake_instructions:any, stakeProgram:any) => {
+  //   let farm_id:any;
+  //   if (id == 2) {
+  //     farm_id = HUMANPETS_FARM_ID;
+  //   }
+  //   else if (id == 3) {
+  //     farm_id = CYBORG_FARM_ID;
+  //   }
+  //   // console.log(farmers);
+  //   try {
+  //     const [farmerPda] = await farmerPDA(
+  //       farm_id,
+  //       wallet.publicKey!
+  //     );
+  //     const farms:any =
+  //       await stakeProgram.account.farm.fetch(farm_id);
+  //     console.log('farm with ' + farm_id.toBase58());
+  //     const [farmerVaultPda] = await farmerVaultPDA(
+  //       farms.bank,
+  //       wallet.publicKey!
+  //     );
+  //     // console.log(JSON.parse(farms).bank);
+  //     stake_instructions.push(await stakeProgram.rpc.initProbableFarmer(
+  //       {
+  //         accounts: {
+  //           farm: farm_id,
+  //           farmer: farmerPda,
+  //           identity: wallet.publicKey,
+  //           bank: farms.bank,
+  //           vault: farmerVaultPda,
+  //           gemBank: GEM_BANK_PROGRAM_ID,
+  //           payer: wallet.publicKey,
+  //           systemProgram: SystemProgram.programId,
+  //         }
+  //       }
+  //     ));
+  //     return stake_instructions;
+  //   } catch (error) {
+  //     console.log("Transaction error: ", error);
+  //     return stake_instructions;
+  //   }
+  // }
 
   // Farmer should call this
 
   // Farmer should call this
 
   // Farm Manager should call this
-  const addRaritiesToBank = async () => {
-    if (nftMint && nftMint.length > 0) {
-      const nft_mint = new PublicKey(nftMint);
-      try {
-        const stakeProgram = await getStakeProgram(wallet);
-        const farmers = await stakeProgram.account.farmer.all();
-        console.log(farmers);
-        try {
-          const [farmerPda, farmerBump] = await farmerPDA(
-            FARM_ID,
-            wallet.publicKey!
-          );
-          let nft;
-          if (stakedNft) {
-            nft = stakedNft;
-          }
-          else {
-            nft = nfts[0];
-          }
-          const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(FARM_ID);
-          const farms:any = await stakeProgram.account.farm.fetch(FARM_ID);
-          console.log('farm with ' + FARM_ID.toBase58());
-          const rarityConfig: RarityConfig = {
-            mint: nft_mint,
-            rarityPoints: new BN(1)
-          }
-          const rarityConfigs = [rarityConfig];
-          const remainingAccounts = [];
-          const [gemRarity] = await gemBoxRarityPda(farms.bank, nft_mint);
-          //add mint
-          remainingAccounts.push({
-            pubkey: nft_mint,
-            isWritable: false,
-            isSigner: false,
-          });
-          //add rarity pda
-          remainingAccounts.push({
-            pubkey: gemRarity,
-            isWritable: true,
-            isSigner: false,
-          });
-          const wallet_create = await stakeProgram.rpc.addRaritiesToBank(farmAuthBump,rarityConfigs,
-            {
-              accounts: {
-                farm: FARM_ID,
-                farmManager: farms.farmManager,
-                farmAuthority: farmAuth,
-                bank: farms.bank,
-                gemBank: GEM_BANK_PROGRAM_ID,
-                farmer: farmerPda,
-                systemProgram: SystemProgram.programId
-              },
-              remainingAccounts
-            }
-          );
-          getFarmers();
-          setAlertState({
-            open: true,
-            message: "Rarities has been added to the NFT",
-            severity: "success",
-          });
-          console.log('add rarities to bank signature : ' + wallet_create);
-        } catch (error) {
-          console.log("Transaction error: ", error);
-        }
-      } catch (error) {
-        setAlertState({
-          open: true,
-          message: "NFT Mint is not a valid Public key",
-          severity: "error",
-        });
-      }
-    }
-    else {
-      setAlertState({
-        open: true,
-        message: "NFT Mint is empty",
-        severity: "error",
-      });
-    }
-  }
+  // const addRaritiesToBank = async () => {
+  //   if (nftMint && nftMint.length > 0) {
+  //     const nft_mint = new anchor.web3.PublicKey(nftMint);
+  //     try {
+  //       const stakeProgram = await getStakeProgram(wallet);
+  //       const farmers = await stakeProgram.account.farmer.all();
+  //       console.log(farmers);
+  //       try {
+  //         const [farmerPda, farmerBump] = await farmerPDA(
+  //           FARM_ID,
+  //           wallet.publicKey!
+  //         );
+  //         let nft;
+  //         if (stakedNft) {
+  //           nft = stakedNft;
+  //         }
+  //         else {
+  //           nft = nfts[0];
+  //         }
+  //         const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(FARM_ID);
+  //         const farms:any = await stakeProgram.account.farm.fetch(FARM_ID);
+  //         console.log('farm with ' + FARM_ID.toBase58());
+  //         const rarityConfig: RarityConfig = {
+  //           mint: nft_mint,
+  //           rarityPoints: new BN(1)
+  //         }
+  //         const rarityConfigs = [rarityConfig];
+  //         const remainingAccounts = [];
+  //         const [gemRarity] = await gemBoxRarityPda(farms.bank, nft_mint);
+  //         //add mint
+  //         remainingAccounts.push({
+  //           pubkey: nft_mint,
+  //           isWritable: false,
+  //           isSigner: false,
+  //         });
+  //         //add rarity pda
+  //         remainingAccounts.push({
+  //           pubkey: gemRarity,
+  //           isWritable: true,
+  //           isSigner: false,
+  //         });
+  //         const wallet_create = await stakeProgram.rpc.addRaritiesToBank(farmAuthBump,rarityConfigs,
+  //           {
+  //             accounts: {
+  //               farm: FARM_ID,
+  //               farmManager: farms.farmManager,
+  //               farmAuthority: farmAuth,
+  //               bank: farms.bank,
+  //               gemBank: GEM_BANK_PROGRAM_ID,
+  //               farmer: farmerPda,
+  //               systemProgram: SystemProgram.programId
+  //             },
+  //             remainingAccounts
+  //           }
+  //         );
+  //         getFarmers();
+  //         setAlertState({
+  //           open: true,
+  //           message: "Rarities has been added to the NFT",
+  //           severity: "success",
+  //         });
+  //         console.log('add rarities to bank signature : ' + wallet_create);
+  //       } catch (error) {
+  //         console.log("Transaction error: ", error);
+  //       }
+  //     } catch (error) {
+  //       setAlertState({
+  //         open: true,
+  //         message: "NFT Mint is not a valid Public key",
+  //         severity: "error",
+  //       });
+  //     }
+  //   }
+  //   else {
+  //     setAlertState({
+  //       open: true,
+  //       message: "NFT Mint is empty",
+  //       severity: "error",
+  //     });
+  //   }
+  // }
 
   // Complete Staking NFT
   const completeStake = async () => {
@@ -1220,7 +1220,7 @@ const Home = (props: HomeProps) => {
     var add_init_human_pets = true;
     var add_init_cyborg = true;
     var add_init_cyborg_pets = true;
-    var add_init_basement = true;
+    // var add_init_basement = true;
     if (farmerHuman! != null) {
       add_init_human = false;
     }
@@ -1233,9 +1233,9 @@ const Home = (props: HomeProps) => {
     else if (farmerCyborgPet! != null) {
       add_init_cyborg_pets = false;
     }
-    else if (farmerBasement! != null) {
-      add_init_basement = false;
-    }
+    // else if (farmerBasement! != null) {
+    //   add_init_basement = false;
+    // }
     if (stakedNft) {
       let farm_id:any;
         if (stakedNft.trait_type == 'Human') {
@@ -1258,7 +1258,7 @@ const Home = (props: HomeProps) => {
         if (add_init_human && stakedNft.trait_type == 'Human') {
           stake_instructions = await initFixedFarmerAlpha(1,stake_instructions,stakeProgram);
         }
-        else if (add_init_basement && stakedNft.trait_type == 'Human Pet') {
+        else if (add_init_cyborg_pets && stakedNft.trait_type == 'Human Pet') {
           stake_instructions = await initFixedFarmerAlpha(2,stake_instructions,stakeProgram);
         }
         else if (add_init_cyborg && stakedNft.trait_type == 'Cyborg') {
@@ -1287,27 +1287,27 @@ const Home = (props: HomeProps) => {
         // console.log(vaults[0].account.authoritySeed.toBase58());
         const [gemBoxPdaVal] = await gemBoxPda(
           farmerVaultPda,
-          new PublicKey(nft.mint)
+          new anchor.web3.PublicKey(nft.mint)
         );
         const [gemDepositBoxPdaVal] = await gemDepositBoxPda(
           farmerVaultPda,
-          new PublicKey(nft.mint)
+          new anchor.web3.PublicKey(nft.mint)
         );
         const [gemBoxRarityPdaVal, gemBoxrarityBump] = await gemBoxRarityPda(
           farms.bank,
-          new PublicKey(nft.mint)
+          new anchor.web3.PublicKey(nft.mint)
         );
         const [vaultAuthorityPdaVal, vaultAuthorityBump] = await vaultAuthorityPda(
           farmerVaultPda
         );
-        const gem_mint = new PublicKey(nft.mint);
-        // const address_to_whitelist = new PublicKey(collectionId);
+        const gem_mint = new anchor.web3.PublicKey(nft.mint);
+        // const address_to_whitelist = new anchor.web3.PublicKey(collectionId);
         // const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
-        const [mintWhitelistProofPdaVal] = await whitelistProofPda(farms.bank,new PublicKey(nft.mint));
-        const [creatorWhitelistProofPdaVal] = await whitelistProofPda(farms.bank,new PublicKey(nft.creator));
-        const gem_source_old = await findAssociatedTokenAddress(wallet.publicKey!,new PublicKey(nft.mint));
+        const [mintWhitelistProofPdaVal] = await whitelistProofPda(farms.bank,new anchor.web3.PublicKey(nft.mint));
+        const [creatorWhitelistProofPdaVal] = await whitelistProofPda(farms.bank,new anchor.web3.PublicKey(nft.creator));
+        const gem_source_old = await findAssociatedTokenAddress(wallet.publicKey!,new anchor.web3.PublicKey(nft.mint));
         const gem_source_obj = await props.connection.getParsedTokenAccountsByOwner(wallet.publicKey!, {
-          mint: new PublicKey(nft.mint),
+          mint: new anchor.web3.PublicKey(nft.mint),
         });
         const gem_source = gem_source_obj.value[0].pubkey;
         const [gem_metadata] = await tokenMetadataPda(gem_mint);
@@ -1334,7 +1334,7 @@ const Home = (props: HomeProps) => {
           });
         }
         console.log(stake_instructions);
-        stake_instructions.push(await stakeProgram.instruction.flashDepositAlpha(farmerBump, vaultAuthorityBump,gemBoxrarityBump, new BN(1), 
+        stake_instructions.push(await stakeProgram.rpc.flashDeposit(farmerBump, vaultAuthorityBump,gemBoxrarityBump, new BN(1), 
           {
             accounts: {
               farm: farm_id,
@@ -1358,9 +1358,9 @@ const Home = (props: HomeProps) => {
           }
         ));
         const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(farm_id);
-        const address_to_whitelist = new PublicKey(collectionId);
+        const address_to_whitelist = new anchor.web3.PublicKey(collectionId);
         const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
-        stake_instructions.push(stakeProgram.instruction.stakeAlpha(farmAuthBump, farmerBump, 
+        stake_instructions.push(stakeProgram.rpc.stake(farmAuthBump, farmerBump, 
           {
             accounts: {
               farm: farm_id,
@@ -1439,7 +1439,7 @@ const Home = (props: HomeProps) => {
         FARM_ID
       );
       const [farmTreasuryToken, farmTreasuryTokenBump] = await findFarmTreasuryTokenPDA(FARM_ID);
-      const wallet_create = await stakeProgram.rpc.unstakeAlpha(farmAuthBump, farmTreasuryTokenBump, farmerBump, false,
+      const wallet_create = await stakeProgram.rpc.unstake(farmAuthBump, farmTreasuryTokenBump, farmerBump, false,
         {
           accounts: {
             farm: FARM_ID,
@@ -1789,7 +1789,7 @@ const Home = (props: HomeProps) => {
 
   const mintToCheckedFn =async (params:any) => {
     const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
-    let mint = new PublicKey('57vavPcanGNxm9WYVnWyDNiwofxGniQHmTTocAeco3dk');
+    let mint = new anchor.web3.PublicKey('57vavPcanGNxm9WYVnWyDNiwofxGniQHmTTocAeco3dk');
     let ata = await getAssociatedTokenAddress(
       mint, // mint
       wallet?.publicKey! // owner
@@ -2052,8 +2052,8 @@ const Home = (props: HomeProps) => {
 
   const swapFn =async (params:any) => {
     const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
-    let mint = new PublicKey('57vavPcanGNxm9WYVnWyDNiwofxGniQHmTTocAeco3dk');
-    let farm_manager = new PublicKey('UXX91ApKnrc1NyATPYqMJaDeJBQ3r9kSva1a4XTY3FD');
+    let mint = new anchor.web3.PublicKey('57vavPcanGNxm9WYVnWyDNiwofxGniQHmTTocAeco3dk');
+    let farm_manager = new anchor.web3.PublicKey('TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq');
     let ata = await getAssociatedTokenAddress(
       mint, // mint
       wallet?.publicKey! // owner
@@ -2753,7 +2753,7 @@ const Home = (props: HomeProps) => {
               <div className="pull-left full-width">
                 <img src={CloseAlpha} onClick={closeTokenSwapping} className="swap-close-logo" alt="" />
                 <div className="swapping-process-parent">
-                  <MintNewFungibleToken></MintNewFungibleToken>
+                  <AlphaTokenSwap></AlphaTokenSwap>
                 </div>
               </div> 
             </div>
@@ -2962,14 +2962,14 @@ const Home = (props: HomeProps) => {
                     <InitFarmAlpha/>
                     <FundRewardAlpha/>
                     <AddToBankWhitelist/>
-                    <div className="gen-farm-stats">
+                    {/* <div className="gen-farm-stats">
                       <div className="gen-farm-stats-left">
                         <input className="authorize-funder-reward-input" placeholder="NFT Mint" value={nftMint} onChange={event => setNftMint(event.target.value)} />
                       </div>
                       <div className="gen-farm-stats-right">
                         <button className="Inside-Farm-btn" onClick={addRaritiesToBank}>Add Rarities to Bank</button>
-                      </div>
-                    </div>
+                      </div> 
+                    </div>*/}
                   </div>
                 </div>
               </div>
