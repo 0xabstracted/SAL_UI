@@ -10,7 +10,8 @@ import { CreateFungibleTokenArgs } from './TokenInterface';
 import { glthFungTokenArgs, glitchFungTokenArgs } from './AlphaTokenConfig';
 import { sendTransactions } from '../../config/connection';
 import { findAssociatedTokenAddress } from '../../GrandProgramUtils/AssociatedTokenAccountProgram/pda';
-import { getStakeProgram } from "../../GrandProgramUtils/gemBank/getProgramObjects";
+import { getStakeProgram } from "../../GrandProgramUtils/GemBank/GetProgramObjects";
+import { getTokenSwapProgramObject } from "../../GrandProgramUtils/TokenSwap/GetProgramObject";
 import { alphaTokenSwapPda,alphaPotPda } from "../../GrandProgramUtils/AssociatedTokenAccountProgram/pda"
 
 function CreateFungibleToken() {
@@ -77,7 +78,7 @@ function CreateFungibleToken() {
                         accounts: {
                         alphaTokenswap: alpha_token_swap_pda,
                         alphaCreator: wallet.publicKey,
-                        alphaPot: alpha_pot_pda,
+                        alphaPot: alpha_pot_pda, 
                         alphaOwnerSource: ata,
                         alphaMint: mint.publicKey,
                         systemProgram: SystemProgram.programId,

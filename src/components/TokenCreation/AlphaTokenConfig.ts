@@ -1,12 +1,14 @@
 import { CreateFungibleTokenArgs, AlphaTokenSwapArgs, UpdateTokenMetadataArgs } from "./TokenInterface";
 import * as anchor from '@project-serum/anchor';
 export const REWARD_MINT_GLITCH = new anchor.web3.PublicKey('6Vq11ujh2dwrsD4rKF131dY7EgfejEd9A3gTt4ChWPeu');
+export const REWARD_MINT_GLITCH_MAINNET = new anchor.web3.PublicKey('GLTChgv7uPRGoRpuQcW7B9tYSUmQmLzeWTjxF4FoEVbY');
 export const REWARD_MINT_GLTCH = new anchor.web3.PublicKey('3tL5Ho7gLUW21VmXaH8hBXCFEPies4VDWKFkchfAD1La');
+export const REWARD_MINT_GLTCH_MAINET = new anchor.web3.PublicKey('3tL5Ho7gLUW21VmXaH8hBXCFEPies4VDWKFkchfAD1La');
 export const ALPHA_OWNER_ATA = new anchor.web3.PublicKey('7HL9xo4rA48cR6CYsxZ4dzJa3zt3FZgGGUaB26JRWwrS');
 
 export const glitchFungTokenArgs : CreateFungibleTokenArgs = {
     decimals: 9,
-    amount: 1e17,
+    amount: 10^8 * 10^9,
     pot_transfer_amount: new anchor.BN(0),
     name: "GLITCHZ",
     symbol: "GLITCHZ",
@@ -16,10 +18,10 @@ export const glitchFungTokenArgs : CreateFungibleTokenArgs = {
 
 export const glthFungTokenArgs : CreateFungibleTokenArgs = {
     decimals: 9,
-    amount: 1e17,
-    pot_transfer_amount: new anchor.BN(1e15),
-    name: "GLTCHZ",
-    symbol: "GLTCHZ",
+    amount:  10^8 * 10^9,
+    pot_transfer_amount: new anchor.BN( 9 * 10^6 * 10^9),
+    name: "GLTCHA",
+    symbol: "GLTCHA",
     uri: "https://arweave.net/wFymyPGgPW2EVggMfjTwJEWN-j5Ye6tchV8MQGEDvy0",
     isMutable: true,
 }
@@ -45,6 +47,13 @@ export const updateAlphaFungTokenMetadataArgs : UpdateTokenMetadataArgs = {
 export const mintNewFungibleTokenArgs : AlphaTokenSwapArgs = {
     oldMint: REWARD_MINT_GLITCH,
     newMint: REWARD_MINT_GLTCH,
+    ownerOldMint: new anchor.web3.PublicKey("TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq"),
+    decimalsOld: 9,
+}   
+
+export const mintNewFungibleTokenMainetArgs : AlphaTokenSwapArgs = {
+    oldMint: REWARD_MINT_GLITCH_MAINNET,
+    newMint: REWARD_MINT_GLTCH_MAINET,
     ownerOldMint: new anchor.web3.PublicKey("TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq"),
     decimalsOld: 9,
 }   

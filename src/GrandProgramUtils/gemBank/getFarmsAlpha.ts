@@ -1,4 +1,4 @@
-import { getStakeProgram } from "./getProgramObjects";
+import { getStakeProgram } from "./GetProgramObjects";
 
 import { PublicKey } from "@solana/web3.js";
 import { WalletContextState } from "@solana/wallet-adapter-react";

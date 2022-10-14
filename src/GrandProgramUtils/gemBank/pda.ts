@@ -1,6 +1,6 @@
 import { PublicKey } from "@solana/web3.js";
 
-import { MAGIC_STAKE_PROGRAM_ID, GEM_BANK_PROGRAM_ID } from "./getProgramObjects";
+import { MAGIC_STAKE_PROGRAM_ID, GEM_BANK_PROGRAM_ID } from "./GetProgramObjects";
 
 export const findFarmAuthorityPDA = async (farm: PublicKey) => {
     return PublicKey.findProgramAddress([farm.toBytes()], MAGIC_STAKE_PROGRAM_ID);

@@ -22,7 +22,7 @@ export const getStakeProgram = async (wallet: WalletContextState) => {
   );
 
   const idl_o: any = idlStake;
-  console.log(MAGIC_STAKE_PROGRAM_ID.toBase58())
+  // console.log(MAGIC_STAKE_PROGRAM_ID.toBase58())
   return new Program(idl_o, MAGIC_STAKE_PROGRAM_ID, provider);
 };
 

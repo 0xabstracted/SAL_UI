@@ -3,8 +3,8 @@ import { clusterApiUrl, Connection, SystemProgram } from '@solana/web3.js';
 
 import * as anchor from '@project-serum/anchor'
 
-import { getStakeProgram, GEM_BANK_PROGRAM_ID } from '../../GrandProgramUtils/gemBank/getProgramObjects';
-import { findFarmAuthorityPDA, whitelistProofPda } from '../../GrandProgramUtils/gemBank/pda';
+import { getStakeProgram, GEM_BANK_PROGRAM_ID } from '../../GrandProgramUtils/GemBank/GetProgramObjects';
+import { findFarmAuthorityPDA, whitelistProofPda } from '../../GrandProgramUtils/GemBank/pda';
 
 
 import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, DEFAULT_PUBLIC_KEY, HUMANPETS_FARM_ID, HUMANS_FARM_ID, UPDATE_AUTHORITY_OF_TOKEN, UPDATE_AUTHORITY_OF_TOKEN_STRING, BANK_WL_OBJECT } from './StakeConfig';
@@ -110,37 +110,55 @@ function AddToBankWhitelist() {
       for (let index = 0; index < allNfts.length; index++) {
         const nft:any = allNfts[index];
         if (nft.updateAuthorityAddress.toBase58() === UPDATE_AUTHORITY_OF_TOKEN_STRING) {
-          console.log(`count1: ${count++}`)
-          let xhr = new XMLHttpRequest();
-          xhr.open("GET", nft.uri);
-          xhr.onreadystatechange = async () => {
-            if(xhr.readyState === 4) {
-              try {
-                let farmId = getFarmIfFromAttributes(JSON.parse(xhr.responseText).attributes)
-                if (farmId === HUMANPETS_FARM_ID ||  farmId === HUMANS_FARM_ID || farmId === CYBORGPET_FARM_ID || farmId === CYBORG_FARM_ID){
-                  let obj : ATBWl = {
-                    mint: nft.mintAddress,
-                    farmId: farmId,
-                    id:obj_list.length,
-                  }
-                  obj_list.push(obj);
-                  if (index === allNfts.length - 1) {
-                    console.log(obj_list);
-                  }
-                }
-              } catch (error) {
-                console.log(1);
-                console.log(nft);
-                let obj : ATBWl = {
-                  mint: nft.mintAddress,
-                  farmId: HUMANS_FARM_ID,
-                  id:obj_list.length,
-                }
-                obj_list.push(obj);
+          if (nft && nft.json && nft.json.attributes) {
+            let farmId = getFarmIfFromAttributes(nft.json.attributes)
+            if (farmId === HUMANPETS_FARM_ID ||  farmId === HUMANS_FARM_ID || farmId === CYBORGPET_FARM_ID || farmId === CYBORG_FARM_ID){
+              let obj : ATBWl = {
+                mint: nft.mintAddress,
+                farmId: farmId,
+                id:obj_list.length,
+              }
+              obj_list.push(obj);
+              if (index === allNfts.length - 1) {
+                console.log(obj_list);
               }
             }
-          };
-          xhr.send();
+          }
+          else {
+            console.log('failed nft');
+            console.log(nft);
+          }
+          // console.log(`count1: ${count++}`)
+          // let xhr = new XMLHttpRequest();
+          // xhr.open("GET", nft.uri);
+          // xhr.onreadystatechange = async () => {
+          //   if(xhr.readyState === 4) {
+          //     try {
+          //       let farmId = getFarmIfFromAttributes(JSON.parse(xhr.responseText).attributes)
+          //       if (farmId === HUMANPETS_FARM_ID ||  farmId === HUMANS_FARM_ID || farmId === CYBORGPET_FARM_ID || farmId === CYBORG_FARM_ID){
+          //         let obj : ATBWl = {
+          //           mint: nft.mintAddress,
+          //           farmId: farmId,
+          //           id:obj_list.length,
+          //         }
+          //         obj_list.push(obj);
+          //         if (index === allNfts.length - 1) {
+          //           console.log(obj_list);
+          //         }
+          //       }
+          //     } catch (error) {
+          //       console.log(1);
+          //       console.log(nft);
+          //       let obj : ATBWl = {
+          //         mint: nft.mintAddress,
+          //         farmId: HUMANS_FARM_ID,
+          //         id:obj_list.length,
+          //       }
+          //       obj_list.push(obj);
+          //     }
+          //   }
+          // };
+          // xhr.send();
         }
       }
       console.log(obj_list);

@@ -1,5 +1,5 @@
 import { BN } from "@project-serum/anchor";
-import { FarmConfig, FixedRateConfig, MaxCounts } from "../../GrandProgramUtils/gemBank/interface";
+import { FarmConfig, FixedRateConfig, MaxCounts } from "../../GrandProgramUtils/GemBank/interface";
 import { REWARD_MINT_GLTCH } from "../TokenCreation/AlphaTokenConfig";
 import { AuthorizeFunderAlphaArgs, InitFarmAlphaArgs } from "./StakeConfigInterface";
 import * as anchor from '@project-serum/anchor'
@@ -76,54 +76,59 @@ export const authorizeFunderAlphaCyborgPetArgs: AuthorizeFunderAlphaArgs = {
 }
 const fixedrateConfigHumans: FixedRateConfig = {
     schedule: {
-        baseRate: new BN(5),
+        baseRate: new BN(60000),
+        // baseRate: new BN(57870),
         tier1: null,
         tier2:null,
         tier3:null,
-        denominator: new BN(86400),
+        denominator: new BN(1),
         numberOfNfts: new BN(5),
-        extraReward: new BN(3),
+        // extraReward: new BN(34722),
+        extraReward: new BN(35000),
     },
-    amount: new BN(1e14),
+    amount: new BN(9 * 10^6 * 10^9),
     durationSec: new BN(8640000),
 };
 const fixedrateConfigHumanPets: FixedRateConfig = {
     schedule: {
-        baseRate: new BN(10),
+        // baseRate: new BN(115740),
+        baseRate: new BN(120000),
         tier1: null,
         tier2:null,
         tier3:null,
-        denominator: new BN(86400),
+        denominator: new BN(1),
         numberOfNfts: new BN(0),
         extraReward: new BN(0),
     },
-    amount: new BN(1e14),
+    amount: new BN(9 * 10^6 * 10^9),
     durationSec: new BN(8640000),
 };
 const fixedrateConfigCyborg: FixedRateConfig = {
     schedule: {
-        baseRate: new BN(15),
+        // baseRate: new BN(173610),
+        baseRate: new BN(180000),
         tier1: null,
         tier2:null,
         tier3:null,
-        denominator: new BN(86400),
+        denominator: new BN(1),
         numberOfNfts: new BN(0),
         extraReward: new BN(0),
     },
-    amount: new BN(1e14),
+    amount: new BN(9 * 10^6 * 10^9),
     durationSec: new BN(8640000),
 };
 const fixedrateConfigCyborgPet: FixedRateConfig = {
     schedule: {
-        baseRate: new BN(20),
+        // baseRate: new BN(231480),
+        baseRate: new BN(240000),
         tier1: null,
         tier2:null,
         tier3:null,
-        denominator: new BN(86400),
+        denominator: new BN(1),
         numberOfNfts: new BN(0),
         extraReward: new BN(0),
     },
-    amount: new BN(1e14),
+    amount: new BN(9 * 10^6 * 10^9),
     durationSec: new BN(8640000),
 };
 
