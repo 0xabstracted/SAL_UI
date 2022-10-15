@@ -253,11 +253,11 @@ body {
 }
 
 .stake-logo {
-  height: 100px;
-  width: 100px;
+  height: 130px;
+  width: 130px;
   display: inline-block;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 0;
+  margin-bottom: 0;
   filter: brightness(0);
 }
 
@@ -559,6 +559,26 @@ body {
   box-sizing: border-box;
   text-transform: uppercase;
   margin: auto;
+}
+
+.Inside-Alphazex-btn {
+  border-width: 0;
+  border-radius: 6px;
+  background-color: #78eefc;
+  cursor: pointer;
+  color: #305759;
+  font-weight: 600;
+  font-size: 18px;
+  font-family: "Ubuntu Mono", monospace;;
+  padding: 0;
+  display: inline-block;
+  margin-top: 10px;
+  padding: 12px 15px;
+  height: 45px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  width: 80%;
 }
 
 .city-one-farm {
@@ -1234,8 +1254,8 @@ body {
 }
 
 .user-profile-img {
-  height: 40px;
-  width: 40px;
+  height: 45px;
+  width: 45px;
   border-radius: 50%;
   cursor: pointer;
 }
@@ -1269,13 +1289,19 @@ body {
 .user-menu-parent>ul>li {
   float: left;
   width: 100%;
-  padding: 10px 15px;
+  padding: 15px 20px;
   line-height: 24px;
   vertical-align: middle;
   text-align: left;
   font-size: 16px;
   color: black;
   box-sizing: border-box;
+  border-bottom: 1px solid lightgray;
+  font-family: "Ubuntu Mono", monospace;
+}
+
+.user-menu-parent>ul>li:last-child {
+  border-bottom: 0 !important;
 }
 
 .swap-icon-parent {
@@ -1758,6 +1784,89 @@ body {
 
   .token-swapping-room {
     background-size: 100% 100% !important;
+  }
+
+  .stake-progress {
+    width: 90% !important;
+    margin-left: 5% !important;
+    margin-right: 5% !important;
+    margin-top: 0 !important;
+  }
+
+  .user-menu-parent {
+    top: 85px !important;
+    right: 10px !important;
+  }
+
+  .alpha-home-logo {
+    z-index: 9999999999999 !important;
+  }
+
+  .nft-parent-div {
+    max-height: calc(100vh - 200px) !important;
+    height: 360px !important;
+  }
+
+  .user-profile-box {
+    margin-right: 0 !important;
+    height: 55px !important;
+    width: 55px !important;
+    margin-top: 25px !important;
+    display: inline-block;
+    float: none;
+  }
+
+  .staking-process-parent {
+    width: 90% !important;
+    margin-left: 5% !important;
+    display: inline-block !important;
+    margin-top: 0 !important;
+  }
+
+  .unstaked-nfts-div {
+    width: 100% !important;
+  }
+
+  .nfts-tab-parent {
+    float: left;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border: 1px solid black;
+    border-radius: 6px;
+  }
+
+  .nfts-tab {
+    text-align: center;
+    float: left;
+    width: 100%;
+    padding: 10px 15px;
+    color: #fff;
+    width: 50%;
+    box-sizing: border-box;
+    font-size: 14px;
+    background-color: #252a33;
+    cursor: pointer;
+  }
+
+  .b-r-right {
+    border-radius: 0 6px 6px 0;
+  }
+
+  .b-r-left {
+    border-radius: 6px 0 0 6px;
+  }
+
+  .selected-nfts-tab {
+    color: #fff !important;
+    font-weight: bold;
+    background-color: #000 !important;
+  }
+
+  .staked-nfts-div {
+    width: 100% !important;
   }
 
   .swapping-box {
@@ -4238,7 +4347,12 @@ form .button {
   z-index: 2;
 }
 
-
+.alphazex-mobile-parent {
+  float: left;
+  width: 100%;
+  margin-top: 120px;
+  text-align: center;
+}
 
 .m-t-30 {
   margin-top: 30px;
@@ -4248,10 +4362,10 @@ form .button {
   float: left;
     width: 100%;
     margin-left: 0;
-    margin-right: 10%;
+    margin-right: 0;
     height: calc(100% - 60px);
     overflow-y: auto;
-    max-height: 500px;
+    max-height: 400px;
     overflow-x: hidden;
 }
 
@@ -4367,7 +4481,7 @@ form .button {
 
 .nft-div {
   float: left;
-  width: 20%;
+  width: 25%;
   /* height: 100px; */
   padding-left: 6px;
   padding-right: 6px;
@@ -4375,6 +4489,8 @@ form .button {
   border: 1px solid transparent;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .nft-small-div {

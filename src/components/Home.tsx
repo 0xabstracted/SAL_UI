@@ -272,6 +272,7 @@ const Home = (props: HomeProps) => {
   const [alphaTokenVal, setAlphaTokenVal] = useState(0);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [stakedBal, setStakedBal] = useState(0);
+  const [nftsTab, setNftsTab] = useState(0);
 
   const wallet = useWallet();
   // wallet.connect();
@@ -1745,6 +1746,8 @@ const Home = (props: HomeProps) => {
       setMobileDoor(id);
       setMenuOpen(false);
       setShowStakeRoom(true);
+      setShowFixedStakingRoom(false);
+      setShowTokenSwapping(false);
       setClassNameState("main-stake-room-door");
       // setShowMobileDoor(true);
       // setMobileDoor(id);
@@ -1785,16 +1788,18 @@ const Home = (props: HomeProps) => {
       setShowStakeRoom(false);
       setShowTeamRoom(false);
       setShowMobileDoor(true);
+      setShowFixedStakingRoom(false);
+      setShowTokenSwapping(false);
     } else {
       setClassNameState("main-bg-after-door-open");
       setLogoAlphaLoading(false);
       setShowAlphaRoom(false);
       setShowStakeRoom(false);
       setShowTeamRoom(false);
+      setShowFixedStakingRoom(false);
+      setShowTokenSwapping(false);
     }
   };
-
-
 
   const createWhitelistConfig = async () => {
     try {
@@ -1987,7 +1992,7 @@ const Home = (props: HomeProps) => {
   };
 
   const handleMobileHome = async () => {
-    if (showAlphaRoom || showTeamRoom || showStakeRoom) {
+    if (showAlphaRoom || showTeamRoom || showStakeRoom || showFixedStakingRoom) {
       closeAlphaRoom();
     } else {
       closeForm();
@@ -2154,6 +2159,11 @@ const Home = (props: HomeProps) => {
     console.log(sig_token);
     console.log(mint.publicKey.toBase58());
     // const myKeypair = loadWalletKey("AndXYwDqSeoZHqk95TUC1pPdp93musGfCo1KztNFNBhd.json");
+  }
+
+  const changeNFTsTab =async (id:any) => {
+    console.log(id);
+    setNftsTab(id);
   }
 
   const openAlphaRoom = async (key:string) => {
@@ -2950,8 +2960,8 @@ const Home = (props: HomeProps) => {
             <div className="fixed-staking-main-bg">
               <div className="pull-left full-width">
                 <div className="stake-logo-parent">
-                  <img src={LogoWhite} className="stake-logo" alt="" />
-                  <img src={CloseAlpha} onClick={closeFixedStaking} className="stake-close-logo" alt="" />
+                  {!isMobile && <img src={LogoWhite} className="stake-logo pointer" onClick={closeAlphaRoom} alt="" />}
+                  {!isMobile && <img src={CloseAlpha} onClick={closeFixedStaking} className="stake-close-logo" alt="" />}
                   <div className="user-profile-box" onClick={() => setShowUserMenu(!showUserMenu)}>
                     <img src={User} className="user-profile-img" alt="" />
                   </div>
@@ -2959,7 +2969,7 @@ const Home = (props: HomeProps) => {
                   <div className="user-menu-parent">
                     <ul>
                       <li>Claimed Tokens : {stakedBal} <img src={Refresh} onClick={refreshFarmers} className="refresh-farmer-icon" alt="" /></li>
-                      <li className="pointer" onClick={claimReward}>Claim</li>
+                      <li className="pointer" onClick={claimReward}>Claim Tokens</li>
                     </ul>
                   </div>
                   }
@@ -2967,6 +2977,7 @@ const Home = (props: HomeProps) => {
                 <div className="stake-progress">
                   <ProgressBar bgcolor={"#6a1b9a"} completed={63} />
                 </div>
+                {!isMobile && 
                 <div className="staking-process-parent">
                   <div className="unstaked-nfts-div">
                     <div className="staking-nft-display">
@@ -3001,29 +3012,78 @@ const Home = (props: HomeProps) => {
                     </div>
                   </div>
                 </div>
+                }
+                {isMobile && 
+                <div className="staking-process-parent">
+                  <div className="nfts-tab-parent" aria-label="NFTs Tabs">
+                    <label className={nftsTab == 0 ? 'selected-nfts-tab nfts-tab b-r-left' : 'nfts-tab b-r-left'} id="simple-tab-0" aria-controls="simple-tabpanel-0" onClick={() => changeNFTsTab(0)}>Unstaked NFTs</label>
+                    <label className={nftsTab == 1 ? 'selected-nfts-tab nfts-tab b-r-right' : 'nfts-tab b-r-right'} id="simple-tab-1" aria-controls="simple-tabpanel-1" onClick={() => changeNFTsTab(1)}>Staked NFTs</label>
+                  </div>
+                  <div role="tabpanel" hidden={nftsTab !== 0} id="simple-tabpanel-0" aria-labelledby="simple-tab-0">
+                    {nftsTab === 0 && (
+                      <div className="unstaked-nfts-div">
+                        <div className="staking-nft-display">
+                          <div className="nft-parent-div">
+                          {nfts && nfts.length > 0 && nfts.map(function (item:any, i:any) {
+                            return (
+                              <div className="nft-div" key={i} style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
+                                <img src={item.link} />
+                                <label>{item.name}</label>
+                                {/* <label>{item.trait_type}</label> */}
+                              </div>
+                            );
+                          })}
+                          </div>
+                          {stakedNft && 
+                          <div className="stake-button-div"> 
+                            <button className="nft-select-button" onClick={nextStepStake}>Stake Now</button>
+                          </div>}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div role="tabpanel" hidden={nftsTab !== 1} id="simple-tabpanel-0" aria-labelledby="simple-tab-0">
+                    {nftsTab === 1 && (
+                      <div className="staked-nfts-div">
+                        <div className="staking-nft-display">
+                          {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
+                            return (
+                              <div className="nft-div" key={i} style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
+                                <img src={item.link} />
+                                <label>{item.name}</label>
+                                {/* <label>{item.trait_type}</label> */}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </div>          
+                </div>
+                }
               </div> 
             </div>
           </div>
         )}
         {!showAlphaRoom && !showTeamRoom && showStakeRoom && !logoAlphaLoading && !logoLoading && !showMobileDoor && (
           <div className="">
-            <div className="raffle-cave">
-
-            </div>
-            <div className="token-swapping" onClick={openTokenSwapping}>
-
-            </div>
+            {!isMobile && <div className="raffle-cave"></div>}
+            {!isMobile && <div className="token-swapping" onClick={openTokenSwapping}></div>}
+            {!isMobile && 
             <div className="staking-portal">
-              <div className="staking-portal-parent">
-              
-              </div>
-              <div className="adventure-staking-div">
-
-              </div>
-              <div className="fixed-staking-div" onClick={openFixedStaking}>
-
-              </div>
+              <div className="staking-portal-parent"></div>
+              <div className="adventure-staking-div"></div>
+              <div className="fixed-staking-div" onClick={openFixedStaking}></div>
             </div>
+            }
+            {isMobile && 
+            <div className="alphazex-mobile-parent">
+              <button className="Inside-Alphazex-btn" onClick={openFixedStaking}>Fixed Staking</button>
+              <button className="Inside-Alphazex-btn">Adventure Staking</button>
+              <button className="Inside-Alphazex-btn" onClick={openTokenSwapping}>Token Swap</button>
+              <button className="Inside-Alphazex-btn">Raffle Cave</button>
+            </div>
+            }
             {!wallet.connected &&
             <div className="staking-room-six">
               <WalletDialogButton className="Connect-Wallet-btn" onClick={() => openAlphaRoom('stake')}>
@@ -3042,7 +3102,7 @@ const Home = (props: HomeProps) => {
           <div className="Backdrop-other">
             <div className="fixed-staking-main-bg">
               <div className="pull-left full-width">
-                <img src={CloseAlpha} onClick={closeTokenSwapping} className="swap-close-logo" alt="" />
+                {!isMobile && <img src={CloseAlpha} onClick={closeTokenSwapping} className="swap-close-logo" alt="" />}
                 <div className="swapping-process-parent">
                   <AlphaTokenSwap></AlphaTokenSwap>
                 </div>
