@@ -1756,6 +1756,44 @@ body {
     background-repeat: no-repeat !important;
   }
 
+  .token-swapping-room {
+    background-size: 100% 100% !important;
+  }
+
+  .swapping-box {
+    width: 90% !important;
+    margin-left: 5% !important;
+    margin-top: 0 !important;
+    height: 75vh !important;
+    padding: 15px 20px !important;
+  }
+
+  .from-token-box {
+    margin-top: 20px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .to-token-box {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .swapping-logo-parent {
+    width: 100% !important;
+  }
+
+  .swap-close-logo {
+    height: 40px !important;
+    width: 40px !important;
+    right: 20px !important;
+    top: 45px !important;
+    filter: contrast(0.01) !important;
+  }
+
+  .Outside-Mint-btn {
+    display: none !important;
+  }
+
   .hamburger-menu {
     position: absolute;
     right: 20px;
@@ -2005,6 +2043,7 @@ body {
 
   .hamburger-menu {
     display: block !important;
+    z-index: 99999999999999 !important;
   }
 
   .alpha-home-logo {

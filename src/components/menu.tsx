@@ -5,7 +5,7 @@ import RightArrow from "../assets/right_arrow_menu.png";
 import "../css/App.css";
 
 const MenuContent = (props: any) => {
-  const [items] = useState(["VAULT", "TEAM", "ALPHA", "STAKE"]);
+  const [items] = useState(["ALPHAZEX", "ALPHA", "ANT.LABS", "WORKSHOP"]);
 
   return (
     <div className="menu">

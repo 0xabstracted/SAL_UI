@@ -1729,29 +1729,39 @@ const Home = (props: HomeProps) => {
   };
 
   const closeMenu = async (id: any) => {
-    if (id && id === "VAULT") {
-      setShowMobileDoor(true);
-      setMobileDoor(id);
-      setMenuOpen(false);
-      setClassNameState("main-vault-room-door");
-    } else if (id && id === "TEAM") {
+    if (id && id === "ANT.LABS") {
       setShowMobileDoor(true);
       setMobileDoor(id);
       setMenuOpen(false);
       setShowTeamRoom(true);
       setClassNameState("main-team-room-door");
+    } else if (id && id === "WORKSHOP") {
+      setShowMobileDoor(true);
+      setMobileDoor(id);
+      setMenuOpen(false);
+      setClassNameState("main-vault-room-door");
+    } else if (id && id === "ALPHAZEX") {
+      setShowMobileDoor(true);
+      setMobileDoor(id);
+      setMenuOpen(false);
+      setShowStakeRoom(true);
+      setClassNameState("main-stake-room-door");
+      // setShowMobileDoor(true);
+      // setMobileDoor(id);
+      // setMenuOpen(false);
+      // setShowAlphaRoom(true);
+      // setClassNameState("main-alpha-room-door");
     } else if (id && id === "ALPHA") {
       setShowMobileDoor(true);
       setMobileDoor(id);
       setMenuOpen(false);
       setShowAlphaRoom(true);
       setClassNameState("main-alpha-room-door");
-    } else if (id && id === "STAKE") {
-      setShowMobileDoor(true);
-      setMobileDoor(id);
-      setMenuOpen(false);
-      setShowStakeRoom(true);
-      setClassNameState("main-stake-room-door");
+      // setShowMobileDoor(true);
+      // setMobileDoor(id);
+      // setMenuOpen(false);
+      // setShowStakeRoom(true);
+      // setClassNameState("main-stake-room-door");
     } else {
       setMenuOpen(false);
     }
@@ -2172,12 +2182,12 @@ const Home = (props: HomeProps) => {
       //     setShowMobileDoor(false);
       //   }, 600);
       // }
-      else if (mobileDoor === "STAKE") {
+      else if (mobileDoor === "ALPHAZEX") {
         setClassNameState("main-bg-after-door-open black-bg");
         setLogoAlphaLoading(true);
         setTimeout(function () {
           setLogoAlphaLoading(false);
-          setClassNameState("team-room");
+          setClassNameState("alphazen-room");
           setShowTeamRoom(false);
           setShowAlphaRoom(false);
           setShowStakeRoom(true);
