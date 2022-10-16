@@ -2257,18 +2257,18 @@ const Home = (props: HomeProps) => {
       //     setShowMobileDoor(false);
       //   }, 600);
       // }
-      else if (mobileDoor === "ALPHAZEX") {
-        setClassNameState("main-bg-after-door-open black-bg");
-        setLogoAlphaLoading(true);
-        setTimeout(function () {
-          setLogoAlphaLoading(false);
-          setClassNameState("alphazen-room");
-          setShowTeamRoom(false);
-          setShowAlphaRoom(false);
-          setShowStakeRoom(true);
-          setShowMobileDoor(false);
-        }, 600);
-      }
+      // else if (mobileDoor === "ALPHAZEX") {
+      //   setClassNameState("main-bg-after-door-open black-bg");
+      //   setLogoAlphaLoading(true);
+      //   setTimeout(function () {
+      //     setLogoAlphaLoading(false);
+      //     setClassNameState("alphazen-room");
+      //     setShowTeamRoom(false);
+      //     setShowAlphaRoom(false);
+      //     setShowStakeRoom(true);
+      //     setShowMobileDoor(false);
+      //   }, 600);
+      // }
       else {
         var arr = [
           "Patience is key",
