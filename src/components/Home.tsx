@@ -563,8 +563,9 @@ const Home = (props: HomeProps) => {
   };
 
   const farmerStakedMintPDA = (index: any, creator: PublicKey) => {
+    console.log(index);
     return PublicKey.findProgramAddress(
-      [Buffer.from('farmer_staked_mints'), index.toBytes(), creator.toBytes()],
+      [Buffer.from('farmer_staked_mints'), Uint8Array.of(index), creator.toBytes()],
       GEM_BANK_PROGRAM_ID
     );
   };
@@ -1075,7 +1076,7 @@ const Home = (props: HomeProps) => {
       wallet.publicKey!
     );
     const [farmerStakedMintVarPDA, farmerStakedMintBump] = await farmerStakedMintPDA(
-      new BN(0),
+      0,
       farmerPda
     );
     stake_instructions.push(stakeProgram.instruction.initFixedFarmer(new BN(0),
@@ -1531,7 +1532,7 @@ const Home = (props: HomeProps) => {
         const bankProgram = await getBankProgram(wallet);
         // let tokens = await getTokensByOwner(wallet.publicKey!);
         console.log(stakedNft);
-        const farmers = await stakeProgram.account.farmer.all();
+        // const farmers = await stakeProgram.account.farmer.all();
         if (add_init_human && stakedNft.trait_type == 'Human') {
           stake_instructions = await initFixedFarmerAlpha(1,stake_instructions,stakeProgram);
         }
@@ -1612,7 +1613,7 @@ const Home = (props: HomeProps) => {
         }
         console.log(stake_instructions);
         const [farmerStakedMintVarPDA, farmerStakedMintBump] = await farmerStakedMintPDA(
-          new BN(0),
+          0,
           farmerPda
         );
         stake_instructions.push(await stakeProgram.instruction.flashDeposit(farmerBump, vaultAuthorityBump,gemBoxrarityBump,new BN(0), new BN(1), 
@@ -1734,7 +1735,7 @@ const Home = (props: HomeProps) => {
         farm_id!
       );
       const [farmerStakedMintVarPDA, farmerStakedMintBump] = await farmerStakedMintPDA(
-        new BN(0),
+        0,
         farmerPda
       );
       const vaults = await bankProgram.account.vault.all();
