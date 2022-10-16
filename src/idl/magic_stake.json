@@ -387,6 +387,11 @@
           "isSigner": false
         },
         {
+          "name": "farmerStakedMints",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
           "name": "identity",
           "isMut": false,
           "isSigner": true
@@ -417,7 +422,12 @@
           "isSigner": false
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "index",
+          "type": "u32"
+        }
+      ]
     },
     {
       "name": "initProbableFarmer",
@@ -544,6 +554,11 @@
           "isSigner": false
         },
         {
+          "name": "farmerStakedMints",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
           "name": "identity",
           "isMut": true,
           "isSigner": true
@@ -559,12 +574,52 @@
           "isSigner": false
         },
         {
+          "name": "vaultAuthority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "gemBox",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "gemDepositReceipt",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "gemDestination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "gemMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "gemRarity",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "gemBank",
           "isMut": false,
           "isSigner": false
         },
         {
           "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
           "isMut": false,
           "isSigner": false
         },
@@ -586,6 +641,26 @@
         {
           "name": "bumpFarmer",
           "type": "u8"
+        },
+        {
+          "name": "bumpGemBox",
+          "type": "u8"
+        },
+        {
+          "name": "bumpGdr",
+          "type": "u8"
+        },
+        {
+          "name": "bumpRarity",
+          "type": "u8"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "index",
+          "type": "u32"
         },
         {
           "name": "skipRewards",
@@ -690,6 +765,11 @@
           "isSigner": false
         },
         {
+          "name": "farmerStakedMints",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
           "name": "identity",
           "isMut": true,
           "isSigner": true
@@ -767,6 +847,10 @@
         {
           "name": "bumpRarity",
           "type": "u8"
+        },
+        {
+          "name": "index",
+          "type": "u32"
         },
         {
           "name": "amount",
@@ -1380,7 +1464,10 @@
           {
             "name": "reserved",
             "type": {
-              "array": ["u8", 32]
+              "array": [
+                "u8",
+                32
+              ]
             }
           }
         ]
@@ -1414,7 +1501,10 @@
           {
             "name": "farmAuthorityBumpSeed",
             "type": {
-              "array": ["u8", 1]
+              "array": [
+                "u8",
+                1
+              ]
             }
           },
           {
@@ -1462,19 +1552,28 @@
           {
             "name": "reserved",
             "type": {
-              "array": ["u8", 32]
+              "array": [
+                "u8",
+                32
+              ]
             }
           },
           {
             "name": "reserved2",
             "type": {
-              "array": ["u8", 16]
+              "array": [
+                "u8",
+                16
+              ]
             }
           },
           {
             "name": "reserved3",
             "type": {
-              "array": ["u8", 4]
+              "array": [
+                "u8",
+                4
+              ]
             }
           }
         ]
@@ -1526,9 +1625,58 @@
             }
           },
           {
+            "name": "noFsmAccounts",
+            "type": "u64"
+          },
+          {
+            "name": "fsmAccountKeys",
+            "type": {
+              "array": [
+                "publicKey",
+                21
+              ]
+            }
+          },
+          {
             "name": "reserved",
             "type": {
-              "array": ["u8", 32]
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "FarmerStakedMints",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "farmer",
+            "type": "publicKey"
+          },
+          {
+            "name": "index",
+            "type": "u32"
+          },
+          {
+            "name": "noOfNftsStaked",
+            "type": "u64"
+          },
+          {
+            "name": "farmerStakedMints",
+            "type": {
+              "array": [
+                "publicKey",
+                200
+              ]
             }
           }
         ]
@@ -1550,7 +1698,10 @@
           {
             "name": "resultBuffer",
             "type": {
-              "array": ["u8", 32]
+              "array": [
+                "u8",
+                32
+              ]
             }
           },
           {
@@ -1574,6 +1725,34 @@
     }
   ],
   "types": [
+    {
+      "name": "InitStateParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "maxResult",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RequestResultParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "permissionBump",
+            "type": "u8"
+          },
+          {
+            "name": "switchboardStateBump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
     {
       "name": "RarityConfig",
       "type": {
@@ -1668,7 +1847,10 @@
           {
             "name": "reserved",
             "type": {
-              "array": ["u8", 32]
+              "array": [
+                "u8",
+                32
+              ]
             }
           }
         ]
@@ -1764,7 +1946,10 @@
           {
             "name": "reserved",
             "type": {
-              "array": ["u8", 16]
+              "array": [
+                "u8",
+                16
+              ]
             }
           }
         ]
@@ -1800,7 +1985,10 @@
           {
             "name": "reserved",
             "type": {
-              "array": ["u8", 16]
+              "array": [
+                "u8",
+                16
+              ]
             }
           }
         ]
@@ -1834,7 +2022,10 @@
           {
             "name": "reserved",
             "type": {
-              "array": ["u8", 32]
+              "array": [
+                "u8",
+                32
+              ]
             }
           }
         ]
@@ -1854,7 +2045,10 @@
           {
             "name": "reserved",
             "type": {
-              "array": ["u8", 16]
+              "array": [
+                "u8",
+                16
+              ]
             }
           }
         ]
@@ -1900,7 +2094,10 @@
           {
             "name": "reserved",
             "type": {
-              "array": ["u8", 32]
+              "array": [
+                "u8",
+                32
+              ]
             }
           }
         ]
@@ -2010,7 +2207,10 @@
           {
             "name": "reserved",
             "type": {
-              "array": ["u8", 32]
+              "array": [
+                "u8",
+                32
+              ]
             }
           }
         ]
@@ -2078,34 +2278,6 @@
           {
             "name": "probability",
             "type": "u64"
-          }
-        ]
-      }
-    },
-    {
-      "name": "InitStateParams",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "maxResult",
-            "type": "u64"
-          }
-        ]
-      }
-    },
-    {
-      "name": "RequestResultParams",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "permissionBump",
-            "type": "u8"
-          },
-          {
-            "name": "switchboardStateBump",
-            "type": "u8"
           }
         ]
       }
@@ -2225,7 +2397,10 @@
         {
           "name": "resultBuffer",
           "type": {
-            "array": ["u8", 32]
+            "array": [
+              "u8",
+              32
+            ]
           },
           "index": false
         },
@@ -2236,5 +2411,8 @@
         }
       ]
     }
-  ]
+  ],
+  "metadata": {
+    "address": "45eAzw1V8BPznoTejeqtMvNP6suKDn9NWs4t5gRyK9TM"
+  }
 }

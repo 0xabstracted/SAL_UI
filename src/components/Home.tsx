@@ -560,6 +560,13 @@ const Home = (props: HomeProps) => {
     );
   };
 
+  const farmerStakedMintPDA = (index: any, creator: PublicKey) => {
+    return PublicKey.findProgramAddress(
+      [Buffer.from('farmer_staked_mints'), index.toBytes(), creator.toBytes()],
+      GEM_BANK_PROGRAM_ID
+    );
+  };
+
   const gemBoxPda = (vault: PublicKey, gem_mint: PublicKey) => {
     return PublicKey.findProgramAddress(
       [Buffer.from('gem_box'), vault.toBytes(), gem_mint.toBytes()],
@@ -1065,11 +1072,16 @@ const Home = (props: HomeProps) => {
       farms.bank,
       wallet.publicKey!
     );
-    stake_instructions.push(stakeProgram.instruction.initFixedFarmer(
+    const [farmerStakedMintVarPDA, farmerStakedMintBump] = await farmerStakedMintPDA(
+      new BN(0),
+      farmerPda
+    );
+    stake_instructions.push(stakeProgram.instruction.initFixedFarmer(new BN(0),
       {
         accounts: {
           farm: farm_id,
           farmer: farmerPda,
+          farmerStakedMints: farmerStakedMintVarPDA,
           identity: wallet.publicKey,
           bank: farms.bank,
           vault: farmerVaultPda,
@@ -1597,12 +1609,17 @@ const Home = (props: HomeProps) => {
           });
         }
         console.log(stake_instructions);
-        stake_instructions.push(await stakeProgram.instruction.flashDeposit(farmerBump, vaultAuthorityBump,gemBoxrarityBump, new BN(1), 
+        const [farmerStakedMintVarPDA, farmerStakedMintBump] = await farmerStakedMintPDA(
+          new BN(0),
+          farmerPda
+        );
+        stake_instructions.push(await stakeProgram.instruction.flashDeposit(farmerBump, vaultAuthorityBump,gemBoxrarityBump,new BN(0), new BN(1), 
           {
             accounts: {
               farm: farm_id,
               farmAuthority: farms.farmAuthority,
               farmer: farmerPda,
+              farmerStakedMints: farmerStakedMintVarPDA,
               identity: wallet.publicKey,
               bank: farms.bank,
               vault: farmerVaultPda,
@@ -1675,45 +1692,90 @@ const Home = (props: HomeProps) => {
   // Farmer should call this
   const UnStakeNft = async () => {
     const stakeProgram = await getStakeProgram(wallet);
-    const [farmerPda, farmerBump] = await farmerPDA(
-      FARM_ID,
-      wallet.publicKey!
-    );
+    const bankProgram = await getBankProgram(wallet);
     const farmers = await stakeProgram.account.farmer.all();
     try {
-      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(FARM_ID);
-      const farms:any = await stakeProgram.account.farm.fetch(FARM_ID);
       let nft;
-      if (stakedNft) {
-        nft = stakedNft;
+      if (unstakedNft) {
+        nft = unstakedNft;
       }
       else {
         nft = nfts[0];
       }
+      let farm_id: anchor.web3.PublicKey;
+      if (stakedNft.trait_type == 'Human') {
+        farm_id = HUMANS_FARM_ID;
+      }
+      else if (stakedNft.trait_type == 'Human Pet') {
+        farm_id = HUMANPETS_FARM_ID;
+      }
+      else if (stakedNft.trait_type == 'Cyborg') {
+        farm_id = CYBORG_FARM_ID;
+      }
+      else if (stakedNft.trait_type == 'Cyborg Pet') {
+        farm_id = CYBORGPET_FARM_ID;
+      }
+      else {
+        farm_id = HUMANS_FARM_ID;
+      }
       const [farmerPda, farmerBump] = await farmerPDA(
-        FARM_ID,
+        farm_id,
         wallet.publicKey!
       );
+      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(farm_id!);
+      const farms:any = await stakeProgram.account.farm.fetch(farm_id)!;
       const [farmerVaultPda, farmerVaultBump] = await farmerVaultPDA(
         farms.bank,
         wallet.publicKey!
       );
       const [farmTreasury, farmTreasuryBump] = await findFarmTreasuryPDA(
-        FARM_ID
+        farm_id!
       );
-      const [farmTreasuryToken, farmTreasuryTokenBump] = await findFarmTreasuryTokenPDA(FARM_ID);
-      const wallet_create = await stakeProgram.instruction.unstake(farmAuthBump, farmTreasuryTokenBump, farmerBump, false,
+      const [farmerStakedMintVarPDA, farmerStakedMintBump] = await farmerStakedMintPDA(
+        new BN(0),
+        farmerPda
+      );
+      const vaults = await bankProgram.account.vault.all();
+        // console.log(vaults[0].account.authoritySeed.toBase58());
+      const [gemBoxPdaVal, gemBoxBump] = await gemBoxPda(
+        farmerVaultPda,
+        new anchor.web3.PublicKey(nft.mint)
+      );
+      const [gemDepositBoxPdaVal, gemDepositReceiptBump] = await gemDepositBoxPda(
+        farmerVaultPda,
+        new anchor.web3.PublicKey(nft.mint)
+      );
+      const [gemBoxRarityPdaVal, gemBoxrarityBump] = await gemBoxRarityPda(
+        farms.bank,
+        new anchor.web3.PublicKey(nft.mint)
+      );
+      const [vaultAuthorityPdaVal, vaultAuthorityBump] = await vaultAuthorityPda(
+        farmerVaultPda
+      );
+      const gem_mint = new anchor.web3.PublicKey(nft.mint);
+      const [farmTreasuryToken, farmTreasuryTokenBump] = await findFarmTreasuryTokenPDA(farm_id);
+      const gem_source_obj = await props.connection.getParsedTokenAccountsByOwner(wallet.publicKey!, {
+        mint: new anchor.web3.PublicKey(nft.mint),
+      });
+      const gem_destination = gem_source_obj.value[0].pubkey;
+      const wallet_create = await stakeProgram.instruction.unstake(farmAuthBump, farmTreasuryTokenBump, farmerBump, gemBoxBump, gemDepositReceiptBump, gemBoxrarityBump, new BN(1), new BN(0), false,
         {
           accounts: {
-            farm: FARM_ID,
+            farm: farm_id,
             farmAuthority: farms.farmAuthority,
             farmTreasuryToken: farmTreasuryToken,
             farmer: farmerPda,
-            identity: wallet.publicKey,
-            bank: farms.bank,
-            vault: farmerVaultPda,
+            farmerStakedMints: farmerStakedMintVarPDA,
+            vaultAuthority: vaultAuthorityPdaVal,
+            gemBox: gemBoxPdaVal,
+            gemDepositReceipt: gemDepositBoxPdaVal,
+            gemDestination: gem_destination,
+            gemMint: gem_mint,
+            gemRarity: gemBoxRarityPdaVal,
             gemBank: GEM_BANK_PROGRAM_ID,
             tokenProgram: TOKEN_PROGRAM_ID,
+            associatedTokenProgram:SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
+            rent: anchor.web3.SYSVAR_RENT_PUBKEY,
             systemProgram: SystemProgram.programId,
           }
         }
@@ -3000,15 +3062,21 @@ const Home = (props: HomeProps) => {
                   </div>
                   <div className="staked-nfts-div">
                     <div className="staking-nft-display">
-                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
-                        return (
-                          <div className="nft-div" key={i} style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
-                            <img src={item.link} />
-                            <label>{item.name}</label>
-                            {/* <label>{item.trait_type}</label> */}
-                          </div>
-                        );
-                      })}
+                      <div className="nft-parent-div">
+                        {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
+                          return (
+                            <div className="nft-div" key={i} style={{borderColor: unstakedNft == item ? "white": "transparent"}} onClick={() => setUnstakedNft(item)}>
+                              <img src={item.link} />
+                              <label>{item.name}</label>
+                              {/* <label>{item.trait_type}</label> */}
+                            </div>
+                          );
+                        })}
+                      </div>
+                      {unstakedNft && 
+                      <div className="stake-button-div"> 
+                        <button className="nft-select-button" onClick={UnStakeNft}>Unstake Now</button>
+                      </div>}
                     </div>
                   </div>
                 </div>
@@ -3046,15 +3114,21 @@ const Home = (props: HomeProps) => {
                     {nftsTab === 1 && (
                       <div className="staked-nfts-div">
                         <div className="staking-nft-display">
+                          <div className="nft-parent-div">
                           {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
                             return (
-                              <div className="nft-div" key={i} style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
+                              <div className="nft-div" key={i} style={{borderColor: unstakedNft == item ? "white": "transparent"}} onClick={() => setUnstakedNft(item)}>
                                 <img src={item.link} />
                                 <label>{item.name}</label>
                                 {/* <label>{item.trait_type}</label> */}
                               </div>
                             );
                           })}
+                          </div>
+                          {unstakedNft && 
+                          <div className="stake-button-div"> 
+                            <button className="nft-select-button" onClick={UnStakeNft}>Unstake Now</button>
+                          </div>}
                         </div>
                       </div>
                     )}
