@@ -1,22 +1,21 @@
 import {
   createAssociatedTokenAccountInstruction,
-  createTransferCheckedInstruction,
   getAccount,
   getAssociatedTokenAddress,
 } from "@solana/spl-token";
 import { WalletNotConnectedError } from "@solana/wallet-adapter-base";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { clusterApiUrl, Connection, SystemProgram } from "@solana/web3.js";
-import React, { useState } from "react";
-import { mintNewFungibleTokenArgs, REWARD_MINT_GLITCH, ALPHA_OWNER_ATA, REWARD_MINT_GLTCH } from "./AlphaTokenConfig";
+import { clusterApiUrl, Connection } from "@solana/web3.js";
+import { useState } from "react";
+import { mintNewFungibleTokenArgs, REWARD_MINT_GLITCH, REWARD_MINT_GLTCH } from "./AlphaTokenConfig";
 import { AlphaTokenSwapArgs } from "./TokenInterface";
 import SwappingIcon from "../../assets/swapping_icon.png";
 import { sendTransactions } from '../../config/connection';
 import LogoWhite from "../../assets/Logowhite.png";
 import { BN } from "@project-serum/anchor";
-import { getStakeProgram } from "../../GrandProgramUtils/GemBank/GetProgramObjects";
 import { TOKEN_PROGRAM_ID } from "../../config/config";
-import { alphaTokenSwapPda,alphaPotPda } from "../../GrandProgramUtils/AssociatedTokenAccountProgram/pda"
+import { getTokenSwapProgramObject } from "../../GrandProgramUtils/TokenSwap/GetProgramObject";
+import { findRegistryPDA, findVaultTokenInPDA, findVaultTokenOutPDA } from "../../GrandProgramUtils/TokenSwap/pda";
 
 function AlphaTokenSwap() {
   const [glitchTokenVal, setGlitchTokenVal] = useState(0);
@@ -43,7 +42,7 @@ function AlphaTokenSwap() {
     try {
       let tokenAmount = await connection.getTokenAccountBalance(ata);
       let tokenAmountAlpha = await connection.getTokenAccountBalance(alpha_ata);
-      if (glitchTokenVal == 0) {
+      if (glitchTokenVal === 0) {
         // setGlitchTokenVal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
         setGlitchTokenBal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
         // setAlphaTokenVal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
@@ -56,11 +55,11 @@ function AlphaTokenSwap() {
   getTokenAccountBalanceFn();
 
   const percentageBtn =async (str:string) => {
-    if (str == '50') {
+    if (str === '50') {
       let k = parseInt((glitchTokenBal / 2).toFixed(0));
       setGlitchTokenVal(k);
     }
-    else if (str == '100') {
+    else if (str === '100') {
       setGlitchTokenVal(glitchTokenBal);
     }
   }
@@ -69,76 +68,61 @@ function AlphaTokenSwap() {
 
   const alphaTokenSwap =async (args: AlphaTokenSwapArgs) => {
     if (wallet.publicKey) {
-      let stakeProgram = await getStakeProgram(wallet);
+      let tokenSwapProgram = await getTokenSwapProgramObject(wallet);
       let token_swap_instructions: any = [];
       let amount = new BN(glitchTokenVal);
-      let userOldTokenAccountPDA = await getAssociatedTokenAddress(
-        args.oldMint, // mint
+      const [registry_pda] = await findRegistryPDA(wallet.publicKey!, args.mintTokenIn, args.mintTokenOut);
+      const [vault_token_in_pda] = await findVaultTokenInPDA(registry_pda);
+      const [vault_token_out_pda] = await findVaultTokenOutPDA(registry_pda);
+        
+      let userTokenInAccountPDA = await getAssociatedTokenAddress(
+        args.mintTokenIn, // mint
         wallet.publicKey // owner
       );
-      let ownerOldTokenAccountPDA = await getAssociatedTokenAddress(
-        args.oldMint, // mint
-        args.ownerOldMint // owner
-      );
-      let userNewTokenAccountPDA = await getAssociatedTokenAddress(
-        args.newMint, // mint
+      let userTokenOutAccountPDA = await getAssociatedTokenAddress(
+        args.mintTokenOut, // mint
         wallet.publicKey // owner
       );
       
 
       console.log(
-        `userOldTokenAccountPDA ATA: ${userOldTokenAccountPDA.toBase58()}`
+        `userTokenInAccountPDA ATA: ${userTokenInAccountPDA.toBase58()}`
       );
       console.log(
-        `ownerOldTokenAccountPDA ATA: ${ownerOldTokenAccountPDA.toBase58()}`
+        `userTokenOutAccountPDA ATA: ${userTokenOutAccountPDA.toBase58()}`
       );
-      console.log(
-        `userNewTokenAccountPDA ATA: ${userNewTokenAccountPDA.toBase58()}`
-      );
-      let amount_old = glitchTokenVal * (10 ** args.decimalsOld);
+      let amount_old = glitchTokenVal * (10 ** args.decimalsTokenIn);
       console.log('amount : '+ amount);
-      console.log(args.newMint);
+      console.log(args.mintTokenOut);
       amount = new BN(amount_old);
-      const [alpha_token_swap_pda, bumpAlphaTokenSwap] = await alphaTokenSwapPda(args.ownerOldMint, args.newMint);
-      const [alpha_pot_pda, bumpAlphaPot] = await alphaPotPda(alpha_token_swap_pda, args.newMint);
-      token_swap_instructions.push(
-        createTransferCheckedInstruction(
-          userOldTokenAccountPDA, // from (should be a token account)
-          args.oldMint, // mint
-          ownerOldTokenAccountPDA, // to (should be a token account)
-          wallet.publicKey, // from's owner
-          amount_old, // amount, if your deciamls is 8, send 10^8 for 1 token
-          args.decimalsOld // decimals
-        )
-      );
-      let userNewTokenAccount;
+      
+      let userTokenOutAccount;
       try {
-        userNewTokenAccount = await getAccount(
+        userTokenOutAccount = await getAccount(
           connection,
-          userNewTokenAccountPDA
+          userTokenOutAccountPDA
         );
       } catch (error) {
-        if (!userNewTokenAccount) {
+        if (!userTokenOutAccount) {
           token_swap_instructions.push(
             createAssociatedTokenAccountInstruction(
               wallet.publicKey, // payer
-              userNewTokenAccountPDA, // ata
+              userTokenOutAccountPDA, // ata
               wallet.publicKey, // owner
-              args.newMint // mint
+              args.mintTokenOut // mint
             )
           );
         }
       }    
       
-      token_swap_instructions.push(stakeProgram.instruction.transferAlphaTokens(bumpAlphaTokenSwap, bumpAlphaPot, amount,{
+      token_swap_instructions.push(tokenSwapProgram.instruction.swap(amount,{
         accounts: {
-          alphaTokenswap: alpha_token_swap_pda,
-          alphaCreator: args.ownerOldMint,
-          alphaPot: alpha_pot_pda,
-          // alphaOwnerSource: ALPHA_OWNER_ATA,
-          alphaMint: args.newMint,
-          userTokenAccount: userNewTokenAccountPDA,
-          user: wallet.publicKey,
+          registry: registry_pda,
+          swapper: wallet.publicKey,
+          vaultTokenIn: vault_token_in_pda,
+          vaultTokenOut: vault_token_out_pda,
+          buyerTokenInAccount: userTokenInAccountPDA,
+          buyerTokenOutAccount: userTokenOutAccountPDA,
           tokenProgram: TOKEN_PROGRAM_ID
         }
       }));

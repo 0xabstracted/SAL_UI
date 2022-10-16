@@ -44,10 +44,10 @@ export const  initFarmAlphaCyborgPetArgs: InitFarmAlphaArgs = {
 
 export const DEFAULT_PUBLIC_KEY =  new anchor.web3.PublicKey('abstractedabstractedabstractedabstractedabs');
 
-export const HUMANS_FARM_ID = new anchor.web3.PublicKey("5Z62GHfHEb7EiQwFUG6xVqPuQNJp1QZjfkVpoSka92k8");
-export const HUMANPETS_FARM_ID = new anchor.web3.PublicKey("Hv1Kt62ZzMYBGv57w4F697dFohcPBv5dVbRQUyzdjs5a");
-export const CYBORG_FARM_ID = new anchor.web3.PublicKey("2Rxqj1KtYrG7kfTmn7uNpi9wRPTMZiA4ZvCxAQCY2WGi");
-export const CYBORGPET_FARM_ID = new anchor.web3.PublicKey("6MPfkPR3hRAvNgFTGKk2MpjjTCZEAmcBDG2AnNNBA91m");
+export const HUMANS_FARM_ID = new anchor.web3.PublicKey("GGeeSWokXYbLMXNf4Db9tm9ZqWbYzooadFQF1A3bzxq5");
+export const HUMANPETS_FARM_ID = new anchor.web3.PublicKey("BbqZd8ZrUoZnqYbFPdu2foD9emC7bZWoJpjvHQNWL4gC");
+export const CYBORG_FARM_ID = new anchor.web3.PublicKey("BaKrKwfSAjneCMvnx11WYSXJ9SAXxZ7H1B5yYaP32wk7");
+export const CYBORGPET_FARM_ID = new anchor.web3.PublicKey("Cq6Zj2ByQmuGB35otV7vQN6NdrfDCo6TxtYTwtZGFjN6");
 
 export const FUNDER_HUMANS_FARM = new anchor.web3.PublicKey('TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq');
 export const FUNDER_HUMANPETS_FARM = new anchor.web3.PublicKey('TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq');
@@ -74,6 +74,7 @@ export const authorizeFunderAlphaCyborgPetArgs: AuthorizeFunderAlphaArgs = {
     funderToAuthorize: FUNDER_CYBORGPET_FARM,
     id: "cp",
 }
+const transferToFundRewardAmount = 9e15;
 const fixedrateConfigHumans: FixedRateConfig = {
     schedule: {
         baseRate: new BN(60000),
@@ -86,7 +87,7 @@ const fixedrateConfigHumans: FixedRateConfig = {
         // extraReward: new BN(34722),
         extraReward: new BN(35000),
     },
-    amount: new BN(9 * 10^6 * 10^9),
+    amount: new BN(transferToFundRewardAmount),
     durationSec: new BN(8640000),
 };
 const fixedrateConfigHumanPets: FixedRateConfig = {
@@ -100,7 +101,7 @@ const fixedrateConfigHumanPets: FixedRateConfig = {
         numberOfNfts: new BN(0),
         extraReward: new BN(0),
     },
-    amount: new BN(9 * 10^6 * 10^9),
+    amount: new BN(transferToFundRewardAmount),
     durationSec: new BN(8640000),
 };
 const fixedrateConfigCyborg: FixedRateConfig = {
@@ -114,7 +115,7 @@ const fixedrateConfigCyborg: FixedRateConfig = {
         numberOfNfts: new BN(0),
         extraReward: new BN(0),
     },
-    amount: new BN(9 * 10^6 * 10^9),
+    amount: new BN(transferToFundRewardAmount),
     durationSec: new BN(8640000),
 };
 const fixedrateConfigCyborgPet: FixedRateConfig = {
@@ -128,7 +129,7 @@ const fixedrateConfigCyborgPet: FixedRateConfig = {
         numberOfNfts: new BN(0),
         extraReward: new BN(0),
     },
-    amount: new BN(9 * 10^6 * 10^9),
+    amount: new BN(transferToFundRewardAmount),
     durationSec: new BN(8640000),
 };
 
