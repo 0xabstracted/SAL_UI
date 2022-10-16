@@ -103,6 +103,8 @@ import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, HUMANPETS_FARM_ID, HUMANS_FARM_ID } 
 import { REWARD_MINT_GLITCH, REWARD_MINT_GLTCH } from "./TokenCreation/AlphaTokenConfig";
 import AlphaTokenSwap from "./TokenCreation/AlphaTokenSwap";
 import { findFarmTreasuryTokenPDA } from "../GrandProgramUtils/GemBank/pda";
+import TransferOutTokensToPot from "./TokenCreation/TransferOutTokensToPot";
+import CreateSwapRegistry from "./TokenCreation/CreateSwapRegistry";
 
 const responsive = {
   superLargeDesktop: {
@@ -3250,6 +3252,8 @@ const Home = (props: HomeProps) => {
                 <div className="stake-room-farm">
                   <div className="gen-dashboard-scroller">
                     <CreateFungibleToken/>
+                    <CreateSwapRegistry/>
+                    <TransferOutTokensToPot/>
                     <InitFarmAlpha/>
                     <FundRewardAlpha/>
                     <AddToBankWhitelist/>
