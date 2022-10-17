@@ -90,7 +90,7 @@ import idl from "../idl/magic_hat.json";
 
 import { findAssociatedTokenAddress } from "../GrandProgramUtils/AssociatedTokenAccountProgram/pda";
 import { MAGIC_STAKE_PROGRAM_ID, GEM_BANK_PROGRAM_ID, getBankProgram, getStakeProgram } from "../GrandProgramUtils/GemBank/GetProgramObjects";
-import { FixedRateConfig, RarityConfig } from "../GrandProgramUtils/GemBank/interface";
+// import { FixedRateConfig, RarityConfig } from "../GrandProgramUtils/GemBank/interface";
 import { TOKEN_METADATA_PROGRAM_ID, SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID } from "../GrandProgramUtils/TokenMetadata/constants";
 
 import MenuContent from "./menu";
@@ -445,7 +445,7 @@ const Home = (props: HomeProps) => {
       setLogoAlphaLoading(false);
       getWhitelistAccounts();
       getNFTs();
-      getStakedNfts();
+      // getStakedNfts();
       getStakedVaults();
       getFarms();
       getFarmers();
@@ -696,7 +696,7 @@ const Home = (props: HomeProps) => {
         const metaplex = new Metaplex(connection);
         // console.log(element.account.gemMint.toBase58());
         let nft:any = await metaplex.nfts().findByMint({ mintAddress: element.account.gemMint }).run();
-        // console.log(nft);
+        console.log(nft);
         if (nft.updateAuthorityAddress.toBase58() == "TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq") {
           var obj:any = {
             name: nft.name,
@@ -747,6 +747,29 @@ const Home = (props: HomeProps) => {
         if (farmersHuman != null) {
           console.log('Human Farmer ');
           console.log(farmersHuman);
+          let [pda] = await farmerStakedMintPDA(
+            0,
+            humanFarmerVar
+          )
+          const nftsStakedCyborg:any = await stakeProgram.account.farmerStakedMints.fetch(pda);
+          console.log('Nfts Staked : ');
+          let arr:any = [];
+          console.log(nftsStakedCyborg);
+          console.log(nftsStakedCyborg.farmerStakedMints[0]);
+          console.log(nftsStakedCyborg.farmerStakedMints[0].toBase58());
+          arr.push(nftsStakedCyborg.farmerStakedMints[0]);
+          let array:any = [];
+          const connection = new Connection(clusterApiUrl("devnet"));
+          const metaplex = new Metaplex(connection);
+          let nft:any = await metaplex.nfts().findByMint({ mintAddress: arr[0] }).run();
+          console.log(nft);
+          var obj:any = {
+            name: nft.name,
+            link: nft.json.image,
+            auth: nft.updateAuthorityAddress.toBase58()
+          }
+          array.push(obj);
+          setStakedNfts(array);
           setFarmerHuman(farmersHuman);
           setStakedBal(stakedBal + farmersHuman.rewardA.accruedReward.toNumber());
           // setStakedTokens(farmersHuman.gemsStaked!.toNumber());
@@ -770,6 +793,13 @@ const Home = (props: HomeProps) => {
         if (farmersHumanPets != null) {
           console.log('Human Pet Farmer ');
           console.log(farmersHumanPets);
+          let [pda] = await farmerStakedMintPDA(
+            0,
+            humanPetsFarmerVar
+          )
+          const nftsStakedHumanPets = await stakeProgram.account.farmerStakedMints.fetch(pda);
+          console.log('Nfts Staked : ');
+          console.log(nftsStakedHumanPets);
           setFarmerHumanPet(farmersHumanPets);
           setStakedBal(stakedBal + farmersHumanPets.rewardA.accruedReward.toNumber());
           // setStakedTokens(farmersHumanPets.gemsStaked!.toNumber());
@@ -792,6 +822,29 @@ const Home = (props: HomeProps) => {
         if (farmersCyborg != null) {
           console.log('Cyborg Farmer ');
           console.log(farmersCyborg);
+          let [pda] = await farmerStakedMintPDA(
+            0,
+            cyborgFarmerVar
+          )
+          const nftsStakedCyborg:any = await stakeProgram.account.farmerStakedMints.fetch(pda);
+          console.log('Nfts Staked : ');
+          let arr:any = [];
+          console.log(nftsStakedCyborg);
+          console.log(nftsStakedCyborg.farmerStakedMints[0]);
+          console.log(nftsStakedCyborg.farmerStakedMints[0].toBase58());
+          arr.push(nftsStakedCyborg.farmerStakedMints[0]);
+          let array:any = [];
+          const connection = new Connection(clusterApiUrl("devnet"));
+          const metaplex = new Metaplex(connection);
+          let nft:any = await metaplex.nfts().findByMint({ mintAddress: arr[0] }).run();
+          console.log(nft);
+          var obj:any = {
+            name: nft.name,
+            link: nft.json.image,
+            auth: nft.updateAuthorityAddress.toBase58()
+          }
+          array.push(obj);
+          setStakedNfts(array);
           setFarmerCyborg(farmersCyborg);
           // setStakedTokens(farmersCyborg.gemsStaked!.toNumber());
           setStakedBal(stakedBal + farmersCyborg.rewardA.accruedReward.toNumber());
@@ -814,6 +867,13 @@ const Home = (props: HomeProps) => {
         if (farmersCyborgPets != null) {
           console.log('Cyborg Pet Farmer ');
           console.log(farmersCyborgPets);
+          let [pda] = await farmerStakedMintPDA(
+            0,
+            cyborgPetFarmerVar
+          )
+          const nftsStakedCyborgpets = await stakeProgram.account.farmerStakedMints.fetch(pda);
+          console.log('Nfts Staked : ');
+          console.log(nftsStakedCyborgpets);
           setFarmerCyborgPet(farmersCyborgPets);
           // setStakedTokens(farmersCyborgPets.gemsStaked!.toNumber());
           setStakedBal(stakedBal + farmersCyborgPets.rewardA.accruedReward.toNumber());
@@ -1708,17 +1768,18 @@ const Home = (props: HomeProps) => {
       else {
         nft = nfts[0];
       }
+      console.log(nft);
       let farm_id: anchor.web3.PublicKey;
-      if (stakedNft.trait_type == 'Human') {
+      if (nft.trait_type == 'Human') {
         farm_id = HUMANS_FARM_ID;
       }
-      else if (stakedNft.trait_type == 'Human Pet') {
+      else if (nft.trait_type == 'Human Pet') {
         farm_id = HUMANPETS_FARM_ID;
       }
-      else if (stakedNft.trait_type == 'Cyborg') {
+      else if (nft.trait_type == 'Cyborg') {
         farm_id = CYBORG_FARM_ID;
       }
-      else if (stakedNft.trait_type == 'Cyborg Pet') {
+      else if (nft.trait_type == 'Cyborg Pet') {
         farm_id = CYBORGPET_FARM_ID;
       }
       else {
@@ -2317,7 +2378,7 @@ const Home = (props: HomeProps) => {
       //     setShowMobileDoor(false);
       //   }, 600);
       // }
-      // else if (key == 'stake') {
+      // else if (key == 'ALPHAZEX') {
       //   setClassNameState("main-bg-after-door-open black-bg");
       //   setLogoAlphaLoading(true);
       //   setTimeout(function () {
@@ -2469,7 +2530,7 @@ const Home = (props: HomeProps) => {
             <img alt="Alpha-logo" src={LogoWhite} className="pulse-animation" />
           </div>
         )}
-        {!logoLoading &&
+        {/* {!logoLoading &&
           !showMobileDoor && 
           !logoAlphaLoading &&
           !showAlphaRoom &&
@@ -2487,7 +2548,7 @@ const Home = (props: HomeProps) => {
                 {" "}
               </a>
             </div>
-          )}
+          )} */}
         {!logoLoading &&
           !showAlphaRoom &&
           !showStakeRoom &&
@@ -2496,7 +2557,7 @@ const Home = (props: HomeProps) => {
           !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <div
-              onClick={() => openAlphaRoom('stake')}
+              onClick={() => openAlphaRoom('ALPHAZEX')}
               // onClick={() => refreshFarmer()}
               // onClick={() => refreshFarmerSigned()}
               className="stake-room-div"
@@ -2533,6 +2594,7 @@ const Home = (props: HomeProps) => {
           !isMobile && (
             <div
               onClick={() => showToaster(5)}
+              // onClick={() =>setShowFarming(true)}
               className="vault-room-div"
             ></div>
           )}
