@@ -565,8 +565,9 @@ const Home = (props: HomeProps) => {
   const farmerStakedMintPDA = (index: any, creator: PublicKey) => {
     console.log(index);
     return PublicKey.findProgramAddress(
-      [Buffer.from('farmer_staked_mints'), Uint8Array.of(index), creator.toBytes()],
-      GEM_BANK_PROGRAM_ID
+      [Buffer.from('farmer_staked_mints'), creator.toBytes()],
+      // [Buffer.from('farmer_staked_mints'), Uint8Array.of(index), creator.toBytes()],
+      MAGIC_STAKE_PROGRAM_ID
     );
   };
 
@@ -1612,7 +1613,8 @@ const Home = (props: HomeProps) => {
           });
         }
         console.log(stake_instructions);
-        const [farmerStakedMintVarPDA, farmerStakedMintBump] = await farmerStakedMintPDA(
+      // const farmerId:any = await stakeProgram.account.farm.fetch(farmerPda)!;
+      const [farmerStakedMintVarPDA, farmerStakedMintBump] = await farmerStakedMintPDA(
           0,
           farmerPda
         );
@@ -1622,6 +1624,7 @@ const Home = (props: HomeProps) => {
               farm: farm_id,
               farmAuthority: farms.farmAuthority,
               farmer: farmerPda,
+              // farmerStakedMints: farmerId.fsmAccountKeys[0],
               farmerStakedMints: farmerStakedMintVarPDA,
               identity: wallet.publicKey,
               bank: farms.bank,
@@ -1696,7 +1699,7 @@ const Home = (props: HomeProps) => {
   const UnStakeNft = async () => {
     const stakeProgram = await getStakeProgram(wallet);
     const bankProgram = await getBankProgram(wallet);
-    const farmers = await stakeProgram.account.farmer.all();
+    // const farmers = await stakeProgram.account.farmer.all();
     try {
       let nft;
       if (unstakedNft) {
@@ -1731,26 +1734,31 @@ const Home = (props: HomeProps) => {
         farms.bank,
         wallet.publicKey!
       );
-      const [farmTreasury, farmTreasuryBump] = await findFarmTreasuryPDA(
-        farm_id!
-      );
+      // const [farmTreasury, farmTreasuryBump] = await findFarmTreasuryPDA(
+      //   farm_id!
+      // );
       const [farmerStakedMintVarPDA, farmerStakedMintBump] = await farmerStakedMintPDA(
         0,
         farmerPda
       );
-      const vaults = await bankProgram.account.vault.all();
+      // const vaults = await bankProgram.account.vault.all();
         // console.log(vaults[0].account.authoritySeed.toBase58());
+      let nftMintPublicKey = new anchor.web3.PublicKey(nft.mint)
+
       const [gemBoxPdaVal, gemBoxBump] = await gemBoxPda(
         farmerVaultPda,
-        new anchor.web3.PublicKey(nft.mint)
+        nftMintPublicKey
+        // new anchor.web3.PublicKey(nft.mint)
       );
       const [gemDepositBoxPdaVal, gemDepositReceiptBump] = await gemDepositBoxPda(
         farmerVaultPda,
-        new anchor.web3.PublicKey(nft.mint)
+        nftMintPublicKey
+        // new anchor.web3.PublicKey(nft.mint)
       );
       const [gemBoxRarityPdaVal, gemBoxrarityBump] = await gemBoxRarityPda(
         farms.bank,
-        new anchor.web3.PublicKey(nft.mint)
+        nftMintPublicKey
+        // new anchor.web3.PublicKey(nft.mint)
       );
       const [vaultAuthorityPdaVal, vaultAuthorityBump] = await vaultAuthorityPda(
         farmerVaultPda
