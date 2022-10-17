@@ -2659,8 +2659,8 @@ const Home = (props: HomeProps) => {
           !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <div
-              onClick={() => showToaster(5)}
-              // onClick={() =>setShowFarming(true)}
+              // onClick={() => showToaster(5)}
+              onClick={() =>setShowFarming(true)}
               className="vault-room-div"
             ></div>
           )}
