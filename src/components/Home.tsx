@@ -1646,20 +1646,20 @@ const Home = (props: HomeProps) => {
         const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(farm_id);
         const address_to_whitelist = new anchor.web3.PublicKey(collectionId);
         const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
-        stake_instructions.push(stakeProgram.instruction.stake(farmAuthBump, farmerBump, 
-          {
-            accounts: {
-              farm: farm_id,
-              farmAuthority: farms.farmAuthority,
-              farmer: farmerPda,
-              identity: wallet.publicKey,
-              bank: farms.bank,
-              vault: farmerVaultPda,
-              gemBank: GEM_BANK_PROGRAM_ID,
-              systemProgram: SystemProgram.programId,
-            }
-          }
-        ));
+        // stake_instructions.push(stakeProgram.instruction.stake(farmAuthBump, farmerBump, 
+        //   {
+        //     accounts: {
+        //       farm: farm_id,
+        //       farmAuthority: farms.farmAuthority,
+        //       farmer: farmerPda,
+        //       identity: wallet.publicKey,
+        //       bank: farms.bank,
+        //       vault: farmerVaultPda,
+        //       gemBank: GEM_BANK_PROGRAM_ID,
+        //       systemProgram: SystemProgram.programId,
+        //     }
+        //   }
+        // ));
         let tr = new Transaction();
         tr.add(stake_instructions);
         const complete_stake = await sendTransactions(
@@ -2265,18 +2265,18 @@ const Home = (props: HomeProps) => {
       //     setShowMobileDoor(false);
       //   }, 600);
       // }
-      else if (mobileDoor === "ALPHAZEX") {
-        setClassNameState("main-bg-after-door-open black-bg");
-        setLogoAlphaLoading(true);
-        setTimeout(function () {
-          setLogoAlphaLoading(false);
-          setClassNameState("alphazen-room");
-          setShowTeamRoom(false);
-          setShowAlphaRoom(false);
-          setShowStakeRoom(true);
-          setShowMobileDoor(false);
-        }, 600);
-      }
+      // else if (mobileDoor === "ALPHAZEX") {
+      //   setClassNameState("main-bg-after-door-open black-bg");
+      //   setLogoAlphaLoading(true);
+      //   setTimeout(function () {
+      //     setLogoAlphaLoading(false);
+      //     setClassNameState("alphazen-room");
+      //     setShowTeamRoom(false);
+      //     setShowAlphaRoom(false);
+      //     setShowStakeRoom(true);
+      //     setShowMobileDoor(false);
+      //   }, 600);
+      // }
       else {
         var arr = [
           "Patience is key",
@@ -2317,50 +2317,50 @@ const Home = (props: HomeProps) => {
       //     setShowMobileDoor(false);
       //   }, 600);
       // }
-      else if (key == 'stake') {
-        setClassNameState("main-bg-after-door-open black-bg");
-        setLogoAlphaLoading(true);
-        setTimeout(function () {
-          setClassNameState("alphazen-room");
-          setLogoAlphaLoading(false);
-          setShowAlphaRoom(false);
-          setShowTeamRoom(false);
-          setShowStakeRoom(true);
-          setShowMobileDoor(false);
-        }, 600);
-        setTimeout(function() {
-          if (roomOneInfoClass == "stake-room-info-one") {
-            setRoomOneInfoClass("stake-room-info-one flip");
-          }
-          else {
-            setRoomOneInfoClass("stake-room-info-one");
-          }
-          if (roomTwoInfoClass == "stake-room-info-one") {
-            setRoomTwoInfoClass("stake-room-info-one flip");
-          }
-          else {
-            setRoomTwoInfoClass("stake-room-info-one");
-          }
-          if (roomThreeInfoClass == "stake-room-info-one") {
-            setRoomThreeInfoClass("stake-room-info-one flip");
-          }
-          else {
-            setRoomThreeInfoClass("stake-room-info-one");
-          }
-          if (roomFourInfoClass == "stake-room-info-one") {
-            setRoomFourInfoClass("stake-room-info-one flip");
-          }
-          else {
-            setRoomFourInfoClass("stake-room-info-one");
-          }
-          if (roomFiveInfoClass == "stake-room-info-one") {
-            setRoomFiveInfoClass("stake-room-info-one flip");
-          }
-          else {
-            setRoomFiveInfoClass("stake-room-info-one");
-          }
-        },3000) 
-      }
+      // else if (key == 'stake') {
+      //   setClassNameState("main-bg-after-door-open black-bg");
+      //   setLogoAlphaLoading(true);
+      //   setTimeout(function () {
+      //     setClassNameState("alphazen-room");
+      //     setLogoAlphaLoading(false);
+      //     setShowAlphaRoom(false);
+      //     setShowTeamRoom(false);
+      //     setShowStakeRoom(true);
+      //     setShowMobileDoor(false);
+      //   }, 600);
+      //   setTimeout(function() {
+      //     if (roomOneInfoClass == "stake-room-info-one") {
+      //       setRoomOneInfoClass("stake-room-info-one flip");
+      //     }
+      //     else {
+      //       setRoomOneInfoClass("stake-room-info-one");
+      //     }
+      //     if (roomTwoInfoClass == "stake-room-info-one") {
+      //       setRoomTwoInfoClass("stake-room-info-one flip");
+      //     }
+      //     else {
+      //       setRoomTwoInfoClass("stake-room-info-one");
+      //     }
+      //     if (roomThreeInfoClass == "stake-room-info-one") {
+      //       setRoomThreeInfoClass("stake-room-info-one flip");
+      //     }
+      //     else {
+      //       setRoomThreeInfoClass("stake-room-info-one");
+      //     }
+      //     if (roomFourInfoClass == "stake-room-info-one") {
+      //       setRoomFourInfoClass("stake-room-info-one flip");
+      //     }
+      //     else {
+      //       setRoomFourInfoClass("stake-room-info-one");
+      //     }
+      //     if (roomFiveInfoClass == "stake-room-info-one") {
+      //       setRoomFiveInfoClass("stake-room-info-one flip");
+      //     }
+      //     else {
+      //       setRoomFiveInfoClass("stake-room-info-one");
+      //     }
+      //   },3000) 
+      // }
       else {
         var arr1 = [
           "Patience is key",
@@ -2557,7 +2557,7 @@ const Home = (props: HomeProps) => {
           !isMobile && (
             <div onClick={() => openAlphaRoom('team')} className="team-room-div"></div>
           )}
-        {!logoLoading &&
+        {/* {!logoLoading &&
           !showAlphaRoom &&
           !showStakeRoom &&
           !showTeamRoom &&
@@ -2565,8 +2565,8 @@ const Home = (props: HomeProps) => {
           !showFixedStakingRoom && !showTokenSwapping &&
           !isMobile && (
             <div onClick={closeForm} className="alpha-logo-div"></div>
-          )}
-        {!logoLoading &&
+          )} */}
+        {/* {!logoLoading &&
           !showAlphaRoom &&
           !showStakeRoom &&
           !showTeamRoom &&
@@ -2574,52 +2574,26 @@ const Home = (props: HomeProps) => {
           !showFixedStakingRoom && !showTokenSwapping &&
           !showMobileDoor && (
             <div className="hologram-div">
-              {/* onClick={openUpdates} */}
               <div className="smaller-holo-updates">
                 {currentWl == "" && (
                   <label className="typing-text">Mint</label>
                 )}
                 {(
-                  // <div className="Top-connected red">
-                  //   <WalletDialogButton className="Inside-Connect-btn">
-                  //     Connect
-                  //   </WalletDialogButton>
-                  // </div>
                   <div className="Top-connected green">
                     <button
                       className={
                         shouldMint ? "Outside-Mint-btn" : "Outside-Mint-btn"
                       }
-                      // onClick={openUpdates}
                     >
                       Minted Out
                     </button>
                   </div>
                 )}
-                {/* {wallet.connected && currentWl != "" && (
-                  <div className="Top-connected green">
-                    <button
-                      className={
-                        shouldMint ? "Outside-Mint-btn" : "Outside-Mint-btn"
-                      }
-                      onClick={openUpdates}
-                    >
-                      Mint
-                    </button>
-                  </div>
-                )} */}
               </div>
             </div>
-          )}
+          )} */}
           
-        {!logoLoading &&
-          !showAlphaRoom &&
-          !showStakeRoom &&
-          !showTeamRoom &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !logoAlphaLoading &&
-          !isMobile && <div className="hologram-setup-div"></div>}
-        {!logoLoading &&
+        {/* {!logoLoading &&
           !showAlphaRoom &&
           !showStakeRoom &&
           !showTeamRoom &&
@@ -2635,8 +2609,8 @@ const Home = (props: HomeProps) => {
                 className="katana-image"
               ></img>
             </div>
-          )}
-        {!logoLoading &&
+          )} */}
+        {/* {!logoLoading &&
           !showAlphaRoom &&
           !showStakeRoom &&
           !showTeamRoom &&
@@ -2651,8 +2625,8 @@ const Home = (props: HomeProps) => {
                 className="pizza-image"
               ></img>
             </div>
-          )}
-        {!logoLoading &&
+          )} */}
+        {/* {!logoLoading &&
           !showAlphaRoom &&
           !showStakeRoom &&
           !showTeamRoom &&
@@ -2667,8 +2641,8 @@ const Home = (props: HomeProps) => {
                 className="sopha-image"
               ></img>
             </div>
-          )}
-        {!logoLoading &&
+          )} */}
+        {/* {!logoLoading &&
           !showAlphaRoom &&
           !showStakeRoom &&
           !showTeamRoom &&
@@ -2686,8 +2660,8 @@ const Home = (props: HomeProps) => {
                 className="bean-bag-image"
               ></img>
             </div>
-          )}
-        {!logoLoading &&
+          )} */}
+        {/* {!logoLoading &&
           !showAlphaRoom &&
           !showStakeRoom &&
           !showTeamRoom &&
@@ -2707,18 +2681,17 @@ const Home = (props: HomeProps) => {
               ></source>
               Your browser does not support HTML5 video.
             </video>
-          )}
-        {!logoLoading &&
+          )} */}
+        {/* {!logoLoading &&
           !showAlphaRoom &&
           !showStakeRoom &&
           !showTeamRoom &&
           !showFixedStakingRoom && !showTokenSwapping &&
           !logoAlphaLoading &&
           !isMobile && (
-            // <div onClick={setCollection} className="light-flicker-image"></div>
             <div className="light-flicker-image"></div>
-          )}
-        {!logoLoading &&
+          )} */}
+        {/* {!logoLoading &&
           !showAlphaRoom &&
           !showStakeRoom &&
           !showTeamRoom &&
@@ -2731,7 +2704,7 @@ const Home = (props: HomeProps) => {
               onClick={() =>setShowFarming(true)}
               className="sopha-sider-image"
             ></img>
-          )}
+          )} */}
         {!logoLoading && showMessage && (
           <div className="mesage-container">
             <label>{messageText}</label>

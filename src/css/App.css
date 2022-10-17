@@ -173,7 +173,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("../assets/room_with_no_items_but_doors_updated.png");
+  background: url("../assets/lobby_main.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -474,30 +474,30 @@ body {
 
 .stake-room-div {
   position: absolute;
-  left: 9%;
-  width: 9%;
-  bottom: 2%;
-  height: 40%;
+  left: 33%;
+  width: 13%;
+  bottom: 36%;
+  height: 38%;
   cursor: pointer;
   z-index: 999;
 }
 
 .vault-room-div {
   position: absolute;
-  right: 10%;
-  width: 9%;
-  bottom: 2%;
-  height: 40%;
+  right: 35%;
+  width: 8%;
+  bottom: 40%;
+  height: 29%;
   cursor: pointer;
   z-index: 999;
 }
 
 .team-room-div {
   position: absolute;
-  right: 30%;
-  width: 11%;
-  bottom: 10%;
-  height: 27%;
+  right: 2%;
+  width: 15%;
+  bottom: 35%;
+  height: 33%;
   cursor: pointer;
   z-index: 999;
 }
@@ -804,10 +804,10 @@ body {
 
 .alpha-room-div {
   position: absolute;
-  left: 28%;
-  width: 10%;
-  bottom: 10%;
-  height: 27%;
+  left: 2%;
+  width: 19%;
+  bottom: 33%;
+  height: 35%;
   cursor: pointer;
   z-index: 999;
 }
@@ -4146,7 +4146,7 @@ form .button {
 .mesage-container {
   left: 0%;
   width: 100%;
-  top: 28%;
+  top: 20%;
   height: 50px;
   position: absolute;
 }
