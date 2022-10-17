@@ -445,7 +445,7 @@ const Home = (props: HomeProps) => {
       setLogoAlphaLoading(false);
       getWhitelistAccounts();
       getNFTs();
-      // getStakedNfts();
+      getStakedNfts();
       getStakedVaults();
       getFarms();
       getFarmers();
@@ -680,44 +680,86 @@ const Home = (props: HomeProps) => {
     }
   }
 
+  // const getStakedNfts = async () => {
+  //   if (wallet && wallet.connected) {
+  //     const bankProgram = await getBankProgram(wallet);
+  //     // const [farmerVaultPda] = await farmerVaultPDA(
+  //     //   farms.bank,
+  //     //   wallet.publicKey!
+  //     // );
+  //     const gdprs:any = await bankProgram.account.gemDepositReceipt.all();
+  //     // console.log(gdprs);
+  //     var array:any = [];
+  //     for (let index = 0; index < gdprs.length; index++) {
+  //       const element = gdprs[index];
+  //       const connection = new Connection(clusterApiUrl("devnet"));
+  //       const metaplex = new Metaplex(connection);
+  //       // console.log(element.account.gemMint.toBase58());
+  //       let nft:any = await metaplex.nfts().findByMint({ mintAddress: element.account.gemMint }).run();
+  //       console.log(nft);
+  //       if (nft.updateAuthorityAddress.toBase58() == "TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq") {
+  //         var obj:any = {
+  //           name: nft.name,
+  //           link: nft.json.image,
+  //           auth: nft.updateAuthorityAddress.toBase58()
+  //         }
+  //         // console.log(obj);
+  //         array.push(obj);
+  //       }
+  //     }
+  //     if (array && array.length > 0) {
+  //       console.log(array);
+  //       setStakedNfts(array);
+  //       // setStakedTokens(array.length * 100);
+  //       // setRespectEarned(array.length * 100);
+  //       // setMultiplierLevel(array.length);
+  //     }
+  //   }
+  // }
+
   const getStakedNfts = async () => {
     if (wallet && wallet.connected) {
-      const bankProgram = await getBankProgram(wallet);
-      // const [farmerVaultPda] = await farmerVaultPDA(
-      //   farms.bank,
-      //   wallet.publicKey!
-      // );
-      const gdprs:any = await bankProgram.account.gemDepositReceipt.all();
-      // console.log(gdprs);
-      var array:any = [];
-      for (let index = 0; index < gdprs.length; index++) {
-        const element = gdprs[index];
-        const connection = new Connection(clusterApiUrl("devnet"));
-        const metaplex = new Metaplex(connection);
-        // console.log(element.account.gemMint.toBase58());
-        let nft:any = await metaplex.nfts().findByMint({ mintAddress: element.account.gemMint }).run();
-        console.log(nft);
-        if (nft.updateAuthorityAddress.toBase58() == "TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq") {
-          var obj:any = {
-            name: nft.name,
-            link: nft.json.image,
-            auth: nft.updateAuthorityAddress.toBase58()
+      // WARNING: For POST requests, body is set to null by browsers.
+      var data = JSON.stringify({
+        "owner": wallet.publicKey?.toBase58()
+      });
+
+      var xhr = new XMLHttpRequest();
+      // xhr.withCredentials = true;
+
+      xhr.addEventListener("readystatechange", async function() {
+        if(this.readyState === 4) {
+          console.log(this.responseText);
+          var mints = JSON.parse(this.responseText).data;
+          var array:any = [];
+          for (let index = 0; index < mints.length; index++) {
+            const element = mints[index];
+            const connection = new Connection(clusterApiUrl("devnet"));
+            const metaplex = new Metaplex(connection);
+            // console.log(element.account.gemMint.toBase58());
+            var pk = new anchor.web3.PublicKey(element);
+            let nft:any = await metaplex.nfts().findByMint({ mintAddress: pk }).run();
+            console.log(nft);
+            var obj:any = {
+              mint: element,
+              name: nft.name,
+              link: nft.json.image,
+              auth: nft.updateAuthorityAddress.toBase58()
+            }
+            array.push(obj);
           }
-          // console.log(obj);
-          array.push(obj);
+          if (array && array.length > 0) {
+            console.log(array);
+            setStakedNfts(array);
+          }
         }
-      }
-      if (array && array.length > 0) {
-        console.log(array);
-        setStakedNfts(array);
-        // setStakedTokens(array.length * 100);
-        // setRespectEarned(array.length * 100);
-        // setMultiplierLevel(array.length);
-      }
+      });
+
+      xhr.open("POST", "http://34.198.111.186:8000/getNfts");
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.send(data);
     }
   }
-
-  
 
   // Farm Manager Should call this
 
@@ -1732,8 +1774,29 @@ const Home = (props: HomeProps) => {
         nftStakeStepCount = nftStakeStepCount + 1;
         setNftStakeStep(nftStakeStepCount);
         var arr = stakedNfts;
-        arr.push(stakedNft);
+        var temp_arr = nfts.slice(0,nfts.indexOf(nft));
+        setNFts(temp_arr);
+        var data = JSON.stringify({
+          "owner": wallet.publicKey?.toBase58(),
+          "mint": nft.mint
+        });
+
+        var xhr = new XMLHttpRequest();
+        // xhr.withCredentials = true;
+
+        xhr.addEventListener("readystatechange", function() {
+          if(this.readyState === 4) {
+            console.log(this.responseText);
+          }
+        });
+
+        xhr.open("POST", "http://34.198.111.186:8000/stakeNft");
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.send(data);
+        arr.push(nft);
         setStakedNfts(arr);
+        getStakedNfts();
         // setStakedTokens(stakedNfts.length * 100);
         // setRespectEarned(stakedNfts.length * 100);
         // setMultiplierLevel(stakedNfts.length);
@@ -1830,7 +1893,7 @@ const Home = (props: HomeProps) => {
         mint: new anchor.web3.PublicKey(nft.mint),
       });
       const gem_destination = gem_source_obj.value[0].pubkey;
-      const wallet_create = await stakeProgram.instruction.unstake(farmAuthBump, farmTreasuryTokenBump, farmerBump, gemBoxBump, gemDepositReceiptBump, gemBoxrarityBump, new BN(1), new BN(0), false,
+      const wallet_create = await stakeProgram.rpc.unstake(farmAuthBump, farmTreasuryTokenBump, farmerBump, gemBoxBump, gemDepositReceiptBump, gemBoxrarityBump, new BN(1), new BN(0), false,
         {
           accounts: {
             farm: farm_id,
@@ -1838,6 +1901,9 @@ const Home = (props: HomeProps) => {
             farmTreasuryToken: farmTreasuryToken,
             farmer: farmerPda,
             farmerStakedMints: farmerStakedMintVarPDA,
+            identity: wallet.publicKey,
+            bank: farms.bank,
+            vault: farmerVaultPda,
             vaultAuthority: vaultAuthorityPdaVal,
             gemBox: gemBoxPdaVal,
             gemDepositReceipt: gemDepositBoxPdaVal,
@@ -2326,18 +2392,18 @@ const Home = (props: HomeProps) => {
       //     setShowMobileDoor(false);
       //   }, 600);
       // }
-      // else if (mobileDoor === "ALPHAZEX") {
-      //   setClassNameState("main-bg-after-door-open black-bg");
-      //   setLogoAlphaLoading(true);
-      //   setTimeout(function () {
-      //     setLogoAlphaLoading(false);
-      //     setClassNameState("alphazen-room");
-      //     setShowTeamRoom(false);
-      //     setShowAlphaRoom(false);
-      //     setShowStakeRoom(true);
-      //     setShowMobileDoor(false);
-      //   }, 600);
-      // }
+      else if (mobileDoor === "ALPHAZEX") {
+        setClassNameState("main-bg-after-door-open black-bg");
+        setLogoAlphaLoading(true);
+        setTimeout(function () {
+          setLogoAlphaLoading(false);
+          setClassNameState("alphazen-room");
+          setShowTeamRoom(false);
+          setShowAlphaRoom(false);
+          setShowStakeRoom(true);
+          setShowMobileDoor(false);
+        }, 600);
+      }
       else {
         var arr = [
           "Patience is key",
@@ -2378,50 +2444,50 @@ const Home = (props: HomeProps) => {
       //     setShowMobileDoor(false);
       //   }, 600);
       // }
-      // else if (key == 'ALPHAZEX') {
-      //   setClassNameState("main-bg-after-door-open black-bg");
-      //   setLogoAlphaLoading(true);
-      //   setTimeout(function () {
-      //     setClassNameState("alphazen-room");
-      //     setLogoAlphaLoading(false);
-      //     setShowAlphaRoom(false);
-      //     setShowTeamRoom(false);
-      //     setShowStakeRoom(true);
-      //     setShowMobileDoor(false);
-      //   }, 600);
-      //   setTimeout(function() {
-      //     if (roomOneInfoClass == "stake-room-info-one") {
-      //       setRoomOneInfoClass("stake-room-info-one flip");
-      //     }
-      //     else {
-      //       setRoomOneInfoClass("stake-room-info-one");
-      //     }
-      //     if (roomTwoInfoClass == "stake-room-info-one") {
-      //       setRoomTwoInfoClass("stake-room-info-one flip");
-      //     }
-      //     else {
-      //       setRoomTwoInfoClass("stake-room-info-one");
-      //     }
-      //     if (roomThreeInfoClass == "stake-room-info-one") {
-      //       setRoomThreeInfoClass("stake-room-info-one flip");
-      //     }
-      //     else {
-      //       setRoomThreeInfoClass("stake-room-info-one");
-      //     }
-      //     if (roomFourInfoClass == "stake-room-info-one") {
-      //       setRoomFourInfoClass("stake-room-info-one flip");
-      //     }
-      //     else {
-      //       setRoomFourInfoClass("stake-room-info-one");
-      //     }
-      //     if (roomFiveInfoClass == "stake-room-info-one") {
-      //       setRoomFiveInfoClass("stake-room-info-one flip");
-      //     }
-      //     else {
-      //       setRoomFiveInfoClass("stake-room-info-one");
-      //     }
-      //   },3000) 
-      // }
+      else if (key == 'ALPHAZEX') {
+        setClassNameState("main-bg-after-door-open black-bg");
+        setLogoAlphaLoading(true);
+        setTimeout(function () {
+          setClassNameState("alphazen-room");
+          setLogoAlphaLoading(false);
+          setShowAlphaRoom(false);
+          setShowTeamRoom(false);
+          setShowStakeRoom(true);
+          setShowMobileDoor(false);
+        }, 600);
+        setTimeout(function() {
+          if (roomOneInfoClass == "stake-room-info-one") {
+            setRoomOneInfoClass("stake-room-info-one flip");
+          }
+          else {
+            setRoomOneInfoClass("stake-room-info-one");
+          }
+          if (roomTwoInfoClass == "stake-room-info-one") {
+            setRoomTwoInfoClass("stake-room-info-one flip");
+          }
+          else {
+            setRoomTwoInfoClass("stake-room-info-one");
+          }
+          if (roomThreeInfoClass == "stake-room-info-one") {
+            setRoomThreeInfoClass("stake-room-info-one flip");
+          }
+          else {
+            setRoomThreeInfoClass("stake-room-info-one");
+          }
+          if (roomFourInfoClass == "stake-room-info-one") {
+            setRoomFourInfoClass("stake-room-info-one flip");
+          }
+          else {
+            setRoomFourInfoClass("stake-room-info-one");
+          }
+          if (roomFiveInfoClass == "stake-room-info-one") {
+            setRoomFiveInfoClass("stake-room-info-one flip");
+          }
+          else {
+            setRoomFiveInfoClass("stake-room-info-one");
+          }
+        },3000) 
+      }
       else {
         var arr1 = [
           "Patience is key",
