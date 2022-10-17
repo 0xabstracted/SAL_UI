@@ -1,5 +1,5 @@
 import { PublicKey } from "@solana/web3.js"
-import { FarmConfig, FixedRateConfig, MaxCounts } from "../../GrandProgramUtils/GemBank/interface";
+import { FarmConfig, FixedRateConfig, MaxCounts } from "../../GrandProgramUtils/gemBank/interface";
 
 export interface InitFarmAlphaArgs{
     rewardMintId: PublicKey,  

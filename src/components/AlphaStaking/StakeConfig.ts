@@ -1,5 +1,5 @@
 import { BN } from "@project-serum/anchor";
-import { FarmConfig, FixedRateConfig, MaxCounts } from "../../GrandProgramUtils/GemBank/interface";
+import { FarmConfig, FixedRateConfig, MaxCounts } from "../../GrandProgramUtils/gemBank/interface";
 import { REWARD_MINT_GLTCH } from "../TokenCreation/AlphaTokenConfig";
 import { AuthorizeFunderAlphaArgs, InitFarmAlphaArgs } from "./StakeConfigInterface";
 import * as anchor from '@project-serum/anchor'

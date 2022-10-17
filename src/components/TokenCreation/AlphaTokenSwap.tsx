@@ -14,7 +14,7 @@ import SwappingIcon from "../../assets/swapping_icon.png";
 import { sendTransactions } from '../../config/connection';
 import LogoWhite from "../../assets/Logowhite.png";
 import { BN } from "@project-serum/anchor";
-import { getStakeProgram } from "../../GrandProgramUtils/GemBank/GetProgramObjects";
+import { getStakeProgram } from "../../GrandProgramUtils/gemBank/GetProgramObjects";
 import { TOKEN_PROGRAM_ID } from "../../config/config";
 import { alphaTokenSwapPda,alphaPotPda } from "../../GrandProgramUtils/AssociatedTokenAccountProgram/pda"
 

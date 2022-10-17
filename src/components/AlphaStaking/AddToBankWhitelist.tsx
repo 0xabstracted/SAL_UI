@@ -3,8 +3,8 @@ import { clusterApiUrl, Connection, SystemProgram } from '@solana/web3.js';
 
 import * as anchor from '@project-serum/anchor'
 
-import { getStakeProgram, GEM_BANK_PROGRAM_ID } from '../../GrandProgramUtils/GemBank/GetProgramObjects';
-import { findFarmAuthorityPDA, whitelistProofPda } from '../../GrandProgramUtils/GemBank/pda';
+import { getStakeProgram, GEM_BANK_PROGRAM_ID } from '../../GrandProgramUtils/gemBank/GetProgramObjects';
+import { findFarmAuthorityPDA, whitelistProofPda } from '../../GrandProgramUtils/gemBank/pda';
 
 
 import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, DEFAULT_PUBLIC_KEY, HUMANPETS_FARM_ID, HUMANS_FARM_ID, UPDATE_AUTHORITY_OF_TOKEN, UPDATE_AUTHORITY_OF_TOKEN_STRING, BANK_WL_OBJECT } from './StakeConfig';

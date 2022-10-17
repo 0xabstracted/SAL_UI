@@ -10,7 +10,7 @@ import { CreateFungibleTokenArgs } from './TokenInterface';
 import { glthFungTokenArgs, glitchFungTokenArgs } from './AlphaTokenConfig';
 import { sendTransactions } from '../../config/connection';
 import { findAssociatedTokenAddress } from '../../GrandProgramUtils/AssociatedTokenAccountProgram/pda';
-import { getStakeProgram } from "../../GrandProgramUtils/GemBank/GetProgramObjects";
+import { getStakeProgram } from "../../GrandProgramUtils/gemBank/GetProgramObjects";
 import { getTokenSwapProgramObject } from "../../GrandProgramUtils/TokenSwap/GetProgramObject";
 import { alphaTokenSwapPda,alphaPotPda } from "../../GrandProgramUtils/AssociatedTokenAccountProgram/pda"
 

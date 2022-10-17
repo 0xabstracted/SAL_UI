@@ -10,8 +10,8 @@ import { useState } from "react";
 
 import { useWallet } from "@solana/wallet-adapter-react";
 
-import { GEM_BANK_PROGRAM_ID, getStakeProgram } from "../../GrandProgramUtils/GemBank/GetProgramObjects";
-import { findFarmAuthorityPDA, findFarmTreasuryTokenPDA, findRewardsPotPDA } from "../../GrandProgramUtils/GemBank/pda";
+import { GEM_BANK_PROGRAM_ID, getStakeProgram } from "../../GrandProgramUtils/gemBank/GetProgramObjects";
+import { findFarmAuthorityPDA, findFarmTreasuryTokenPDA, findRewardsPotPDA } from "../../GrandProgramUtils/gemBank/pda";
 
 import { 
   initFarmAlphaCyborgArgs, 

@@ -89,9 +89,9 @@ import idl from "../idl/magic_hat.json";
 
 
 import { findAssociatedTokenAddress } from "../GrandProgramUtils/AssociatedTokenAccountProgram/pda";
-import { MAGIC_STAKE_PROGRAM_ID, GEM_BANK_PROGRAM_ID, getBankProgram, getStakeProgram } from "../GrandProgramUtils/GemBank/GetProgramObjects";
-import { FixedRateConfig, RarityConfig } from "../GrandProgramUtils/GemBank/interface";
-import { TOKEN_METADATA_PROGRAM_ID, SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID } from "../GrandProgramUtils/TokenMetadata/constants";
+import { MAGIC_STAKE_PROGRAM_ID, GEM_BANK_PROGRAM_ID, getBankProgram, getStakeProgram } from "../GrandProgramUtils/gemBank/GetProgramObjects";
+// import { FixedRateConfig, RarityConfig } from "../GrandProgramUtils/gemBank/interface";
+import { TOKEN_METADATA_PROGRAM_ID, SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID } from "../GrandProgramUtils/tokenMetadata/constants";
 
 import MenuContent from "./menu";
 import InitFarmAlpha from "./AlphaStaking/InitFarmAlpha";
@@ -102,7 +102,7 @@ import CreateFungibleToken from "./TokenCreation/CreateFungibleToken";
 import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, HUMANPETS_FARM_ID, HUMANS_FARM_ID } from "./AlphaStaking/StakeConfig";
 import { REWARD_MINT_GLITCH, REWARD_MINT_GLTCH } from "./TokenCreation/AlphaTokenConfig";
 import AlphaTokenSwap from "./TokenCreation/AlphaTokenSwap";
-import { findFarmTreasuryTokenPDA } from "../GrandProgramUtils/GemBank/pda";
+import { findFarmTreasuryTokenPDA } from "../GrandProgramUtils/gemBank/pda";
 
 const responsive = {
   superLargeDesktop: {

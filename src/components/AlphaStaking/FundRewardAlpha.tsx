@@ -3,8 +3,8 @@ import { SystemProgram } from "@solana/web3.js";
 import { useWallet } from "@solana/wallet-adapter-react";
 
 import { findAssociatedTokenAddress } from "../../GrandProgramUtils/AssociatedTokenAccountProgram/pda";
-import { findRewardsPotPDA, funderToAuthorizePDA } from "../../GrandProgramUtils/GemBank/pda";
-import { getStakeProgram } from "../../GrandProgramUtils/GemBank/GetProgramObjects";
+import { findRewardsPotPDA, funderToAuthorizePDA } from "../../GrandProgramUtils/gemBank/pda";
+import { getStakeProgram } from "../../GrandProgramUtils/gemBank/GetProgramObjects";
 
 import { FundRewardAlphaArgs } from "./StakeConfigInterface";
 
