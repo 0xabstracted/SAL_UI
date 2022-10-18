@@ -143,10 +143,11 @@ function AlphaTokenSwap() {
         <img src={LogoWhite} className="swapping-logo" alt="" />
       </div>
       <div className="swapping-box">
-        <label className="swapping-label">Trade</label>
+        <div className="swapping-box-child">
+        <label className="swapping-label">3-Tier Token System</label>
         <div className="from-token-box">
           <div className="from-token-header">
-            <label className="from-token-text">From</label>
+            <label className="from-token-text"></label>
             <label className="from-token-bal">Bal : {glitchTokenBal}</label>
           </div>
           <div className="token-image-parent">
@@ -184,18 +185,18 @@ function AlphaTokenSwap() {
         </div>
         <div className="to-token-box">
           <div className="from-token-header">
-            <label className="from-token-text">To</label>
+            <label className="from-token-text"></label>
             <label className="from-token-bal">Bal : {alphaTokenBal}</label>
           </div>
           <div className="token-image-parent">
             <img
               className="token-image"
-              src="https://dgnvzn3x5fqusqpvst65sizekrfhwtklzokfk7usi64h7erzb7iq.arweave.net/GZtct3fpYUlB9ZT92SMkVEp7TUvLlFV-kke4f5I5D9E?ext=jpg"
+              src="https://phnhi7zckm7jflblrjawdoei6ymbfjtfceqihngixxho6rkxluhq.arweave.net/edp0fyJTPpKsK4pBYbiI9hgSpmURIIO0yL3O70VXXQ8?ext=png"
               alt=""
             />
           </div>
           <div className="token-name-parent">
-            <h2 className="token-name">ALPHA</h2>
+            <h2 className="token-name">GLTCH</h2>
           </div>
           <div className="token-count-parent">
             <input
@@ -217,6 +218,7 @@ function AlphaTokenSwap() {
           >
             Swap
           </button>
+        </div>
         </div>
       </div>
     </div>

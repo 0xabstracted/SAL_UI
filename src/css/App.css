@@ -1066,27 +1066,40 @@ body {
   margin-left: 15%;
   border-radius: 24px;
   margin-top: calc(25vh - 150px);
-  padding: 20px 25px;
+  padding: 1px;
   font-size: 24px;
-  background-color: rgb(56, 71, 165);
+  /* background-color: rgb(56, 71, 165); */
   height: 62vh;
   box-sizing: border-box;
+  background-image: linear-gradient(var(--gradient-rotate, 246deg), #1ac3e4 7.97%, #4a20c9 49.17%, #4caf50 92.1%);
+  box-sizing: border-box;
+}
+
+.swapping-box-child {
+  float: left;
+  width: 100%;
+  border-radius: 24px;
+  /* margin-top: calc(25vh - 150px); */
+  padding: 20px 25px;
+  background: rgb(56, 71, 165);
+  box-sizing: border-box;
+  height: 100%;
 }
 
 .token-image-parent {
   float: left;
-  width: 40px;
+  width: 48px;
   text-align: center;
   padding-top: 4px;
   padding-bottom: 4px;
   box-sizing: border-box;
   margin-right: 10px;
-  height: 40px;
+  height: 48px;
 }
 
 .token-image {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   max-width: 100%;
   /* float: left; */
@@ -1099,7 +1112,7 @@ body {
   padding-top: 0px;
   padding-bottom: 0px;
   box-sizing: border-box;
-  height: 40px;
+  height: 48px;
 }
 
 .from-token-text {
@@ -1129,11 +1142,11 @@ body {
   width: 100%;
   text-align: center;
   margin-top: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .token-name {
-  font-size: 24px;
+  font-size: 26px;
   color: white;
   float: left;
   width: 100%;
@@ -1145,12 +1158,12 @@ body {
   margin-top: 0px;
   margin-bottom: 0;
   font-family: "Ubuntu Mono", monospace;
-  line-height: 40px;
+  line-height: 48px;
   vertical-align: middle;
 }
 
 .token-count-parent {
-  width: calc(100% - 150px);
+  width: calc(100% - 160px);
   float: left;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1176,7 +1189,7 @@ body {
   float: left;
   font-size: 12px;
   height: 28px;
-  margin-top: 6px;
+  margin-top: 8px;
   margin-left: 0;
   margin-right: 2px;
   background-color: #222;
@@ -1210,7 +1223,7 @@ body {
   margin-bottom: 5px;
   border: 1px solid #fff;
   border-radius: 6px;
-  padding: 8px 12px;
+  padding: 8px 12px 12px 12px;
   box-sizing: border-box;
 }
 
@@ -1221,7 +1234,7 @@ body {
   margin-bottom: 5px;
   border: 1px solid #fff;
   border-radius: 6px;
-  padding: 8px 12px;
+  padding: 8px 12px 12px 12px;
   box-sizing: border-box;
 }
 
@@ -1330,6 +1343,9 @@ body {
   text-transform: capitalize;
   color: white;
   font-family: "Ubuntu Mono", monospace;
+  float: left;
+  width: 100%;
+  text-align: center;
 }
 
 .unstaked-nfts-div {

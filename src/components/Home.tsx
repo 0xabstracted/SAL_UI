@@ -1639,13 +1639,13 @@ const Home = (props: HomeProps) => {
         if (add_init_human && stakedNft.trait_type == 'Human') {
           stake_instructions = await initFixedFarmerAlpha(1,stake_instructions,stakeProgram);
         }
-        else if (add_init_cyborg_pets && stakedNft.trait_type == 'Human Pet') {
+        else if (add_init_human_pets && stakedNft.trait_type == 'Human Pet') {
           stake_instructions = await initFixedFarmerAlpha(2,stake_instructions,stakeProgram);
         }
         else if (add_init_cyborg && stakedNft.trait_type == 'Cyborg') {
           stake_instructions = await initFixedFarmerAlpha(3,stake_instructions,stakeProgram);
         }
-        else if (add_init_human_pets && stakedNft.trait_type == 'Cyborg Pet') {
+        else if (add_init_cyborg_pets && stakedNft.trait_type == 'Cyborg Pet') {
           stake_instructions = await initFixedFarmerAlpha(4,stake_instructions,stakeProgram);
         }
         const [farmerPda, farmerBump] = await farmerPDA(
@@ -1748,20 +1748,20 @@ const Home = (props: HomeProps) => {
         const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(farm_id);
         const address_to_whitelist = new anchor.web3.PublicKey(collectionId);
         const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
-        // stake_instructions.push(stakeProgram.instruction.stake(farmAuthBump, farmerBump, 
-        //   {
-        //     accounts: {
-        //       farm: farm_id,
-        //       farmAuthority: farms.farmAuthority,
-        //       farmer: farmerPda,
-        //       identity: wallet.publicKey,
-        //       bank: farms.bank,
-        //       vault: farmerVaultPda,
-        //       gemBank: GEM_BANK_PROGRAM_ID,
-        //       systemProgram: SystemProgram.programId,
-        //     }
-        //   }
-        // ));
+        stake_instructions.push(stakeProgram.instruction.stake(farmAuthBump, farmerBump, 
+          {
+            accounts: {
+              farm: farm_id,
+              farmAuthority: farms.farmAuthority,
+              farmer: farmerPda,
+              identity: wallet.publicKey,
+              bank: farms.bank,
+              vault: farmerVaultPda,
+              gemBank: GEM_BANK_PROGRAM_ID,
+              systemProgram: SystemProgram.programId,
+            }
+          }
+        ));
         let tr = new Transaction();
         tr.add(stake_instructions);
         const complete_stake = await sendTransactions(
@@ -2584,600 +2584,583 @@ const Home = (props: HomeProps) => {
 
   return (
     <div id="main" className={classNameState}>
-      <div id="wrapper">
-        {isMobile && (
-          //  <CheeseburgerMenu isOpen={menuOpen} closeCallback={this.closeMenu.bind(this)}>
-          //   <MenuContent closeCallback={this.closeMenu.bind(this)} />
-          // </CheeseburgerMenu>
-          <div></div>
-        )}
-        {logoLoading && !logoAlphaLoading && (
-          <div className="logo-loader-parent">
-            <img alt="Alpha-logo" src={LogoWhite} className="pulse-animation" />
-          </div>
-        )}
-        {/* {!logoLoading &&
-          !showMobileDoor && 
-          !logoAlphaLoading &&
-          !showAlphaRoom &&
-          !showStakeRoom &&
-          !showTeamRoom &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !isMobile && (
-            <div className="white-paper-div">
-              <a
-                href="https://secret-alpha.gitbook.io/glitch/"
-                target="_blank"
-                rel="noreferrer"
-                className="white-paper-anchor"
-              >
-                {" "}
-              </a>
-            </div>
-          )} */}
-        {!logoLoading &&
-          !showAlphaRoom &&
-          !showStakeRoom &&
-          !showTeamRoom &&
-          !logoAlphaLoading &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !isMobile && (
-            <div
-              onClick={() => openAlphaRoom('ALPHAZEX')}
-              // onClick={() => refreshFarmer()}
-              // onClick={() => refreshFarmerSigned()}
-              className="stake-room-div"
-            ></div>
+      {wallet && wallet.connected && 
+        <div className="pull-left full-width">
+          <div id="wrapper">
+          {isMobile && (
+            //  <CheeseburgerMenu isOpen={menuOpen} closeCallback={this.closeMenu.bind(this)}>
+            //   <MenuContent closeCallback={this.closeMenu.bind(this)} />
+            // </CheeseburgerMenu>
+            <div></div>
           )}
-        {!logoLoading && isMobile && !logoAlphaLoading && !menuOpen && (
-          <div className="hamburger-menu">
-            <img alt="Menu" onClick={openMenu} src={MobileMenu} />
-          </div>
-        )}
-        {!logoLoading && isMobile && !logoAlphaLoading && (
-          <div className="alpha-home-logo" onClick={handleMobileHome}>
-            <img alt="Alpha-Logo-Cropped" src={LogoWhiteCropped} />
-          </div>
-        )}
-        {!logoLoading &&
-          isMobile &&
-          !logoAlphaLoading &&
-          showTeamRoom &&
-          !showMobileDoor && (
-            <div className="team-room-header" onClick={handleMobileHome}>
-              <h2>TEAM</h2>
+          {logoLoading && !logoAlphaLoading && (
+            <div className="logo-loader-parent">
+              <img alt="Alpha-logo" src={LogoWhite} className="pulse-animation" />
             </div>
           )}
-        {!logoLoading && isMobile && showMobileDoor && !logoAlphaLoading && (
-          <div className="mobile-room-div" onClick={() => openAlphaRoom('')}></div>
-        )}
-        {!logoLoading &&
-          !showAlphaRoom &&
-          !showStakeRoom &&
-          !showTeamRoom &&
-          !logoAlphaLoading &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !isMobile && (
-            <div
-              // onClick={() => showToaster(5)}
-              onClick={() =>setShowFarming(true)}
-              className="vault-room-div"
-            ></div>
-          )}
-        {!logoLoading &&
-          !showAlphaRoom &&
-          !showTeamRoom &&
-          !showStakeRoom &&
-          !logoAlphaLoading &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !isMobile && (
-            <div
-              onClick={() => openAlphaRoom('alpha')}
-              className="alpha-room-div"
-            ></div>
-          )}
-        {!logoLoading &&
-          !showAlphaRoom &&
-          !showStakeRoom &&
-          !showTeamRoom &&
-          !logoAlphaLoading &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !isMobile && (
-            <div onClick={() => openAlphaRoom('team')} className="team-room-div"></div>
-          )}
-        {/* {!logoLoading &&
-          !showAlphaRoom &&
-          !showStakeRoom &&
-          !showTeamRoom &&
-          !logoAlphaLoading &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !isMobile && (
-            <div onClick={closeForm} className="alpha-logo-div"></div>
-          )} */}
-        {/* {!logoLoading &&
-          !showAlphaRoom &&
-          !showStakeRoom &&
-          !showTeamRoom &&
-          !logoAlphaLoading &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !showMobileDoor && (
-            <div className="hologram-div">
-              <div className="smaller-holo-updates">
-                {currentWl == "" && (
-                  <label className="typing-text">Mint</label>
-                )}
-                {(
-                  <div className="Top-connected green">
-                    <button
-                      className={
-                        shouldMint ? "Outside-Mint-btn" : "Outside-Mint-btn"
-                      }
-                    >
-                      Minted Out
-                    </button>
-                  </div>
-                )}
+          {/* {!logoLoading &&
+            !showMobileDoor && 
+            !logoAlphaLoading &&
+            !showAlphaRoom &&
+            !showStakeRoom &&
+            !showTeamRoom &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !isMobile && (
+              <div className="white-paper-div">
+                <a
+                  href="https://secret-alpha.gitbook.io/glitch/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="white-paper-anchor"
+                >
+                  {" "}
+                </a>
               </div>
+            )} */}
+          {!logoLoading &&
+            !showAlphaRoom &&
+            !showStakeRoom &&
+            !showTeamRoom &&
+            !logoAlphaLoading &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !isMobile && (
+              <div
+                onClick={() => openAlphaRoom('ALPHAZEX')}
+                // onClick={() => refreshFarmer()}
+                // onClick={() => refreshFarmerSigned()}
+                className="stake-room-div"
+              ></div>
+            )}
+          {!logoLoading && isMobile && !logoAlphaLoading && !menuOpen && (
+            <div className="hamburger-menu">
+              <img alt="Menu" onClick={openMenu} src={MobileMenu} />
             </div>
-          )} */}
-          
-        {/* {!logoLoading &&
-          !showAlphaRoom &&
-          !showStakeRoom &&
-          !showTeamRoom &&
-          !logoAlphaLoading &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !isMobile && (
-            <div>
+          )}
+          {!logoLoading && isMobile && !logoAlphaLoading && (
+            <div className="alpha-home-logo" onClick={handleMobileHome}>
+              <img alt="Alpha-Logo-Cropped" src={LogoWhiteCropped} />
+            </div>
+          )}
+          {!logoLoading &&
+            isMobile &&
+            !logoAlphaLoading &&
+            showTeamRoom &&
+            !showMobileDoor && (
+              <div className="team-room-header" onClick={handleMobileHome}>
+                <h2>TEAM</h2>
+              </div>
+            )}
+          {!logoLoading && isMobile && showMobileDoor && !logoAlphaLoading && (
+            <div className="mobile-room-div" onClick={() => openAlphaRoom('')}></div>
+          )}
+          {!logoLoading &&
+            !showAlphaRoom &&
+            !showStakeRoom &&
+            !showTeamRoom &&
+            !logoAlphaLoading &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !isMobile && (
+              <div
+                // onClick={() => showToaster(5)}
+                onClick={() =>setShowFarming(true)}
+                className="vault-room-div"
+              ></div>
+            )}
+          {!logoLoading &&
+            !showAlphaRoom &&
+            !showTeamRoom &&
+            !showStakeRoom &&
+            !logoAlphaLoading &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !isMobile && (
+              <div
+                onClick={() => openAlphaRoom('alpha')}
+                className="alpha-room-div"
+              ></div>
+            )}
+          {!logoLoading &&
+            !showAlphaRoom &&
+            !showStakeRoom &&
+            !showTeamRoom &&
+            !logoAlphaLoading &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !isMobile && (
+              <div onClick={() => openAlphaRoom('team')} className="team-room-div"></div>
+            )}
+          {/* {!logoLoading &&
+            !showAlphaRoom &&
+            !showStakeRoom &&
+            !showTeamRoom &&
+            !logoAlphaLoading &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !isMobile && (
+              <div onClick={closeForm} className="alpha-logo-div"></div>
+            )} */}
+          {/* {!logoLoading &&
+            !showAlphaRoom &&
+            !showStakeRoom &&
+            !showTeamRoom &&
+            !logoAlphaLoading &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !showMobileDoor && (
+              <div className="hologram-div">
+                <div className="smaller-holo-updates">
+                  {currentWl == "" && (
+                    <label className="typing-text">Mint</label>
+                  )}
+                  {(
+                    <div className="Top-connected green">
+                      <button
+                        className={
+                          shouldMint ? "Outside-Mint-btn" : "Outside-Mint-btn"
+                        }
+                      >
+                        Minted Out
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )} */}
+            
+          {/* {!logoLoading &&
+            !showAlphaRoom &&
+            !showStakeRoom &&
+            !showTeamRoom &&
+            !logoAlphaLoading &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !isMobile && (
+              <div>
+                <img
+                  alt="Katana"
+                  src={KatanaImage}
+                  // onClick={createWhitelistAccountMultiple}
+                  onClick={() => showToaster(2)}
+                  className="katana-image"
+                ></img>
+              </div>
+            )} */}
+          {/* {!logoLoading &&
+            !showAlphaRoom &&
+            !showStakeRoom &&
+            !showTeamRoom &&
+            !logoAlphaLoading &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !isMobile && (
+              <div>
+                <img
+                  alt="Pizza"
+                  src={PizzaImage}
+                  onClick={() => showToaster(1)}
+                  className="pizza-image"
+                ></img>
+              </div>
+            )} */}
+          {/* {!logoLoading &&
+            !showAlphaRoom &&
+            !showStakeRoom &&
+            !showTeamRoom &&
+            !logoAlphaLoading &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !isMobile && (
+              <div>
+                <img
+                  alt="Sopha"
+                  onClick={updateWhitelistConfig}
+                  src={Sopha}
+                  className="sopha-image"
+                ></img>
+              </div>
+            )} */}
+          {/* {!logoLoading &&
+            !showAlphaRoom &&
+            !showStakeRoom &&
+            !showTeamRoom &&
+            !logoAlphaLoading &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !isMobile && (
+              <div>
+                <div
+                  className="bean-bag-click"
+                  onClick={() => showToaster(4)}
+                ></div>
+                <img
+                  alt="Bean-bag"
+                  src={Beanbag}
+                  className="bean-bag-image"
+                ></img>
+              </div>
+            )} */}
+          {/* {!logoLoading &&
+            !showAlphaRoom &&
+            !showStakeRoom &&
+            !showTeamRoom &&
+            !logoAlphaLoading &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !isMobile && (
+              <video autoPlay={true} loop muted className="fan-spinning-image">
+                <source
+                  src={FanSpinning}
+                  className="fan-spinning-image"
+                  type="video/mp4"
+                ></source>
+                <source
+                  src={FanSpinning}
+                  className="fan-spinning-image"
+                  type="video/mp4"
+                ></source>
+                Your browser does not support HTML5 video.
+              </video>
+            )} */}
+          {/* {!logoLoading &&
+            !showAlphaRoom &&
+            !showStakeRoom &&
+            !showTeamRoom &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !logoAlphaLoading &&
+            !isMobile && (
+              <div className="light-flicker-image"></div>
+            )} */}
+          {/* {!logoLoading &&
+            !showAlphaRoom &&
+            !showStakeRoom &&
+            !showTeamRoom &&
+            !logoAlphaLoading &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !isMobile && (
               <img
-                alt="Katana"
-                src={KatanaImage}
-                // onClick={createWhitelistAccountMultiple}
-                onClick={() => showToaster(2)}
-                className="katana-image"
+                alt="Sider"
+                src={SophaSider}
+                onClick={() =>setShowFarming(true)}
+                className="sopha-sider-image"
               ></img>
+            )} */}
+          {!logoLoading && showMessage && (
+            <div className="mesage-container">
+              <label>{messageText}</label>
             </div>
-          )} */}
-        {/* {!logoLoading &&
-          !showAlphaRoom &&
-          !showStakeRoom &&
-          !showTeamRoom &&
-          !logoAlphaLoading &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !isMobile && (
-            <div>
-              <img
-                alt="Pizza"
-                src={PizzaImage}
-                onClick={() => showToaster(1)}
-                className="pizza-image"
-              ></img>
-            </div>
-          )} */}
-        {/* {!logoLoading &&
-          !showAlphaRoom &&
-          !showStakeRoom &&
-          !showTeamRoom &&
-          !logoAlphaLoading &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !isMobile && (
-            <div>
-              <img
-                alt="Sopha"
-                onClick={updateWhitelistConfig}
-                src={Sopha}
-                className="sopha-image"
-              ></img>
-            </div>
-          )} */}
-        {/* {!logoLoading &&
-          !showAlphaRoom &&
-          !showStakeRoom &&
-          !showTeamRoom &&
-          !logoAlphaLoading &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !isMobile && (
+          )}
+          {!logoLoading &&
+            !showAlphaRoom &&
+            !showStakeRoom &&
+            !showTeamRoom &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !logoAlphaLoading &&
+            !isMobile && (
+              <div className="social-media-links">
+                <a
+                  href="https://twitter.com/SecretAlphaLabs"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img alt="Twitter" className="social-icons" src={Twitter} />
+                </a>
+                <a
+                  href="https://discord.com/invite/SecretAlpha"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img alt="Discord" className="social-icons" src={Discord} />
+                </a>
+              </div>
+            )}
+          {showAlphaRoom &&
+            !logoAlphaLoading &&
+            !logoLoading &&
+            !showMobileDoor &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !isMobile && (
+              <div className="close-alpha-room" onClick={closeAlphaRoom}>
+                <img alt="close" src={CloseAlpha} />
+              </div>
+            )}
+          {showStakeRoom &&
+            !showStakeCity &&
+            !showStaking &&
+            !showStakeDashboard &&
+            !logoAlphaLoading &&
+            !logoLoading &&
+            !showMobileDoor &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !isMobile && (
+              <div className="close-stake-room" onClick={closeAlphaRoom}>
+                <img alt="close" src={CloseAlpha} />
+              </div>
+            )}
+          {showTeamRoom &&
+            !logoAlphaLoading &&
+            !logoLoading &&
+            !showMobileDoor &&
+            !showFixedStakingRoom && !showTokenSwapping &&
+            !isMobile && (
+              <div className="close-team-room" onClick={closeAlphaRoom}>
+                <img alt="close" src={CloseAlpha} />
+              </div>
+            )}
+          {showTeamRoom && !isMobile && (
             <div>
               <div
-                className="bean-bag-click"
-                onClick={() => showToaster(4)}
+                onMouseLeave={hideTeamInfo}
+                onMouseOver={() => showTeamInfoHover(1)}
+                className="first-team-member"
               ></div>
-              <img
-                alt="Bean-bag"
-                src={Beanbag}
-                className="bean-bag-image"
-              ></img>
-            </div>
-          )} */}
-        {/* {!logoLoading &&
-          !showAlphaRoom &&
-          !showStakeRoom &&
-          !showTeamRoom &&
-          !logoAlphaLoading &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !isMobile && (
-            <video autoPlay={true} loop muted className="fan-spinning-image">
-              <source
-                src={FanSpinning}
-                className="fan-spinning-image"
-                type="video/mp4"
-              ></source>
-              <source
-                src={FanSpinning}
-                className="fan-spinning-image"
-                type="video/mp4"
-              ></source>
-              Your browser does not support HTML5 video.
-            </video>
-          )} */}
-        {/* {!logoLoading &&
-          !showAlphaRoom &&
-          !showStakeRoom &&
-          !showTeamRoom &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !logoAlphaLoading &&
-          !isMobile && (
-            <div className="light-flicker-image"></div>
-          )} */}
-        {/* {!logoLoading &&
-          !showAlphaRoom &&
-          !showStakeRoom &&
-          !showTeamRoom &&
-          !logoAlphaLoading &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !isMobile && (
-            <img
-              alt="Sider"
-              src={SophaSider}
-              onClick={() =>setShowFarming(true)}
-              className="sopha-sider-image"
-            ></img>
-          )} */}
-        {!logoLoading && showMessage && (
-          <div className="mesage-container">
-            <label>{messageText}</label>
-          </div>
-        )}
-        {!logoLoading &&
-          !showAlphaRoom &&
-          !showStakeRoom &&
-          !showTeamRoom &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !logoAlphaLoading &&
-          !isMobile && (
-            <div className="social-media-links">
-              <a
-                href="https://twitter.com/SecretAlphaLabs"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img alt="Twitter" className="social-icons" src={Twitter} />
-              </a>
-              <a
-                href="https://discord.com/invite/SecretAlpha"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img alt="Discord" className="social-icons" src={Discord} />
-              </a>
+              <div
+                onMouseLeave={hideTeamInfo}
+                onMouseOver={() => showTeamInfoHover(2)}
+                className="second-team-member"
+              ></div>
+              <div
+                onMouseLeave={hideTeamInfo}
+                onMouseOver={() => showTeamInfoHover(3)}
+                className="third-team-member"
+              ></div>
+              <div
+                onMouseLeave={hideTeamInfo}
+                onMouseOver={() => showTeamInfoHover(4)}
+                className="fourth-team-member"
+              ></div>
+              <div
+                onMouseLeave={hideTeamInfo}
+                onMouseOver={() => showTeamInfoHover(5)}
+                className="fifth-team-member"
+              ></div>
+              <div
+                onMouseLeave={hideTeamInfo}
+                onMouseOver={() => showTeamInfoHover(6)}
+                className="sixth-team-member"
+              ></div>
+              <div
+                onMouseLeave={hideTeamInfo}
+                onMouseOver={() => showTeamInfoHover(7)}
+                className="seventh-team-member"
+              ></div>
+              <div
+                onMouseLeave={hideTeamInfo}
+                onMouseOver={() => showTeamInfoHover(8)}
+                className="eigth-team-member"
+              ></div>
             </div>
           )}
-        {showAlphaRoom &&
-          !logoAlphaLoading &&
-          !logoLoading &&
-          !showMobileDoor &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !isMobile && (
-            <div className="close-alpha-room" onClick={closeAlphaRoom}>
-              <img alt="close" src={CloseAlpha} />
+          {isMobile && menuOpen && (
+            <div className="cheeseburger-menu">
+              <MenuContent closeCallback={closeMenu} />
             </div>
           )}
-        {showStakeRoom &&
-          !showStakeCity &&
-          !showStaking &&
-          !showStakeDashboard &&
-          !logoAlphaLoading &&
-          !logoLoading &&
-          !showMobileDoor &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !isMobile && (
-            <div className="close-stake-room" onClick={closeAlphaRoom}>
-              <img alt="close" src={CloseAlpha} />
+          {showTeamRoom && showTeamInfo && teamInfoMember === 1 && (
+            <div className="mesage-container-team">
+              <label className="message-container-label-small">
+                <b>Gabriel</b>
+                <br />
+                <i>NFT artist</i>
+                <br />
+                Artist Extraordinaire. Delicately detailed.
+              </label>
             </div>
           )}
-        {showTeamRoom &&
-          !logoAlphaLoading &&
-          !logoLoading &&
-          !showMobileDoor &&
-          !showFixedStakingRoom && !showTokenSwapping &&
-          !isMobile && (
-            <div className="close-team-room" onClick={closeAlphaRoom}>
-              <img alt="close" src={CloseAlpha} />
+          {showTeamRoom && showTeamInfo && teamInfoMember === 2 && (
+            <div className="mesage-container-team">
+              <label className="message-container-label-small">
+                <b>Yogantar</b>
+                <br />
+                <i>Artist</i>
+                <br />
+                He sees, He makes, He thinks, He creates. No world is too far.
+              </label>
             </div>
           )}
-        {showTeamRoom && !isMobile && (
-          <div>
-            <div
-              onMouseLeave={hideTeamInfo}
-              onMouseOver={() => showTeamInfoHover(1)}
-              className="first-team-member"
-            ></div>
-            <div
-              onMouseLeave={hideTeamInfo}
-              onMouseOver={() => showTeamInfoHover(2)}
-              className="second-team-member"
-            ></div>
-            <div
-              onMouseLeave={hideTeamInfo}
-              onMouseOver={() => showTeamInfoHover(3)}
-              className="third-team-member"
-            ></div>
-            <div
-              onMouseLeave={hideTeamInfo}
-              onMouseOver={() => showTeamInfoHover(4)}
-              className="fourth-team-member"
-            ></div>
-            <div
-              onMouseLeave={hideTeamInfo}
-              onMouseOver={() => showTeamInfoHover(5)}
-              className="fifth-team-member"
-            ></div>
-            <div
-              onMouseLeave={hideTeamInfo}
-              onMouseOver={() => showTeamInfoHover(6)}
-              className="sixth-team-member"
-            ></div>
-            <div
-              onMouseLeave={hideTeamInfo}
-              onMouseOver={() => showTeamInfoHover(7)}
-              className="seventh-team-member"
-            ></div>
-            <div
-              onMouseLeave={hideTeamInfo}
-              onMouseOver={() => showTeamInfoHover(8)}
-              className="eigth-team-member"
-            ></div>
-          </div>
-        )}
-        {isMobile && menuOpen && (
-          <div className="cheeseburger-menu">
-            <MenuContent closeCallback={closeMenu} />
-          </div>
-        )}
-        {showTeamRoom && showTeamInfo && teamInfoMember === 1 && (
-          <div className="mesage-container-team">
-            <label className="message-container-label-small">
-              <b>Gabriel</b>
-              <br />
-              <i>NFT artist</i>
-              <br />
-              Artist Extraordinaire. Delicately detailed.
-            </label>
-          </div>
-        )}
-        {showTeamRoom && showTeamInfo && teamInfoMember === 2 && (
-          <div className="mesage-container-team">
-            <label className="message-container-label-small">
-              <b>Yogantar</b>
-              <br />
-              <i>Artist</i>
-              <br />
-              He sees, He makes, He thinks, He creates. No world is too far.
-            </label>
-          </div>
-        )}
-        {showTeamRoom && showTeamInfo && teamInfoMember === 3 && (
-          <div className="mesage-container-team">
-            <label className="message-container-label-small">
-              <b>Wallace</b>
-              <br />
-              <i>Collab Chief</i>
-              <br />
-              Master Negotiator, One handshake is all it takes.
-            </label>
-          </div>
-        )}
-        {showTeamRoom && showTeamInfo && teamInfoMember === 4 && (
-          <div className="mesage-container-team">
-            <label className="message-container-label-small">
-              <b>Vamshi</b>
-              <br />
-              <i>Front-end Dev</i>
-              <br />
-              Skillful savant. Code is art.
-            </label>
-          </div>
-        )}
-        {showTeamRoom && showTeamInfo && teamInfoMember === 5 && (
-          <div className="mesage-container-team">
-            <label className="message-container-label-small">
-              <b>Bhargav</b>
-              <br />
-              <i>Back-end Dev</i>
-              <br />
-              Code Whizz. The magic happens at the back.
-            </label>
-          </div>
-        )}
-        {showTeamRoom && showTeamInfo && teamInfoMember === 6 && (
-          <div className="mesage-container-team">
-            <label className="message-container-label-small">
-              <b>Walter</b>
-              <br />
-              <i>CEO</i>
-              <br />
-              Eyes all around. <span className="strikethrough">Sex</span> Genius
-              Sells.
-            </label>
-          </div>
-        )}
-        {showTeamRoom && showTeamInfo && teamInfoMember === 7 && (
-          <div className="mesage-container-team">
-            <label className="message-container-label-small">
-              <b>Kaizer</b>
-              <br />
-              <i>CMO</i>
-              <br />
-              The one holding all the cards. Shh…
-            </label>
-          </div>
-        )}
-        {showTeamRoom && showTeamInfo && teamInfoMember === 8 && (
-          <div className="mesage-container-team">
-            <label className="message-container-label-small">
-              <b>Sashi</b>
-              <br />
-              <i>COO</i>
-              <br />
-              King of discord. No bullshit, only work.
-            </label>
-          </div>
-        )}
-        {showTeamRoom && isMobile && !showMobileDoor && (
-          <div className="team-member-div">
-            <Carousel responsive={responsive}>
-              <div className="team-member-image">
-                <label className="team-member-info-top">
-                  Walter <span className="text-right">CEO</span>
-                </label>
-                <img alt="Walter" src={Walter} />
-                <label className="team-member-info-bottom">
-                  <q>
-                    Eyes all around. <span className="strikethrough">Sex</span>{" "}
-                    Genius Sells.
-                  </q>
-                </label>
-              </div>
-              <div className="team-member-image">
-                <label className="team-member-info-top">
-                  Kaizer <span className="text-right">CMO</span>
-                </label>
-                <img alt="kaizer" src={Kaizer} />
-                <label className="team-member-info-bottom">
-                  <q>The one holding all the cards. Shh…</q>
-                </label>
-              </div>
-              <div className="team-member-image">
-                <label className="team-member-info-top">
-                  Sashi <span className="text-right">COO</span>
-                </label>
-                <img alt="Sashi" src={Sashi} />
-                <label className="team-member-info-bottom">
-                  <q>King of discord. No bullshit, only work.</q>
-                </label>
-              </div>
-              <div className="team-member-image">
-                <label className="team-member-info-top">
-                  Gabriel <span className="text-right">NFT artist</span>
-                </label>
-                <img alt="Gabriel" src={Gabriel} />
-                <label className="team-member-info-bottom">
-                  <q>Artist Extraordinaire. Delicately detailed.</q>
-                </label>
-              </div>
-              <div className="team-member-image">
-                <label className="team-member-info-top">
-                  Yogantar <span className="text-right">Artist</span>
-                </label>
-                <img alt="Yogantar" src={Yogantar} />
-                <label className="team-member-info-bottom">
-                  <q>
-                    He sees, He makes, He thinks, He creates. No world is too
-                    far.
-                  </q>
-                </label>
-              </div>
-              <div className="team-member-image">
-                <label className="team-member-info-top">
-                  Wallace <span className="text-right">Collab Chief</span>
-                </label>
-                <img alt="Wallace" src={Wallace} />
-                <label className="team-member-info-bottom">
-                  <q>Master Negotiator, One handshake is all it takes.</q>
-                </label>
-              </div>
-              <div className="team-member-image">
-                <label className="team-member-info-top">
-                  Vamshi <span className="text-right">Front-end Dev</span>
-                </label>
-                <img alt="Dev1" src={Dev1} />
-                <label className="team-member-info-bottom">
-                  <q>Skillful savant. Code is art.</q>
-                </label>
-              </div>
-              <div className="team-member-image">
-                <label className="team-member-info-top">
-                  Bhargav <span className="text-right">Back-end Dev</span>
-                </label>
-                <img alt="Dev2" src={Dev2} />
-                <label className="team-member-info-bottom">
-                  <q>Code Whizz. The magic happens at the back.</q>
-                </label>
-              </div>
-            </Carousel>
-          </div>
-        )}
-        {showAlphaRoom && !showTeamRoom && !showStakeRoom && !logoAlphaLoading && !logoLoading && !showMobileDoor && (
-          <div className="Backdrop-other">
-            <div
-              className="alpha-room-phil-one"
-              onClick={openFirstPhilAlphaRoom}
-            >
-              <div className="smaller-alpha-updates">
-                <label className="typing-text story-line">The Story</label>
-              </div>
+          {showTeamRoom && showTeamInfo && teamInfoMember === 3 && (
+            <div className="mesage-container-team">
+              <label className="message-container-label-small">
+                <b>Wallace</b>
+                <br />
+                <i>Collab Chief</i>
+                <br />
+                Master Negotiator, One handshake is all it takes.
+              </label>
             </div>
-          </div>
-        )}
-        {showFixedStakingRoom && (
-          <div className="Backdrop-other">
-            <div className="fixed-staking-main-bg">
-              <div className="pull-left full-width">
-                <div className="stake-logo-parent">
-                  {!isMobile && <img src={LogoWhite} className="stake-logo pointer" onClick={closeAlphaRoom} alt="" />}
-                  {!isMobile && <img src={CloseAlpha} onClick={closeFixedStaking} className="stake-close-logo" alt="" />}
-                  <div className="user-profile-box" onClick={() => setShowUserMenu(!showUserMenu)}>
-                    <img src={User} className="user-profile-img" alt="" />
-                  </div>
-                  {showUserMenu && 
-                  <div className="user-menu-parent">
-                    <ul>
-                      <li>Claimed Tokens : {stakedBal} <img src={Refresh} onClick={refreshFarmers} className="refresh-farmer-icon" alt="" /></li>
-                      <li className="pointer" onClick={claimReward}>Claim Tokens</li>
-                    </ul>
-                  </div>
-                  }
+          )}
+          {showTeamRoom && showTeamInfo && teamInfoMember === 4 && (
+            <div className="mesage-container-team">
+              <label className="message-container-label-small">
+                <b>Vamshi</b>
+                <br />
+                <i>Front-end Dev</i>
+                <br />
+                Skillful savant. Code is art.
+              </label>
+            </div>
+          )}
+          {showTeamRoom && showTeamInfo && teamInfoMember === 5 && (
+            <div className="mesage-container-team">
+              <label className="message-container-label-small">
+                <b>Bhargav</b>
+                <br />
+                <i>Back-end Dev</i>
+                <br />
+                Code Whizz. The magic happens at the back.
+              </label>
+            </div>
+          )}
+          {showTeamRoom && showTeamInfo && teamInfoMember === 6 && (
+            <div className="mesage-container-team">
+              <label className="message-container-label-small">
+                <b>Walter</b>
+                <br />
+                <i>CEO</i>
+                <br />
+                Eyes all around. <span className="strikethrough">Sex</span> Genius
+                Sells.
+              </label>
+            </div>
+          )}
+          {showTeamRoom && showTeamInfo && teamInfoMember === 7 && (
+            <div className="mesage-container-team">
+              <label className="message-container-label-small">
+                <b>Kaizer</b>
+                <br />
+                <i>CMO</i>
+                <br />
+                The one holding all the cards. Shh…
+              </label>
+            </div>
+          )}
+          {showTeamRoom && showTeamInfo && teamInfoMember === 8 && (
+            <div className="mesage-container-team">
+              <label className="message-container-label-small">
+                <b>Sashi</b>
+                <br />
+                <i>COO</i>
+                <br />
+                King of discord. No bullshit, only work.
+              </label>
+            </div>
+          )}
+          {showTeamRoom && isMobile && !showMobileDoor && (
+            <div className="team-member-div">
+              <Carousel responsive={responsive}>
+                <div className="team-member-image">
+                  <label className="team-member-info-top">
+                    Walter <span className="text-right">CEO</span>
+                  </label>
+                  <img alt="Walter" src={Walter} />
+                  <label className="team-member-info-bottom">
+                    <q>
+                      Eyes all around. <span className="strikethrough">Sex</span>{" "}
+                      Genius Sells.
+                    </q>
+                  </label>
                 </div>
-                <div className="stake-progress">
-                  <ProgressBar bgcolor={"#6a1b9a"} completed={63} />
+                <div className="team-member-image">
+                  <label className="team-member-info-top">
+                    Kaizer <span className="text-right">CMO</span>
+                  </label>
+                  <img alt="kaizer" src={Kaizer} />
+                  <label className="team-member-info-bottom">
+                    <q>The one holding all the cards. Shh…</q>
+                  </label>
                 </div>
-                {!isMobile && 
-                <div className="staking-process-parent">
-                  <div className="unstaked-nfts-div">
-                    <div className="staking-nft-display">
-                    <div className="nft-parent-div">
-                      {nfts && nfts.length > 0 && nfts.map(function (item:any, i:any) {
-                        return (
-                          <div className="nft-div" key={i} style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
-                            <img src={item.link} />
-                            <label>{item.name}</label>
-                            {/* <label>{item.trait_type}</label> */}
-                          </div>
-                        );
-                      })}
+                <div className="team-member-image">
+                  <label className="team-member-info-top">
+                    Sashi <span className="text-right">COO</span>
+                  </label>
+                  <img alt="Sashi" src={Sashi} />
+                  <label className="team-member-info-bottom">
+                    <q>King of discord. No bullshit, only work.</q>
+                  </label>
+                </div>
+                <div className="team-member-image">
+                  <label className="team-member-info-top">
+                    Gabriel <span className="text-right">NFT artist</span>
+                  </label>
+                  <img alt="Gabriel" src={Gabriel} />
+                  <label className="team-member-info-bottom">
+                    <q>Artist Extraordinaire. Delicately detailed.</q>
+                  </label>
+                </div>
+                <div className="team-member-image">
+                  <label className="team-member-info-top">
+                    Yogantar <span className="text-right">Artist</span>
+                  </label>
+                  <img alt="Yogantar" src={Yogantar} />
+                  <label className="team-member-info-bottom">
+                    <q>
+                      He sees, He makes, He thinks, He creates. No world is too
+                      far.
+                    </q>
+                  </label>
+                </div>
+                <div className="team-member-image">
+                  <label className="team-member-info-top">
+                    Wallace <span className="text-right">Collab Chief</span>
+                  </label>
+                  <img alt="Wallace" src={Wallace} />
+                  <label className="team-member-info-bottom">
+                    <q>Master Negotiator, One handshake is all it takes.</q>
+                  </label>
+                </div>
+                <div className="team-member-image">
+                  <label className="team-member-info-top">
+                    Vamshi <span className="text-right">Front-end Dev</span>
+                  </label>
+                  <img alt="Dev1" src={Dev1} />
+                  <label className="team-member-info-bottom">
+                    <q>Skillful savant. Code is art.</q>
+                  </label>
+                </div>
+                <div className="team-member-image">
+                  <label className="team-member-info-top">
+                    Bhargav <span className="text-right">Back-end Dev</span>
+                  </label>
+                  <img alt="Dev2" src={Dev2} />
+                  <label className="team-member-info-bottom">
+                    <q>Code Whizz. The magic happens at the back.</q>
+                  </label>
+                </div>
+              </Carousel>
+            </div>
+          )}
+          {showAlphaRoom && !showTeamRoom && !showStakeRoom && !logoAlphaLoading && !logoLoading && !showMobileDoor && (
+            <div className="Backdrop-other">
+              <div
+                className="alpha-room-phil-one"
+                onClick={openFirstPhilAlphaRoom}
+              >
+                <div className="smaller-alpha-updates">
+                  <label className="typing-text story-line">The Story</label>
+                </div>
+              </div>
+            </div>
+          )}
+          {showFixedStakingRoom && (
+            <div className="Backdrop-other">
+              <div className="fixed-staking-main-bg">
+                <div className="pull-left full-width">
+                  <div className="stake-logo-parent">
+                    {!isMobile && <img src={LogoWhite} className="stake-logo pointer" onClick={closeAlphaRoom} alt="" />}
+                    {!isMobile && <img src={CloseAlpha} onClick={closeFixedStaking} className="stake-close-logo" alt="" />}
+                    <div className="user-profile-box" onClick={() => setShowUserMenu(!showUserMenu)}>
+                      <img src={User} className="user-profile-img" alt="" />
                     </div>
-                    {stakedNft && 
-                    <div className="stake-button-div"> 
-                      <button className="nft-select-button" onClick={nextStepStake}>Stake Now</button>
-                    </div>}
+                    {showUserMenu && 
+                    <div className="user-menu-parent">
+                      <ul>
+                        <li>Claimed Tokens : {stakedBal} <img src={Refresh} onClick={refreshFarmers} className="refresh-farmer-icon" alt="" /></li>
+                        <li className="pointer" onClick={claimReward}>Claim Tokens</li>
+                      </ul>
                     </div>
+                    }
                   </div>
-                  <div className="staked-nfts-div">
-                    <div className="staking-nft-display">
+                  <div className="stake-progress">
+                    <ProgressBar bgcolor={"#6a1b9a"} completed={63} />
+                  </div>
+                  {!isMobile && 
+                  <div className="staking-process-parent">
+                    <div className="unstaked-nfts-div">
+                      <div className="staking-nft-display">
                       <div className="nft-parent-div">
-                        {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
+                        {nfts && nfts.length > 0 && nfts.map(function (item:any, i:any) {
                           return (
-                            <div className="nft-div" key={i} style={{borderColor: unstakedNft == item ? "white": "transparent"}} onClick={() => setUnstakedNft(item)}>
+                            <div className="nft-div" key={i} style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
                               <img src={item.link} />
                               <label>{item.name}</label>
                               {/* <label>{item.trait_type}</label> */}
@@ -3185,48 +3168,15 @@ const Home = (props: HomeProps) => {
                           );
                         })}
                       </div>
-                      {unstakedNft && 
+                      {stakedNft && 
                       <div className="stake-button-div"> 
-                        <button className="nft-select-button" onClick={UnStakeNft}>Unstake Now</button>
+                        <button className="nft-select-button" onClick={nextStepStake}>Stake Now</button>
                       </div>}
-                    </div>
-                  </div>
-                </div>
-                }
-                {isMobile && 
-                <div className="staking-process-parent">
-                  <div className="nfts-tab-parent" aria-label="NFTs Tabs">
-                    <label className={nftsTab == 0 ? 'selected-nfts-tab nfts-tab b-r-left' : 'nfts-tab b-r-left'} id="simple-tab-0" aria-controls="simple-tabpanel-0" onClick={() => changeNFTsTab(0)}>Unstaked NFTs</label>
-                    <label className={nftsTab == 1 ? 'selected-nfts-tab nfts-tab b-r-right' : 'nfts-tab b-r-right'} id="simple-tab-1" aria-controls="simple-tabpanel-1" onClick={() => changeNFTsTab(1)}>Staked NFTs</label>
-                  </div>
-                  <div role="tabpanel" hidden={nftsTab !== 0} id="simple-tabpanel-0" aria-labelledby="simple-tab-0">
-                    {nftsTab === 0 && (
-                      <div className="unstaked-nfts-div">
-                        <div className="staking-nft-display">
-                          <div className="nft-parent-div">
-                          {nfts && nfts.length > 0 && nfts.map(function (item:any, i:any) {
-                            return (
-                              <div className="nft-div" key={i} style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
-                                <img src={item.link} />
-                                <label>{item.name}</label>
-                                {/* <label>{item.trait_type}</label> */}
-                              </div>
-                            );
-                          })}
-                          </div>
-                          {stakedNft && 
-                          <div className="stake-button-div"> 
-                            <button className="nft-select-button" onClick={nextStepStake}>Stake Now</button>
-                          </div>}
-                        </div>
                       </div>
-                    )}
-                  </div>
-                  <div role="tabpanel" hidden={nftsTab !== 1} id="simple-tabpanel-0" aria-labelledby="simple-tab-0">
-                    {nftsTab === 1 && (
-                      <div className="staked-nfts-div">
-                        <div className="staking-nft-display">
-                          <div className="nft-parent-div">
+                    </div>
+                    <div className="staked-nfts-div">
+                      <div className="staking-nft-display">
+                        <div className="nft-parent-div">
                           {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
                             return (
                               <div className="nft-div" key={i} style={{borderColor: unstakedNft == item ? "white": "transparent"}} onClick={() => setUnstakedNft(item)}>
@@ -3236,317 +3186,376 @@ const Home = (props: HomeProps) => {
                               </div>
                             );
                           })}
-                          </div>
-                          {unstakedNft && 
-                          <div className="stake-button-div"> 
-                            <button className="nft-select-button" onClick={UnStakeNft}>Unstake Now</button>
-                          </div>}
                         </div>
+                        {unstakedNft && 
+                        <div className="stake-button-div"> 
+                          <button className="nft-select-button" onClick={UnStakeNft}>Unstake Now</button>
+                        </div>}
                       </div>
-                    )}
-                  </div>          
-                </div>
-                }
-              </div> 
-            </div>
-          </div>
-        )}
-        {!showAlphaRoom && !showTeamRoom && showStakeRoom && !logoAlphaLoading && !logoLoading && !showMobileDoor && (
-          <div className="">
-            {!isMobile && <div className="raffle-cave"></div>}
-            {!isMobile && <div className="token-swapping" onClick={openTokenSwapping}></div>}
-            {!isMobile && 
-            <div className="staking-portal">
-              <div className="staking-portal-parent"></div>
-              <div className="adventure-staking-div"></div>
-              <div className="fixed-staking-div" onClick={openFixedStaking}></div>
-            </div>
-            }
-            {isMobile && 
-            <div className="alphazex-mobile-parent">
-              <button className="Inside-Alphazex-btn" onClick={openFixedStaking}>Fixed Staking</button>
-              <button className="Inside-Alphazex-btn">Adventure Staking</button>
-              <button className="Inside-Alphazex-btn" onClick={openTokenSwapping}>Token Swap</button>
-              <button className="Inside-Alphazex-btn">Raffle Cave</button>
-            </div>
-            }
-            {!wallet.connected &&
-            <div className="staking-room-six">
-              <WalletDialogButton className="Connect-Wallet-btn" onClick={() => openAlphaRoom('stake')}>
-                Connect Wallet
-              </WalletDialogButton>
-            </div> 
-            }
-            {/* {wallet.connected &&
-            <div className="staking-room-six" onClick={openStaking}>
-              <button className="outside-stake-btn">Stake Now</button>
-            </div> 
-            } */}
-          </div>
-        )}
-        {showTokenSwapping && (
-          <div className="Backdrop-other">
-            <div className="fixed-staking-main-bg">
-              <div className="pull-left full-width">
-                {!isMobile && <img src={CloseAlpha} onClick={closeTokenSwapping} className="swap-close-logo" alt="" />}
-                <div className="swapping-process-parent">
-                  <AlphaTokenSwap></AlphaTokenSwap>
-                </div>
-              </div> 
-            </div>
-          </div>
-        )}
-        {showStaking && (
-          <div className="Backdrop-other-mint">
-            <OutsideClickHandler onOutsideClick={closeStaking}>
-              <div className="stake-room-opened">
-                <img className="stake-close-image" onClick={closeStaking} src={Close} />
-                {nftStakeStep == 0 && 
-                <div className="pull-left full-width full-height">
-                    <div className="stake-room-header">
-                      <h2>NFT Selection</h2>
                     </div>
-                    <div className="nft-parent-div">
-                      {nfts && nfts.length > 0 && nfts.map(function (item:any, i:any) {
-                        return (
-                          <div className="nft-div" style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
-                            <img src={item.link} />
-                            <label>{item.name}</label>
+                  </div>
+                  }
+                  {isMobile && 
+                  <div className="staking-process-parent">
+                    <div className="nfts-tab-parent" aria-label="NFTs Tabs">
+                      <label className={nftsTab == 0 ? 'selected-nfts-tab nfts-tab b-r-left' : 'nfts-tab b-r-left'} id="simple-tab-0" aria-controls="simple-tabpanel-0" onClick={() => changeNFTsTab(0)}>Unstaked NFTs</label>
+                      <label className={nftsTab == 1 ? 'selected-nfts-tab nfts-tab b-r-right' : 'nfts-tab b-r-right'} id="simple-tab-1" aria-controls="simple-tabpanel-1" onClick={() => changeNFTsTab(1)}>Staked NFTs</label>
+                    </div>
+                    <div role="tabpanel" hidden={nftsTab !== 0} id="simple-tabpanel-0" aria-labelledby="simple-tab-0">
+                      {nftsTab === 0 && (
+                        <div className="unstaked-nfts-div">
+                          <div className="staking-nft-display">
+                            <div className="nft-parent-div">
+                            {nfts && nfts.length > 0 && nfts.map(function (item:any, i:any) {
+                              return (
+                                <div className="nft-div" key={i} style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
+                                  <img src={item.link} />
+                                  <label>{item.name}</label>
+                                  {/* <label>{item.trait_type}</label> */}
+                                </div>
+                              );
+                            })}
+                            </div>
+                            {stakedNft && 
+                            <div className="stake-button-div"> 
+                              <button className="nft-select-button" onClick={nextStepStake}>Stake Now</button>
+                            </div>}
                           </div>
-                        );
-                      })}
+                        </div>
+                      )}
                     </div>
-                    {stakedNft && 
-                    <div className="stake-button-div"> 
-                      <button className="nft-select-button" onClick={nextStepStake}>Next</button>
-                    </div>
-                    }
-                </div>
-                }
-                {nftStakeStep == 1 && 
-                <div className="pull-left full-width full-height">
-                    <div className="nft-deal-div">
-                      <h2 className="deal-finalizing-text">Finalizing the Deal</h2>
-                    </div>
-                </div>
-                }
-                {nftStakeStep == 2 && 
-                <div className="pull-left full-width full-height">
-                    <div className="nft-parent-div">
-                      <h2 className="stake-congrats-header">Congratulations !!!</h2>
-                      <label className="stake-congrats-text">Your {stakedNft.name} has been<br/>successfully staked in<br/>{stakedCity}</label>
-                    </div>
-                </div>
-                }
+                    <div role="tabpanel" hidden={nftsTab !== 1} id="simple-tabpanel-0" aria-labelledby="simple-tab-0">
+                      {nftsTab === 1 && (
+                        <div className="staked-nfts-div">
+                          <div className="staking-nft-display">
+                            <div className="nft-parent-div">
+                            {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
+                              return (
+                                <div className="nft-div" key={i} style={{borderColor: unstakedNft == item ? "white": "transparent"}} onClick={() => setUnstakedNft(item)}>
+                                  <img src={item.link} />
+                                  <label>{item.name}</label>
+                                  {/* <label>{item.trait_type}</label> */}
+                                </div>
+                              );
+                            })}
+                            </div>
+                            {unstakedNft && 
+                            <div className="stake-button-div"> 
+                              <button className="nft-select-button" onClick={UnStakeNft}>Unstake Now</button>
+                            </div>}
+                          </div>
+                        </div>
+                      )}
+                    </div>          
+                  </div>
+                  }
+                </div> 
               </div>
-            </OutsideClickHandler>
-          </div>
-        )}
-        
-        {/* {showStakeDashboard && (
-          <div className="Backdrop-other-mint">
-            <OutsideClickHandler onOutsideClick={() => setShowStakeDashboard(false)}>
-              <div className="stake-room-opened">
-                <img className="stake-close-image" onClick={() => setShowStakeDashboard(false)} src={Close} />
-                <div className="stake-room-header">
-                  <h2 className="p-l-10-i">General Dashboard</h2>
-                </div>
-                <div className="gen-dashboard-scroller">
-                  <div className="gen-dahboard-stats">
-                    <div className="gen-dashboard-stats-left">
-                      <label>NFTs Staked</label>
-                      <h2>{stakedNfts.length} {unstakedNft != null && <button className="nft-select-button" onClick={UnStakeNft}>Unstake</button>}</h2>
-                    </div>
-                    <div className="gen-dashboard-stats-right">
-                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
-                        return (
-                          <div className="nft-small-div" style={{borderColor: unstakedNft == item ? "white": "transparent"}} onClick={() => setUnstakedNft(item)}>
-                            <img src={item.link} />
-                            <label>{item.name}</label>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  <div className="gen-dahboard-stats">
-                    <div className="gen-dashboard-stats-left">
-                      <label>Tokens Generated</label>
-                      <h2>{stakedTokens}</h2>
-                    </div>
-                    <div className="gen-dashboard-stats-right">
-                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
-                        return (
-                          <div className="nft-small-div">
-                            <img src={item.link} />
-                            <label>{item.name}</label>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  <div className="gen-dahboard-stats">
-                    <div className="gen-dashboard-stats-left">
-                      <label>Respect Generated</label>
-                      <h2>{respectEarned}</h2>
-                    </div>
-                    <div className="gen-dashboard-stats-right">
-                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
-                        return (
-                          <div className="nft-small-div">
-                            <img src={item.link} />
-                            <label>{item.name}</label>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  <div className="gen-dahboard-stats">
-                    <div className="gen-dashboard-stats-left">
-                      <label>Multiplier Level</label>
-                      <h2>{multiplierLevel}</h2>
-                    </div>
-                    <div className="gen-dashboard-stats-right">
-                      {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
-                        return (
-                          <div className="nft-small-div">
-                            <img src={item.link} />
-                            <label>{item.name}</label>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-                
+            </div>
+          )}
+          {!showAlphaRoom && !showTeamRoom && showStakeRoom && !logoAlphaLoading && !logoLoading && !showMobileDoor && (
+            <div className="">
+              {!isMobile && <div className="raffle-cave"></div>}
+              {!isMobile && <div className="token-swapping" onClick={openTokenSwapping}></div>}
+              {!isMobile && 
+              <div className="staking-portal">
+                <div className="staking-portal-parent"></div>
+                <div className="adventure-staking-div"></div>
+                <div className="fixed-staking-div" onClick={openFixedStaking}></div>
               </div>
-            </OutsideClickHandler>
-          </div>
-        )} */}
-        {showFirstPhil && (
-          <div className="Backdrop-other">
-            <OutsideClickHandler onOutsideClick={closeAlphaUpdates}>
-              <div className="alpha-holo">
-                <div className="alpha-holo-updates" id="alpha-scroll">
-                  <img
-                    alt="Story-background"
-                    src={AlphaScroll}
-                    className="alpha-scroll-icon"
-                    onClick={scrollStory}
-                  />
-                  <label className="typing-text">
-                    In the year 6969, a gang of 4 kids, led by their leader
-                    Jesse, venture out into the wild post-apocalyptic cyberpunk
-                    world of Alphazex, traveling through various cities,
-                    meandering through multiple adventures, just to answer a
-                    single question...
-                  </label>
-                  <label className="typing-text m-t-15">
-                    Throughout the world of Alphazex, there is only one
-                    safeplace, one haven for Jesse and his friends. It's the
-                    Alpha hood.{" "}
-                  </label>
-                  <label className="typing-text m-t-15">
-                    Originally, what was one of the biggest laboratories in the
-                    world for AI research, Alpha Labs was destroyed in the world
-                    wars that kept on occurring, The not-so-okay wars, the Creck
-                    wars, the cult vs tribe wars, and the once grand building of
-                    Alpha Labs was destroyed, or that's what people thought.
-                  </label>
-                  <label className="typing-text m-t-15">
-                    Goverments and rulers came and went, and even though the
-                    existence of autonomous organizations was banned, one group
-                    thrived in the ruins of the same building that was thought
-                    to not exist. This organisation was, Secret Alpha.
-                  </label>
-                </div>
-              </div>
-            </OutsideClickHandler>
-          </div>
-        )}
-        {/* {showWhitelist && 
-        <div>
-          <div className="Backdrop-other-mint">
-            <OutsideClickHandler onOutsideClick={closeUpdates}>
-              <div className="bigger-holo">
-                <div className="mint-inside-div">
-                  <div className="whitelist-parent">
-                    {!wallet.connected && 
-                    <div className="pull-left full-width text-center">
-                      <WalletDialogButton className="Inside-Connect-btn">
-                        Connect
-                      </WalletDialogButton>
-                    </div>
-                    }
-                    <button className="whitelist-create-button m-t-15" onClick={createWhitelistConfig}>Create Whitelist Config</button>
-                    <div className="pull-left full-width text-center m-t-15 m-b-15">
-                      <label className="whitelist-texts">Created Whitelist Accounts : {createdWlCounts}</label>
-                      <button className="whitelist-account-create" onClick={createWhitelistAccountMultiple}>Create 10 Accounts</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </OutsideClickHandler>
-          </div>
-        </div>} */}
-        {showFarming && (
-          <div className="Backdrop-other-mint">
-            <OutsideClickHandler onOutsideClick={() =>closeFarming()}>
-              {wallet.connected && 
-              <div className="bigger-holo">
-                <div className="stake-room-farm">
-                  <div className="gen-dashboard-scroller">
-                    <CreateFungibleToken/>
-                    <CreateSwapRegistry/>
-                    <TransferOutTokensToPot/>
-                    <InitFarmAlpha/>
-                    <FundRewardAlpha/>
-                    <AddToBankWhitelist/>
-                    {/* <div className="gen-farm-stats">
-                      <div className="gen-farm-stats-left">
-                        <input className="authorize-funder-reward-input" placeholder="NFT Mint" value={nftMint} onChange={event => setNftMint(event.target.value)} />
-                      </div>
-                      <div className="gen-farm-stats-right">
-                        <button className="Inside-Farm-btn" onClick={addRaritiesToBank}>Add Rarities to Bank</button>
-                      </div> 
-                    </div>*/}
-                  </div>
-                </div>
+              }
+              {isMobile && 
+              <div className="alphazex-mobile-parent">
+                <button className="Inside-Alphazex-btn" onClick={openFixedStaking}>Fixed Staking</button>
+                <button className="Inside-Alphazex-btn">Adventure Staking</button>
+                <button className="Inside-Alphazex-btn" onClick={openTokenSwapping}>Token Swap</button>
+                <button className="Inside-Alphazex-btn">Raffle Cave</button>
               </div>
               }
               {!wallet.connected &&
-              <div className="bigger-holo">
-                <div className="holo-updates">
-                  <div className="mint-inside-div">
-                    <WalletDialogButton className="Connect-Wallet-btn">
-                      Connect Wallet
-                    </WalletDialogButton>
+              <div className="staking-room-six">
+                <WalletDialogButton className="Connect-Wallet-btn" onClick={() => openAlphaRoom('stake')}>
+                  Connect Wallet
+                </WalletDialogButton>
+              </div> 
+              }
+              {/* {wallet.connected &&
+              <div className="staking-room-six" onClick={openStaking}>
+                <button className="outside-stake-btn">Stake Now</button>
+              </div> 
+              } */}
+            </div>
+          )}
+          {showTokenSwapping && (
+            <div className="Backdrop-other">
+              <div className="fixed-staking-main-bg">
+                <div className="pull-left full-width">
+                  {!isMobile && <img src={CloseAlpha} onClick={closeTokenSwapping} className="swap-close-logo" alt="" />}
+                  <div className="swapping-process-parent">
+                    <AlphaTokenSwap></AlphaTokenSwap>
+                  </div>
+                </div> 
+              </div>
+            </div>
+          )}
+          {showStaking && (
+            <div className="Backdrop-other-mint">
+              <OutsideClickHandler onOutsideClick={closeStaking}>
+                <div className="stake-room-opened">
+                  <img className="stake-close-image" onClick={closeStaking} src={Close} />
+                  {nftStakeStep == 0 && 
+                  <div className="pull-left full-width full-height">
+                      <div className="stake-room-header">
+                        <h2>NFT Selection</h2>
+                      </div>
+                      <div className="nft-parent-div">
+                        {nfts && nfts.length > 0 && nfts.map(function (item:any, i:any) {
+                          return (
+                            <div className="nft-div" style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
+                              <img src={item.link} />
+                              <label>{item.name}</label>
+                            </div>
+                          );
+                        })}
+                      </div>
+                      {stakedNft && 
+                      <div className="stake-button-div"> 
+                        <button className="nft-select-button" onClick={nextStepStake}>Next</button>
+                      </div>
+                      }
+                  </div>
+                  }
+                  {nftStakeStep == 1 && 
+                  <div className="pull-left full-width full-height">
+                      <div className="nft-deal-div">
+                        <h2 className="deal-finalizing-text">Finalizing the Deal</h2>
+                      </div>
+                  </div>
+                  }
+                  {nftStakeStep == 2 && 
+                  <div className="pull-left full-width full-height">
+                      <div className="nft-parent-div">
+                        <h2 className="stake-congrats-header">Congratulations !!!</h2>
+                        <label className="stake-congrats-text">Your {stakedNft.name} has been<br/>successfully staked in<br/>{stakedCity}</label>
+                      </div>
+                  </div>
+                  }
+                </div>
+              </OutsideClickHandler>
+            </div>
+          )}
+          
+          {/* {showStakeDashboard && (
+            <div className="Backdrop-other-mint">
+              <OutsideClickHandler onOutsideClick={() => setShowStakeDashboard(false)}>
+                <div className="stake-room-opened">
+                  <img className="stake-close-image" onClick={() => setShowStakeDashboard(false)} src={Close} />
+                  <div className="stake-room-header">
+                    <h2 className="p-l-10-i">General Dashboard</h2>
+                  </div>
+                  <div className="gen-dashboard-scroller">
+                    <div className="gen-dahboard-stats">
+                      <div className="gen-dashboard-stats-left">
+                        <label>NFTs Staked</label>
+                        <h2>{stakedNfts.length} {unstakedNft != null && <button className="nft-select-button" onClick={UnStakeNft}>Unstake</button>}</h2>
+                      </div>
+                      <div className="gen-dashboard-stats-right">
+                        {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
+                          return (
+                            <div className="nft-small-div" style={{borderColor: unstakedNft == item ? "white": "transparent"}} onClick={() => setUnstakedNft(item)}>
+                              <img src={item.link} />
+                              <label>{item.name}</label>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    <div className="gen-dahboard-stats">
+                      <div className="gen-dashboard-stats-left">
+                        <label>Tokens Generated</label>
+                        <h2>{stakedTokens}</h2>
+                      </div>
+                      <div className="gen-dashboard-stats-right">
+                        {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
+                          return (
+                            <div className="nft-small-div">
+                              <img src={item.link} />
+                              <label>{item.name}</label>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    <div className="gen-dahboard-stats">
+                      <div className="gen-dashboard-stats-left">
+                        <label>Respect Generated</label>
+                        <h2>{respectEarned}</h2>
+                      </div>
+                      <div className="gen-dashboard-stats-right">
+                        {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
+                          return (
+                            <div className="nft-small-div">
+                              <img src={item.link} />
+                              <label>{item.name}</label>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    <div className="gen-dahboard-stats">
+                      <div className="gen-dashboard-stats-left">
+                        <label>Multiplier Level</label>
+                        <h2>{multiplierLevel}</h2>
+                      </div>
+                      <div className="gen-dashboard-stats-right">
+                        {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
+                          return (
+                            <div className="nft-small-div">
+                              <img src={item.link} />
+                              <label>{item.name}</label>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </OutsideClickHandler>
+            </div>
+          )} */}
+          {showFirstPhil && (
+            <div className="Backdrop-other">
+              <OutsideClickHandler onOutsideClick={closeAlphaUpdates}>
+                <div className="alpha-holo">
+                  <div className="alpha-holo-updates" id="alpha-scroll">
+                    <img
+                      alt="Story-background"
+                      src={AlphaScroll}
+                      className="alpha-scroll-icon"
+                      onClick={scrollStory}
+                    />
+                    <label className="typing-text">
+                      In the year 6969, a gang of 4 kids, led by their leader
+                      Jesse, venture out into the wild post-apocalyptic cyberpunk
+                      world of Alphazex, traveling through various cities,
+                      meandering through multiple adventures, just to answer a
+                      single question...
+                    </label>
+                    <label className="typing-text m-t-15">
+                      Throughout the world of Alphazex, there is only one
+                      safeplace, one haven for Jesse and his friends. It's the
+                      Alpha hood.{" "}
+                    </label>
+                    <label className="typing-text m-t-15">
+                      Originally, what was one of the biggest laboratories in the
+                      world for AI research, Alpha Labs was destroyed in the world
+                      wars that kept on occurring, The not-so-okay wars, the Creck
+                      wars, the cult vs tribe wars, and the once grand building of
+                      Alpha Labs was destroyed, or that's what people thought.
+                    </label>
+                    <label className="typing-text m-t-15">
+                      Goverments and rulers came and went, and even though the
+                      existence of autonomous organizations was banned, one group
+                      thrived in the ruins of the same building that was thought
+                      to not exist. This organisation was, Secret Alpha.
+                    </label>
                   </div>
                 </div>
-              </div>
-              }
-            </OutsideClickHandler>
-          </div>
-        )}
-        {!logoLoading && logoAlphaLoading && (
-          <div className="logo-loader-parent-alpha">
-            <img alt="Alpha-logo" src={LogoWhite} className="pulse-animation" />
-          </div>
-        )}
-      </div>
-      <Snackbar
-        className="snack-bar"
-        open={alertState.open}
-        autoHideDuration={6000}
-        onClose={() => setAlertState({ ...alertState, open: false })}
-      >
-        <Alert
-          className="bold"
+              </OutsideClickHandler>
+            </div>
+          )}
+          {/* {showWhitelist && 
+          <div>
+            <div className="Backdrop-other-mint">
+              <OutsideClickHandler onOutsideClick={closeUpdates}>
+                <div className="bigger-holo">
+                  <div className="mint-inside-div">
+                    <div className="whitelist-parent">
+                      {!wallet.connected && 
+                      <div className="pull-left full-width text-center">
+                        <WalletDialogButton className="Inside-Connect-btn">
+                          Connect
+                        </WalletDialogButton>
+                      </div>
+                      }
+                      <button className="whitelist-create-button m-t-15" onClick={createWhitelistConfig}>Create Whitelist Config</button>
+                      <div className="pull-left full-width text-center m-t-15 m-b-15">
+                        <label className="whitelist-texts">Created Whitelist Accounts : {createdWlCounts}</label>
+                        <button className="whitelist-account-create" onClick={createWhitelistAccountMultiple}>Create 10 Accounts</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </OutsideClickHandler>
+            </div>
+          </div>} */}
+          {showFarming && (
+            <div className="Backdrop-other-mint">
+              <OutsideClickHandler onOutsideClick={() =>closeFarming()}>
+                {wallet.connected && 
+                <div className="bigger-holo">
+                  <div className="stake-room-farm">
+                    <div className="gen-dashboard-scroller">
+                      <CreateFungibleToken/>
+                      <CreateSwapRegistry/>
+                      <TransferOutTokensToPot/>
+                      <InitFarmAlpha/>
+                      <FundRewardAlpha/>
+                      <AddToBankWhitelist/>
+                      {/* <div className="gen-farm-stats">
+                        <div className="gen-farm-stats-left">
+                          <input className="authorize-funder-reward-input" placeholder="NFT Mint" value={nftMint} onChange={event => setNftMint(event.target.value)} />
+                        </div>
+                        <div className="gen-farm-stats-right">
+                          <button className="Inside-Farm-btn" onClick={addRaritiesToBank}>Add Rarities to Bank</button>
+                        </div> 
+                      </div>*/}
+                    </div>
+                  </div>
+                </div>
+                }
+                {!wallet.connected &&
+                <div className="bigger-holo">
+                  <div className="holo-updates">
+                    <div className="mint-inside-div">
+                      <WalletDialogButton className="Connect-Wallet-btn">
+                        Connect Wallet
+                      </WalletDialogButton>
+                    </div>
+                  </div>
+                </div>
+                }
+              </OutsideClickHandler>
+            </div>
+          )}
+          {!logoLoading && logoAlphaLoading && (
+            <div className="logo-loader-parent-alpha">
+              <img alt="Alpha-logo" src={LogoWhite} className="pulse-animation" />
+            </div>
+          )}
+        </div>
+        <Snackbar
+          className="snack-bar"
+          open={alertState.open}
+          autoHideDuration={6000}
           onClose={() => setAlertState({ ...alertState, open: false })}
-          severity={alertState.severity}
         >
-          {alertState.message}
-        </Alert>
-      </Snackbar>
+          <Alert
+            className="bold"
+            onClose={() => setAlertState({ ...alertState, open: false })}
+            severity={alertState.severity}
+          >
+            {alertState.message}
+          </Alert>
+        </Snackbar>
+        </div>
+      }
+      {(!wallet || !wallet.connected) &&  
+        <WalletDialogButton className="Connect-Wallet-btn" onClick={() => openAlphaRoom('stake')}>
+          Connect Wallet
+        </WalletDialogButton>
+      }
     </div>
   );
 };
