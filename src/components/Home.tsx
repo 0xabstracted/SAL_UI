@@ -3261,7 +3261,7 @@ const Home = (props: HomeProps) => {
               <div className="staking-portal">
                 <div className="staking-portal-parent"></div>
                 <div className="adventure-staking-div"></div>
-                <div className="fixed-staking-div" onClick={openFixedStaking}></div>
+                {/* <div className="fixed-staking-div" onClick={openFixedStaking}></div> */}
               </div>
               }
               {isMobile && 
