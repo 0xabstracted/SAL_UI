@@ -65,7 +65,7 @@ function UpdateTokenMetadata() {
     <div>
       <div className='gen-farm-stats'>
         <div className='gen-farm-stats-left'>
-            <button className='Inside-Farm-btn' onClick={() => updateTokenMetadata(updateAlphaFungTokenMetadataArgs)}> Create Whitelist Token</button>
+            <button className='Inside-Farm-btn' onClick={() => updateTokenMetadata(updateAlphaFungTokenMetadataArgs)}> Update Metadata</button>
         </div>
       </div>
     </div>

@@ -105,6 +105,8 @@ import AlphaTokenSwap from "./TokenCreation/AlphaTokenSwap";
 import { findFarmTreasuryTokenPDA } from "../GrandProgramUtils/GemBank/pda";
 import TransferOutTokensToPot from "./TokenCreation/TransferOutTokensToPot";
 import CreateSwapRegistry from "./TokenCreation/CreateSwapRegistry";
+import UpdateTokenMetadata from "./TokenCreation/UpdateTokenMetadata";
+import CreateTokenMetadata from "./TokenCreation/CreateTokenMetadata";
 
 const responsive = {
   superLargeDesktop: {
@@ -3261,7 +3263,7 @@ const Home = (props: HomeProps) => {
               <div className="staking-portal">
                 <div className="staking-portal-parent"></div>
                 <div className="adventure-staking-div"></div>
-                {/* <div className="fixed-staking-div" onClick={openFixedStaking}></div> */}
+                <div className="fixed-staking-div" onClick={openFixedStaking}></div>
               </div>
               }
               {isMobile && 
@@ -3498,6 +3500,8 @@ const Home = (props: HomeProps) => {
                   <div className="stake-room-farm">
                     <div className="gen-dashboard-scroller">
                       <CreateFungibleToken/>
+                      <UpdateTokenMetadata/>
+                      <CreateTokenMetadata/>
                       <CreateSwapRegistry/>
                       <TransferOutTokensToPot/>
                       <InitFarmAlpha/>

@@ -14,7 +14,7 @@ import { createSwapRegistryAlphaArgs } from './AlphaTokenConfig';
 function CreateSwapRegistry() {
     const wallet = useWallet()
 
-    const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
+    const connection = new Connection(clusterApiUrl("mainnet-beta"), "confirmed");
 
     const createSwapRegistry = async (args: CreateSwapRegistryArgs) => {
         let tokenSwapProgram = await getTokenSwapProgramObject(wallet);
