@@ -48,6 +48,9 @@ import User from "../assets/user.png";
 import Refresh from "../assets/refresh.png";
 import ProgressBar from "./progress-bar";
 import 'react-circular-progressbar/dist/styles.css';
+import StakingMobile from "../assets/staking_mobile.png";
+import TokenSwapMobile from "../assets/token_swap_mobile.png";
+import RaffleCave from "../assets/raffle_cave_mobile.png";
 
 import {
   pdaSeed,
@@ -445,13 +448,13 @@ const Home = (props: HomeProps) => {
     setTimeout(function () {
       setClassNameState("main-bg-after-door-open");
       setLogoAlphaLoading(false);
-      getWhitelistAccounts();
+      // getWhitelistAccounts();
       getNFTs();
-      getStakedNfts();
-      getStakedVaults();
-      getFarms();
-      getFarmers();
-      getTimeToMInt();
+      // getStakedNfts();
+      // getStakedVaults();
+      // getFarms();
+      // getFarmers();
+      // getTimeToMInt();
     }, 900);
   }, [
     anchorWallet,
@@ -732,28 +735,33 @@ const Home = (props: HomeProps) => {
       xhr.addEventListener("readystatechange", async function() {
         if(this.readyState === 4) {
           console.log(this.responseText);
-          var mints = JSON.parse(this.responseText).data;
-          var array:any = [];
-          for (let index = 0; index < mints.length; index++) {
-            const element = mints[index];
-            const connection = new Connection(clusterApiUrl("devnet"));
-            const metaplex = new Metaplex(connection);
-            // console.log(element.account.gemMint.toBase58());
-            var pk = new anchor.web3.PublicKey(element);
-            let nft:any = await metaplex.nfts().findByMint({ mintAddress: pk }).run();
-            console.log(nft);
-            var obj:any = {
-              mint: element,
-              name: nft.name,
-              link: nft.json.image,
-              auth: nft.updateAuthorityAddress.toBase58()
+          try {
+            var mints = JSON.parse(this.responseText).data;
+            var array:any = [];
+            for (let index = 0; index < mints.length; index++) {
+              const element = mints[index];
+              const connection = new Connection(clusterApiUrl("devnet"));
+              const metaplex = new Metaplex(connection);
+              // console.log(element.account.gemMint.toBase58());
+              var pk = new anchor.web3.PublicKey(element);
+              let nft:any = await metaplex.nfts().findByMint({ mintAddress: pk }).run();
+              console.log(nft);
+              var obj:any = {
+                mint: element,
+                name: nft.name,
+                link: nft.json.image,
+                auth: nft.updateAuthorityAddress.toBase58()
+              }
+              array.push(obj);
             }
-            array.push(obj);
+            if (array && array.length > 0) {
+              console.log(array);
+              setStakedNfts(array);
+            }
+          } catch (error) {
+            
           }
-          if (array && array.length > 0) {
-            console.log(array);
-            setStakedNfts(array);
-          }
+          
         }
       });
 
@@ -1937,12 +1945,12 @@ const Home = (props: HomeProps) => {
       setMobileDoor(id);
       setMenuOpen(false);
       setShowTeamRoom(true);
-      setClassNameState("main-team-room-door");
+      setClassNameState("main-ant-labs-room-door");
     } else if (id && id === "WORKSHOP") {
       setShowMobileDoor(true);
       setMobileDoor(id);
       setMenuOpen(false);
-      setClassNameState("main-vault-room-door");
+      setClassNameState("main-workshop-room-door");
     } else if (id && id === "ALPHAZEX") {
       setShowMobileDoor(true);
       setMobileDoor(id);
@@ -1950,7 +1958,7 @@ const Home = (props: HomeProps) => {
       setShowStakeRoom(true);
       setShowFixedStakingRoom(false);
       setShowTokenSwapping(false);
-      setClassNameState("main-stake-room-door");
+      setClassNameState("main-alphazex-mobile-room-door");
       // setShowMobileDoor(true);
       // setMobileDoor(id);
       // setMenuOpen(false);
@@ -1966,7 +1974,7 @@ const Home = (props: HomeProps) => {
       // setMobileDoor(id);
       // setMenuOpen(false);
       // setShowStakeRoom(true);
-      // setClassNameState("main-stake-room-door");
+      // setClassNameState("main-alphazex-mobile-room-door");
     } else {
       setMenuOpen(false);
     }
@@ -1975,13 +1983,13 @@ const Home = (props: HomeProps) => {
   const closeAlphaRoom = async () => {
     var n = "";
     if (mobileDoor === "VAULT") {
-      n = "main-vault-room-door";
+      n = "main-workshop-room-door";
     } else if (mobileDoor === "ALPHA") {
       n = "main-alpha-room-door";
     } else if (mobileDoor === "TEAM") {
-      n = "main-team-room-door";
-    } else if (mobileDoor === "STAKE") {
-      n = "main-stake-room-door";
+      n = "main-ant-labs-room-door";
+    } else if (mobileDoor === "ALPHAZEX") {
+      n = "main-alphazex-mobile-room-door";
     }
     if (showMobileDoor) {
       setClassNameState(n);
@@ -2194,7 +2202,7 @@ const Home = (props: HomeProps) => {
   };
 
   const handleMobileHome = async () => {
-    if (showAlphaRoom || showTeamRoom || showStakeRoom || showFixedStakingRoom) {
+    if (showAlphaRoom || showTeamRoom || showStakeRoom || showFixedStakingRoom || showTokenSwapping) {
       closeAlphaRoom();
     } else {
       closeForm();
@@ -3266,12 +3274,30 @@ const Home = (props: HomeProps) => {
                 <div className="fixed-staking-div" onClick={openFixedStaking}></div>
               </div>
               }
-              {isMobile && 
+              {/* {isMobile && 
               <div className="alphazex-mobile-parent">
                 <button className="Inside-Alphazex-btn" onClick={openFixedStaking}>Fixed Staking</button>
                 <button className="Inside-Alphazex-btn">Adventure Staking</button>
                 <button className="Inside-Alphazex-btn" onClick={openTokenSwapping}>Token Swap</button>
                 <button className="Inside-Alphazex-btn">Raffle Cave</button>
+              </div>
+              } */}
+              {isMobile && 
+              <div className="pull-left full-width">
+                <Carousel responsive={responsive}>
+                  <div className="team-member-image">
+                    <img alt="Walter" src={TokenSwapMobile} />
+                    <div onClick={openTokenSwapping} className="opening-feature-room-token-swap-mobile"></div>
+                  </div>
+                  <div className="team-member-image">
+                    <img alt="kaizer" src={StakingMobile} />
+                    <div className="opening-feature-room-staking-mobile"></div>
+                  </div>
+                  <div className="team-member-image">
+                    <img alt="Sashi" src={RaffleCave} />
+                    <div className="opening-feature-room-raffle-cave-mobile"></div>
+                  </div>
+                </Carousel>
               </div>
               }
               {!wallet.connected &&

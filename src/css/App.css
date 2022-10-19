@@ -121,11 +121,11 @@ body {
   max-height: 100vh;
 }
 
-.main-vault-room-door {
+.main-workshop-room-door {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("../assets/vault_room_mobile.png");
+  background: url("../assets/workshop_door_mobile.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -147,11 +147,22 @@ body {
   max-height: 100vh;
 }
 
-.main-team-room-door {
+.main-alphazex-mobile-room-door {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("../assets/team_room_mobile.png");
+  background: url("../assets/alphazex_door_mobile.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  overflow-y: hidden;
+  max-height: 100vh;
+}
+
+.main-ant-labs-room-door {
+  display: inline-block;
+  height: 100vh;
+  width: 100%;
+  background: url("../assets/ant_labs_door_mobile.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -162,7 +173,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("../assets/Alpha_room_mobile.png");
+  background: url("../assets/alpha_door_mobile.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -312,11 +323,40 @@ body {
   /* background: rgba(0,0,0,0.4); */
 }
 
+.opening-feature-room-token-swap-mobile {
+  position: absolute;
+  bottom: 0;
+  height: 60%;
+  width: 83%;
+  left: 3%;
+  right: 10%;
+}
+
+.opening-feature-room-raffle-cave-mobile {
+  position: absolute;
+  bottom: 24%;
+  height: 53%;
+  width: 83%;
+  left: 15%;
+  right: 10%;
+  pointer-events: none;
+}
+
+.opening-feature-room-staking-mobile {
+  position: absolute;
+  bottom: 20%;
+  height: 63%;
+  width: 76%;
+  left: 8%;
+  right: 10%;
+  pointer-events: none;
+}
+
 .alphazen-room {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("../assets/alphazex_bg.png");
+  background: transparent;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -1888,9 +1928,54 @@ body {
   .swapping-box {
     width: 90% !important;
     margin-left: 5% !important;
-    margin-top: 0 !important;
-    height: 75vh !important;
-    padding: 15px 20px !important;
+    margin-top: 90px !important;
+    height: calc(100vh - 110px) !important;
+    padding: 2px !important;
+  }
+
+  .token-count-parent {
+    width: 100% !important;
+  }
+
+  .swapping-label {
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .swap-icon-parent {
+    width: 40px !important;
+    height: 40px !important;
+    padding: 5px !important;
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .swap-icon {
+    height: 22px !important;
+  }
+
+  .token-image-parent {
+    height: 40px !important;
+    width: 40px !important;
+  }
+
+  .token-name {
+    height: 40px !important;
+    line-height: 40px !important;
+    font-size: 24px !important;
+  }
+
+  .token-image {
+    height: 32px !important;
+    width: 32px !important;
+  }
+
+  .swapping-box-child {
+    padding: 10px 15px !important;
+  }
+
+  .swapping-logo-parent {
+    display: none !important;
   }
 
   .from-token-box {
@@ -1942,7 +2027,7 @@ body {
   }
 
   .react-multi-carousel-item {
-    height: calc(100vh - 150px);
+    height: calc(100vh - 0px);
   }
 
   .team-member-info-bottom {
@@ -1997,11 +2082,12 @@ body {
   }
 
   .mobile-room-div {
-    bottom: 0 !important;
-    height: 54% !important;
-    left: 12% !important;
-    right: 10% !important;
-    width: 70% !important;
+    bottom: 15% !important;
+    height: 60% !important;
+    left: 3% !important;
+    right: 0% !important;
+    width: 97% !important;
+    top: 25% !important;
   }
 
   .story-line {
@@ -2025,7 +2111,7 @@ body {
   }
 
   .main-bg-after-door-open {
-    background: url("../assets/basement_mobile.png") !important;
+    background: url("../assets/main_background_mobile.png") !important;
     background-size: 100% 100% !important;
     background-repeat: no-repeat !important;
   }
@@ -4173,7 +4259,7 @@ form .button {
   float: left;
   width: 100%;
   margin-bottom: 0;
-  color: white;
+  color: rgb(106,228,171);
   text-align: center;
 }
 
@@ -4183,7 +4269,7 @@ form .button {
   float: left;
   width: 100%;
   margin-bottom: 0;
-  color: white;
+  color: rgb(106,228,171);
   text-align: center;
   mix-blend-mode: difference;
 }
@@ -4194,7 +4280,7 @@ form .button {
   float: left;
   width: 100%;
   margin-bottom: 0;
-  color: white;
+  color: rgb(106,228,171);
   text-align: center;
   /* mix-blend-mode: difference; */
   text-shadow: 2px 2px #131313;
@@ -5047,12 +5133,12 @@ form .button {
 
 .team-member-image > img {
   float: left;
-  width: 90%;
-  margin-left: 5%;
-  /* margin-right: 5%; */
-  max-width: 90%;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
   /* height: calc(100vh - 180px); */
-  padding: 55px 45px 45px 45px;
+  padding: 0;
   /* background: url(/static/media/team_member_bg.d57cd87d.png); */
   background-size: 100% 100% !important;
   /* background-repeat: no-repeat; */
@@ -5060,12 +5146,12 @@ form .button {
   display: inline-block;
   position: absolute;
   top: 0;
-  min-height: 200px;
+  min-height: 100%;
   bottom: 0;
   margin-top: auto;
   margin-bottom: auto;
   margin-bottom: 0;
-  margin-top: 80px;
+  margin-top: 0;
 }
 
 .close-team-room img {
