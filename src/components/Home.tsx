@@ -48,6 +48,9 @@ import User from "../assets/user.png";
 import Refresh from "../assets/refresh.png";
 import ProgressBar from "./progress-bar";
 import 'react-circular-progressbar/dist/styles.css';
+import StakingMobile from "../assets/staking_mobile.png";
+import TokenSwapMobile from "../assets/token_swap_mobile.png";
+import RaffleCave from "../assets/raffle_cave_mobile.png";
 
 import {
   pdaSeed,
@@ -1935,12 +1938,12 @@ const Home = (props: HomeProps) => {
       setMobileDoor(id);
       setMenuOpen(false);
       setShowTeamRoom(true);
-      setClassNameState("main-team-room-door");
+      setClassNameState("main-ant-labs-room-door");
     } else if (id && id === "WORKSHOP") {
       setShowMobileDoor(true);
       setMobileDoor(id);
       setMenuOpen(false);
-      setClassNameState("main-vault-room-door");
+      setClassNameState("main-workshop-room-door");
     } else if (id && id === "ALPHAZEX") {
       setShowMobileDoor(true);
       setMobileDoor(id);
@@ -1948,7 +1951,7 @@ const Home = (props: HomeProps) => {
       setShowStakeRoom(true);
       setShowFixedStakingRoom(false);
       setShowTokenSwapping(false);
-      setClassNameState("main-stake-room-door");
+      setClassNameState("main-alphazex-mobile-room-door");
       // setShowMobileDoor(true);
       // setMobileDoor(id);
       // setMenuOpen(false);
@@ -1964,7 +1967,7 @@ const Home = (props: HomeProps) => {
       // setMobileDoor(id);
       // setMenuOpen(false);
       // setShowStakeRoom(true);
-      // setClassNameState("main-stake-room-door");
+      // setClassNameState("main-alphazex-mobile-room-door");
     } else {
       setMenuOpen(false);
     }
@@ -1973,13 +1976,13 @@ const Home = (props: HomeProps) => {
   const closeAlphaRoom = async () => {
     var n = "";
     if (mobileDoor === "VAULT") {
-      n = "main-vault-room-door";
+      n = "main-workshop-room-door";
     } else if (mobileDoor === "ALPHA") {
       n = "main-alpha-room-door";
     } else if (mobileDoor === "TEAM") {
-      n = "main-team-room-door";
-    } else if (mobileDoor === "STAKE") {
-      n = "main-stake-room-door";
+      n = "main-ant-labs-room-door";
+    } else if (mobileDoor === "ALPHAZEX") {
+      n = "main-alphazex-mobile-room-door";
     }
     if (showMobileDoor) {
       setClassNameState(n);
@@ -3264,12 +3267,30 @@ const Home = (props: HomeProps) => {
                 {/* <div className="fixed-staking-div" onClick={openFixedStaking}></div> */}
               </div>
               }
-              {isMobile && 
+              {/* {isMobile && 
               <div className="alphazex-mobile-parent">
                 <button className="Inside-Alphazex-btn" onClick={openFixedStaking}>Fixed Staking</button>
                 <button className="Inside-Alphazex-btn">Adventure Staking</button>
                 <button className="Inside-Alphazex-btn" onClick={openTokenSwapping}>Token Swap</button>
                 <button className="Inside-Alphazex-btn">Raffle Cave</button>
+              </div>
+              } */}
+              {isMobile && 
+              <div className="pull-left full-width">
+                <Carousel responsive={responsive}>
+                  <div className="team-member-image">
+                    <img alt="Walter" src={TokenSwapMobile} />
+                    <div onClick={openTokenSwapping} className="opening-feature-room-token-swap-mobile"></div>
+                  </div>
+                  <div className="team-member-image">
+                    <img alt="kaizer" src={StakingMobile} />
+                    <div className="opening-feature-room-staking-mobile"></div>
+                  </div>
+                  <div className="team-member-image">
+                    <img alt="Sashi" src={RaffleCave} />
+                    <div className="opening-feature-room-raffle-cave-mobile"></div>
+                  </div>
+                </Carousel>
               </div>
               }
               {!wallet.connected &&
