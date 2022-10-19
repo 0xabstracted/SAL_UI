@@ -1944,11 +1944,13 @@ const Home = (props: HomeProps) => {
       setMenuOpen(false);
       setShowTeamRoom(true);
       setClassNameState("main-ant-labs-room-door");
+      setShowTokenSwapping(false);
     } else if (id && id === "WORKSHOP") {
       setShowMobileDoor(true);
       setMobileDoor(id);
       setMenuOpen(false);
       setClassNameState("main-workshop-room-door");
+      setShowTokenSwapping(false);
     } else if (id && id === "ALPHAZEX") {
       setShowMobileDoor(true);
       setMobileDoor(id);
@@ -1968,6 +1970,7 @@ const Home = (props: HomeProps) => {
       setMenuOpen(false);
       setShowAlphaRoom(true);
       setClassNameState("main-alpha-room-door");
+      setShowTokenSwapping(false);
       // setShowMobileDoor(true);
       // setMobileDoor(id);
       // setMenuOpen(false);
