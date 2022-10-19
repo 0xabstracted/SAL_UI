@@ -446,13 +446,13 @@ const Home = (props: HomeProps) => {
     setTimeout(function () {
       setClassNameState("main-bg-after-door-open");
       setLogoAlphaLoading(false);
-      getWhitelistAccounts();
+      // getWhitelistAccounts();
       getNFTs();
-      getStakedNfts();
-      getStakedVaults();
-      getFarms();
-      getFarmers();
-      getTimeToMInt();
+      // getStakedNfts();
+      // getStakedVaults();
+      // getFarms();
+      // getFarmers();
+      // getTimeToMInt();
     }, 900);
   }, [
     anchorWallet,
@@ -733,28 +733,33 @@ const Home = (props: HomeProps) => {
       xhr.addEventListener("readystatechange", async function() {
         if(this.readyState === 4) {
           console.log(this.responseText);
-          var mints = JSON.parse(this.responseText).data;
-          var array:any = [];
-          for (let index = 0; index < mints.length; index++) {
-            const element = mints[index];
-            const connection = new Connection(clusterApiUrl("devnet"));
-            const metaplex = new Metaplex(connection);
-            // console.log(element.account.gemMint.toBase58());
-            var pk = new anchor.web3.PublicKey(element);
-            let nft:any = await metaplex.nfts().findByMint({ mintAddress: pk }).run();
-            console.log(nft);
-            var obj:any = {
-              mint: element,
-              name: nft.name,
-              link: nft.json.image,
-              auth: nft.updateAuthorityAddress.toBase58()
+          try {
+            var mints = JSON.parse(this.responseText).data;
+            var array:any = [];
+            for (let index = 0; index < mints.length; index++) {
+              const element = mints[index];
+              const connection = new Connection(clusterApiUrl("devnet"));
+              const metaplex = new Metaplex(connection);
+              // console.log(element.account.gemMint.toBase58());
+              var pk = new anchor.web3.PublicKey(element);
+              let nft:any = await metaplex.nfts().findByMint({ mintAddress: pk }).run();
+              console.log(nft);
+              var obj:any = {
+                mint: element,
+                name: nft.name,
+                link: nft.json.image,
+                auth: nft.updateAuthorityAddress.toBase58()
+              }
+              array.push(obj);
             }
-            array.push(obj);
+            if (array && array.length > 0) {
+              console.log(array);
+              setStakedNfts(array);
+            }
+          } catch (error) {
+            
           }
-          if (array && array.length > 0) {
-            console.log(array);
-            setStakedNfts(array);
-          }
+          
         }
       });
 
@@ -2195,7 +2200,7 @@ const Home = (props: HomeProps) => {
   };
 
   const handleMobileHome = async () => {
-    if (showAlphaRoom || showTeamRoom || showStakeRoom || showFixedStakingRoom) {
+    if (showAlphaRoom || showTeamRoom || showStakeRoom || showFixedStakingRoom || showTokenSwapping) {
       closeAlphaRoom();
     } else {
       closeForm();

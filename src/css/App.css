@@ -4259,7 +4259,7 @@ form .button {
   float: left;
   width: 100%;
   margin-bottom: 0;
-  color: white;
+  color: rgb(106,228,171);
   text-align: center;
 }
 
@@ -4269,7 +4269,7 @@ form .button {
   float: left;
   width: 100%;
   margin-bottom: 0;
-  color: white;
+  color: rgb(106,228,171);
   text-align: center;
   mix-blend-mode: difference;
 }
@@ -4280,7 +4280,7 @@ form .button {
   float: left;
   width: 100%;
   margin-bottom: 0;
-  color: white;
+  color: rgb(106,228,171);
   text-align: center;
   /* mix-blend-mode: difference; */
   text-shadow: 2px 2px #131313;
