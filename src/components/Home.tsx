@@ -1946,11 +1946,13 @@ const Home = (props: HomeProps) => {
       setMenuOpen(false);
       setShowTeamRoom(true);
       setClassNameState("main-ant-labs-room-door");
+      setShowTokenSwapping(false);
     } else if (id && id === "WORKSHOP") {
       setShowMobileDoor(true);
       setMobileDoor(id);
       setMenuOpen(false);
       setClassNameState("main-workshop-room-door");
+      setShowTokenSwapping(false);
     } else if (id && id === "ALPHAZEX") {
       setShowMobileDoor(true);
       setMobileDoor(id);
@@ -1959,6 +1961,7 @@ const Home = (props: HomeProps) => {
       setShowFixedStakingRoom(false);
       setShowTokenSwapping(false);
       setClassNameState("main-alphazex-mobile-room-door");
+      setShowTokenSwapping(false);
       // setShowMobileDoor(true);
       // setMobileDoor(id);
       // setMenuOpen(false);
@@ -1970,6 +1973,7 @@ const Home = (props: HomeProps) => {
       setMenuOpen(false);
       setShowAlphaRoom(true);
       setClassNameState("main-alpha-room-door");
+      setShowTokenSwapping(false);
       // setShowMobileDoor(true);
       // setMobileDoor(id);
       // setMenuOpen(false);
@@ -2671,8 +2675,8 @@ const Home = (props: HomeProps) => {
             !showFixedStakingRoom && !showTokenSwapping &&
             !isMobile && (
               <div
-                // onClick={() => showToaster(5)}
-                onClick={() =>setShowFarming(true)}
+                onClick={() => showToaster(5)}
+                // onClick={() =>setShowFarming(true)}
                 className="vault-room-div"
               ></div>
             )}
@@ -3271,7 +3275,7 @@ const Home = (props: HomeProps) => {
               <div className="staking-portal">
                 <div className="staking-portal-parent"></div>
                 <div className="adventure-staking-div"></div>
-                <div className="fixed-staking-div" onClick={openFixedStaking}></div>
+                {/* <div className="fixed-staking-div" onClick={openFixedStaking}></div> */}
               </div>
               }
               {/* {isMobile && 
