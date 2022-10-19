@@ -108,6 +108,8 @@ import AlphaTokenSwap from "./TokenCreation/AlphaTokenSwap";
 import { findFarmTreasuryTokenPDA } from "../GrandProgramUtils/GemBank/pda";
 import TransferOutTokensToPot from "./TokenCreation/TransferOutTokensToPot";
 import CreateSwapRegistry from "./TokenCreation/CreateSwapRegistry";
+import UpdateTokenMetadata from "./TokenCreation/UpdateTokenMetadata";
+import CreateTokenMetadata from "./TokenCreation/CreateTokenMetadata";
 
 const responsive = {
   superLargeDesktop: {
@@ -1959,6 +1961,7 @@ const Home = (props: HomeProps) => {
       setShowFixedStakingRoom(false);
       setShowTokenSwapping(false);
       setClassNameState("main-alphazex-mobile-room-door");
+      setShowTokenSwapping(false);
       // setShowMobileDoor(true);
       // setMobileDoor(id);
       // setMenuOpen(false);
@@ -2672,8 +2675,8 @@ const Home = (props: HomeProps) => {
             !showFixedStakingRoom && !showTokenSwapping &&
             !isMobile && (
               <div
-                // onClick={() => showToaster(5)}
-                onClick={() =>setShowFarming(true)}
+                onClick={() => showToaster(5)}
+                // onClick={() =>setShowFarming(true)}
                 className="vault-room-div"
               ></div>
             )}
@@ -3527,6 +3530,8 @@ const Home = (props: HomeProps) => {
                   <div className="stake-room-farm">
                     <div className="gen-dashboard-scroller">
                       <CreateFungibleToken/>
+                      <UpdateTokenMetadata/>
+                      <CreateTokenMetadata/>
                       <CreateSwapRegistry/>
                       <TransferOutTokensToPot/>
                       <InitFarmAlpha/>

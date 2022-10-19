@@ -7,7 +7,7 @@ import { WalletNotConnectedError } from "@solana/wallet-adapter-base";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { clusterApiUrl, Connection } from "@solana/web3.js";
 import { useState } from "react";
-import { mintNewFungibleTokenArgs, REWARD_MINT_GLITCH, REWARD_MINT_GLTCH } from "./AlphaTokenConfig";
+import { mintNewFungibleTokenArgs, REWARD_MINT_GLITCH, REWARD_MINT_GLTCH, RYAN_ADDRESS } from "./AlphaTokenConfig";
 import { AlphaTokenSwapArgs } from "./TokenInterface";
 import SwappingIcon from "../../assets/swapping_icon.png";
 import { sendTransactions } from '../../config/connection';
@@ -30,21 +30,28 @@ function AlphaTokenSwap() {
   };
 
   const getTokenAccountBalanceFn =async () => {
-    let ata = await getAssociatedTokenAddress(
-      REWARD_MINT_GLITCH, // mint
-      wallet?.publicKey! // owner
-    );
-
-    let alpha_ata = await getAssociatedTokenAddress(
-      REWARD_MINT_GLTCH, // mint
-      wallet?.publicKey! // owner
-    );
+    
     try {
+      let ata = await getAssociatedTokenAddress(
+        REWARD_MINT_GLITCH, // mint
+        wallet?.publicKey! // owner
+      );
       let tokenAmount = await connection.getTokenAccountBalance(ata);
-      let tokenAmountAlpha = await connection.getTokenAccountBalance(alpha_ata);
-      if (glitchTokenVal === 0) {
+      if (tokenAmount != null) {
         // setGlitchTokenVal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
         setGlitchTokenBal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
+        // setAlphaTokenVal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
+        // setAlphaTokenBal(parseInt(tokenAmountAlpha.value.amount) / 10 ** tokenAmountAlpha.value.decimals);
+      }
+      let alpha_ata = await getAssociatedTokenAddress(
+        REWARD_MINT_GLTCH, // mint
+        wallet?.publicKey! // owner
+      );
+      let tokenAmountAlpha = await connection.getTokenAccountBalance(alpha_ata);
+      // if (glitchTokenVal === 0) {
+      if (tokenAmountAlpha != null) {
+        // setGlitchTokenVal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
+        // setGlitchTokenBal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
         // setAlphaTokenVal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
         setAlphaTokenBal(parseInt(tokenAmountAlpha.value.amount) / 10 ** tokenAmountAlpha.value.decimals);
       }
@@ -64,14 +71,14 @@ function AlphaTokenSwap() {
     }
   }
 
-  const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
+  const connection = new Connection(clusterApiUrl("mainnet-beta"), "confirmed");
 
   const alphaTokenSwap =async (args: AlphaTokenSwapArgs) => {
     if (wallet.publicKey) {
       let tokenSwapProgram = await getTokenSwapProgramObject(wallet);
       let token_swap_instructions: any = [];
       let amount = new BN(glitchTokenVal);
-      const [registry_pda] = await findRegistryPDA(wallet.publicKey!, args.mintTokenIn, args.mintTokenOut);
+      const [registry_pda] = await findRegistryPDA(RYAN_ADDRESS, args.mintTokenIn, args.mintTokenOut);
       const [vault_token_in_pda] = await findVaultTokenInPDA(registry_pda);
       const [vault_token_out_pda] = await findVaultTokenOutPDA(registry_pda);
         

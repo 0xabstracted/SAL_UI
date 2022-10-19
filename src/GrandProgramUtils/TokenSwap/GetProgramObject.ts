@@ -5,7 +5,7 @@ import idlTokenSwap from "../../idl/token_swap.json";
 
 import { WalletContextState } from "@solana/wallet-adapter-react";
 
-export const TOKEN_SWAP_PROGRAM_ID = new anchor.web3.PublicKey("9BUQq8TPQurLVvynAbiVDtMGPK8DYtxEwhdh3HHQe69v");
+export const TOKEN_SWAP_PROGRAM_ID = new anchor.web3.PublicKey("2PrbTwpNBDNDrZQBWtxmGcuSnxZzRxE1ECfL9EEMVxkG");
 
 export const getTokenSwapProgramObject = async (wallet: WalletContextState) => {
   const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST!;
