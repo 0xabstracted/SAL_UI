@@ -16,6 +16,9 @@ import { BN } from "@project-serum/anchor";
 import { TOKEN_PROGRAM_ID } from "../../config/config";
 import { getTokenSwapProgramObject } from "../../GrandProgramUtils/TokenSwap/GetProgramObject";
 import { findRegistryPDA, findVaultTokenInPDA, findVaultTokenOutPDA } from "../../GrandProgramUtils/TokenSwap/pda";
+import { Snackbar } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
+import { AlertState } from "../../utils/utils";
 
 function AlphaTokenSwap() {
   const [glitchTokenVal, setGlitchTokenVal] = useState(0);
@@ -23,6 +26,11 @@ function AlphaTokenSwap() {
   const [alphaTokenVal, setAlphaTokenVal] = useState(0);
   const [alphaTokenBal, setAlphaTokenBal] = useState(0);
   const [swapping, setSwapping] = useState(false);
+  const [alertState, setAlertState] = useState<AlertState>({
+    open: false,
+    message: "",
+    severity: undefined,
+  });
   const wallet = useWallet();
 
   const changeGlitchToken = async (val:any) => {
@@ -144,8 +152,18 @@ function AlphaTokenSwap() {
         )
         console.log(token_swap__sig);
         setSwapping(false);
+        setAlertState({
+          open: true,
+          message: 'Successfully Swapped',
+          severity: 'success',
+        });
       } catch (error) {
         setSwapping(false);
+        setAlertState({
+          open: true,
+          message: 'Please try again later',
+          severity: 'error',
+        });
       }
     } else {
       setSwapping(false);
@@ -237,6 +255,20 @@ function AlphaTokenSwap() {
         </div>
         </div>
       </div>
+      <Snackbar
+          className="snack-bar"
+          open={alertState.open}
+          autoHideDuration={6000}
+          onClose={() => setAlertState({ ...alertState, open: false })}
+        >
+          <Alert
+            className="bold"
+            onClose={() => setAlertState({ ...alertState, open: false })}
+            severity={alertState.severity}
+          >
+            {alertState.message}
+          </Alert>
+        </Snackbar>
     </div>
   );
 }
