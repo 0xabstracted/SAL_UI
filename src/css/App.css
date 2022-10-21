@@ -1296,6 +1296,7 @@ body {
   margin-bottom: 12px;
   height: 45px;
   font-size: 18px;
+  width: 350px;
 }
 
 .user-profile-box {
@@ -1847,6 +1848,10 @@ body {
     margin-left: 5% !important;
     margin-right: 5% !important;
     margin-top: 0 !important;
+  }
+
+  .swap-btn {
+    width: 220px !important;
   }
 
   .user-menu-parent {
@@ -4272,6 +4277,11 @@ form .button {
   color: rgb(106,228,171);
   text-align: center;
   mix-blend-mode: difference;
+}
+
+.loading-btn {
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 .message-container-label-small {

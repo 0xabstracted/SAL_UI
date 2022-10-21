@@ -22,6 +22,7 @@ function AlphaTokenSwap() {
   const [glitchTokenBal, setGlitchTokenBal] = useState(0);
   const [alphaTokenVal, setAlphaTokenVal] = useState(0);
   const [alphaTokenBal, setAlphaTokenBal] = useState(0);
+  const [swapping, setSwapping] = useState(false);
   const wallet = useWallet();
 
   const changeGlitchToken = async (val:any) => {
@@ -75,6 +76,7 @@ function AlphaTokenSwap() {
 
   const alphaTokenSwap =async (args: AlphaTokenSwapArgs) => {
     if (wallet.publicKey) {
+      setSwapping(true);
       let tokenSwapProgram = await getTokenSwapProgramObject(wallet);
       let token_swap_instructions: any = [];
       let amount = new BN(glitchTokenVal);
@@ -133,14 +135,20 @@ function AlphaTokenSwap() {
           tokenProgram: TOKEN_PROGRAM_ID
         }
       }));
-      const token_swap__sig = await sendTransactions(
-        connection,
-        wallet,
-        [token_swap_instructions],
-        [[]]
-      )
-      console.log(token_swap__sig);
+      try {
+        const token_swap__sig = await sendTransactions(
+          connection,
+          wallet,
+          [token_swap_instructions],
+          [[]]
+        )
+        console.log(token_swap__sig);
+        setSwapping(false);
+      } catch (error) {
+        setSwapping(false);
+      }
     } else {
+      setSwapping(false);
       throw new WalletNotConnectedError();
     }
   }
@@ -219,11 +227,12 @@ function AlphaTokenSwap() {
         </div>
         <div className="pull-left full-width text-center">
           <button
-            className="swap-btn"
+            className={!swapping ? "swap-btn": "swap-btn loading-btn"}
             onClick={() => alphaTokenSwap(mintNewFungibleTokenArgs)}
             disabled={glitchTokenVal <= 0}
           >
-            Swap
+            {!swapping && <span>Swap</span>}
+            {swapping && <span>Swapping ...</span>}
           </button>
         </div>
         </div>
