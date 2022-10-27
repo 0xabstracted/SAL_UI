@@ -19,7 +19,7 @@ import {
   StartStakePoolCyborgPetArgs, 
   StartStakePoolHumanPetsArgs, 
   StartStakePoolHumansArgs 
-} from "./StakeConfig";
+} from "./StakePoolConfig";
 
 
 import { findAssociatedTokenAddress } from "../../GrandProgramUtils/AssociatedTokenAccountProgram/pda";

@@ -101,7 +101,7 @@ import StartStakePool from "./AlphaStaking/StartStakePool";
 import AddToBankWhitelist from "./AlphaStaking/AddToBankWhitelist";
 import CreateFungibleToken from "./TokenCreation/CreateFungibleToken";
 
-import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, HUMANPETS_FARM_ID, HUMANS_FARM_ID } from "./AlphaStaking/StakeConfig";
+import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, HUMANPETS_FARM_ID, HUMANS_FARM_ID, UPDATE_AUTHORITY_OF_TOKEN_STRING } from "./AlphaStaking/StakePoolConfig";
 import { REWARD_MINT_GLITCH, REWARD_MINT_GLTCH } from "./TokenCreation/AlphaTokenConfig";
 import AlphaTokenSwap from "./TokenCreation/AlphaTokenSwap";
 import { findFarmTreasuryTokenPDA } from "../GrandProgramUtils/GemBank/pda";
@@ -207,7 +207,7 @@ const Home = (props: HomeProps) => {
   const [isMobile, setIsMobile] = useState(false);
   const [logoLoading] = useState(false);
   const [logoAlphaLoading, setLogoAlphaLoading] = useState(true);
-  const [showFarming, setShowFarming] = useState(true);
+  const [showFarming, setShowFarming] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [messageText, setMessageText] = useState("");
   const [showAlphaRoom, setShowAlphaRoom] = useState(false);
@@ -1025,7 +1025,7 @@ const Home = (props: HomeProps) => {
           var creators = nft.creators;
           var is_ours = false;
           // console.log(nft.updateAuthorityAddress.toBase58(), nft.name);
-          if (nft.updateAuthorityAddress.toBase58() == "TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq") {
+          if (nft.updateAuthorityAddress.toBase58() == UPDATE_AUTHORITY_OF_TOKEN_STRING) {
             is_ours = true;
             for (let iindex = 0; iindex < creators.length; iindex++) {
               const element = creators[iindex];
@@ -2410,56 +2410,6 @@ const Home = (props: HomeProps) => {
     setAlphaTokenVal(val);
   };
 
-  const swapFn =async (params:any) => {
-    const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
-    let mint = new anchor.web3.PublicKey('57vavPcanGNxm9WYVnWyDNiwofxGniQHmTTocAeco3dk');
-    let farm_manager = new anchor.web3.PublicKey('TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq');
-    let ata = await getAssociatedTokenAddress(
-      mint, // mint
-      wallet?.publicKey! // owner
-    );
-    let tx:any = new Transaction().add(
-      createMintToCheckedInstruction(
-        mint, // mint
-        ata, // receiver (sholud be a token account)
-        wallet?.publicKey!, // mint authority
-        1e15, // amount. if your decimals is 8, you mint 10^8 for 1 token.
-        8 // decimals
-        // [signer1, signer2 ...], // only multisig account will use
-      )
-    )
-    const sig_token = await sendTransaction(connection, wallet, tx.instructions, []);
-    console.log(sig_token);
-  }
-
-  // const getFreeSol = async () => {
-  //   var data = JSON.stringify({
-  //     "jsonrpc": "2.0",
-  //     "id": "eb5c5883-8d38-44cb-a7af-22ab62343a75",
-  //     "method": "requestAirdrop",
-  //     "params": [
-  //       anchorWallet?.publicKey.toBase58(),
-  //       1000000000
-  //     ]
-  //   });
-
-  //   var xhr = new XMLHttpRequest();
-  //   xhr.addEventListener("readystatechange", function() {
-  //     if(this.readyState === 4) {
-  //       setAlertState({
-  //         open: true,
-  //         message: '1 Sol transferred!',
-  //         severity: 'success',
-  //       });
-  //     }
-  //   });
-
-  //   xhr.open("POST", "https://api.devnet.solana.com/");
-  //   xhr.setRequestHeader("Content-Type", "application/json");
-
-  //   xhr.send(data);
-  // }
-
   return (
     <div id="main" className={classNameState}>
       {wallet && wallet.connected && 
@@ -2539,8 +2489,8 @@ const Home = (props: HomeProps) => {
             !showFixedStakingRoom && !showTokenSwapping &&
             !isMobile && (
               <div
-                onClick={() => showToaster(5)}
-                // onClick={() =>setShowFarming(true)}
+                // onClick={() => showToaster(5)}
+                onClick={() =>setShowFarming(true)}
                 className="vault-room-div"
               ></div>
             )}
@@ -3038,9 +2988,9 @@ const Home = (props: HomeProps) => {
                       <div className="nft-parent-div">
                         {nfts && nfts.length > 0 && nfts.map(function (item:any, i:any) {
                           return (
-                            <div className="nft-div" key={i} style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
+                            <div className="nft-div" key={i} style={{boxShadow: stakedNft == item ? "1px 1px 5px 1px #00f5ffab": "none"}} onClick={() => setStakedNft(item)}>
                               <img src={item.link} />
-                              <label>{item.name}</label>
+                              {/* <label>{item.name}</label> */}
                               {/* <label>{item.trait_type}</label> */}
                             </div>
                           );
@@ -3059,7 +3009,7 @@ const Home = (props: HomeProps) => {
                             return (
                               <div className="nft-div" key={i} style={{borderColor: unstakedNft == item ? "white": "transparent"}} onClick={() => setUnstakedNft(item)}>
                                 <img src={item.link} />
-                                <label>{item.name}</label>
+                                {/* <label>{item.name}</label> */}
                                 {/* <label>{item.trait_type}</label> */}
                               </div>
                             );
@@ -3088,7 +3038,7 @@ const Home = (props: HomeProps) => {
                               return (
                                 <div className="nft-div" key={i} style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
                                   <img src={item.link} />
-                                  <label>{item.name}</label>
+                                  {/* <label>{item.name}</label> */}
                                   {/* <label>{item.trait_type}</label> */}
                                 </div>
                               );
@@ -3111,7 +3061,7 @@ const Home = (props: HomeProps) => {
                               return (
                                 <div className="nft-div" key={i} style={{borderColor: unstakedNft == item ? "white": "transparent"}} onClick={() => setUnstakedNft(item)}>
                                   <img src={item.link} />
-                                  <label>{item.name}</label>
+                                  {/* <label>{item.name}</label> */}
                                   {/* <label>{item.trait_type}</label> */}
                                 </div>
                               );
@@ -3139,7 +3089,7 @@ const Home = (props: HomeProps) => {
               <div className="staking-portal">
                 <div className="staking-portal-parent"></div>
                 <div className="adventure-staking-div"></div>
-                {/* <div className="fixed-staking-div" onClick={openFixedStaking}></div> */}
+                <div className="fixed-staking-div" onClick={openFixedStaking}></div>
               </div>
               }
               {/* {isMobile && 
@@ -3209,7 +3159,7 @@ const Home = (props: HomeProps) => {
                           return (
                             <div className="nft-div" style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
                               <img src={item.link} />
-                              <label>{item.name}</label>
+                              {/* <label>{item.name}</label> */}
                             </div>
                           );
                         })}
