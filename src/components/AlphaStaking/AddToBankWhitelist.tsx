@@ -7,11 +7,12 @@ import { getStakeProgram, GEM_BANK_PROGRAM_ID } from '../../GrandProgramUtils/Ge
 import { findFarmAuthorityPDA, whitelistProofPda } from '../../GrandProgramUtils/GemBank/pda';
 
 
-import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, DEFAULT_PUBLIC_KEY, HUMANPETS_FARM_ID, HUMANS_FARM_ID, UPDATE_AUTHORITY_OF_TOKEN, UPDATE_AUTHORITY_OF_TOKEN_STRING, BANK_WL_OBJECT } from './StakeConfig';
+import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, DEFAULT_PUBLIC_KEY, HUMANPETS_FARM_ID, HUMANS_FARM_ID, UPDATE_AUTHORITY_OF_TOKEN, UPDATE_AUTHORITY_OF_TOKEN_STRING, BANK_WL_OBJECT, CREATOR_SECRET_ALPHA_DEV_COLLECTION, CREATOR_SECRET_ALPHA_MAIN_COLLECTION } from './StakeConfig';
 
-import { Metaplex } from '@metaplex-foundation/js';
+import { FindNftsByCreatorOutput, JsonMetadata, Metadata, Metaplex, Nft, Sft } from '@metaplex-foundation/js';
 
 import { sendTransactions } from '../../config/connection';
+import { SAL_DEVNET_4200 } from './SAL_Devnet_4200';
 
 function AddToBankWhitelist() {
   const wallet = useWallet();
@@ -36,15 +37,19 @@ function AddToBankWhitelist() {
     }
 
     if (body === 'human' && is_pet) {
+      // console.log("HUMANPETS_FARM_ID")
       return HUMANPETS_FARM_ID 
     }
     else if (body === 'human' && !is_pet) {
+      // console.log("HUMANS_FARM_ID")
       return HUMANS_FARM_ID
     }
     else if (body === 'cyborg' && is_pet) {
+      // console.log("CYBORGPET_FARM_ID")
       return  CYBORGPET_FARM_ID
     }
     else if (body === 'cyborg' && !is_pet) {
+      // console.log("CYBORG_FARM_ID")
       return  CYBORG_FARM_ID
     }
     return DEFAULT_PUBLIC_KEY
@@ -94,23 +99,37 @@ function AddToBankWhitelist() {
 
   const getFramIdFromUpdateAuthority = async () => {
     if (wallet && wallet.connected) {
-      const connection = new Connection(clusterApiUrl("devnet"));
+  // const connection = new Connection(clusterApiUrl("mainnet-beta"), "confirmed");
+  // const connection = new Connection("https://api.metaplex.solana.com/", "confirmed");
+  // const connection = new Connection("https://snowy-bitter-morning.solana-mainnet.quiknode.pro/9dd2ee037aa0a92503bd345d7f92c8beda03ce73/", "confirmed");
+  // const connection = new Connection(clusterApiUrl("devnet"),"confirmed");
+  const connection = new Connection("https://metaplex.devnet.rpcpool.com/","confirmed");
+  
 
       const metaplex = Metaplex.make(connection);
       
-      const allNfts = await metaplex
-                          .nfts()
-                          .findAllByUpdateAuthority({updateAuthority: UPDATE_AUTHORITY_OF_TOKEN})
-                          .run();
+      // const allNfts1 = await metaplex
+      //                     .nfts()
+      //                     .findAllByUpdateAuthority({updateAuthority: UPDATE_AUTHORITY_OF_TOKEN})
+      //                     .run();
       
+      const allNfts = await metaplex.nfts().findAllByCreator({creator: CREATOR_SECRET_ALPHA_DEV_COLLECTION}).run();
+      
+      // const allNfts = await metaplex.nfts().findAllByCreator({creator: CREATOR_SECRET_ALPHA_MAIN_COLLECTION}).run();
+                              
       let obj_list :ATBWl[] = [];
-      let count = 0
+      // let count = 0
       console.log(allNfts);
-
+      // console.log(allNfts1);
+      console.log("CREATOR_SECRET_ALPHA_DEV_COLLECTION:", CREATOR_SECRET_ALPHA_DEV_COLLECTION.toBase58())
+      // console.log("CREATOR_SECRET_ALPHA_MAIN_COLLECTION:", CREATOR_SECRET_ALPHA_MAIN_COLLECTION.toBase58())
       for (let index = 0; index < allNfts.length; index++) {
-        const nft:any = allNfts[index];
-        if (nft.updateAuthorityAddress.toBase58() === UPDATE_AUTHORITY_OF_TOKEN_STRING) {
+        const nft: any= allNfts[index];
+        // console.log(nft.creators[0].address.toBase58())
+        // if (nft.creators[0].address.toBase58() === CREATOR_SECRET_ALPHA_MAIN_COLLECTION.toBase58()) {
+        if (nft.creators[0].address.toBase58() === CREATOR_SECRET_ALPHA_DEV_COLLECTION.toBase58()) {
           if (nft && nft.json && nft.json.attributes) {
+            console.log("if nft.creators[0].address.toBase58(): ", nft.creators[0].address.toBase58() )
             let farmId = getFarmIfFromAttributes(nft.json.attributes)
             if (farmId === HUMANPETS_FARM_ID ||  farmId === HUMANS_FARM_ID || farmId === CYBORGPET_FARM_ID || farmId === CYBORG_FARM_ID){
               let obj : ATBWl = {
@@ -125,43 +144,48 @@ function AddToBankWhitelist() {
             }
           }
           else {
-            console.log('failed nft');
-            console.log(nft);
+            // console.log('failed nft');
+            // console.log(nft);
+            console.log("else nft.creators[0].address.toBase58(): ", nft.creators[0].address.toBase58() )
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", nft.uri);
+            xhr.onreadystatechange = async () => {
+              if(xhr.readyState === 4) {
+                try {
+                  let farmId = getFarmIfFromAttributes(JSON.parse(xhr.responseText).attributes)
+                  if (farmId === HUMANPETS_FARM_ID ||  farmId === HUMANS_FARM_ID || farmId === CYBORGPET_FARM_ID || farmId === CYBORG_FARM_ID){
+                    let obj : ATBWl = {
+                      mint: nft.mintAddress.toBase58(),
+                      farmId: farmId.toBase58(),
+                      id:obj_list.length,
+                    }
+                    obj_list.push(obj);
+                    if (index === allNfts.length - 1) {
+                      console.log(obj_list);
+                    }
+                  }
+                } catch (error) {
+                  // console.log(1);
+                  console.log('Error Reading from URI');
+                  // let obj : ATBWl = {
+                  //   mint: nft.mintAddress,
+                  //   farmId: DEFAULT_PUBLIC_KEY,
+                  //   id:obj_list.length,
+                  // }
+                  // obj_list.push(obj);
+                }
+              }
+            };
+            xhr.send();
           }
           // console.log(`count1: ${count++}`)
-          // let xhr = new XMLHttpRequest();
-          // xhr.open("GET", nft.uri);
-          // xhr.onreadystatechange = async () => {
-          //   if(xhr.readyState === 4) {
-          //     try {
-          //       let farmId = getFarmIfFromAttributes(JSON.parse(xhr.responseText).attributes)
-          //       if (farmId === HUMANPETS_FARM_ID ||  farmId === HUMANS_FARM_ID || farmId === CYBORGPET_FARM_ID || farmId === CYBORG_FARM_ID){
-          //         let obj : ATBWl = {
-          //           mint: nft.mintAddress,
-          //           farmId: farmId,
-          //           id:obj_list.length,
-          //         }
-          //         obj_list.push(obj);
-          //         if (index === allNfts.length - 1) {
-          //           console.log(obj_list);
-          //         }
-          //       }
-          //     } catch (error) {
-          //       console.log(1);
-          //       console.log(nft);
-          //       let obj : ATBWl = {
-          //         mint: nft.mintAddress,
-          //         farmId: HUMANS_FARM_ID,
-          //         id:obj_list.length,
-          //       }
-          //       obj_list.push(obj);
-          //     }
-          //   }
-          // };
-          // xhr.send();
+          
+        }
+        else {
+          // console.log(nft.creators[0].address.toBase58());
         }
       }
-      console.log(obj_list);
+      console.log('obj_list: ',obj_list);
     }
   }
 
@@ -170,11 +194,12 @@ function AddToBankWhitelist() {
     let bank_instruction:any = [];
     console.log(stack_opener)
     for (let index = stack_opener; index < stack_opener + 7; index++) {
-      bank_instruction = await sendAddtoBankWhitelistInstruction(BANK_WL_OBJECT[index]['farmId'], BANK_WL_OBJECT[index]['mint'], bank_instruction);
+      // bank_instruction = await sendAddtoBankWhitelistInstruction(BANK_WL_OBJECT[index]['farmId'], BANK_WL_OBJECT[index]['mint'], bank_instruction);
+      bank_instruction = await sendAddtoBankWhitelistInstruction(SAL_DEVNET_4200[index]['farmId'], SAL_DEVNET_4200[index]['mint'], bank_instruction);
       // bank_instruction.push(k)
       // const element = BANK_WL_OBJECT[index];
     }
-    console.log(bank_instruction);
+    // console.log(bank_instruction);
     const add_to_bank_wl_sig = await sendTransactions(
       connection,
       wallet,
