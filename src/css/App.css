@@ -192,6 +192,18 @@ body {
   animation: fadeIn 0.8s;
 }
 
+.main-bg-raffles {
+  display: inline-block;
+  height: 100vh;
+  width: 100%;
+  background: url("../assets/raffle_bg.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  overflow-y: hidden;
+  max-height: 100vh;
+  animation: fadeIn 0.8s;
+}
+
 .mobile-room-div {
   bottom: 35px;
   height: 55%;
@@ -5680,4 +5692,33 @@ form .button {
   margin-top: 15px;
   margin-bottom: 15px;
   font-weight: 600;
+}
+
+.raffle-parent {
+  float: left;
+  width: 100%;
+  height: 100vh;
+}
+
+.raffle-header {
+  float: left;
+  width: 100%;
+  height: 80px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.raffle-user-parent {
+  float: right;
+  width: 60px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: 60px;
+  margin-right:15px;
+}
+
+.raffle-user-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }

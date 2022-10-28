@@ -2170,7 +2170,7 @@ const Home = (props: HomeProps) => {
     const seed1 = Buffer.from(anchor.utils.bytes.utf8.encode("metadata"));
     const seed2 = Buffer.from(mpl.PROGRAM_ID.toBytes());
     const seed3 = Buffer.from(mint.publicKey.toBytes());
-    const [metadataPDA, _bump] = anchor.web3.PublicKey.findProgramAddressSync([seed1, seed2, seed3], mpl.PROGRAM_ID);
+    const [metadataPDA, _bump] = await anchor.web3.PublicKey.findProgramAddress([seed1, seed2, seed3], mpl.PROGRAM_ID);
     const accounts:any = {
         metadata: metadataPDA,
         mint,
