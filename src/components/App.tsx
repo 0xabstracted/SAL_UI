@@ -1,6 +1,5 @@
 import '../css/App.css';
 import { useMemo } from 'react';
-import * as anchor from '@project-serum/anchor';
 import Home from './Home';
 
 import { clusterApiUrl } from '@solana/web3.js';
@@ -27,32 +26,32 @@ const theme = createTheme({
   },
 });
 
-const getMagicHatId = (): anchor.web3.PublicKey | undefined => {
-  try {
-    const magicHatId = new anchor.web3.PublicKey(
-      process.env.REACT_APP_MAGIC_HAT_ID!,
-    );
-    console.log(magicHatId);
-    return magicHatId;
-  } catch (e) {
-    console.log('Failed to construct MagicHatId', e);
-    return undefined;
-  }
-};
+// const getMagicHatId = (): anchor.web3.PublicKey | undefined => {
+//   try {
+//     const magicHatId = new anchor.web3.PublicKey(
+//       process.env.REACT_APP_MAGIC_HAT_ID!,
+//     );
+//     console.log(magicHatId);
+//     return magicHatId;
+//   } catch (e) {
+//     console.log('Failed to construct MagicHatId', e);
+//     return undefined;
+//   }
+// };
 
-const magicHatId = getMagicHatId();
-const network = process.env.REACT_APP_SOLANA_NETWORK as WalletAdapterNetwork;
-const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST!;
-const connection = new anchor.web3.Connection(rpcHost
-  ? rpcHost
-  : anchor.web3.clusterApiUrl('devnet'));
+// const magicHatId = getMagicHatId();
+// const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST!;
+// const connection = new anchor.web3.Connection(rpcHost
+//   ? rpcHost
+//   : anchor.web3.clusterApiUrl('devnet'));
 
-const startDateSeed = parseInt(process.env.REACT_APP_CANDY_START_DATE!, 10);
-const txTimeoutInMilliseconds = 30000;
+// const startDateSeed = parseInt(process.env.REACT_APP_CANDY_START_DATE!, 10);
+// const txTimeoutInMilliseconds = 30000;
 
 const App = () => {
-  const endpoint = useMemo(() => clusterApiUrl(network), []);
-
+  let network = WalletAdapterNetwork.Devnet
+  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+  
   const wallets = useMemo(
     () => [
       getPhantomWallet(),
@@ -61,7 +60,7 @@ const App = () => {
       getSolletWallet({ network }),
       getSolletExtensionWallet({ network }),
     ],
-    [],
+    [network],
   );
 
   return (
@@ -70,11 +69,11 @@ const App = () => {
         <WalletProvider wallets={wallets} autoConnect>
           <WalletDialogProvider>
             <Home
-              magicHatId={magicHatId}
-              connection={connection}
-              startDate={startDateSeed}
-              txTimeout={txTimeoutInMilliseconds}
-              rpcHost={rpcHost}
+              // magicHatId={magicHatId}
+              // connection={connection}
+              // startDate={startDateSeed}
+              // txTimeout={txTimeoutInMilliseconds}
+              // rpcHost={rpcHost}
             />
           </WalletDialogProvider>
         </WalletProvider>

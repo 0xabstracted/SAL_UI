@@ -6,6 +6,7 @@ import * as anchor from "@project-serum/anchor";
 import {
   getStakeProgram,
   GEM_BANK_PROGRAM_ID,
+  getBankProgram,
 } from "../../GrandProgramUtils/GemBank/GetProgramObjects";
 import {
   findFarmAuthorityPDA,
@@ -39,7 +40,7 @@ import { SAL_DEVNET_4200 } from "./ATBW_SAL_Devnet_4200";
 
 function AddToBankWhitelist() {
   const wallet = useWallet();
-  let stack_opener = 287;
+  let stack_opener = 3150;
 
   const getFarmIfFromAttributes = (attributes: any) => {
     let body;
@@ -213,7 +214,7 @@ function AddToBankWhitelist() {
       callMetadataAPI(allNfts, index, main_arr);
       console.log(main_arr);
       // for (let index = 0; index < allNfts.length; index++) {
-      //   const nft: any = allNfts[index];
+      //   const nft: any = await metaplex.nfts().load({ metadata: allNfts[index].metadataAddress })
       //   // console.log(nft.creators[0].address.toBase58())
       //   // if (nft.creators[0].address.toBase58() === CREATOR_SECRET_ALPHA_MAIN_COLLECTION.toBase58()) {
       //   if (
@@ -278,12 +279,25 @@ function AddToBankWhitelist() {
 
     console.log(stack_opener);
     console.log(add_to_bank_wl_sig);
-    if (stack_opener < 360) {
+    if (stack_opener < 4300) {
       stack_opener = stack_opener + 7;
       parseArrayToBankWhitelist();
     }
   };
 
+  const getWLMintProofAccounts = async () => {
+    const bankProgram = await getBankProgram(wallet);
+    const whitelistProofs = await bankProgram.account.whitelistProof.all();
+    console.log("whitelistProofs.length",whitelistProofs.length)
+    console.log("whitelistProofs",whitelistProofs)
+  }
+
+  const getFarmerAccounts = async () => {
+    const stakeProgram = await getStakeProgram(wallet);
+    const farmers = await stakeProgram.account.farmer.all();
+    console.log("farmers.length",farmers.length)
+    console.log("farmers",farmers)
+  }
   return (
     <div>
       <div className="gen-farm-stats">
@@ -301,6 +315,22 @@ function AddToBankWhitelist() {
             onClick={() => parseArrayToBankWhitelist()}
           >
             Whitelist NFTs
+          </button>
+        </div>
+        <div className="gen-farm-stats-right">
+          <button
+            className="Inside-Farm-btn"
+            onClick={() => getWLMintProofAccounts()}
+          >
+            Get WL Mint Proofs
+          </button>
+        </div>
+        <div className="gen-farm-stats-left">
+          <button
+            className="Inside-Farm-btn"
+            onClick={() => getFarmerAccounts()}
+          >
+            Get Farmer Proofs
           </button>
         </div>
       </div>

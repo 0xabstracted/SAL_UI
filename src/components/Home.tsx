@@ -175,15 +175,7 @@ interface WhiteListType {
   start_time: any;
 }
 
-export interface HomeProps {
-  magicHatId?: anchor.web3.PublicKey;
-  connection: anchor.web3.Connection;
-  startDate: number;
-  txTimeout: number;
-  rpcHost: string;
-}
-
-const Home = (props: HomeProps) => {
+const Home = () => {
   // const url = window.location.origin;
   // if (!url.includes('https')) {
   //   if (url.split(':')[2]) {
@@ -195,6 +187,8 @@ const Home = (props: HomeProps) => {
   //     window.location = loc;
   //   }
   // }
+  const connection = new anchor.web3.Connection(anchor.web3.clusterApiUrl('devnet'));
+
   const [magicHat, setMagicHat] = useState<MagicHatAccount>();
   const [alertState, setAlertState] = useState<AlertState>({
     open: false,
@@ -301,28 +295,28 @@ const Home = (props: HomeProps) => {
     } as anchor.Wallet;
   }, [wallet]);
 
-  const refreshMagicHatState = useCallback(async () => {
-    if (!anchorWallet) {
-      return;
-    }
+  // const refreshMagicHatState = useCallback(async () => {
+  //   if (!anchorWallet) {
+  //     return;
+  //   }
 
-    if (props.magicHatId) {
-      try {
-        const cndy = await getMagicHatState(
-          anchorWallet,
-          props.magicHatId,
-          props.connection
-        );
-        console.log(JSON.stringify(cndy.state, null, 4));
-        const k: any = cndy?.state.itemsRedeemed.toString()!;
-        const l: any = cndy?.state.itemsAvailable.toString()!;
-        setMagicHat(cndy);
-      } catch (e) {
-        console.log("There was a problem fetching Candy Machine state");
-        console.log(e);
-      }
-    }
-  }, [anchorWallet, props.magicHatId, props.connection]);
+  //   if (props.magicHatId) {
+  //     try {
+  //       const cndy = await getMagicHatState(
+  //         anchorWallet,
+  //         props.magicHatId,
+  //         connection
+  //       );
+  //       console.log(JSON.stringify(cndy.state, null, 4));
+  //       const k: any = cndy?.state.itemsRedeemed.toString()!;
+  //       const l: any = cndy?.state.itemsAvailable.toString()!;
+  //       setMagicHat(cndy);
+  //     } catch (e) {
+  //       console.log("There was a problem fetching Candy Machine state");
+  //       console.log(e);
+  //     }
+  //   }
+  // }, [anchorWallet, props.magicHatId, connection]);
 
 
 
@@ -457,9 +451,9 @@ const Home = (props: HomeProps) => {
     }, 900);
   }, [
     anchorWallet,
-    props.magicHatId,
-    props.connection,
-    refreshMagicHatState,
+    // props.magicHatId,
+    // connection,
+    // refreshMagicHatState,
     wallet,
     whitelists,
     shouldMint,
@@ -519,7 +513,7 @@ const Home = (props: HomeProps) => {
   const getProgram = async () => {
     const wallet_t: any = wallet;
     const provider = new anchor.Provider(
-      props.connection,
+      connection,
       wallet_t,
       anchor.Provider.defaultOptions()
     );
@@ -1326,7 +1320,7 @@ const Home = (props: HomeProps) => {
     }
     console.log(claim_instructions);
     const claim_farmer_sig = await sendTransactions(
-      props.connection,
+      connection,
       wallet,
       [claim_instructions],
       [[]]
@@ -1434,7 +1428,7 @@ const Home = (props: HomeProps) => {
     }
     console.log(fresh_instructions);
     const refresh_farmer_sig = await sendTransactions(
-      props.connection,
+      connection,
       wallet,
       [fresh_instructions],
       [[]]
@@ -1561,7 +1555,7 @@ const Home = (props: HomeProps) => {
         const [mintWhitelistProofPdaVal] = await whitelistProofPda(farms.bank,new anchor.web3.PublicKey(nft.mint));
         const [creatorWhitelistProofPdaVal] = await whitelistProofPda(farms.bank,new anchor.web3.PublicKey(nft.creator));
         const gem_source_old = await findAssociatedTokenAddress(wallet.publicKey!,new anchor.web3.PublicKey(nft.mint));
-        const gem_source_obj = await props.connection.getParsedTokenAccountsByOwner(wallet.publicKey!, {
+        const gem_source_obj = await connection.getParsedTokenAccountsByOwner(wallet.publicKey!, {
           mint: new anchor.web3.PublicKey(nft.mint),
         });
         const gem_source = gem_source_obj.value[0].pubkey;
@@ -1639,7 +1633,7 @@ const Home = (props: HomeProps) => {
         let tr = new Transaction();
         tr.add(stake_instructions);
         const complete_stake = await sendTransactions(
-          props.connection,
+          connection,
           wallet,
           [stake_instructions],
           [[]]
@@ -1763,7 +1757,7 @@ const Home = (props: HomeProps) => {
       );
       const gem_mint = new anchor.web3.PublicKey(nft.mint);
       const [farmTreasuryToken, farmTreasuryTokenBump] = await findFarmTreasuryTokenPDA(farm_id);
-      const gem_source_obj = await props.connection.getParsedTokenAccountsByOwner(wallet.publicKey!, {
+      const gem_source_obj = await connection.getParsedTokenAccountsByOwner(wallet.publicKey!, {
         mint: new anchor.web3.PublicKey(nft.mint),
       });
       const gem_destination = gem_source_obj.value[0].pubkey;
@@ -2409,6 +2403,74 @@ const Home = (props: HomeProps) => {
     setGlitchTokenVal(val);
     setAlphaTokenVal(val);
   };
+
+  const swapFn =async (params:any) => {
+    const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
+    let mint = new anchor.web3.PublicKey('57vavPcanGNxm9WYVnWyDNiwofxGniQHmTTocAeco3dk');
+    let farm_manager = new anchor.web3.PublicKey('TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq');
+    let ata = await getAssociatedTokenAddress(
+      mint, // mint
+      wallet?.publicKey! // owner
+    );
+    let tx:any = new Transaction().add(
+      createMintToCheckedInstruction(
+        mint, // mint
+        ata, // receiver (sholud be a token account)
+        wallet?.publicKey!, // mint authority
+        1e15, // amount. if your decimals is 8, you mint 10^8 for 1 token.
+        8 // decimals
+        // [signer1, signer2 ...], // only multisig account will use
+      )
+    )
+    const sig_token = await sendTransaction(connection, wallet, tx.instructions, []);
+    console.log(sig_token);
+  }
+
+  // const getFreeSol = async () => {
+  //   var data = JSON.stringify({
+  //     "jsonrpc": "2.0",
+  //     "id": "eb5c5883-8d38-44cb-a7af-22ab62343a75",
+  //     "method": "requestAirdrop",
+  //     "params": [
+  //       anchorWallet?.publicKey.toBase58(),
+  //       1000000000
+  //     ]
+  //   });
+
+  //   var xhr = new XMLHttpRequest();
+  //   xhr.addEventListener("readystatechange", function() {
+  //     if(this.readyState === 4) {
+  //       setAlertState({
+  //         open: true,
+  //         message: '1 Sol transferred!',
+  //         severity: 'success',
+  //       });
+  //     }
+  //   });
+
+  //   xhr.open("POST", "https://api.devnet.solana.com/");
+  //   xhr.setRequestHeader("Content-Type", "application/json");
+
+  //   xhr.send(data);
+  // }
+  // const [network, setNetwork] = useState(WalletAdapterNetwork.Devnet);
+
+  // const handleChange = (event: any) => {
+  //   switch(event.target.value){
+  //     case "devnet":
+  //       setNetwork(WalletAdapterNetwork.Devnet);
+  //       break;
+  //     case "mainnet":
+  //       setNetwork(WalletAdapterNetwork.Mainnet);
+  //     break;
+  //     case "testnet":
+  //       setNetwork(WalletAdapterNetwork.Testnet);
+  //       break;
+  //     default:
+  //       setNetwork(WalletAdapterNetwork.Devnet);
+  //       break;
+  //   }
+  // }
 
   return (
     <div id="main" className={classNameState}>
