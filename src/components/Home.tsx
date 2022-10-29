@@ -1644,26 +1644,26 @@ const Home = () => {
         var arr = stakedNfts;
         var temp_arr = nfts.slice(0,nfts.indexOf(nft));
         setNFts(temp_arr);
-        var data = JSON.stringify({
-          "owner": wallet.publicKey?.toBase58(),
-          "mint": nft.mint
-        });
+        // var data = JSON.stringify({
+        //   "owner": wallet.publicKey?.toBase58(),
+        //   "mint": nft.mint
+        // });
 
-        var xhr = new XMLHttpRequest();
-        // xhr.withCredentials = true;
+        // var xhr = new XMLHttpRequest();
+        // // xhr.withCredentials = true;
 
-        xhr.addEventListener("readystatechange", function() {
-          if(this.readyState === 4) {
-            console.log(this.responseText);
-          }
-        });
+        // xhr.addEventListener("readystatechange", function() {
+        //   if(this.readyState === 4) {
+        //     console.log(this.responseText);
+        //   }
+        // });
 
-        xhr.open("POST", "http://34.198.111.186:8000/stakeNft");
-        xhr.setRequestHeader("Content-Type", "application/json");
+        // xhr.open("POST", "http://34.198.111.186:8000/stakeNft");
+        // xhr.setRequestHeader("Content-Type", "application/json");
 
-        xhr.send(data);
-        arr.push(nft);
-        setStakedNfts(arr);
+        // xhr.send(data);
+        // arr.push(nft);
+        // setStakedNfts(arr);
         getStakedNfts();
         // setStakedTokens(stakedNfts.length * 100);
         // setRespectEarned(stakedNfts.length * 100);
@@ -2164,7 +2164,7 @@ const Home = () => {
     const seed1 = Buffer.from(anchor.utils.bytes.utf8.encode("metadata"));
     const seed2 = Buffer.from(mpl.PROGRAM_ID.toBytes());
     const seed3 = Buffer.from(mint.publicKey.toBytes());
-    const [metadataPDA, _bump] = anchor.web3.PublicKey.findProgramAddressSync([seed1, seed2, seed3], mpl.PROGRAM_ID);
+    const [metadataPDA, _bump] = await anchor.web3.PublicKey.findProgramAddress([seed1, seed2, seed3], mpl.PROGRAM_ID);
     const accounts:any = {
         metadata: metadataPDA,
         mint,

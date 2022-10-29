@@ -1,6 +1,7 @@
 import '../css/App.css';
 import { useMemo } from 'react';
 import Home from './Home';
+import Raffle from './Raffles/Raffles';
 
 import { clusterApiUrl } from '@solana/web3.js';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
@@ -19,6 +20,8 @@ import {
 import { WalletDialogProvider } from '@solana/wallet-adapter-material-ui';
 
 import { ThemeProvider, createTheme } from '@material-ui/core';
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
@@ -63,22 +66,36 @@ const App = () => {
     [network],
   );
 
+  const HomeParent = () => {
+    return (
+      <ThemeProvider theme={theme}>
+        <ConnectionProvider endpoint={endpoint}>
+          <WalletProvider wallets={wallets} autoConnect>
+            <WalletDialogProvider>
+              <Home
+                // magicHatId={magicHatId}
+                // connection={connection}
+                // startDate={startDateSeed}
+                // txTimeout={txTimeoutInMilliseconds}
+                // rpcHost={rpcHost}
+              />
+            </WalletDialogProvider>
+          </WalletProvider>
+        </ConnectionProvider>
+      </ThemeProvider>
+    )
+  }
+
   return (
-    <ThemeProvider theme={theme}>
-      <ConnectionProvider endpoint={endpoint}>
-        <WalletProvider wallets={wallets} autoConnect>
-          <WalletDialogProvider>
-            <Home
-              // magicHatId={magicHatId}
-              // connection={connection}
-              // startDate={startDateSeed}
-              // txTimeout={txTimeoutInMilliseconds}
-              // rpcHost={rpcHost}
-            />
-          </WalletDialogProvider>
-        </WalletProvider>
-      </ConnectionProvider>
-    </ThemeProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomeParent />}>
+        </Route>
+        <Route path="/raffles" element={<Raffle />}>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+    
   );
 };
 
