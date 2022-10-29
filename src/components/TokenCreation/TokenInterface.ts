@@ -17,6 +17,13 @@ export interface CreateSwapRegistryArgs {
     mintTokenIn: PublicKey,
     mintTokenOut: PublicKey,
 }
+export interface CreateTokenMetadataArgs {
+    mint : PublicKey,
+    name: string,
+    symbol: string,
+    uri: string,
+    isMutable: boolean,
+}
 export interface UpdateTokenMetadataArgs{
     mint : PublicKey,
     name: string,

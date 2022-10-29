@@ -6,8 +6,8 @@ import idlBank from "../../idl/gem_bank.json";
 
 import { WalletContextState } from "@solana/wallet-adapter-react";
 
-export const MAGIC_STAKE_PROGRAM_ID = new anchor.web3.PublicKey("45eAzw1V8BPznoTejeqtMvNP6suKDn9NWs4t5gRyK9TM");
-export const GEM_BANK_PROGRAM_ID = new anchor.web3.PublicKey('AjkkPAMBzpJ1M4yGPjdLomRSZkQHUgL9YNp9ksfKebGm');
+export const MAGIC_STAKE_PROGRAM_ID = new anchor.web3.PublicKey("GNiDApGeBX1Yj5aTRzqetj7ULVWZbyMPa2jw9E8EP9YX");
+export const GEM_BANK_PROGRAM_ID = new anchor.web3.PublicKey('9ug6fAsdBT3cu4YzA57KDxFadZSPHXX4d2ke7UXL6Vmz');
 
 export const getStakeProgram = async (wallet: WalletContextState) => {
   const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST!;

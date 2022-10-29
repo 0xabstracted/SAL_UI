@@ -7,7 +7,7 @@ import { WalletNotConnectedError } from "@solana/wallet-adapter-base";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { clusterApiUrl, Connection } from "@solana/web3.js";
 import { useState } from "react";
-import { mintNewFungibleTokenArgs, REWARD_MINT_GLITCH, REWARD_MINT_GLTCH } from "./AlphaTokenConfig";
+import { mintNewFungibleTokenArgs, REWARD_MINT_GLITCH, REWARD_MINT_GLTCH, RYAN_ADDRESS } from "./AlphaTokenConfig";
 import { AlphaTokenSwapArgs } from "./TokenInterface";
 import SwappingIcon from "../../assets/swapping_icon.png";
 import { sendTransactions } from '../../config/connection';
@@ -16,12 +16,21 @@ import { BN } from "@project-serum/anchor";
 import { TOKEN_PROGRAM_ID } from "../../config/config";
 import { getTokenSwapProgramObject } from "../../GrandProgramUtils/TokenSwap/GetProgramObject";
 import { findRegistryPDA, findVaultTokenInPDA, findVaultTokenOutPDA } from "../../GrandProgramUtils/TokenSwap/pda";
+import { Snackbar } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
+import { AlertState } from "../../utils/utils";
 
 function AlphaTokenSwap() {
   const [glitchTokenVal, setGlitchTokenVal] = useState(0);
   const [glitchTokenBal, setGlitchTokenBal] = useState(0);
   const [alphaTokenVal, setAlphaTokenVal] = useState(0);
   const [alphaTokenBal, setAlphaTokenBal] = useState(0);
+  const [swapping, setSwapping] = useState(false);
+  const [alertState, setAlertState] = useState<AlertState>({
+    open: false,
+    message: "",
+    severity: undefined,
+  });
   const wallet = useWallet();
 
   const changeGlitchToken = async (val:any) => {
@@ -30,21 +39,28 @@ function AlphaTokenSwap() {
   };
 
   const getTokenAccountBalanceFn =async () => {
-    let ata = await getAssociatedTokenAddress(
-      REWARD_MINT_GLITCH, // mint
-      wallet?.publicKey! // owner
-    );
-
-    let alpha_ata = await getAssociatedTokenAddress(
-      REWARD_MINT_GLTCH, // mint
-      wallet?.publicKey! // owner
-    );
+    
     try {
+      let ata = await getAssociatedTokenAddress(
+        REWARD_MINT_GLITCH, // mint
+        wallet?.publicKey! // owner
+      );
       let tokenAmount = await connection.getTokenAccountBalance(ata);
-      let tokenAmountAlpha = await connection.getTokenAccountBalance(alpha_ata);
-      if (glitchTokenVal === 0) {
+      if (tokenAmount != null) {
         // setGlitchTokenVal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
         setGlitchTokenBal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
+        // setAlphaTokenVal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
+        // setAlphaTokenBal(parseInt(tokenAmountAlpha.value.amount) / 10 ** tokenAmountAlpha.value.decimals);
+      }
+      let alpha_ata = await getAssociatedTokenAddress(
+        REWARD_MINT_GLTCH, // mint
+        wallet?.publicKey! // owner
+      );
+      let tokenAmountAlpha = await connection.getTokenAccountBalance(alpha_ata);
+      // if (glitchTokenVal === 0) {
+      if (tokenAmountAlpha != null) {
+        // setGlitchTokenVal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
+        // setGlitchTokenBal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
         // setAlphaTokenVal(parseInt(tokenAmount.value.amount) / 10 ** tokenAmount.value.decimals);
         setAlphaTokenBal(parseInt(tokenAmountAlpha.value.amount) / 10 ** tokenAmountAlpha.value.decimals);
       }
@@ -64,14 +80,15 @@ function AlphaTokenSwap() {
     }
   }
 
-  const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
+  const connection = new Connection(clusterApiUrl("mainnet-beta"), "confirmed");
 
   const alphaTokenSwap =async (args: AlphaTokenSwapArgs) => {
     if (wallet.publicKey) {
+      setSwapping(true);
       let tokenSwapProgram = await getTokenSwapProgramObject(wallet);
       let token_swap_instructions: any = [];
       let amount = new BN(glitchTokenVal);
-      const [registry_pda] = await findRegistryPDA(wallet.publicKey!, args.mintTokenIn, args.mintTokenOut);
+      const [registry_pda] = await findRegistryPDA(RYAN_ADDRESS, args.mintTokenIn, args.mintTokenOut);
       const [vault_token_in_pda] = await findVaultTokenInPDA(registry_pda);
       const [vault_token_out_pda] = await findVaultTokenOutPDA(registry_pda);
         
@@ -126,14 +143,30 @@ function AlphaTokenSwap() {
           tokenProgram: TOKEN_PROGRAM_ID
         }
       }));
-      const token_swap__sig = await sendTransactions(
-        connection,
-        wallet,
-        [token_swap_instructions],
-        [[]]
-      )
-      console.log(token_swap__sig);
+      try {
+        const token_swap__sig = await sendTransactions(
+          connection,
+          wallet,
+          [token_swap_instructions],
+          [[]]
+        )
+        console.log(token_swap__sig);
+        setSwapping(false);
+        setAlertState({
+          open: true,
+          message: 'Successfully Swapped',
+          severity: 'success',
+        });
+      } catch (error) {
+        setSwapping(false);
+        setAlertState({
+          open: true,
+          message: 'Please try again later',
+          severity: 'error',
+        });
+      }
     } else {
+      setSwapping(false);
       throw new WalletNotConnectedError();
     }
   }
@@ -143,10 +176,11 @@ function AlphaTokenSwap() {
         <img src={LogoWhite} className="swapping-logo" alt="" />
       </div>
       <div className="swapping-box">
-        <label className="swapping-label">Trade</label>
+        <div className="swapping-box-child">
+        <label className="swapping-label">3-Tier Token System</label>
         <div className="from-token-box">
           <div className="from-token-header">
-            <label className="from-token-text">From</label>
+            <label className="from-token-text"></label>
             <label className="from-token-bal">Bal : {glitchTokenBal}</label>
           </div>
           <div className="token-image-parent">
@@ -184,18 +218,18 @@ function AlphaTokenSwap() {
         </div>
         <div className="to-token-box">
           <div className="from-token-header">
-            <label className="from-token-text">To</label>
+            <label className="from-token-text"></label>
             <label className="from-token-bal">Bal : {alphaTokenBal}</label>
           </div>
           <div className="token-image-parent">
             <img
               className="token-image"
-              src="https://dgnvzn3x5fqusqpvst65sizekrfhwtklzokfk7usi64h7erzb7iq.arweave.net/GZtct3fpYUlB9ZT92SMkVEp7TUvLlFV-kke4f5I5D9E?ext=jpg"
+              src="https://phnhi7zckm7jflblrjawdoei6ymbfjtfceqihngixxho6rkxluhq.arweave.net/edp0fyJTPpKsK4pBYbiI9hgSpmURIIO0yL3O70VXXQ8?ext=png"
               alt=""
             />
           </div>
           <div className="token-name-parent">
-            <h2 className="token-name">ALPHA</h2>
+            <h2 className="token-name">GLTCH</h2>
           </div>
           <div className="token-count-parent">
             <input
@@ -211,14 +245,30 @@ function AlphaTokenSwap() {
         </div>
         <div className="pull-left full-width text-center">
           <button
-            className="swap-btn"
+            className={!swapping ? "swap-btn": "swap-btn loading-btn"}
             onClick={() => alphaTokenSwap(mintNewFungibleTokenArgs)}
             disabled={glitchTokenVal <= 0}
           >
-            Swap
+            {!swapping && <span>Swap</span>}
+            {swapping && <span>Swapping ...</span>}
           </button>
         </div>
+        </div>
       </div>
+      <Snackbar
+          className="snack-bar"
+          open={alertState.open}
+          autoHideDuration={6000}
+          onClose={() => setAlertState({ ...alertState, open: false })}
+        >
+          <Alert
+            className="bold"
+            onClose={() => setAlertState({ ...alertState, open: false })}
+            severity={alertState.severity}
+          >
+            {alertState.message}
+          </Alert>
+        </Snackbar>
     </div>
   );
 }
