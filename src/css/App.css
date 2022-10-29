@@ -5717,6 +5717,35 @@ form .button {
   margin-right:15px;
 }
 
+.create-raffle-parent {
+  float: right;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: 60px;
+  margin-right:15px;
+}
+
+.create-raffle-btn {
+  border-width: 0;
+  border-radius: 6px;
+  background-color: #78eefc;
+  cursor: pointer;
+  color: #305759;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
+  font-family: "Ubuntu Mono", monospace;;
+  padding: 0;
+  display: inline-block;
+  margin-top: 0px;
+  padding: 8px 12px;
+  height: 40px;
+  min-width: 150px;
+  margin-right: 10px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+}
+
 .raffle-user-img {
   width: 40px;
   height: 40px;

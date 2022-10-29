@@ -1650,26 +1650,26 @@ const Home = (props: HomeProps) => {
         var arr = stakedNfts;
         var temp_arr = nfts.slice(0,nfts.indexOf(nft));
         setNFts(temp_arr);
-        var data = JSON.stringify({
-          "owner": wallet.publicKey?.toBase58(),
-          "mint": nft.mint
-        });
+        // var data = JSON.stringify({
+        //   "owner": wallet.publicKey?.toBase58(),
+        //   "mint": nft.mint
+        // });
 
-        var xhr = new XMLHttpRequest();
-        // xhr.withCredentials = true;
+        // var xhr = new XMLHttpRequest();
+        // // xhr.withCredentials = true;
 
-        xhr.addEventListener("readystatechange", function() {
-          if(this.readyState === 4) {
-            console.log(this.responseText);
-          }
-        });
+        // xhr.addEventListener("readystatechange", function() {
+        //   if(this.readyState === 4) {
+        //     console.log(this.responseText);
+        //   }
+        // });
 
-        xhr.open("POST", "http://34.198.111.186:8000/stakeNft");
-        xhr.setRequestHeader("Content-Type", "application/json");
+        // xhr.open("POST", "http://34.198.111.186:8000/stakeNft");
+        // xhr.setRequestHeader("Content-Type", "application/json");
 
-        xhr.send(data);
-        arr.push(nft);
-        setStakedNfts(arr);
+        // xhr.send(data);
+        // arr.push(nft);
+        // setStakedNfts(arr);
         getStakedNfts();
         // setStakedTokens(stakedNfts.length * 100);
         // setRespectEarned(stakedNfts.length * 100);

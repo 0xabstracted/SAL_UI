@@ -26,6 +26,9 @@ const RaffleContent = (props: any) => {
                     <div className="raffle-user-parent">
                         <img src={User} className="raffle-user-img" alt="" />
                     </div>
+                    <div className="create-raffle-parent">
+                        <button className="create-raffle-btn">Create Raffle</button>
+                    </div>
                 </div>
             </div>
             }
