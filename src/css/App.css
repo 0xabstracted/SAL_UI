@@ -121,11 +121,11 @@ body {
   max-height: 100vh;
 }
 
-.main-vault-room-door {
+.main-workshop-room-door {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("../assets/vault_room_mobile.png");
+  background: url("../assets/workshop_door_mobile.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -147,11 +147,22 @@ body {
   max-height: 100vh;
 }
 
-.main-team-room-door {
+.main-alphazex-mobile-room-door {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("../assets/team_room_mobile.png");
+  background: url("../assets/alphazex_door_mobile.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  overflow-y: hidden;
+  max-height: 100vh;
+}
+
+.main-ant-labs-room-door {
+  display: inline-block;
+  height: 100vh;
+  width: 100%;
+  background: url("../assets/ant_labs_door_mobile.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -162,7 +173,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("../assets/Alpha_room_mobile.png");
+  background: url("../assets/alpha_door_mobile.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -173,7 +184,19 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("../assets/room_with_no_items_but_doors_updated.png");
+  background: url("../assets/lobby_main.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  overflow-y: hidden;
+  max-height: 100vh;
+  animation: fadeIn 0.8s;
+}
+
+.main-bg-raffles {
+  display: inline-block;
+  height: 100vh;
+  width: 100%;
+  background: url("../assets/raffle_bg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -231,7 +254,7 @@ body {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("../assets/Fixed_Staking.png");
+  background: url("../assets/fixed_staking_bg_new.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -253,11 +276,11 @@ body {
 }
 
 .stake-logo {
-  height: 100px;
-  width: 100px;
+  height: 130px;
+  width: 130px;
   display: inline-block;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 0;
+  margin-bottom: 0;
   filter: brightness(0);
 }
 
@@ -312,11 +335,40 @@ body {
   /* background: rgba(0,0,0,0.4); */
 }
 
+.opening-feature-room-token-swap-mobile {
+  position: absolute;
+  bottom: 0;
+  height: 60%;
+  width: 83%;
+  left: 3%;
+  right: 10%;
+}
+
+.opening-feature-room-raffle-cave-mobile {
+  position: absolute;
+  bottom: 24%;
+  height: 53%;
+  width: 83%;
+  left: 15%;
+  right: 10%;
+  pointer-events: none;
+}
+
+.opening-feature-room-staking-mobile {
+  position: absolute;
+  bottom: 20%;
+  height: 63%;
+  width: 76%;
+  left: 8%;
+  right: 10%;
+  pointer-events: none;
+}
+
 .alphazen-room {
   display: inline-block;
   height: 100vh;
   width: 100%;
-  background: url("../assets/alphazex_bg.png");
+  background: url('../assets/alphazex_bg.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow-y: hidden;
@@ -474,30 +526,30 @@ body {
 
 .stake-room-div {
   position: absolute;
-  left: 9%;
-  width: 9%;
-  bottom: 2%;
-  height: 40%;
+  left: 33%;
+  width: 13%;
+  bottom: 36%;
+  height: 38%;
   cursor: pointer;
   z-index: 999;
 }
 
 .vault-room-div {
   position: absolute;
-  right: 10%;
-  width: 9%;
-  bottom: 2%;
-  height: 40%;
+  right: 35%;
+  width: 8%;
+  bottom: 40%;
+  height: 29%;
   cursor: pointer;
   z-index: 999;
 }
 
 .team-room-div {
   position: absolute;
-  right: 30%;
-  width: 11%;
-  bottom: 10%;
-  height: 27%;
+  right: 2%;
+  width: 15%;
+  bottom: 35%;
+  height: 33%;
   cursor: pointer;
   z-index: 999;
 }
@@ -559,6 +611,26 @@ body {
   box-sizing: border-box;
   text-transform: uppercase;
   margin: auto;
+}
+
+.Inside-Alphazex-btn {
+  border-width: 0;
+  border-radius: 6px;
+  background-color: #78eefc;
+  cursor: pointer;
+  color: #305759;
+  font-weight: 600;
+  font-size: 18px;
+  font-family: "Ubuntu Mono", monospace;;
+  padding: 0;
+  display: inline-block;
+  margin-top: 10px;
+  padding: 12px 15px;
+  height: 45px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  width: 80%;
 }
 
 .city-one-farm {
@@ -784,10 +856,10 @@ body {
 
 .alpha-room-div {
   position: absolute;
-  left: 28%;
-  width: 10%;
-  bottom: 10%;
-  height: 27%;
+  left: 2%;
+  width: 19%;
+  bottom: 33%;
+  height: 35%;
   cursor: pointer;
   z-index: 999;
 }
@@ -1046,27 +1118,40 @@ body {
   margin-left: 15%;
   border-radius: 24px;
   margin-top: calc(25vh - 150px);
-  padding: 20px 25px;
+  padding: 1px;
   font-size: 24px;
-  background-color: rgb(56, 71, 165);
+  /* background-color: rgb(56, 71, 165); */
   height: 62vh;
   box-sizing: border-box;
+  background-image: linear-gradient(var(--gradient-rotate, 246deg), #1ac3e4 7.97%, #4a20c9 49.17%, #4caf50 92.1%);
+  box-sizing: border-box;
+}
+
+.swapping-box-child {
+  float: left;
+  width: 100%;
+  border-radius: 24px;
+  /* margin-top: calc(25vh - 150px); */
+  padding: 20px 25px;
+  background: rgb(56, 71, 165);
+  box-sizing: border-box;
+  height: 100%;
 }
 
 .token-image-parent {
   float: left;
-  width: 40px;
+  width: 48px;
   text-align: center;
   padding-top: 4px;
   padding-bottom: 4px;
   box-sizing: border-box;
   margin-right: 10px;
-  height: 40px;
+  height: 48px;
 }
 
 .token-image {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   max-width: 100%;
   /* float: left; */
@@ -1079,7 +1164,7 @@ body {
   padding-top: 0px;
   padding-bottom: 0px;
   box-sizing: border-box;
-  height: 40px;
+  height: 48px;
 }
 
 .from-token-text {
@@ -1109,11 +1194,11 @@ body {
   width: 100%;
   text-align: center;
   margin-top: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .token-name {
-  font-size: 24px;
+  font-size: 26px;
   color: white;
   float: left;
   width: 100%;
@@ -1125,12 +1210,12 @@ body {
   margin-top: 0px;
   margin-bottom: 0;
   font-family: "Ubuntu Mono", monospace;
-  line-height: 40px;
+  line-height: 48px;
   vertical-align: middle;
 }
 
 .token-count-parent {
-  width: calc(100% - 150px);
+  width: calc(100% - 160px);
   float: left;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1156,7 +1241,7 @@ body {
   float: left;
   font-size: 12px;
   height: 28px;
-  margin-top: 6px;
+  margin-top: 8px;
   margin-left: 0;
   margin-right: 2px;
   background-color: #222;
@@ -1190,7 +1275,7 @@ body {
   margin-bottom: 5px;
   border: 1px solid #fff;
   border-radius: 6px;
-  padding: 8px 12px;
+  padding: 8px 12px 12px 12px;
   box-sizing: border-box;
 }
 
@@ -1201,7 +1286,7 @@ body {
   margin-bottom: 5px;
   border: 1px solid #fff;
   border-radius: 6px;
-  padding: 8px 12px;
+  padding: 8px 12px 12px 12px;
   box-sizing: border-box;
 }
 
@@ -1223,6 +1308,7 @@ body {
   margin-bottom: 12px;
   height: 45px;
   font-size: 18px;
+  width: 350px;
 }
 
 .user-profile-box {
@@ -1234,8 +1320,8 @@ body {
 }
 
 .user-profile-img {
-  height: 40px;
-  width: 40px;
+  height: 45px;
+  width: 45px;
   border-radius: 50%;
   cursor: pointer;
 }
@@ -1250,7 +1336,25 @@ body {
   box-shadow: 0 1pt 6pt rgb(0 0 0 / 15%);
 }
 
+.raffle-user-menu-parent {
+  position: absolute;
+  top: 75px;
+  right: 40px;
+  max-width: 300px;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 1pt 6pt rgb(0 0 0 / 15%);
+}
+
 .user-menu-parent ul {
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.raffle-user-menu-parent ul {
   float: left;
   width: 100%;
   padding: 0;
@@ -1269,13 +1373,41 @@ body {
 .user-menu-parent>ul>li {
   float: left;
   width: 100%;
-  padding: 10px 15px;
+  padding: 15px 20px;
   line-height: 24px;
   vertical-align: middle;
   text-align: left;
   font-size: 16px;
   color: black;
   box-sizing: border-box;
+  border-bottom: 1px solid lightgray;
+  font-family: "Ubuntu Mono", monospace;
+}
+
+.raffle-user-menu-parent>ul>li>a {
+  text-decoration: none !important;
+}
+
+.user-menu-parent>ul>li:last-child {
+  border-bottom: 0 !important;
+}
+
+.raffle-user-menu-parent>ul>li {
+  float: left;
+  width: 100%;
+  padding: 15px 20px;
+  line-height: 24px;
+  vertical-align: middle;
+  text-align: left;
+  font-size: 16px;
+  color: black;
+  box-sizing: border-box;
+  border-bottom: 1px solid lightgray;
+  font-family: "Ubuntu Mono", monospace;
+}
+
+.raffle-user-menu-parent>ul>li:last-child {
+  border-bottom: 0 !important;
 }
 
 .swap-icon-parent {
@@ -1304,6 +1436,9 @@ body {
   text-transform: capitalize;
   color: white;
   font-family: "Ubuntu Mono", monospace;
+  float: left;
+  width: 100%;
+  text-align: center;
 }
 
 .unstaked-nfts-div {
@@ -1318,8 +1453,9 @@ body {
   width: 100%;
   height: 100%;
   border-radius: 6px;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.65);
   min-height: 420px;
+  box-shadow: 2px 2px 10px 2px #00f5ffab;
 }
 
 .staked-nfts-div {
@@ -1756,6 +1892,186 @@ body {
     background-repeat: no-repeat !important;
   }
 
+  .alphazen-room {
+    background: transparent !important;
+  }
+
+  .token-swapping-room {
+    background-size: 100% 100% !important;
+  }
+
+  .stake-progress {
+    width: 90% !important;
+    margin-left: 5% !important;
+    margin-right: 5% !important;
+    margin-top: 0 !important;
+  }
+
+  .swap-btn {
+    width: 220px !important;
+  }
+
+  .user-menu-parent {
+    top: 85px !important;
+    right: 10px !important;
+  }
+
+  .raffle-user-menu-parent {
+    top: 85px !important;
+    right: 10px !important;
+  }
+
+  .alpha-home-logo {
+    z-index: 9999999999999 !important;
+  }
+
+  .nft-parent-div {
+    max-height: calc(100vh - 200px) !important;
+    height: 360px !important;
+    padding: 0 !important;
+  }
+
+  .user-profile-box {
+    margin-right: 0 !important;
+    height: 55px !important;
+    width: 55px !important;
+    margin-top: 25px !important;
+    display: inline-block;
+    float: none;
+  }
+
+  .staking-process-parent {
+    width: 90% !important;
+    margin-left: 5% !important;
+    display: inline-block !important;
+    margin-top: 0 !important;
+  }
+
+  .unstaked-nfts-div {
+    width: 100% !important;
+  }
+
+  .nfts-tab-parent {
+    float: left;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border: 1px solid black;
+    border-radius: 6px;
+  }
+
+  .nfts-tab {
+    text-align: center;
+    float: left;
+    width: 100%;
+    padding: 10px 15px;
+    color: #fff;
+    width: 50%;
+    box-sizing: border-box;
+    font-size: 14px;
+    background-color: #252a33;
+    cursor: pointer;
+  }
+
+  .b-r-right {
+    border-radius: 0 6px 6px 0;
+  }
+
+  .b-r-left {
+    border-radius: 6px 0 0 6px;
+  }
+
+  .selected-nfts-tab {
+    color: #fff !important;
+    font-weight: bold;
+    background-color: #000 !important;
+  }
+
+  .staked-nfts-div {
+    width: 100% !important;
+  }
+
+  .swapping-box {
+    width: 90% !important;
+    margin-left: 5% !important;
+    margin-top: 90px !important;
+    height: calc(100vh - 110px) !important;
+    padding: 2px !important;
+  }
+
+  .token-count-parent {
+    width: 100% !important;
+  }
+
+  .swapping-label {
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .swap-icon-parent {
+    width: 40px !important;
+    height: 40px !important;
+    padding: 5px !important;
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .swap-icon {
+    height: 22px !important;
+  }
+
+  .token-image-parent {
+    height: 40px !important;
+    width: 40px !important;
+  }
+
+  .token-name {
+    height: 40px !important;
+    line-height: 40px !important;
+    font-size: 24px !important;
+  }
+
+  .token-image {
+    height: 32px !important;
+    width: 32px !important;
+  }
+
+  .swapping-box-child {
+    padding: 10px 15px !important;
+  }
+
+  .swapping-logo-parent {
+    display: none !important;
+  }
+
+  .from-token-box {
+    margin-top: 20px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .to-token-box {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .swapping-logo-parent {
+    width: 100% !important;
+  }
+
+  .swap-close-logo {
+    height: 40px !important;
+    width: 40px !important;
+    right: 20px !important;
+    top: 45px !important;
+    filter: contrast(0.01) !important;
+  }
+
+  .Outside-Mint-btn {
+    display: none !important;
+  }
+
   .hamburger-menu {
     position: absolute;
     right: 20px;
@@ -1779,7 +2095,7 @@ body {
   }
 
   .react-multi-carousel-item {
-    height: calc(100vh - 150px);
+    height: calc(100vh - 0px);
   }
 
   .team-member-info-bottom {
@@ -1834,11 +2150,12 @@ body {
   }
 
   .mobile-room-div {
-    bottom: 0 !important;
-    height: 54% !important;
-    left: 12% !important;
-    right: 10% !important;
-    width: 70% !important;
+    bottom: 15% !important;
+    height: 60% !important;
+    left: 3% !important;
+    right: 0% !important;
+    width: 97% !important;
+    top: 25% !important;
   }
 
   .story-line {
@@ -1862,7 +2179,7 @@ body {
   }
 
   .main-bg-after-door-open {
-    background: url("../assets/basement_mobile.png") !important;
+    background: url("../assets/main_background_mobile.png") !important;
     background-size: 100% 100% !important;
     background-repeat: no-repeat !important;
   }
@@ -2005,6 +2322,7 @@ body {
 
   .hamburger-menu {
     display: block !important;
+    z-index: 99999999999999 !important;
   }
 
   .alpha-home-logo {
@@ -3600,7 +3918,7 @@ form .button {
   position: absolute;
   /* right: 20px; */
   top: 34%;
-  right: 26%;
+  right: 20%;
 }
 
 .social-media-links > a {
@@ -3623,14 +3941,14 @@ form .button {
   margin-left: 0px;
   margin-right: 10px;
   margin-top: 5px;
-  opacity: 0.5;
+  /* opacity: 0.5; */
   filter: invert(85%) sepia(100%) saturate(0%) hue-rotate(170deg)
     brightness(107%) contrast(101%);
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
-  opacity: 0.5;
+  opacity: 1;
 }
 
 .social-icons-mobile {
@@ -3998,7 +4316,7 @@ form .button {
 .mesage-container {
   left: 0%;
   width: 100%;
-  top: 28%;
+  top: 20%;
   height: 50px;
   position: absolute;
 }
@@ -4009,7 +4327,7 @@ form .button {
   float: left;
   width: 100%;
   margin-bottom: 0;
-  color: white;
+  color: rgb(106,228,171);
   text-align: center;
 }
 
@@ -4019,9 +4337,14 @@ form .button {
   float: left;
   width: 100%;
   margin-bottom: 0;
-  color: white;
+  color: rgb(106,228,171);
   text-align: center;
   mix-blend-mode: difference;
+}
+
+.loading-btn {
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 .message-container-label-small {
@@ -4030,7 +4353,7 @@ form .button {
   float: left;
   width: 100%;
   margin-bottom: 0;
-  color: white;
+  color: rgb(106,228,171);
   text-align: center;
   /* mix-blend-mode: difference; */
   text-shadow: 2px 2px #131313;
@@ -4199,7 +4522,12 @@ form .button {
   z-index: 2;
 }
 
-
+.alphazex-mobile-parent {
+  float: left;
+  width: 100%;
+  margin-top: 120px;
+  text-align: center;
+}
 
 .m-t-30 {
   margin-top: 30px;
@@ -4209,11 +4537,14 @@ form .button {
   float: left;
     width: 100%;
     margin-left: 0;
-    margin-right: 10%;
+    margin-right: 0;
     height: calc(100% - 60px);
     overflow-y: auto;
-    max-height: 500px;
+    max-height: 400px;
     overflow-x: hidden;
+    padding-left: 5px;
+    padding-right: 5px;
+    box-sizing: border-box;
 }
 
 .nft-deal-div {
@@ -4328,7 +4659,7 @@ form .button {
 
 .nft-div {
   float: left;
-  width: 20%;
+  width: 25%;
   /* height: 100px; */
   padding-left: 6px;
   padding-right: 6px;
@@ -4336,14 +4667,16 @@ form .button {
   border: 1px solid transparent;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .nft-small-div {
   float: left;
   width: 20%;
   /* height: 100px; */
-  padding-left: 6px;
-  padding-right: 6px;
+  padding-left: 8px;
+  padding-right: 8px;
   box-sizing: border-box;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -4353,7 +4686,7 @@ form .button {
 .nft-div img {
   float: left;
   width: 100%;
-  height: 90px;
+  /* height: 90px; */
   margin-top: 5px;
   border-radius: 4px;
   margin-bottom: 5px;
@@ -4876,12 +5209,12 @@ form .button {
 
 .team-member-image > img {
   float: left;
-  width: 90%;
-  margin-left: 5%;
-  /* margin-right: 5%; */
-  max-width: 90%;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
   /* height: calc(100vh - 180px); */
-  padding: 55px 45px 45px 45px;
+  padding: 0;
   /* background: url(/static/media/team_member_bg.d57cd87d.png); */
   background-size: 100% 100% !important;
   /* background-repeat: no-repeat; */
@@ -4889,12 +5222,12 @@ form .button {
   display: inline-block;
   position: absolute;
   top: 0;
-  min-height: 200px;
+  min-height: 100%;
   bottom: 0;
   margin-top: auto;
   margin-bottom: auto;
   margin-bottom: 0;
-  margin-top: 80px;
+  margin-top: 0;
 }
 
 .close-team-room img {
@@ -5405,3 +5738,559 @@ form .button {
   margin-bottom: 15px;
   font-weight: 600;
 }
+
+.raffle-parent {
+  float: left;
+  width: 100%;
+  height: 100vh;
+}
+
+.raffle-header {
+  float: left;
+  width: 100%;
+  height: 80px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: rgba(0,0,0,0.4);
+  box-sizing: border-box;
+}
+
+.raffle-user-parent {
+  float: right;
+  width: 60px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: 60px;
+  margin-right:15px;
+}
+
+.create-raffle-parent {
+  float: right;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: 60px;
+  margin-right:15px;
+}
+
+.create-raffle-btn {
+  border-width: 0;
+  border-radius: 6px;
+  background-color: #78eefc;
+  cursor: pointer;
+  color: #305759;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
+  font-family: "Ubuntu Mono", monospace;;
+  padding: 0;
+  display: inline-block;
+  margin-top: 0px;
+  padding: 8px 12px;
+  height: 40px;
+  min-width: 150px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+}
+
+.raffle-user-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  filter: invert(83%) sepia(19%) saturate(1208%) hue-rotate(154deg) brightness(101%) contrast(104%);
+}
+
+.create-raffle-body {
+  float: left;
+  width: 100%;
+  height: calc(100vh - 80px);
+  background-color: rgba(0,0,0,0.4);
+  padding-left: 8%;
+  padding-right: 8%;
+  box-sizing: border-box;
+}
+
+.create-raffle-header {
+  font-size: 30px;
+  color: #ffffffcc;
+  font-weight: bold;
+  font-family: "Ubuntu Mono", monospace;
+  text-transform: uppercase;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.raffle-nft-select-parent {
+  width: 250px;
+  float: left;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.raffle-details-parent {
+  width: calc(100% - 250px);
+  float: left;
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.raffle-nft-parent {
+  border: 2px solid white;
+  border-radius: 6px;
+  float: left;
+  width: 100%;
+  height: 200px;
+  cursor: pointer;
+  position: relative;
+}
+
+.raffle-nft-parent-no-hover {
+  border: 2px solid white;
+  border-radius: 6px;
+  float: left;
+  width: 100%;
+  height: 200px;
+  cursor: pointer;
+  position: relative;
+}
+
+.raffle-nft-edit {
+  position: absolute;
+  right: 5px;
+  height: 16px;
+  width: 16px;
+  top: 5px;
+  filter: invert(83%) sepia(19%) saturate(1208%) hue-rotate(154deg) brightness(101%) contrast(104%);
+}
+
+.nft-prize-header {
+  float: left;
+  width: 100%;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: "Ubuntu Mono", monospace;
+  color: black;
+}
+
+.nft-raffle-prize-close {
+  float: right;
+  height: 20px;
+  width: 20px;
+  filter: brightness(0);
+  cursor: pointer;
+}
+
+.raffle-nft-modal-body {
+  float: left;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.raffle-nft-parent:hover {
+  opacity: 0.7;
+}
+
+.raffle-details-div {
+  float: left;
+  width: 100%;
+  background-color: white;
+  border-radius: 6px;
+  height: calc(100vh - 170px);
+  padding: 15px 20px;
+  max-height: calc(100vh - 170px);
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding-bottom: 65px;
+}
+
+.basic-raffle-details-parent {
+  float: left;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.react-datepicker {
+  font-family: "Ubuntu Mono", monospace !important;
+}
+
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item {
+  height: 30px !important;
+  padding: 5px 10px;
+  white-space: nowrap;
+  box-sizing: border-box !important;
+  line-height: 20px !important;
+  vertical-align: middle !important;
+}
+
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected {
+  background-color: #78eefc !important;
+  color: #000 !important;
+}
+
+.react-datepicker__day--selected {
+  background-color: #78eefc !important;
+  color: #000 !important;
+}
+
+.react-datepicker__input-container>input , .react-datepicker-ignore-onclickoutside {
+  height: 44px;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 28px;
+  vertical-align: middle;
+  border-radius: 6px;
+  border: 1px solid lightgray;
+  font-family: "Ubuntu Mono", monospace;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.raffle-ticket-supply {
+  height: 44px;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 28px;
+  vertical-align: middle;
+  border-radius: 6px;
+  border: 1px solid lightgray;
+  font-family: "Ubuntu Mono", monospace;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.basic-details-date-parent {
+  float: left;
+  width: 35%;
+  padding-left: 3px;
+  padding-right: 3px;
+  box-sizing: border-box;
+}
+
+.basic-details-supply-parent {
+  float: left;
+  width: 25%;
+  padding-left: 7px;
+  padding-right: 7px;
+  box-sizing: border-box;
+}
+
+.basic-details-token-parent {
+  float: left;
+  width: 40%;
+  padding-left: 3px;
+  padding-right: 3px;
+  box-sizing: border-box;
+}
+
+.basic-details-date-label {
+  float: left;
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Ubuntu Mono", monospace;
+  text-transform: capitalize;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+.raffle-token-price-parent {
+  float: left;
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid lightgray;
+  padding: 6px 12px;
+  box-sizing: border-box;
+}
+
+.raffle-token-price-input {
+  height: 30px;
+  padding: 0;
+  font-size: 16px;
+  line-height: 30px;
+  vertical-align: middle;
+  border-radius: 6px 0 0 6px;
+  border: 0;
+  border-right: 1px solid lightgray;
+  font-family: "Ubuntu Mono", monospace;
+  max-width: calc(50% - 1px);
+  box-sizing: border-box;
+  width: calc(50% - 1px);
+}
+
+.raffle-token-options {
+  height: 30px;
+  padding: 0;
+  font-size: 14px;
+  line-height: 30px;
+  vertical-align: middle;
+  border-radius: 6px 0 0 6px;
+  border: 0;
+  font-family: "Ubuntu Mono", monospace;
+  max-width: calc(50% - 0px);
+  box-sizing: border-box;
+  width: calc(50% - 0px);
+  padding-left: 4px;
+}
+
+.raffle-token-price-input::-webkit-outer-spin-button,
+.raffle-token-price-input::-webkit-inner-spin-button, 
+.raffle-ticket-supply::-webkit-outer-spin-button,
+.raffle-ticket-supply::-webkit-inner-spin-button, 
+.ticket-limit-input::-webkit-outer-spin-button,
+.ticket-limit-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.raffle-token-price-input {
+  -moz-appearance: textfield;
+}
+
+.raffle-token-price-input:focus-visible, .raffle-ticket-supply:focus-visible, .raffle-token-options:focus-visible, .ticket-limit-input:focus-visible {
+  outline: none;
+}
+
+.raffle-holder-only-details {
+  float: left;
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.raffle-holder-text {
+  float: left;
+  width: 100%;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "Ubuntu Mono", monospace;
+}
+
+.holder-only-creator-input {
+  float: left;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  height: 44px;
+  line-height: 28px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  font-family: "Ubuntu Mono", monospace;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  border-radius: 6px;
+  border: 1px solid lightgray;
+}
+
+.ticket-limit-wallet {
+  float: left;
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.ticket-winners-parent {
+  float: left;
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.create-raffle-button-parent {
+  float: left;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-top: 1px solid lightgray;
+  position: absolute;
+  bottom: 10px;
+  height: 60px;
+  box-sizing: border-box;
+  background: white;
+  right: 10px;
+  left: 10px;
+  border-radius: 0 0 6px 6px;
+}
+
+.ticket-limit-input {
+  float: left;
+  padding: 8px 12px;
+  font-size: 14px;
+  height: 44px;
+  line-height: 28px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  font-family: "Ubuntu Mono", monospace;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  border-radius: 6px;
+  border: 1px solid lightgray;
+}
+
+.terms-conditions-parent {
+  float: left;
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  background-color: #e4e6e5;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+}
+
+.terms-conditions-checkbox-parent {
+  float: left;
+  width: 60%;
+  height: 40px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.create-raffle-button {
+  border-width: 0;
+  border-radius: 6px;
+  background-color: #78eefc;
+  cursor: pointer;
+  color: #305759;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
+  font-family: "Ubuntu Mono", monospace;;
+  padding: 0;
+  margin-top: 0px;
+  padding: 8px 12px;
+  height: 40px;
+  min-width: 150px;
+  margin-right: 10px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  float: right;
+}
+
+.terms-conditions-checkbox-label {
+  float: left;
+  width: 100%;
+  padding: 6px 12px;
+  line-height: 30px;
+  box-sizing: border-box;
+}
+
+.raffle-terms-checkbox {
+  float: left;
+  margin-right: 10px;
+  display: inline-block;
+  margin-top: 8px;
+  height: 16px;
+  width: 16px;
+}
+
+.disabled-raffle {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.create-raffle-btn-parent {
+  float: left;
+  width: 40%;
+  height: 40px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.terms-conditions-header {
+  font-size: 16px;
+  font-weight: 600;
+  float: left;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-family: "Ubuntu Mono", monospace;
+}
+
+.terms-conditions-ul {
+  float: left;
+  width: 100%;
+  padding-left: 30px;
+  list-style: decimal;
+  font-family: "Ubuntu Mono", monospace;
+  box-sizing: border-box;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.terms-conditions-ul>li {
+  float: left;
+  width: 100%;
+  font-family: "Ubuntu Mono", monospace;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.raffle-nft-img {
+  height: 60px;
+  width: 60px;
+  margin-top: 50px;
+  margin-bottom: 10px;
+  filter: invert(89%) sepia(61%) saturate(2%) hue-rotate(152deg) brightness(105%) contrast(101%);
+}
+
+.raffle-selected-nft-img {
+  height: 160px;
+  width: 160px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.raffle-nft-create-text {
+  float: left;
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "Ubuntu Mono", monospace;
+  color: white;
+}
+
+.raffle-nfts-body {
+  float: left;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  max-height: calc(100vh - 290px);
+  overflow-y: auto;
+}
+
+.raffle-nft-select-button-parent {
+  float: left;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.select-raffle-nft-btn {
+  border-width: 0;
+  border-radius: 6px;
+  background-color: #78eefc;
+  cursor: pointer;
+  color: #305759;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
+  font-family: "Ubuntu Mono", monospace;;
+  padding: 0;
+  display: inline-block;
+  margin-top: 0px;
+  padding: 8px 12px;
+  height: 40px;
+  min-width: 150px;
+  margin-right: 10px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  float: right;
+}
+

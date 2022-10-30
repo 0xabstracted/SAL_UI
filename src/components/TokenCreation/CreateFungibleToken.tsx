@@ -10,7 +10,7 @@ import { CreateFungibleTokenArgs } from './TokenInterface';
 import { glthFungTokenArgs, glitchFungTokenArgs } from './AlphaTokenConfig';
 import { sendTransactions } from '../../config/connection';
 import { findAssociatedTokenAddress } from '../../GrandProgramUtils/AssociatedTokenAccountProgram/pda';
-import { getStakeProgram } from "../../GrandProgramUtils/gemBank/GetProgramObjects";
+import { getStakeProgram } from "../../GrandProgramUtils/GemBank/GetProgramObjects";
 import { getTokenSwapProgramObject } from "../../GrandProgramUtils/TokenSwap/GetProgramObject";
 import { alphaTokenSwapPda,alphaPotPda } from "../../GrandProgramUtils/AssociatedTokenAccountProgram/pda"
 
@@ -27,10 +27,6 @@ function CreateFungibleToken() {
             mint.publicKey, // mint
         );
         console.log('ata : ', ata.toBase58());
-        let stakeProgram = await getStakeProgram(wallet);
-        const [alpha_token_swap_pda] = await alphaTokenSwapPda(wallet.publicKey!, mint.publicKey);
-        const [alpha_pot_pda] = await alphaPotPda(alpha_token_swap_pda, mint.publicKey);
-        console.log(`ATA: ${ata.toBase58()}`);
         if (wallet.publicKey) {
             let create_fung_token_ix:any = [];
 
@@ -71,23 +67,7 @@ function CreateFungibleToken() {
                     // [signer1, signer2 ...], // only multisig account will use
                 )
             )
-            console.log("args.pot_transfer_amount: ",args.pot_transfer_amount.toNumber())
-            if (args.pot_transfer_amount.toNumber() > 0 ){
-                create_fung_token_ix.push(
-                    stakeProgram.instruction.createAlphaTokenswap(args.pot_transfer_amount,{
-                        accounts: {
-                        alphaTokenswap: alpha_token_swap_pda,
-                        alphaCreator: wallet.publicKey,
-                        alphaPot: alpha_pot_pda, 
-                        alphaOwnerSource: ata,
-                        alphaMint: mint.publicKey,
-                        systemProgram: SystemProgram.programId,
-                        tokenProgram: TOKEN_PROGRAM_ID,
-                        rent: anchor.web3.SYSVAR_RENT_PUBKEY
-                        }
-                    })
-                )
-            }
+            
             const seed1 = Buffer.from(anchor.utils.bytes.utf8.encode("metadata"));
             const seed2 = Buffer.from(mpl.PROGRAM_ID.toBytes());
             const seed3 = Buffer.from(mint.publicKey.toBytes());
@@ -124,7 +104,6 @@ function CreateFungibleToken() {
                 [[mint]]
             )
             console.log(`cft_sig: ${cft_sig}`);
-            console.log(cft_sig);
         }
         else {
             throw new WalletNotConnectedError()

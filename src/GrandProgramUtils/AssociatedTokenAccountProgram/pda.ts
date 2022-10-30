@@ -1,7 +1,7 @@
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { PublicKey } from "@solana/web3.js";
 import { SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID } from "./constants";
-import { MAGIC_STAKE_PROGRAM_ID, GEM_BANK_PROGRAM_ID } from "../gemBank/GetProgramObjects";
+import { MAGIC_STAKE_PROGRAM_ID, GEM_BANK_PROGRAM_ID } from "../GemBank/GetProgramObjects";
 
 export const findAssociatedTokenAddress = async(walletAddress: PublicKey, tokenMintAddress: PublicKey) => {
   return (await PublicKey.findProgramAddress([
