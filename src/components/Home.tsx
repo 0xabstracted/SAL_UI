@@ -2576,6 +2576,7 @@ const Home = () => {
             !showFixedStakingRoom && !showTokenSwapping &&
             !isMobile && (
               <div onClick={() => openAlphaRoom('team')} className="team-room-div"></div>
+              // <a href="/create-raffle" className="team-room-div"></a>
             )}
           {/* {!logoLoading &&
             !showAlphaRoom &&

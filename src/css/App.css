@@ -1336,7 +1336,25 @@ body {
   box-shadow: 0 1pt 6pt rgb(0 0 0 / 15%);
 }
 
+.raffle-user-menu-parent {
+  position: absolute;
+  top: 75px;
+  right: 40px;
+  max-width: 300px;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 1pt 6pt rgb(0 0 0 / 15%);
+}
+
 .user-menu-parent ul {
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.raffle-user-menu-parent ul {
   float: left;
   width: 100%;
   padding: 0;
@@ -1366,7 +1384,29 @@ body {
   font-family: "Ubuntu Mono", monospace;
 }
 
+.raffle-user-menu-parent>ul>li>a {
+  text-decoration: none !important;
+}
+
 .user-menu-parent>ul>li:last-child {
+  border-bottom: 0 !important;
+}
+
+.raffle-user-menu-parent>ul>li {
+  float: left;
+  width: 100%;
+  padding: 15px 20px;
+  line-height: 24px;
+  vertical-align: middle;
+  text-align: left;
+  font-size: 16px;
+  color: black;
+  box-sizing: border-box;
+  border-bottom: 1px solid lightgray;
+  font-family: "Ubuntu Mono", monospace;
+}
+
+.raffle-user-menu-parent>ul>li:last-child {
   border-bottom: 0 !important;
 }
 
@@ -1872,6 +1912,11 @@ body {
   }
 
   .user-menu-parent {
+    top: 85px !important;
+    right: 10px !important;
+  }
+
+  .raffle-user-menu-parent {
     top: 85px !important;
     right: 10px !important;
   }
@@ -5706,6 +5751,8 @@ form .button {
   height: 80px;
   padding-top: 10px;
   padding-bottom: 10px;
+  background-color: rgba(0,0,0,0.4);
+  box-sizing: border-box;
 }
 
 .raffle-user-parent {
@@ -5741,7 +5788,6 @@ form .button {
   padding: 8px 12px;
   height: 40px;
   min-width: 150px;
-  margin-right: 10px;
   box-sizing: border-box;
   text-transform: uppercase;
 }
@@ -5750,4 +5796,501 @@ form .button {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  cursor: pointer;
+  filter: invert(83%) sepia(19%) saturate(1208%) hue-rotate(154deg) brightness(101%) contrast(104%);
 }
+
+.create-raffle-body {
+  float: left;
+  width: 100%;
+  height: calc(100vh - 80px);
+  background-color: rgba(0,0,0,0.4);
+  padding-left: 8%;
+  padding-right: 8%;
+  box-sizing: border-box;
+}
+
+.create-raffle-header {
+  font-size: 30px;
+  color: #ffffffcc;
+  font-weight: bold;
+  font-family: "Ubuntu Mono", monospace;
+  text-transform: uppercase;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.raffle-nft-select-parent {
+  width: 250px;
+  float: left;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.raffle-details-parent {
+  width: calc(100% - 250px);
+  float: left;
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.raffle-nft-parent {
+  border: 2px solid white;
+  border-radius: 6px;
+  float: left;
+  width: 100%;
+  height: 200px;
+  cursor: pointer;
+  position: relative;
+}
+
+.raffle-nft-parent-no-hover {
+  border: 2px solid white;
+  border-radius: 6px;
+  float: left;
+  width: 100%;
+  height: 200px;
+  cursor: pointer;
+  position: relative;
+}
+
+.raffle-nft-edit {
+  position: absolute;
+  right: 5px;
+  height: 16px;
+  width: 16px;
+  top: 5px;
+  filter: invert(83%) sepia(19%) saturate(1208%) hue-rotate(154deg) brightness(101%) contrast(104%);
+}
+
+.nft-prize-header {
+  float: left;
+  width: 100%;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: "Ubuntu Mono", monospace;
+  color: black;
+}
+
+.nft-raffle-prize-close {
+  float: right;
+  height: 20px;
+  width: 20px;
+  filter: brightness(0);
+  cursor: pointer;
+}
+
+.raffle-nft-modal-body {
+  float: left;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.raffle-nft-parent:hover {
+  opacity: 0.7;
+}
+
+.raffle-details-div {
+  float: left;
+  width: 100%;
+  background-color: white;
+  border-radius: 6px;
+  height: calc(100vh - 170px);
+  padding: 15px 20px;
+  max-height: calc(100vh - 170px);
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding-bottom: 65px;
+}
+
+.basic-raffle-details-parent {
+  float: left;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.react-datepicker {
+  font-family: "Ubuntu Mono", monospace !important;
+}
+
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item {
+  height: 30px !important;
+  padding: 5px 10px;
+  white-space: nowrap;
+  box-sizing: border-box !important;
+  line-height: 20px !important;
+  vertical-align: middle !important;
+}
+
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected {
+  background-color: #78eefc !important;
+  color: #000 !important;
+}
+
+.react-datepicker__day--selected {
+  background-color: #78eefc !important;
+  color: #000 !important;
+}
+
+.react-datepicker__input-container>input , .react-datepicker-ignore-onclickoutside {
+  height: 44px;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 28px;
+  vertical-align: middle;
+  border-radius: 6px;
+  border: 1px solid lightgray;
+  font-family: "Ubuntu Mono", monospace;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.raffle-ticket-supply {
+  height: 44px;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 28px;
+  vertical-align: middle;
+  border-radius: 6px;
+  border: 1px solid lightgray;
+  font-family: "Ubuntu Mono", monospace;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.basic-details-date-parent {
+  float: left;
+  width: 35%;
+  padding-left: 3px;
+  padding-right: 3px;
+  box-sizing: border-box;
+}
+
+.basic-details-supply-parent {
+  float: left;
+  width: 25%;
+  padding-left: 7px;
+  padding-right: 7px;
+  box-sizing: border-box;
+}
+
+.basic-details-token-parent {
+  float: left;
+  width: 40%;
+  padding-left: 3px;
+  padding-right: 3px;
+  box-sizing: border-box;
+}
+
+.basic-details-date-label {
+  float: left;
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Ubuntu Mono", monospace;
+  text-transform: capitalize;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+.raffle-token-price-parent {
+  float: left;
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid lightgray;
+  padding: 6px 12px;
+  box-sizing: border-box;
+}
+
+.raffle-token-price-input {
+  height: 30px;
+  padding: 0;
+  font-size: 16px;
+  line-height: 30px;
+  vertical-align: middle;
+  border-radius: 6px 0 0 6px;
+  border: 0;
+  border-right: 1px solid lightgray;
+  font-family: "Ubuntu Mono", monospace;
+  max-width: calc(50% - 1px);
+  box-sizing: border-box;
+  width: calc(50% - 1px);
+}
+
+.raffle-token-options {
+  height: 30px;
+  padding: 0;
+  font-size: 14px;
+  line-height: 30px;
+  vertical-align: middle;
+  border-radius: 6px 0 0 6px;
+  border: 0;
+  font-family: "Ubuntu Mono", monospace;
+  max-width: calc(50% - 0px);
+  box-sizing: border-box;
+  width: calc(50% - 0px);
+  padding-left: 4px;
+}
+
+.raffle-token-price-input::-webkit-outer-spin-button,
+.raffle-token-price-input::-webkit-inner-spin-button, 
+.raffle-ticket-supply::-webkit-outer-spin-button,
+.raffle-ticket-supply::-webkit-inner-spin-button, 
+.ticket-limit-input::-webkit-outer-spin-button,
+.ticket-limit-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.raffle-token-price-input {
+  -moz-appearance: textfield;
+}
+
+.raffle-token-price-input:focus-visible, .raffle-ticket-supply:focus-visible, .raffle-token-options:focus-visible, .ticket-limit-input:focus-visible {
+  outline: none;
+}
+
+.raffle-holder-only-details {
+  float: left;
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.raffle-holder-text {
+  float: left;
+  width: 100%;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "Ubuntu Mono", monospace;
+}
+
+.holder-only-creator-input {
+  float: left;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  height: 44px;
+  line-height: 28px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  font-family: "Ubuntu Mono", monospace;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  border-radius: 6px;
+  border: 1px solid lightgray;
+}
+
+.ticket-limit-wallet {
+  float: left;
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.ticket-winners-parent {
+  float: left;
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.create-raffle-button-parent {
+  float: left;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-top: 1px solid lightgray;
+  position: absolute;
+  bottom: 10px;
+  height: 60px;
+  box-sizing: border-box;
+  background: white;
+  right: 10px;
+  left: 10px;
+  border-radius: 0 0 6px 6px;
+}
+
+.ticket-limit-input {
+  float: left;
+  padding: 8px 12px;
+  font-size: 14px;
+  height: 44px;
+  line-height: 28px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  font-family: "Ubuntu Mono", monospace;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  border-radius: 6px;
+  border: 1px solid lightgray;
+}
+
+.terms-conditions-parent {
+  float: left;
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  background-color: #e4e6e5;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+}
+
+.terms-conditions-checkbox-parent {
+  float: left;
+  width: 60%;
+  height: 40px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.create-raffle-button {
+  border-width: 0;
+  border-radius: 6px;
+  background-color: #78eefc;
+  cursor: pointer;
+  color: #305759;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
+  font-family: "Ubuntu Mono", monospace;;
+  padding: 0;
+  margin-top: 0px;
+  padding: 8px 12px;
+  height: 40px;
+  min-width: 150px;
+  margin-right: 10px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  float: right;
+}
+
+.terms-conditions-checkbox-label {
+  float: left;
+  width: 100%;
+  padding: 6px 12px;
+  line-height: 30px;
+  box-sizing: border-box;
+}
+
+.raffle-terms-checkbox {
+  float: left;
+  margin-right: 10px;
+  display: inline-block;
+  margin-top: 8px;
+  height: 16px;
+  width: 16px;
+}
+
+.disabled-raffle {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.create-raffle-btn-parent {
+  float: left;
+  width: 40%;
+  height: 40px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.terms-conditions-header {
+  font-size: 16px;
+  font-weight: 600;
+  float: left;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-family: "Ubuntu Mono", monospace;
+}
+
+.terms-conditions-ul {
+  float: left;
+  width: 100%;
+  padding-left: 30px;
+  list-style: decimal;
+  font-family: "Ubuntu Mono", monospace;
+  box-sizing: border-box;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.terms-conditions-ul>li {
+  float: left;
+  width: 100%;
+  font-family: "Ubuntu Mono", monospace;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.raffle-nft-img {
+  height: 60px;
+  width: 60px;
+  margin-top: 50px;
+  margin-bottom: 10px;
+  filter: invert(89%) sepia(61%) saturate(2%) hue-rotate(152deg) brightness(105%) contrast(101%);
+}
+
+.raffle-selected-nft-img {
+  height: 160px;
+  width: 160px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.raffle-nft-create-text {
+  float: left;
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "Ubuntu Mono", monospace;
+  color: white;
+}
+
+.raffle-nfts-body {
+  float: left;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  max-height: calc(100vh - 290px);
+  overflow-y: auto;
+}
+
+.raffle-nft-select-button-parent {
+  float: left;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.select-raffle-nft-btn {
+  border-width: 0;
+  border-radius: 6px;
+  background-color: #78eefc;
+  cursor: pointer;
+  color: #305759;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
+  font-family: "Ubuntu Mono", monospace;;
+  padding: 0;
+  display: inline-block;
+  margin-top: 0px;
+  padding: 8px 12px;
+  height: 40px;
+  min-width: 150px;
+  margin-right: 10px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  float: right;
+}
+

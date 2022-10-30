@@ -27,7 +27,7 @@ const RaffleContent = (props: any) => {
                         <img src={User} className="raffle-user-img" alt="" />
                     </div>
                     <div className="create-raffle-parent">
-                        <button className="create-raffle-btn">Create Raffle</button>
+                        <a href="/create-raffle" className="pull-left m-r-10"><button className="create-raffle-btn">Create Raffle</button></a>
                     </div>
                 </div>
             </div>

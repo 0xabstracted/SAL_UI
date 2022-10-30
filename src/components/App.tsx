@@ -2,6 +2,7 @@ import '../css/App.css';
 import { useMemo } from 'react';
 import Home from './Home';
 import Raffle from './Raffles/Raffles';
+import CreateRaffle from './Raffles/CreateRaffle';
 
 import { clusterApiUrl } from '@solana/web3.js';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
@@ -73,11 +74,36 @@ const App = () => {
           <WalletProvider wallets={wallets} autoConnect>
             <WalletDialogProvider>
               <Home
-                // magicHatId={magicHatId}
-                // connection={connection}
-                // startDate={startDateSeed}
-                // txTimeout={txTimeoutInMilliseconds}
-                // rpcHost={rpcHost}
+              />
+            </WalletDialogProvider>
+          </WalletProvider>
+        </ConnectionProvider>
+      </ThemeProvider>
+    )
+  }
+
+  const CreateRaffleParent = () => {
+    return (
+      <ThemeProvider theme={theme}>
+        <ConnectionProvider endpoint={endpoint}>
+          <WalletProvider wallets={wallets} autoConnect>
+            <WalletDialogProvider>
+              <CreateRaffle
+              />
+            </WalletDialogProvider>
+          </WalletProvider>
+        </ConnectionProvider>
+      </ThemeProvider>
+    )
+  }
+
+  const RafflesParent = () => {
+    return (
+      <ThemeProvider theme={theme}>
+        <ConnectionProvider endpoint={endpoint}>
+          <WalletProvider wallets={wallets} autoConnect>
+            <WalletDialogProvider>
+              <Raffle
               />
             </WalletDialogProvider>
           </WalletProvider>
@@ -89,10 +115,9 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomeParent />}>
-        </Route>
-        <Route path="/raffles" element={<Raffle />}>
-        </Route>
+        <Route path="/" element={<HomeParent />}></Route>
+        <Route path="/raffles" element={<RafflesParent />}></Route>
+        <Route path="/create-raffle" element={<CreateRaffleParent />}></Route>
       </Routes>
     </BrowserRouter>
     
