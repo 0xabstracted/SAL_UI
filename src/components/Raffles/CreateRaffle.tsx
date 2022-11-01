@@ -291,7 +291,7 @@ const CreateRaffle = () => {
                     }
                 </div>
             </Modal>
-            {!wallet.connected && 
+            {!logoLoading && !wallet.connected && 
             <WalletDialogButton className="Connect-Wallet-btn" onClick={() => onRaffleNFTAfterOpen()}>
                 Connect Wallet
             </WalletDialogButton>

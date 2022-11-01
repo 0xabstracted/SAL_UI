@@ -3146,7 +3146,7 @@ const Home = () => {
           )}
           {!showAlphaRoom && !showTeamRoom && showStakeRoom && !logoAlphaLoading && !logoLoading && !showMobileDoor && (
             <div className="">
-              {!isMobile && <div className="raffle-cave"></div>}
+              {!isMobile && <a href="/raffles" className="raffle-cave"></a>}
               {!isMobile && <div className="token-swapping" onClick={openTokenSwapping}></div>}
               {!isMobile && 
               <div className="staking-portal">
