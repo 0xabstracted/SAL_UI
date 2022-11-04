@@ -1,4 +1,4 @@
-import { createTransferCheckedInstruction } from '@solana/spl-token';
+import { createTransferCheckedInstruction } from 'solanaSPLToken036';
 import { WalletNotConnectedError } from '@solana/wallet-adapter-base';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { Connection, clusterApiUrl } from '@solana/web3.js';

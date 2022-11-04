@@ -79,7 +79,7 @@ import {
   getAssociatedTokenAddress,
   createAssociatedTokenAccountInstruction,
   createMintToCheckedInstruction,
-} from "@solana/spl-token";
+} from "solanaSPLToken036";
 
 import * as mpl from "@metaplex-foundation/mpl-token-metadata";
 

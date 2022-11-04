@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { clusterApiUrl, Connection } from "@solana/web3.js";
-import { getAssociatedTokenAddress } from "@solana/spl-token";
+import { getAssociatedTokenAddress } from "solanaSPLToken036";
 import { WalletDialogButton } from "@solana/wallet-adapter-material-ui";
 import LogoWhite from "../../assets/Logowhite.png";
 import User from "../../assets/user.png";
