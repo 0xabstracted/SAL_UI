@@ -1,4 +1,4 @@
-import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import { TOKEN_PROGRAM_ID } from 'solanaSPLToken036';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { Connection, clusterApiUrl, SystemProgram } from '@solana/web3.js';
 import * as anchor from '@project-serum/anchor'

@@ -1,6 +1,6 @@
 import * as anchor from '@project-serum/anchor';
 
-import { MintLayout, createInitializeMintInstruction, createMintToInstruction, createApproveInstruction, createRevokeInstruction,} from '@solana/spl-token';
+import { MintLayout, createInitializeMintInstruction, createMintToInstruction, createApproveInstruction, createRevokeInstruction,} from 'solanaSPLToken036';
 import { SystemProgram } from '@solana/web3.js';
 import { sendTransactions } from '../config/connection';
 import idlMagicHat from '../idl/magic_hat.json';
