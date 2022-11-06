@@ -9,7 +9,9 @@ import {
   MetadataData,
 } from "mplTokenMetadata125";
 import type { Wallet } from "saberhqSolanaContrib11244";
-import * as splToken from "@solana/spl-token";
+import { Token } from "@solana/spl-token";
+import { TOKEN_PROGRAM_ID, MintLayout } from "solanaSPLToken036";
+// import { Token } from "solanaSPLToken020";
 import type { Connection } from "@solana/web3.js";
 import * as web3 from "@solana/web3.js";
 
@@ -38,14 +40,14 @@ export const createMint = async (
   recipient: web3.PublicKey,
   amount = 1,
   freezeAuthority: web3.PublicKey = recipient
-): Promise<[web3.PublicKey, splToken.Token]> => {
-  const mint = await splToken.Token.createMint(
+): Promise<[web3.PublicKey, Token]> => {
+  const mint = await Token.createMint(
     connection,
     creator,
     creator.publicKey,
     freezeAuthority,
     0,
-    splToken.TOKEN_PROGRAM_ID
+    TOKEN_PROGRAM_ID
   );
   const tokenAccount = await mint.createAssociatedTokenAccount(recipient);
   await mint.mintTo(tokenAccount, creator.publicKey, [], amount);
@@ -68,7 +70,7 @@ export const createMintTransaction = async (
   freezeAuthority: web3.PublicKey = recipient,
   receiver = wallet.publicKey
 ): Promise<[web3.PublicKey, web3.Transaction]> => {
-  const mintBalanceNeeded = await splToken.Token.getMinBalanceRentForExemptMint(
+  const mintBalanceNeeded = await Token.getMinBalanceRentForExemptMint(
     connection
   );
   transaction.add(
@@ -77,13 +79,13 @@ export const createMintTransaction = async (
       newAccountPubkey: mintId,
       lamports: mintBalanceNeeded,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      space: splToken.MintLayout.span,
-      programId: splToken.TOKEN_PROGRAM_ID,
+      space: MintLayout.span,
+      programId: TOKEN_PROGRAM_ID,
     })
   );
   transaction.add(
-    splToken.Token.createInitMintInstruction(
-      splToken.TOKEN_PROGRAM_ID,
+    Token.createInitMintInstruction(
+      TOKEN_PROGRAM_ID,
       mintId,
       0,
       wallet.publicKey,
@@ -100,8 +102,8 @@ export const createMintTransaction = async (
   );
   if (amount > 0) {
     transaction.add(
-      splToken.Token.createMintToInstruction(
-        splToken.TOKEN_PROGRAM_ID,
+      Token.createMintToInstruction(
+        TOKEN_PROGRAM_ID,
         mintId,
         receiverAta,
         wallet.publicKey,
@@ -206,10 +208,10 @@ export const withRemainingAccountsForPayment = async (
     // get holder of receipt mint
     const receiptTokenAccountId = receiptMintLargestAccount.value[0]?.address;
     if (!receiptTokenAccountId) throw new Error("No token accounts found");
-    const receiptMintToken = new splToken.Token(
+    const receiptMintToken = new Token(
       connection,
       options.receiptMint,
-      splToken.TOKEN_PROGRAM_ID,
+      TOKEN_PROGRAM_ID,
       web3.Keypair.generate()
     );
     const receiptTokenAccount = await receiptMintToken.getAccountInfo(

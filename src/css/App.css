@@ -5598,6 +5598,10 @@ form .button {
   margin-bottom: 8px;
 }
 
+.no-float {
+  float: none !important;
+}
+
 .raffle-nft-details-price {
   float: left;
   width: 100%;
@@ -6038,6 +6042,16 @@ form .button {
   padding: 10px;
   box-sizing: border-box;
   position: relative;
+}
+
+.admin-staking-parent {
+  width: 80%;
+  float: left;
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative;
+  margin-left: 10%;
+  margin-top: 80px;
 }
 
 .raffle-nft-parent {

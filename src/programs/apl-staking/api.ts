@@ -38,10 +38,10 @@ import { getMintSupply } from "./utils";
  * @param imageUri - (Optional) Image URI for stake pool
  * @param resetOnStake - (Optional) Boolean to reset an entry's total stake seconds on unstake
  * @param cooldownSeconds - (Optional) Number of seconds for token to cool down before returned to the staker
- * @param rewardDistributor - (Optional) Parameters to creat reward distributor
+ * @param rewardDistributor - (Optional) Parameters to create reward distributor
  * @returns
  */
-export const createStakePool = async (
+export const CreateStakePool = async (
   connection: Connection,
   wallet: Wallet,
   params: {
@@ -102,6 +102,7 @@ export const createStakePool = async (
  * @param rewardDistributorKind - (Optional) Reward distributor kind Mint or Treasury
  * @param maxSupply - (Optional) Max supply
  * @param supply - (Optional) Supply
+ * Stake owner should call this but no needed now as we are doing it above already
  * @returns
  */
 export const createRewardDistributor = async (
@@ -128,6 +129,7 @@ export const createRewardDistributor = async (
  * @param user - (Optional) User pubkey in case the person paying for the transaction and
  * stake entry owner are different
  * @returns
+ * stake user should call this
  */
 export const createStakeEntry = async (
   connection: Connection,
@@ -150,6 +152,7 @@ export const createStakeEntry = async (
  * @param stakePoolId - Stake pool ID
  * @param originalMintId - Original mint ID
  * @returns
+ * Stake user should call this
  */
 export const initializeRewardEntry = async (
   connection: Connection,
@@ -202,6 +205,7 @@ export const initializeRewardEntry = async (
  * @param stakePoolId - Stake pool ID
  * @param originalMintId - Original mint ID
  * @returns
+ * Stake owner should call this similar to add to bank whitelist
  */
 export const authorizeStakeEntry = async (
   connection: Connection,
@@ -225,6 +229,7 @@ export const authorizeStakeEntry = async (
  * @param originalMintId - Original mint ID
  * @param amount - (Optional) Amount of tokens to be staked, defaults to 1
  * @returns
+ * Stake owner should call this not needed now
  */
 export const createStakeEntryAndStakeMint = async (
   connection: Connection,
@@ -281,6 +286,7 @@ export const createStakeEntryAndStakeMint = async (
  * @param stakePoolId - Stake pool id
  * @param stakeEntryId - Original mint id
  * @returns
+ * Stake user should call this
  */
 export const claimRewards = async (
   connection: Connection,
@@ -323,6 +329,7 @@ export const claimRewards = async (
  * stake entry owner are different
  * @param amount - (Optional) Amount of tokens to be staked, defaults to 1
  * @returns
+ * Stake user should call this
  */
 export const stake = async (
   connection: Connection,

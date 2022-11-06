@@ -170,6 +170,7 @@ export const withInitStakeEntry = async (
  * @param wallet
  * @param params
  * @returns Transaction
+ * Stake owner should call this
  */
 export const withAuthorizeStakeEntry = async (
   transaction: web3.Transaction,

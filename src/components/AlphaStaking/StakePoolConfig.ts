@@ -3,7 +3,22 @@ import { FarmConfig, FixedRateConfig, MaxCounts } from "../../GrandProgramUtils/
 import { REWARD_MINT_GLTCH, RYAN_ADDRESS } from "../TokenCreation/AlphaTokenConfig";
 import * as anchor from '@project-serum/anchor'
 import { PublicKey } from "@solana/web3.js"
-
+export const STAKE_POOL_ADDRESS = new PublicKey(
+    "ASPXjbyfki5TsXHu4eBmsqqhKNJLhPqJ4wj7gsgW18F6"
+);
+export enum RewardDistributorKind {
+    Mint = 1,
+    Treasury = 2,
+}
+export const IDENTIFIER_SEED = "identifier";
+export const STAKE_POOL_SEED = "stake-pool";
+export const REWARD_DISTRIBUTOR_ADDRESS = new PublicKey(
+    "ARDCbrxKAMA2pCBAAa5TUSi5SYMvobfPnHB97mu44EMY"
+);
+export const STAKE_AUTHORIZATION_SEED = "stake-authorization";
+export const REWARD_DISTRIBUTOR_SEED = "reward-distributor";
+export const STAKE_ENTRY_SEED = "stake-entry";
+export const REWARD_ENTRY_SEED = "reward-entry";
 
 export interface StartStakePoolArgs{
     rewardMintId: PublicKey,  
