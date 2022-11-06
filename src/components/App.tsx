@@ -6,6 +6,7 @@ import CreateRaffle from './Raffles/CreateRaffle';
 import SingleRaffle from './Raffles/SingleRaffle';
 import StartStaking from './AlphaStaking/startStaking';
 import AdminStaking from './AlphaStaking/adminStaking';
+import FixedStaking from './AlphaStaking/fixedStaking';
 
 import { clusterApiUrl } from '@solana/web3.js';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
@@ -161,12 +162,28 @@ const App = () => {
     )
   }
 
+  const FixedStakingParent = () => {
+    return (
+      <ThemeProvider theme={theme}>
+        <ConnectionProvider endpoint={endpoint}>
+          <WalletProvider wallets={wallets} autoConnect>
+            <WalletDialogProvider>
+              <FixedStaking
+              />
+            </WalletDialogProvider>
+          </WalletProvider>
+        </ConnectionProvider>
+      </ThemeProvider>
+    )
+  }
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomeParent />}></Route>
         <Route path="/raffles" element={<RafflesParent />} />
         <Route path="/start-staking" element={<StartStakingParent />} />
+        <Route path="/fixed-staking" element={<FixedStakingParent />} />
         <Route path="/admin-staking" element={<AdminStakingParent />} />
         <Route path="/buy-tickets/*" element={<SingleRaffleParent />} />
         <Route path="/create-raffle" element={<CreateRaffleParent />}></Route>
