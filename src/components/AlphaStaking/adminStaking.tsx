@@ -11,7 +11,7 @@ import Pencil from "../../assets/pencil.png";
 import DatePicker from "react-datepicker";
 import Modal from 'react-modal';
 import * as anchor from "@project-serum/anchor";
-import { REWARD_MINT_GLITCH, REWARD_MINT_GLTCH } from "../TokenCreation/AlphaTokenConfig";
+import { REWARD_MINT_GLTCH } from "../TokenCreation/AlphaTokenConfig";
 import { Metaplex } from "@metaplex-foundation/js";
 import { UPDATE_AUTHORITY_OF_TOKEN_STRING, STAKE_POOL_ADDRESS, IDENTIFIER_SEED, STAKE_POOL_SEED, REWARD_DISTRIBUTOR_SEED, REWARD_DISTRIBUTOR_ADDRESS, RewardDistributorKind, STAKE_AUTHORIZATION_SEED, STAKE_ENTRY_SEED, REWARD_ENTRY_SEED } from "../AlphaStaking/StakePoolConfig";
 
@@ -21,8 +21,6 @@ import { useParams } from "react-router-dom";
 import { AnchorProvider, BN, Program } from "projectSerumAnchor0250";
 import * as STAKE_POOL_TYPES from "../../programs/apl-staking/idl/apl_stake_pool";
 import * as REWARD_DISTRIBUTOR_TYPES from "../../programs/apl-staking/idl/apl_reward_distributor";
-import provider from "@project-serum/anchor/dist/provider";
-import { GEM_BANK_PROGRAM_ID } from "../../GrandProgramUtils/GemBank/GetProgramObjects";
 import {
     AccountData,
     findAta,
@@ -32,7 +30,8 @@ import {
 import { sendTransactions } from "../../config/connection";
 import * as metaplex125 from "mplTokenMetadata125";
 import { StakeEntryData } from "../../programs/apl-staking/programs/stakePool/constants";
-import * as splToken from "@solana/spl-token";
+// import * as splToken from "@solana/spl-token";
+import * as splToken36 from "solanaSPLToken036";
 import { withRemainingAccountsForKind } from "../../programs/apl-staking/programs/rewardDistributor/utils";
 
 const AdminStaking = () => {
@@ -115,7 +114,7 @@ const AdminStaking = () => {
                 is_ours = true;
                 for (let iindex = 0; iindex < creators.length; iindex++) {
                   const element = creators[iindex];
-                  if (element.share == 0) {
+                  if (element.share === 0) {
                   }
                 }
               }
@@ -130,13 +129,13 @@ const AdminStaking = () => {
                     var trait_type;
                     for (let index = 0; index < attributes.length; index++) {
                       const element = attributes[index];
-                      if (element.trait_type == 'BaseBody' && element.value == 'Human') {
+                      if (element.trait_type === 'BaseBody' && element.value === 'Human') {
                         is_human = true;
                       }
-                      else if (element.trait_type == 'BaseBody' && element.value == 'Cyborg') {
+                      else if (element.trait_type === 'BaseBody' && element.value === 'Cyborg') {
                         is_cyborg = true;
                       }
-                      if (element.trait_type == 'Pets' && element.value && element.value.length > 0) {
+                      if (element.trait_type === 'Pets' && element.value && element.value.length > 0) {
                         is_pet = true;
                       }
                     }
@@ -225,15 +224,19 @@ const AdminStaking = () => {
         connection: anchor.web3.Connection,
         originalMintId: anchor.web3.PublicKey
       ): Promise<BN> => {
-        const mint = new splToken.Token(
-          connection,
-          originalMintId,
-          splToken.TOKEN_PROGRAM_ID,
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          null
-        );
-        return (await mint.getMintInfo()).supply;
+        // const mint = new splToken.Token(
+        //   connection,
+        //   originalMintId,
+        //   splToken.TOKEN_PROGRAM_ID,
+        //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //   // @ts-ignore
+        //   null
+        // );
+        const mint = await splToken36.getMint(
+            connection,
+            originalMintId
+          )
+        return mint.supply as unknown as BN;
     };
 
     const findStakeEntryIdFromMint = async (
@@ -246,7 +249,7 @@ const AdminStaking = () => {
         if (isFungible === undefined) {
             const supply = await getMintSupply(connection, originalMintId);
             isFungible = supply.gt(new BN(1));
-            isFungible = true;
+            // isFungible = true;
         }
         return findStakeEntryId(wallet, stakePoolId, originalMintId, isFungible!);
     };
@@ -304,31 +307,39 @@ const AdminStaking = () => {
             stakePoolId
         );
         console.log(`rewardDistributorId: ${rewardDistributorId}`)
-        const associatedAddress = await splToken.Token.getAssociatedTokenAddress(
-            splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
-            splToken.TOKEN_PROGRAM_ID,
-            REWARD_MINT_GLTCH,
-            rewardDistributorId,
-            true
-        );
-        console.log(`associatedAddress: ${associatedAddress}`)
-        var inst = splToken.Token.createAssociatedTokenAccountInstruction(
-            splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
-            splToken.TOKEN_PROGRAM_ID,
-            REWARD_MINT_GLTCH,
-            associatedAddress,
-            rewardDistributorId,
-            wallet_t.publicKey
-        )
-        console.log(`inst: ${inst}`)
-        const gltch_ata = await sendTransactions(
-            connection,
-            wallet_t,
-            [[inst]],
-            // [anchor.utils.bytes.utf8.encode(REWARD_DISTRIBUTOR_SEED), stakePoolId.toBytes()]
-            []
-        );
-        console.log('Reward Distributor ATA Signature : ', gltch_ata);
+        // const associatedAddress = await splToken36.getAssociatedTokenAddress(
+        //     REWARD_MINT_GLTCH,
+        //     rewardDistributorId,
+        //     true,
+        //     // splToken36.ASSOCIATED_TOKEN_PROGRAM_ID,
+        //     // splToken36.TOKEN_PROGRAM_ID,
+        // );
+        // console.log(`associatedAddress: ${associatedAddress}`)
+        // var inst = splToken36.createAssociatedTokenAccountInstruction(
+        //     wallet_t.publicKey,
+        //     associatedAddress,
+        //     rewardDistributorId,
+        //     REWARD_MINT_GLTCH,
+        //     // splToken36.ASSOCIATED_TOKEN_PROGRAM_ID,
+        //     // splToken36.TOKEN_PROGRAM_ID,
+        //     )
+            const gltch_ata = await splToken36.getOrCreateAssociatedTokenAccount(
+                connection,
+                wallet_t.publicKey,
+                REWARD_MINT_GLTCH,
+                rewardDistributorId,
+                true
+            );
+        // console.log(`inst: ${inst}`)
+        // const gltch_ata = await sendTransactions(
+        //     connection,
+        //     wallet_t,
+        //     [[inst]],
+        //     // [anchor.utils.bytes.utf8.encode(REWARD_DISTRIBUTOR_SEED), stakePoolId.toBytes()]
+        //     [[]]
+        // );
+        console.log('Reward Distributor ATA address : ', gltch_ata.address.toBase58());
+        console.log('Reward Distributor ATA amount : ', gltch_ata.amount);
     }
 
     const createStakePool = async (str:any) => {
@@ -339,16 +350,16 @@ const AdminStaking = () => {
             overlayText: "",
             imageUri: "https://dgnvzn3x5fqusqpvst65sizekrfhwtklzokfk7usi64h7erzb7iq.arweave.net/GZtct3fpYUlB9ZT92SMkVEp7TUvLlFV-kke4f5I5D9E?ext=jpg",
             requiresCollections: [],
-            requiresCreators: [],
+            requiresCreators: ["C5VUx4cjauGxVU3u9KEU6zuuLW5SDV4icbDRC51qZLwX"],
             requiresAuthorization: false,
             authority: wallet_t.publicKey,
-            resetOnStake: false,
+            resetOnStake: true,
             cooldownSeconds: null,
             minStakeSeconds: null,
             endDate: null,
-            rewardAmount: new BN(50000000),
+            rewardAmount: new BN(500_000_000_000),
             rewardDurationSeconds: new BN(5),
-            supply: new BN(50000000),
+            supply: new BN(9_000_000_000_000_000),
             kind: RewardDistributorKind.Treasury
         };
         const provider = new AnchorProvider(connection, wallet_t, {});
@@ -369,7 +380,7 @@ const AdminStaking = () => {
             const parsed:any = await stakePoolProgram.account.identifier.fetch(identifierId);
             console.log(parsed);
             const identifier = parsed?.count.toNumber();
-            if (identifier == 0) {
+            if (identifier === 0) {
                 let identifier_instructions = stakePoolProgram.instruction.initIdentifier({
                     accounts: {
                         identifier: identifierId,

@@ -3,13 +3,13 @@ import {
   withFindOrInitAssociatedTokenAccount,
 } from "cardinalCommon2011";
 import type { Wallet } from "saberhqSolanaContrib11244";
-import type {
+import {
   AccountMeta,
   Connection,
   PublicKey,
   Transaction,
 } from "@solana/web3.js";
-
+import * as splToken36 from "solanaSPLToken036"
 import { RewardDistributorKind } from "./constants";
 
 export const withRemainingAccountsForKind = async (
@@ -26,15 +26,25 @@ export const withRemainingAccountsForKind = async (
       return [];
     }
     case RewardDistributorKind.Treasury: {
-      const rewardDistributorRewardMintTokenAccountId =
-        await withFindOrInitAssociatedTokenAccount(
-          transaction,
-          connection,
-          rewardMint,
-          rewardDistributorId,
-          wallet.publicKey,
-          true
-        );
+      let wallet_t:any = wallet;
+
+    //   const rewardDistributorRewardMintTokenAccountId = await splToken36.getOrCreateAssociatedTokenAccount(
+    //     connection,
+    //     wallet,
+    //     rewardMint,
+    //     rewardDistributorId,
+    //     true
+    // );
+      const rewardDistributorRewardMintTokenAccountId = new PublicKey("FNYBie5kK9mjfbZ5FJGmTbyyMHwVaGcTQA2Q1tVEkx7J")
+      // const rewardDistributorRewardMintTokenAccountId =
+      //   await withFindOrInitAssociatedTokenAccount(
+      //     transaction,
+      //     connection,
+      //     rewardMint,
+      //     rewardDistributorId,
+      //     wallet.publicKey,
+      //     true
+      //   );
       const userRewardMintTokenAccountId = await findAta(
         rewardMint,
         wallet.publicKey,
