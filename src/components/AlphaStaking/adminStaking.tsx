@@ -33,6 +33,7 @@ import { StakeEntryData } from "../../programs/apl-staking/programs/stakePool/co
 // import * as splToken from "@solana/spl-token";
 import * as splToken36 from "solanaSPLToken036";
 import { withRemainingAccountsForKind } from "../../programs/apl-staking/programs/rewardDistributor/utils";
+import { SAL_DEVNET_4200 } from "./ATBW_SAL_Devnet_4200";
 
 const AdminStaking = () => {
 
@@ -49,6 +50,7 @@ const AdminStaking = () => {
     const [nfts, setNFts] = useState<any>([]);
 
     const wallet = useWallet();
+    let stack_opener = 0; 
 
     const anchorWallet = useMemo(() => {
         // wallet.connect();
@@ -477,8 +479,8 @@ const AdminStaking = () => {
         console.log('Start Pool Signature : ', start_pool_signature);
     }
 
-    const initializeRewardEntry =async () => {
-        var selected_nft:any = nfts[0];
+    const authorizeStakeEntryInst = async (stakePoolId:PublicKey, originalMintId: PublicKey,  arr:any) => {
+        const transaction = new Transaction();
         let wallet_t:any = wallet;
         const provider = new AnchorProvider(connection, wallet_t, {});
         const stakePoolProgram = new Program<STAKE_POOL_TYPES.aplStakePool>(
@@ -491,96 +493,52 @@ const AdminStaking = () => {
             REWARD_DISTRIBUTOR_ADDRESS,
             provider
         );
-        let init_reward_entry_instructions:any = [];
+        let authorize_stake_instructions:any = [];
         const [identifierId] = await findIdentifierId(wallet_t.publicKey);
-        let [stakePoolId]:any = [null];
-        try {
-            const parsed:any = await stakePoolProgram.account.identifier.fetch(identifierId);
-            console.log(parsed);
-            const identifier = parsed?.count;
-            if (!identifier) {
-                let identifier_instructions = stakePoolProgram.instruction.initIdentifier({
-                    accounts: {
-                        identifier: identifierId,
-                        payer: wallet_t.publicKey,
-                        systemProgram: SystemProgram.programId,
-                    }
-                });
-                init_reward_entry_instructions.push(identifier_instructions);
-            }
-            [stakePoolId] = await findStakePoolId(identifier);
-        } catch (error) {
-            const identifier = new anchor.BN(1);
-            let identifier_instructions = stakePoolProgram.instruction.initIdentifier({
-                accounts: {
-                    identifier: identifierId,
-                    payer: wallet_t.publicKey,
-                    systemProgram: SystemProgram.programId,
-                }
-            });
-            [stakePoolId] = await findStakePoolId(identifier);
-            init_reward_entry_instructions.push(identifier_instructions);
-        }
-        const remainingAccounts = await remainingAccountsForInitStakeEntry(
+        console.log("stakePoolId : ",stakePoolId.toBase58());
+        console.log("identifierId : ",identifierId.toBase58());
+
+        const [stakeAuthorizationId] = await findStakeAuthorizationId(
             stakePoolId,
-            selected_nft.mint
-        );    
-        const [[stakeEntryId], originalMintMetadataId] = await Promise.all([
-            findStakeEntryIdFromMint(
-              connection,
-              wallet_t.publicKey,
-              stakePoolId,
-              selected_nft.mint,
-              true
-            ),
-            metaplex125.Metadata.getPDA(selected_nft.mint),
-        ]);
-        
-        const stakeEntryData = await tryGetAccount(() =>
-            getStakeEntry(connection, stakeEntryId)
+            originalMintId
         );
-        
-        let init_entry_instruction = stakePoolProgram.instruction.initEntry(wallet_t.publicKey, {
+        let stake_authorize_instruction = stakePoolProgram.instruction.authorizeMint(originalMintId, {
             accounts: {
-                stakeEntry: stakeEntryId,
-                stakePool: stakePoolId,
-                originalMint: selected_nft.mint,
-                originalMintMetadata: originalMintMetadataId,
-                payer: wallet_t.publicKey,
-                systemProgram: SystemProgram.programId,
+              stakePool: stakePoolId,
+              stakeAuthorizationRecord: stakeAuthorizationId,
+              payer: wallet_t.publicKey,
+              systemProgram: SystemProgram.programId,
             },
-            remainingAccounts,
         })
-        if (!stakeEntryData) {
-            init_reward_entry_instructions.push(init_entry_instruction);
-        }
-
-        const [rewardDistributorId] = await findRewardDistributorId(
-            stakePoolId
-        );
-        const [rewardEntryId] = await findRewardEntryId(
-            rewardDistributorId,
-            stakeEntryId
-        );
-        let init_reward_entry_instruction = rewardDistributorProgram.instruction.initRewardEntry({
-            accounts: {
-                rewardEntry: rewardEntryId,
-                stakeEntry: stakeEntryId,
-                rewardDistributor: rewardDistributorId,
-                payer: wallet_t.publicKey,
-                systemProgram: SystemProgram.programId,
-            }
-        })
-        init_reward_entry_instructions.push(init_reward_entry_instruction);
-
-        const init_reward_signature = await sendTransactions(
-            connection,
-            wallet,
-            [init_reward_entry_instructions],
-            [[]]
-        );
-        console.log('Init Reward Signature : ', init_reward_signature);
+        arr.push(stake_authorize_instruction);
+        return arr;
     }
+
+    const parseArrayToAuthorizeStake = async () => {
+        const connection = new Connection(clusterApiUrl("devnet"));
+        let authorize_stake_instruction: any = [];
+        console.log(stack_opener);
+        for (let index = stack_opener; index < stack_opener + 7; index++) {
+          // bank_instruction = await sendAddtoBankWhitelistInstruction(BANK_WL_OBJECT[index]['farmId'], BANK_WL_OBJECT[index]['mint'], bank_instruction);
+          authorize_stake_instruction = await authorizeStakeEntryInst(
+            new anchor.web3.PublicKey(SAL_DEVNET_4200[index]["stakePoolId"]),
+            new anchor.web3.PublicKey(SAL_DEVNET_4200[index]["mint"]),
+            authorize_stake_instruction
+          );
+        }
+        const authorize_stake_entry_sig = await sendTransactions(
+          connection,
+          wallet,
+          [authorize_stake_instruction],
+          [[]]
+        );
+        console.log(stack_opener);
+        console.log(authorize_stake_entry_sig);
+        if (stack_opener < 4200) {
+          stack_opener = stack_opener + 7;
+          parseArrayToAuthorizeStake();
+        }
+    };
 
     return (
         <div className={logoLoading ? "main-bg-raffles black-bg" : "main-bg-raffles"}>
@@ -608,9 +566,6 @@ const AdminStaking = () => {
                                     </div>
                                     <div className="pull-left full-width m-t-10 m-b-10 text-center">
                                         <button className="create-raffle-button no-float" onClick={() => createStakePool('cyborg_pets')}>Create Cyborg Pets Staking Pool</button>
-                                    </div>
-                                    <div className="pull-left full-width m-t-10 m-b-10 text-center">
-                                        <button className="create-raffle-button no-float" onClick={() => initializeRewardEntry()}>Initialize Reward Entry</button>
                                     </div>
                                     <div className="pull-left full-width m-t-10 m-b-10 text-center">
                                         <button className="create-raffle-button no-float" onClick={() => createGltchATA()}>Create Gltch ATA</button>

@@ -262,7 +262,7 @@ function AddToBankWhitelist() {
     for (let index = stack_opener; index < stack_opener + 7; index++) {
       // bank_instruction = await sendAddtoBankWhitelistInstruction(BANK_WL_OBJECT[index]['farmId'], BANK_WL_OBJECT[index]['mint'], bank_instruction);
       bank_instruction = await sendAddtoBankWhitelistInstruction(
-        SAL_DEVNET_4200[index]["farmId"],
+        SAL_DEVNET_4200[index]["stakePoolId"],
         SAL_DEVNET_4200[index]["mint"],
         bank_instruction
       );

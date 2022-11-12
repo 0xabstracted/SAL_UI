@@ -1,38 +1,42 @@
-import '../css/App.css';
-import { useMemo } from 'react';
-import Home from './Home';
-import Raffle from './Raffles/Raffles';
-import CreateRaffle from './Raffles/CreateRaffle';
-import SingleRaffle from './Raffles/SingleRaffle';
-import StartStaking from './AlphaStaking/startStaking';
-import AdminStaking from './AlphaStaking/adminStaking';
+import "../css/App.css";
+import { useMemo } from "react";
+import Home from "./Home";
+import Raffle from "./Raffles/Raffles";
+import CreateRaffle from "./Raffles/CreateRaffle";
+import SingleRaffle from "./Raffles/SingleRaffle";
+import StartStaking from "./AlphaStaking/startStaking";
+import AdminStaking from "./AlphaStaking/adminStaking";
+import FixedStaking from "./AlphaStaking/fixedStaking";
 
-import { clusterApiUrl } from '@solana/web3.js';
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+import { clusterApiUrl } from "@solana/web3.js";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import {
   getPhantomWallet,
   getSlopeWallet,
   getSolflareWallet,
   getSolletWallet,
   getSolletExtensionWallet,
-} from '@solana/wallet-adapter-wallets';
+} from "@solana/wallet-adapter-wallets";
 
 import {
   ConnectionProvider,
   WalletProvider,
-} from '@solana/wallet-adapter-react';
-import { WalletDialogProvider } from '@solana/wallet-adapter-material-ui';
+} from "@solana/wallet-adapter-react";
+import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 
-import { ThemeProvider, createTheme } from '@material-ui/core';
+import { ThemeProvider, createTheme } from "@material-ui/core";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { exact } from 'prop-types';
+import { exact } from "prop-types";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const theme = createTheme({
   palette: {
-    type: 'dark',
+    type: "dark",
   },
 });
+
+const queryClient = new QueryClient();
 
 // const getMagicHatId = (): anchor.web3.PublicKey | undefined => {
 //   try {
@@ -57,9 +61,9 @@ const theme = createTheme({
 // const txTimeoutInMilliseconds = 30000;
 
 const App = () => {
-  let network = WalletAdapterNetwork.Devnet
+  let network = WalletAdapterNetwork.Devnet;
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-  
+
   const wallets = useMemo(
     () => [
       getPhantomWallet(),
@@ -68,7 +72,7 @@ const App = () => {
       getSolletWallet({ network }),
       getSolletExtensionWallet({ network }),
     ],
-    [network],
+    [network]
   );
 
   const HomeParent = () => {
@@ -77,14 +81,13 @@ const App = () => {
         <ConnectionProvider endpoint={endpoint}>
           <WalletProvider wallets={wallets} autoConnect>
             <WalletDialogProvider>
-              <Home
-              />
+              <Home />
             </WalletDialogProvider>
           </WalletProvider>
         </ConnectionProvider>
       </ThemeProvider>
-    )
-  }
+    );
+  };
 
   const CreateRaffleParent = () => {
     return (
@@ -92,14 +95,13 @@ const App = () => {
         <ConnectionProvider endpoint={endpoint}>
           <WalletProvider wallets={wallets} autoConnect>
             <WalletDialogProvider>
-              <CreateRaffle
-              />
+              <CreateRaffle />
             </WalletDialogProvider>
           </WalletProvider>
         </ConnectionProvider>
       </ThemeProvider>
-    )
-  }
+    );
+  };
 
   const RafflesParent = () => {
     return (
@@ -107,14 +109,13 @@ const App = () => {
         <ConnectionProvider endpoint={endpoint}>
           <WalletProvider wallets={wallets} autoConnect>
             <WalletDialogProvider>
-              <Raffle
-              />
+              <Raffle />
             </WalletDialogProvider>
           </WalletProvider>
         </ConnectionProvider>
       </ThemeProvider>
-    )
-  }
+    );
+  };
 
   const SingleRaffleParent = () => {
     return (
@@ -122,14 +123,13 @@ const App = () => {
         <ConnectionProvider endpoint={endpoint}>
           <WalletProvider wallets={wallets} autoConnect>
             <WalletDialogProvider>
-              <SingleRaffle
-              />
+              <SingleRaffle />
             </WalletDialogProvider>
           </WalletProvider>
         </ConnectionProvider>
       </ThemeProvider>
-    )
-  }
+    );
+  };
 
   const StartStakingParent = () => {
     return (
@@ -137,14 +137,13 @@ const App = () => {
         <ConnectionProvider endpoint={endpoint}>
           <WalletProvider wallets={wallets} autoConnect>
             <WalletDialogProvider>
-              <StartStaking
-              />
+              <StartStaking />
             </WalletDialogProvider>
           </WalletProvider>
         </ConnectionProvider>
       </ThemeProvider>
-    )
-  }
+    );
+  };
 
   const AdminStakingParent = () => {
     return (
@@ -152,14 +151,29 @@ const App = () => {
         <ConnectionProvider endpoint={endpoint}>
           <WalletProvider wallets={wallets} autoConnect>
             <WalletDialogProvider>
-              <AdminStaking
-              />
+              <AdminStaking />
             </WalletDialogProvider>
           </WalletProvider>
         </ConnectionProvider>
       </ThemeProvider>
-    )
-  }
+    );
+  };
+
+  const FixedStakingParent = () => {
+    return (
+      <ThemeProvider theme={theme}>
+        <ConnectionProvider endpoint={endpoint}>
+          <WalletProvider wallets={wallets} autoConnect>
+            <WalletDialogProvider>
+              <QueryClientProvider client={queryClient}>
+                <FixedStaking client={queryClient} />
+              </QueryClientProvider>
+            </WalletDialogProvider>
+          </WalletProvider>
+        </ConnectionProvider>
+      </ThemeProvider>
+    );
+  };
 
   return (
     <BrowserRouter>
@@ -167,12 +181,12 @@ const App = () => {
         <Route path="/" element={<HomeParent />}></Route>
         <Route path="/raffles" element={<RafflesParent />} />
         <Route path="/start-staking" element={<StartStakingParent />} />
+        <Route path="/fixed-staking" element={<FixedStakingParent />} />
         <Route path="/admin-staking" element={<AdminStakingParent />} />
         <Route path="/buy-tickets/*" element={<SingleRaffleParent />} />
         <Route path="/create-raffle" element={<CreateRaffleParent />}></Route>
       </Routes>
     </BrowserRouter>
-    
   );
 };
 

@@ -266,7 +266,6 @@ const Home = () => {
   const [funderFive, setFunderFive] = useState<any>("");
   const [nftMint, setNftMint] = useState<any>("");
   const [collectionIdMint, setCollectionIdMint] = useState<any>("");
-  const [showFixedStakingRoom, setShowFixedStakingRoom] = useState(false);
   const [showTokenSwapping, setShowTokenSwapping] = useState(false);
   const [glitchTokenVal, setGlitchTokenVal] = useState(0);
   const [alphaTokenVal, setAlphaTokenVal] = useState(0);
@@ -1816,15 +1815,9 @@ const Home = () => {
       setMobileDoor(id);
       setMenuOpen(false);
       setShowStakeRoom(true);
-      setShowFixedStakingRoom(false);
       setShowTokenSwapping(false);
       setClassNameState("main-alphazex-mobile-room-door");
       setShowTokenSwapping(false);
-      // setShowMobileDoor(true);
-      // setMobileDoor(id);
-      // setMenuOpen(false);
-      // setShowAlphaRoom(true);
-      // setClassNameState("main-alpha-room-door");
     } else if (id && id === "ALPHA") {
       setShowMobileDoor(true);
       setMobileDoor(id);
@@ -1832,11 +1825,6 @@ const Home = () => {
       setShowAlphaRoom(true);
       setClassNameState("main-alpha-room-door");
       setShowTokenSwapping(false);
-      // setShowMobileDoor(true);
-      // setMobileDoor(id);
-      // setMenuOpen(false);
-      // setShowStakeRoom(true);
-      // setClassNameState("main-alphazex-mobile-room-door");
     } else {
       setMenuOpen(false);
     }
@@ -1860,7 +1848,6 @@ const Home = () => {
       setShowStakeRoom(false);
       setShowTeamRoom(false);
       setShowMobileDoor(true);
-      setShowFixedStakingRoom(false);
       setShowTokenSwapping(false);
     } else {
       setClassNameState("main-bg-after-door-open");
@@ -1868,192 +1855,11 @@ const Home = () => {
       setShowAlphaRoom(false);
       setShowStakeRoom(false);
       setShowTeamRoom(false);
-      setShowFixedStakingRoom(false);
       setShowTokenSwapping(false);
     }
   };
 
-  const createWhitelistConfig = async () => {
-    try {
-      const [whitelist_config_pda, bump] = await PublicKey.findProgramAddress(
-        [Buffer.from(pdaWhitelistSeed), wallet.publicKey!.toBuffer()],
-        MAGIC_HAT_PROGRAM_V2_ID
-      );
-      // let config_t:any = Borsh.struct(JSON.stringify(config));
-      // return { whitelistConfigAccounts };
-    } catch (error) {
-      console.log("Transaction error: ", error);
-    }
-  };
-
-  const updateWhitelistConfig = async () => {
-    try {
-      const [whitelist_config_pda, bump] = await PublicKey.findProgramAddress(
-        [Buffer.from(pdaWhitelistSeed), wallet.publicKey!.toBuffer()],
-        MAGIC_HAT_PROGRAM_V2_ID
-      );
-      // return { whitelistConfigAccounts };
-    } catch (error) {
-      console.log("Transaction error: ", error);
-    }
-  };
-
-
-
-
-
   let currentWltype: String;
-
-  const getTimeToMInt = async () => {
-    const date = new Date();
-    const time: any = parseInt((date.getTime() / 1000).toFixed(0));
-    if (time >= PUBLIC_TIME) {
-      setCurrentWl("PUBLIC");
-      currentWltype = "PUBLIC";
-    } else if (time >= WL_TIME) {
-      setCurrentWl("WL");
-      currentWltype = "WL";
-    } else if (time >= GOG_TIME) {
-      setCurrentWl("GOG + OG");
-      currentWltype = "GOG + OG";
-    } else if (time >= COMMUNITY_TIME) {
-      setCurrentWl("COMMUNITY");
-      currentWltype = "COMMUNITY";
-    }
-    if (currentWltype == "PUBLIC") {
-      return "";
-    } else {
-      if (currentWltype == "COMMUNITY") {
-        const date = new Date();
-        const time: any = parseInt((date.getTime() / 1000).toFixed(0));
-        var delta = Math.abs(time - GOG_TIME);
-        if (delta <= 0) {
-          setCurrentWl("GOG + OG");
-          currentWltype = "GOG + OG";
-        }
-        let days: any = Math.floor(delta / 86400);
-        delta -= days * 86400;
-        let hours: any = Math.floor(delta / 3600) % 24;
-        delta -= hours * 3600;
-        let minutes: any = Math.floor(delta / 60) % 60;
-        delta -= minutes * 60;
-        let seconds: any = delta % 60;
-        hours = Math.abs(hours);
-        if (days < 10) {
-          days = "0" + days;
-        }
-        if (hours < 10) {
-          hours = "0" + hours;
-        }
-        minutes = Math.abs(minutes);
-        if (minutes < 10) {
-          minutes = "0" + minutes;
-        }
-        seconds = Math.abs(seconds);
-        if (seconds < 10) {
-          seconds = "0" + seconds;
-        }
-        setTime(hours + ":" + minutes + ":" + seconds);
-      } else if (currentWltype == "GOG + OG") {
-        const date = new Date();
-        const time: any = parseInt((date.getTime() / 1000).toFixed(0));
-        delta = Math.abs(time - WL_TIME);
-        if (delta <= 0) {
-          setCurrentWl("WL");
-          currentWltype = "WL";
-        }
-        let days: any = Math.floor(delta / 86400);
-        delta -= days * 86400;
-        let hours: any = Math.floor(delta / 3600) % 24;
-        delta -= hours * 3600;
-        let minutes: any = Math.floor(delta / 60) % 60;
-        delta -= minutes * 60;
-        let seconds: any = delta % 60;
-        hours = Math.abs(hours);
-        if (days < 10) {
-          days = "0" + days;
-        }
-        if (hours < 10) {
-          hours = "0" + hours;
-        }
-        minutes = Math.abs(minutes);
-        if (minutes < 10) {
-          minutes = "0" + minutes;
-        }
-        seconds = Math.abs(seconds);
-        if (seconds < 10) {
-          seconds = "0" + seconds;
-        }
-        setTime(hours + ":" + minutes + ":" + seconds);
-      } else if (currentWltype == "WL") {
-        const date = new Date();
-        const time: any = parseInt((date.getTime() / 1000).toFixed(0));
-        delta = Math.abs(time - PUBLIC_TIME);
-        if (delta <= 0) {
-          setCurrentWl("PUBLIC");
-          currentWltype = "PUBLIC";
-        }
-        let days: any = Math.floor(delta / 86400);
-        delta -= days * 86400;
-        let hours: any = Math.floor(delta / 3600) % 24;
-        delta -= hours * 3600;
-        let minutes: any = Math.floor(delta / 60) % 60;
-        delta -= minutes * 60;
-        let seconds: any = delta % 60;
-        hours = Math.abs(hours);
-        if (days < 10) {
-          days = "0" + days;
-        }
-        if (hours < 10) {
-          hours = "0" + hours;
-        }
-        minutes = Math.abs(minutes);
-        if (minutes < 10) {
-          minutes = "0" + minutes;
-        }
-        seconds = Math.abs(seconds);
-        if (seconds < 10) {
-          seconds = "0" + seconds;
-        }
-        setTime(hours + ":" + minutes + ":" + seconds);
-      } else if (currentWl == "PUBLIC") {
-        setTime("");
-      } else {
-        const date = new Date();
-        const time: any = parseInt((date.getTime() / 1000).toFixed(0));
-        delta = Math.abs(time - COMMUNITY_TIME);
-        if (delta <= 0) {
-          setCurrentWl("COMMUNITY");
-          currentWltype = "COMMUNITY";
-        }
-        let days: any = Math.floor(delta / 86400);
-        delta -= days * 86400;
-        let hours: any = Math.floor(delta / 3600) % 24;
-        delta -= hours * 3600;
-        let minutes: any = Math.floor(delta / 60) % 60;
-        delta -= minutes * 60;
-        let seconds: any = delta % 60;
-        hours = Math.abs(hours);
-        if (days < 10) {
-          days = "0" + days;
-        }
-        if (hours < 10) {
-          hours = "0" + hours;
-        }
-        minutes = Math.abs(minutes);
-        if (minutes < 10) {
-          minutes = "0" + minutes;
-        }
-        seconds = Math.abs(seconds);
-        if (seconds < 10) {
-          seconds = "0" + seconds;
-        }
-        setTime(hours + ":" + minutes + ":" + seconds);
-      }
-    }
-  };
-
-
 
   const closeForm = async () => {
     setClassNameState("main-bg-after-door-open");
@@ -2064,7 +1870,7 @@ const Home = () => {
   };
 
   const handleMobileHome = async () => {
-    if (showAlphaRoom || showTeamRoom || showStakeRoom || showFixedStakingRoom || showTokenSwapping) {
+    if (showAlphaRoom || showTeamRoom || showStakeRoom || showTokenSwapping) {
       closeAlphaRoom();
     } else {
       closeForm();
@@ -2080,21 +1886,6 @@ const Home = () => {
     setShowStakeCity(true);
   };
 
-  const closeStakeCity = async () => {
-    setShowStakeCity(false);
-    setShowStaking(false);
-  };
-
-  const closeFixedStaking =async () => {
-    setClassNameState("alphazen-room");
-    setLogoAlphaLoading(false);
-    setShowAlphaRoom(false);
-    setShowTeamRoom(false);
-    setShowStakeRoom(true);
-    setShowMobileDoor(false);
-    setShowFixedStakingRoom(false);
-  }
-
   const closeTokenSwapping =async () => {
     setClassNameState("alphazen-room");
     setLogoAlphaLoading(false);
@@ -2102,24 +1893,8 @@ const Home = () => {
     setShowTeamRoom(false);
     setShowStakeRoom(true);
     setShowMobileDoor(false);
-    setShowFixedStakingRoom(false);
     setShowTokenSwapping(false);
   }
-
-  const openFixedStaking = async (id:any) => {
-    console.log('1');
-    setClassNameState("main-bg-after-door-open black-bg");
-    setLogoAlphaLoading(true);
-    setTimeout(function () {
-    setLogoAlphaLoading(false);
-      setClassNameState("fixed-staking-room");
-      setShowTeamRoom(false);
-      setShowAlphaRoom(false);
-      setShowStakeRoom(false);
-      setShowMobileDoor(false);
-      setShowFixedStakingRoom(true)
-    }, 600);
-  };
 
   const openTokenSwapping =async (params:any) => {
     setClassNameState("main-bg-after-door-open black-bg");
@@ -2131,111 +1906,8 @@ const Home = () => {
       setShowAlphaRoom(false);
       setShowStakeRoom(false);
       setShowMobileDoor(false);
-      setShowFixedStakingRoom(false);
       setShowTokenSwapping(true);
     }, 600);
-  }
-
-  const mintToCheckedFn =async (params:any) => {
-    const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
-    let mint = new anchor.web3.PublicKey('57vavPcanGNxm9WYVnWyDNiwofxGniQHmTTocAeco3dk');
-    let ata = await getAssociatedTokenAddress(
-      mint, // mint
-      wallet?.publicKey! // owner
-    );
-    let tx:any = new Transaction().add(
-      createMintToCheckedInstruction(
-        mint, // mint
-        ata, // receiver (sholud be a token account)
-        wallet?.publicKey!, // mint authority
-        1e15, // amount. if your decimals is 8, you mint 10^8 for 1 token.
-        8 // decimals
-        // [signer1, signer2 ...], // only multisig account will use
-      )
-    )
-    const sig_token = await sendTransaction(connection, wallet, tx.instructions, []);
-    console.log(sig_token);
-  }
-
-  const createToken = async (params:any) => {
-    const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
-    const alice = anchor.web3.Keypair.generate();
-    const mint = anchor.web3.Keypair.generate();
-    const seed1 = Buffer.from(anchor.utils.bytes.utf8.encode("metadata"));
-    const seed2 = Buffer.from(mpl.PROGRAM_ID.toBytes());
-    const seed3 = Buffer.from(mint.publicKey.toBytes());
-    const [metadataPDA, _bump] = await anchor.web3.PublicKey.findProgramAddress([seed1, seed2, seed3], mpl.PROGRAM_ID);
-    const accounts:any = {
-        metadata: metadataPDA,
-        mint,
-        mintAuthority: wallet.publicKey,
-        payer: wallet.publicKey,
-        updateAuthority: wallet.publicKey,
-    }
-    const dataV2:any = {
-        name: "Fake USD Token",
-        symbol: "FUD",
-        uri: "https://shdw-drive.genesysgo.net/ArP7jjhVZsp7vkzteU7mpKA1fyHRhv4ZBz6gR7MJ1JTC/metadata.json",
-        // we don't need that
-        sellerFeeBasisPoints: 0,
-        creators: null,
-        collection: null,
-        uses: null
-    }  
-    const args:any =  {
-      updateMetadataAccountArgsV2: {
-          data: dataV2,
-          isMutable: true,
-          updateAuthority: wallet.publicKey,
-          primarySaleHappened: true
-      }
-    };
-    let ata = await getAssociatedTokenAddress(
-      mint.publicKey, // mint
-      wallet?.publicKey! // owner
-    );
-    console.log(`ATA: ${ata.toBase58()}`);
-    let tx:any = new Transaction().add(
-      // create mint account
-      SystemProgram.createAccount({
-        fromPubkey: wallet?.publicKey!,
-        newAccountPubkey: mint.publicKey,
-        space: MINT_SIZE,
-        lamports: await getMinimumBalanceForRentExemptMint(connection),
-        programId: TOKEN_PROGRAM_ID,
-      }),
-      // init mint account
-      createInitializeMintInstruction(
-        mint.publicKey, // mint pubkey
-        8, // decimals
-        wallet?.publicKey!, // mint authority
-        wallet?.publicKey! // freeze authority (you can use `null` to disable it. when you disable it, you can't turn it on again)
-      ),
-      createAssociatedTokenAccountInstruction(
-        wallet?.publicKey!, // payer
-        ata, // ata
-        wallet?.publicKey!, // owner
-        mint.publicKey // mint
-      ),
-      createMintToCheckedInstruction(
-        mint.publicKey, // mint
-        ata, // receiver (sholud be a token account)
-        wallet?.publicKey!, // mint authority
-        1e8, // amount. if your decimals is 8, you mint 10^8 for 1 token.
-        8 // decimals
-        // [signer1, signer2 ...], // only multisig account will use
-      )
-      // ,mpl.createUpdateMetadataAccountV2Instruction(accounts, args)
-    );
-    const sig_token = await sendTransaction(connection, wallet, tx.instructions, [mint]);
-    console.log(sig_token);
-    console.log(mint.publicKey.toBase58());
-    // const myKeypair = loadWalletKey("AndXYwDqSeoZHqk95TUC1pPdp93musGfCo1KztNFNBhd.json");
-  }
-
-  const changeNFTsTab =async (id:any) => {
-    console.log(id);
-    setNftsTab(id);
   }
 
   const openAlphaRoom = async (key:string) => {
@@ -2252,18 +1924,6 @@ const Home = () => {
           setShowMobileDoor(false);
         }, 600);
       } 
-      // else if (mobileDoor === "TEAM") {
-      //   setClassNameState("main-bg-after-door-open black-bg");
-      //   setLogoAlphaLoading(true);
-      //   setTimeout(function () {
-      //     setLogoAlphaLoading(false);
-      //     setClassNameState("team-room");
-      //     setShowTeamRoom(true);
-      //     setShowAlphaRoom(false);
-      //     setShowStakeRoom(false);
-      //     setShowMobileDoor(false);
-      //   }, 600);
-      // }
       else if (mobileDoor === "ALPHAZEX") {
         setClassNameState("main-bg-after-door-open black-bg");
         setLogoAlphaLoading(true);
@@ -2304,18 +1964,6 @@ const Home = () => {
           setShowMobileDoor(false);
         }, 600);
       }
-      // else if (key == 'team') {
-      //   setClassNameState("main-bg-after-door-open black-bg");
-      //   setLogoAlphaLoading(true);
-      //   setTimeout(function () {
-      //     setClassNameState("team-room");
-      //     setLogoAlphaLoading(false);
-      //     setShowAlphaRoom(false);
-      //     setShowTeamRoom(true);
-      //     setShowStakeRoom(false);
-      //     setShowMobileDoor(false);
-      //   }, 600);
-      // }
       else if (key == 'ALPHAZEX') {
         setClassNameState("main-bg-after-door-open black-bg");
         setLogoAlphaLoading(true);
@@ -2399,88 +2047,12 @@ const Home = () => {
     setShowAlphaRoom(true);
   };
 
-  const changeGlitchToken = async (val:any) => {
-    setGlitchTokenVal(val);
-    setAlphaTokenVal(val);
-  };
-
-  const swapFn =async (params:any) => {
-    const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
-    let mint = new anchor.web3.PublicKey('57vavPcanGNxm9WYVnWyDNiwofxGniQHmTTocAeco3dk');
-    let farm_manager = new anchor.web3.PublicKey('TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq');
-    let ata = await getAssociatedTokenAddress(
-      mint, // mint
-      wallet?.publicKey! // owner
-    );
-    let tx:any = new Transaction().add(
-      createMintToCheckedInstruction(
-        mint, // mint
-        ata, // receiver (sholud be a token account)
-        wallet?.publicKey!, // mint authority
-        1e15, // amount. if your decimals is 8, you mint 10^8 for 1 token.
-        8 // decimals
-        // [signer1, signer2 ...], // only multisig account will use
-      )
-    )
-    const sig_token = await sendTransaction(connection, wallet, tx.instructions, []);
-    console.log(sig_token);
-  }
-
-  // const getFreeSol = async () => {
-  //   var data = JSON.stringify({
-  //     "jsonrpc": "2.0",
-  //     "id": "eb5c5883-8d38-44cb-a7af-22ab62343a75",
-  //     "method": "requestAirdrop",
-  //     "params": [
-  //       anchorWallet?.publicKey.toBase58(),
-  //       1000000000
-  //     ]
-  //   });
-
-  //   var xhr = new XMLHttpRequest();
-  //   xhr.addEventListener("readystatechange", function() {
-  //     if(this.readyState === 4) {
-  //       setAlertState({
-  //         open: true,
-  //         message: '1 Sol transferred!',
-  //         severity: 'success',
-  //       });
-  //     }
-  //   });
-
-  //   xhr.open("POST", "https://api.devnet.solana.com/");
-  //   xhr.setRequestHeader("Content-Type", "application/json");
-
-  //   xhr.send(data);
-  // }
-  // const [network, setNetwork] = useState(WalletAdapterNetwork.Devnet);
-
-  // const handleChange = (event: any) => {
-  //   switch(event.target.value){
-  //     case "devnet":
-  //       setNetwork(WalletAdapterNetwork.Devnet);
-  //       break;
-  //     case "mainnet":
-  //       setNetwork(WalletAdapterNetwork.Mainnet);
-  //     break;
-  //     case "testnet":
-  //       setNetwork(WalletAdapterNetwork.Testnet);
-  //       break;
-  //     default:
-  //       setNetwork(WalletAdapterNetwork.Devnet);
-  //       break;
-  //   }
-  // }
-
   return (
     <div id="main" className={classNameState}>
       {wallet && wallet.connected && 
         <div className="pull-left full-width">
           <div id="wrapper">
           {isMobile && (
-            //  <CheeseburgerMenu isOpen={menuOpen} closeCallback={this.closeMenu.bind(this)}>
-            //   <MenuContent closeCallback={this.closeMenu.bind(this)} />
-            // </CheeseburgerMenu>
             <div></div>
           )}
           {logoLoading && !logoAlphaLoading && (
@@ -2488,31 +2060,12 @@ const Home = () => {
               <img alt="Alpha-logo" src={LogoWhite} className="pulse-animation" />
             </div>
           )}
-          {/* {!logoLoading &&
-            !showMobileDoor && 
-            !logoAlphaLoading &&
-            !showAlphaRoom &&
-            !showStakeRoom &&
-            !showTeamRoom &&
-            !showFixedStakingRoom && !showTokenSwapping &&
-            !isMobile && (
-              <div className="white-paper-div">
-                <a
-                  href="https://secret-alpha.gitbook.io/glitch/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="white-paper-anchor"
-                >
-                  {" "}
-                </a>
-              </div>
-            )} */}
           {!logoLoading &&
             !showAlphaRoom &&
             !showStakeRoom &&
             !showTeamRoom &&
             !logoAlphaLoading &&
-            !showFixedStakingRoom && !showTokenSwapping &&
+            !showTokenSwapping &&
             !isMobile && (
               <div
                 onClick={() => openAlphaRoom('ALPHAZEX')}
@@ -2548,7 +2101,7 @@ const Home = () => {
             !showStakeRoom &&
             !showTeamRoom &&
             !logoAlphaLoading &&
-            !showFixedStakingRoom && !showTokenSwapping &&
+            !showTokenSwapping &&
             !isMobile && (
               <div
                 // onClick={() => showToaster(5)}
@@ -2561,7 +2114,7 @@ const Home = () => {
             !showTeamRoom &&
             !showStakeRoom &&
             !logoAlphaLoading &&
-            !showFixedStakingRoom && !showTokenSwapping &&
+            !showTokenSwapping &&
             !isMobile && (
               <div
                 onClick={() => openAlphaRoom('alpha')}
@@ -2573,159 +2126,11 @@ const Home = () => {
             !showStakeRoom &&
             !showTeamRoom &&
             !logoAlphaLoading &&
-            !showFixedStakingRoom && !showTokenSwapping &&
+            !showTokenSwapping &&
             !isMobile && (
               <div onClick={() => openAlphaRoom('team')} className="team-room-div"></div>
               // <a href="/create-raffle" className="team-room-div"></a>
             )}
-          {/* {!logoLoading &&
-            !showAlphaRoom &&
-            !showStakeRoom &&
-            !showTeamRoom &&
-            !logoAlphaLoading &&
-            !showFixedStakingRoom && !showTokenSwapping &&
-            !isMobile && (
-              <div onClick={closeForm} className="alpha-logo-div"></div>
-            )} */}
-          {/* {!logoLoading &&
-            !showAlphaRoom &&
-            !showStakeRoom &&
-            !showTeamRoom &&
-            !logoAlphaLoading &&
-            !showFixedStakingRoom && !showTokenSwapping &&
-            !showMobileDoor && (
-              <div className="hologram-div">
-                <div className="smaller-holo-updates">
-                  {currentWl == "" && (
-                    <label className="typing-text">Mint</label>
-                  )}
-                  {(
-                    <div className="Top-connected green">
-                      <button
-                        className={
-                          shouldMint ? "Outside-Mint-btn" : "Outside-Mint-btn"
-                        }
-                      >
-                        Minted Out
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )} */}
-            
-          {/* {!logoLoading &&
-            !showAlphaRoom &&
-            !showStakeRoom &&
-            !showTeamRoom &&
-            !logoAlphaLoading &&
-            !showFixedStakingRoom && !showTokenSwapping &&
-            !isMobile && (
-              <div>
-                <img
-                  alt="Katana"
-                  src={KatanaImage}
-                  // onClick={createWhitelistAccountMultiple}
-                  onClick={() => showToaster(2)}
-                  className="katana-image"
-                ></img>
-              </div>
-            )} */}
-          {/* {!logoLoading &&
-            !showAlphaRoom &&
-            !showStakeRoom &&
-            !showTeamRoom &&
-            !logoAlphaLoading &&
-            !showFixedStakingRoom && !showTokenSwapping &&
-            !isMobile && (
-              <div>
-                <img
-                  alt="Pizza"
-                  src={PizzaImage}
-                  onClick={() => showToaster(1)}
-                  className="pizza-image"
-                ></img>
-              </div>
-            )} */}
-          {/* {!logoLoading &&
-            !showAlphaRoom &&
-            !showStakeRoom &&
-            !showTeamRoom &&
-            !logoAlphaLoading &&
-            !showFixedStakingRoom && !showTokenSwapping &&
-            !isMobile && (
-              <div>
-                <img
-                  alt="Sopha"
-                  onClick={updateWhitelistConfig}
-                  src={Sopha}
-                  className="sopha-image"
-                ></img>
-              </div>
-            )} */}
-          {/* {!logoLoading &&
-            !showAlphaRoom &&
-            !showStakeRoom &&
-            !showTeamRoom &&
-            !logoAlphaLoading &&
-            !showFixedStakingRoom && !showTokenSwapping &&
-            !isMobile && (
-              <div>
-                <div
-                  className="bean-bag-click"
-                  onClick={() => showToaster(4)}
-                ></div>
-                <img
-                  alt="Bean-bag"
-                  src={Beanbag}
-                  className="bean-bag-image"
-                ></img>
-              </div>
-            )} */}
-          {/* {!logoLoading &&
-            !showAlphaRoom &&
-            !showStakeRoom &&
-            !showTeamRoom &&
-            !logoAlphaLoading &&
-            !showFixedStakingRoom && !showTokenSwapping &&
-            !isMobile && (
-              <video autoPlay={true} loop muted className="fan-spinning-image">
-                <source
-                  src={FanSpinning}
-                  className="fan-spinning-image"
-                  type="video/mp4"
-                ></source>
-                <source
-                  src={FanSpinning}
-                  className="fan-spinning-image"
-                  type="video/mp4"
-                ></source>
-                Your browser does not support HTML5 video.
-              </video>
-            )} */}
-          {/* {!logoLoading &&
-            !showAlphaRoom &&
-            !showStakeRoom &&
-            !showTeamRoom &&
-            !showFixedStakingRoom && !showTokenSwapping &&
-            !logoAlphaLoading &&
-            !isMobile && (
-              <div className="light-flicker-image"></div>
-            )} */}
-          {/* {!logoLoading &&
-            !showAlphaRoom &&
-            !showStakeRoom &&
-            !showTeamRoom &&
-            !logoAlphaLoading &&
-            !showFixedStakingRoom && !showTokenSwapping &&
-            !isMobile && (
-              <img
-                alt="Sider"
-                src={SophaSider}
-                onClick={() =>setShowFarming(true)}
-                className="sopha-sider-image"
-              ></img>
-            )} */}
           {!logoLoading && showMessage && (
             <div className="mesage-container">
               <label>{messageText}</label>
@@ -2735,7 +2140,7 @@ const Home = () => {
             !showAlphaRoom &&
             !showStakeRoom &&
             !showTeamRoom &&
-            !showFixedStakingRoom && !showTokenSwapping &&
+            !showTokenSwapping &&
             !logoAlphaLoading &&
             !isMobile && (
               <div className="social-media-links">
@@ -2759,7 +2164,7 @@ const Home = () => {
             !logoAlphaLoading &&
             !logoLoading &&
             !showMobileDoor &&
-            !showFixedStakingRoom && !showTokenSwapping &&
+            !showTokenSwapping &&
             !isMobile && (
               <div className="close-alpha-room" onClick={closeAlphaRoom}>
                 <img alt="close" src={CloseAlpha} />
@@ -2772,7 +2177,7 @@ const Home = () => {
             !logoAlphaLoading &&
             !logoLoading &&
             !showMobileDoor &&
-            !showFixedStakingRoom && !showTokenSwapping &&
+            !showTokenSwapping &&
             !isMobile && (
               <div className="close-stake-room" onClick={closeAlphaRoom}>
                 <img alt="close" src={CloseAlpha} />
@@ -2782,7 +2187,7 @@ const Home = () => {
             !logoAlphaLoading &&
             !logoLoading &&
             !showMobileDoor &&
-            !showFixedStakingRoom && !showTokenSwapping &&
+            !showTokenSwapping &&
             !isMobile && (
               <div className="close-team-room" onClick={closeAlphaRoom}>
                 <img alt="close" src={CloseAlpha} />
@@ -3022,128 +2427,6 @@ const Home = () => {
               </div>
             </div>
           )}
-          {showFixedStakingRoom && (
-            <div className="Backdrop-other">
-              <div className="fixed-staking-main-bg">
-                <div className="pull-left full-width">
-                  <div className="stake-logo-parent">
-                    {!isMobile && <img src={LogoWhite} className="stake-logo pointer" onClick={closeAlphaRoom} alt="" />}
-                    {!isMobile && <img src={CloseAlpha} onClick={closeFixedStaking} className="stake-close-logo" alt="" />}
-                    <div className="user-profile-box" onClick={() => setShowUserMenu(!showUserMenu)}>
-                      <img src={User} className="user-profile-img" alt="" />
-                    </div>
-                    {showUserMenu && 
-                    <div className="user-menu-parent">
-                      <ul>
-                        <li>Claimed Tokens : {stakedBal} <img src={Refresh} onClick={refreshFarmers} className="refresh-farmer-icon" alt="" /></li>
-                        <li className="pointer" onClick={claimReward}>Claim Tokens</li>
-                      </ul>
-                    </div>
-                    }
-                  </div>
-                  <div className="stake-progress">
-                    <ProgressBar bgcolor={"#6a1b9a"} completed={63} />
-                  </div>
-                  {!isMobile && 
-                  <div className="staking-process-parent">
-                    <div className="unstaked-nfts-div">
-                      <div className="staking-nft-display">
-                      <div className="nft-parent-div">
-                        {nfts && nfts.length > 0 && nfts.map(function (item:any, i:any) {
-                          return (
-                            <div className="nft-div" key={i} style={{boxShadow: stakedNft == item ? "1px 1px 5px 1px #00f5ffab": "none"}} onClick={() => setStakedNft(item)}>
-                              <img src={item.link} />
-                              {/* <label>{item.name}</label> */}
-                              {/* <label>{item.trait_type}</label> */}
-                            </div>
-                          );
-                        })}
-                      </div>
-                      {stakedNft && 
-                      <div className="stake-button-div"> 
-                        <button className="nft-select-button" onClick={nextStepStake}>Stake Now</button>
-                      </div>}
-                      </div>
-                    </div>
-                    <div className="staked-nfts-div">
-                      <div className="staking-nft-display">
-                        <div className="nft-parent-div">
-                          {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
-                            return (
-                              <div className="nft-div" key={i} style={{borderColor: unstakedNft == item ? "white": "transparent"}} onClick={() => setUnstakedNft(item)}>
-                                <img src={item.link} />
-                                {/* <label>{item.name}</label> */}
-                                {/* <label>{item.trait_type}</label> */}
-                              </div>
-                            );
-                          })}
-                        </div>
-                        {unstakedNft && 
-                        <div className="stake-button-div"> 
-                          <button className="nft-select-button" onClick={UnStakeNft}>Unstake Now</button>
-                        </div>}
-                      </div>
-                    </div>
-                  </div>
-                  }
-                  {isMobile && 
-                  <div className="staking-process-parent">
-                    <div className="nfts-tab-parent" aria-label="NFTs Tabs">
-                      <label className={nftsTab == 0 ? 'selected-nfts-tab nfts-tab b-r-left' : 'nfts-tab b-r-left'} id="simple-tab-0" aria-controls="simple-tabpanel-0" onClick={() => changeNFTsTab(0)}>Unstaked NFTs</label>
-                      <label className={nftsTab == 1 ? 'selected-nfts-tab nfts-tab b-r-right' : 'nfts-tab b-r-right'} id="simple-tab-1" aria-controls="simple-tabpanel-1" onClick={() => changeNFTsTab(1)}>Staked NFTs</label>
-                    </div>
-                    <div role="tabpanel" hidden={nftsTab !== 0} id="simple-tabpanel-0" aria-labelledby="simple-tab-0">
-                      {nftsTab === 0 && (
-                        <div className="unstaked-nfts-div">
-                          <div className="staking-nft-display">
-                            <div className="nft-parent-div">
-                            {nfts && nfts.length > 0 && nfts.map(function (item:any, i:any) {
-                              return (
-                                <div className="nft-div" key={i} style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
-                                  <img src={item.link} />
-                                  {/* <label>{item.name}</label> */}
-                                  {/* <label>{item.trait_type}</label> */}
-                                </div>
-                              );
-                            })}
-                            </div>
-                            {stakedNft && 
-                            <div className="stake-button-div"> 
-                              <button className="nft-select-button" onClick={nextStepStake}>Stake Now</button>
-                            </div>}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                    <div role="tabpanel" hidden={nftsTab !== 1} id="simple-tabpanel-0" aria-labelledby="simple-tab-0">
-                      {nftsTab === 1 && (
-                        <div className="staked-nfts-div">
-                          <div className="staking-nft-display">
-                            <div className="nft-parent-div">
-                            {stakedNfts && stakedNfts.length > 0 && stakedNfts.map(function (item:any, i:any) {
-                              return (
-                                <div className="nft-div" key={i} style={{borderColor: unstakedNft == item ? "white": "transparent"}} onClick={() => setUnstakedNft(item)}>
-                                  <img src={item.link} />
-                                  {/* <label>{item.name}</label> */}
-                                  {/* <label>{item.trait_type}</label> */}
-                                </div>
-                              );
-                            })}
-                            </div>
-                            {unstakedNft && 
-                            <div className="stake-button-div"> 
-                              <button className="nft-select-button" onClick={UnStakeNft}>Unstake Now</button>
-                            </div>}
-                          </div>
-                        </div>
-                      )}
-                    </div>          
-                  </div>
-                  }
-                </div> 
-              </div>
-            </div>
-          )}
           {!showAlphaRoom && !showTeamRoom && showStakeRoom && !logoAlphaLoading && !logoLoading && !showMobileDoor && (
             <div className="">
               {!isMobile && <a href="/raffles" className="raffle-cave"></a>}
@@ -3152,17 +2435,9 @@ const Home = () => {
               <div className="staking-portal">
                 <div className="staking-portal-parent"></div>
                 <div className="adventure-staking-div"></div>
-                <div className="fixed-staking-div" onClick={openFixedStaking}></div>
+                <a href="/fixed-staking" className="fixed-staking-div"></a>
               </div>
               }
-              {/* {isMobile && 
-              <div className="alphazex-mobile-parent">
-                <button className="Inside-Alphazex-btn" onClick={openFixedStaking}>Fixed Staking</button>
-                <button className="Inside-Alphazex-btn">Adventure Staking</button>
-                <button className="Inside-Alphazex-btn" onClick={openTokenSwapping}>Token Swap</button>
-                <button className="Inside-Alphazex-btn">Raffle Cave</button>
-              </div>
-              } */}
               {isMobile && 
               <div className="pull-left full-width">
                 <Carousel responsive={responsive}>
@@ -3188,11 +2463,6 @@ const Home = () => {
                 </WalletDialogButton>
               </div> 
               }
-              {/* {wallet.connected &&
-              <div className="staking-room-six" onClick={openStaking}>
-                <button className="outside-stake-btn">Stake Now</button>
-              </div> 
-              } */}
             </div>
           )}
           {showTokenSwapping && (
