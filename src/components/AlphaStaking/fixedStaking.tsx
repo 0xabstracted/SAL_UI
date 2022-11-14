@@ -193,6 +193,19 @@ const FixedStaking = (props: any) => {
     );
   };
 
+  const findStakeEntryIdPda = (stakePool: PublicKey, mint: PublicKey) => {
+    return PublicKey.findProgramAddress(
+      [
+        anchor.utils.bytes.utf8.encode(STAKE_ENTRY_SEED),
+        stakePool.toBuffer(),
+        mint.toBuffer(),
+        anchor.web3.PublicKey.default.toBuffer(),
+        // new PublicKey().,
+      ],
+      STAKE_POOL_ADDRESS
+    );
+  };
+
   const findRewardDistributorId = (stakePoolId: PublicKey) => {
     return PublicKey.findProgramAddress(
       [
@@ -258,13 +271,13 @@ const FixedStaking = (props: any) => {
                 }
               }
               if (is_human && is_pet) {
-                trait_type = "Human Pet";
+                trait_type = "humanpets";
               } else if (is_human && !is_pet) {
-                trait_type = "Human";
+                trait_type = "humans";
               } else if (is_cyborg && is_pet) {
-                trait_type = "Cyborg Pet";
+                trait_type = "cyborgpets";
               } else if (is_cyborg && !is_pet) {
-                trait_type = "Cyborg";
+                trait_type = "cyborg";
               }
               var obj: any = {
                 id: temp_nfts.length,
@@ -413,13 +426,7 @@ const FixedStaking = (props: any) => {
       STAKE_POOL_ADDRESS,
       provider
     );
-    // const parsed: any = await stakePoolProgram.account.identifier.fetch(
-    //   identifierId
-    // );
-    // console.log(parsed);
-    // const identifier = parsed?.count.toNumber();
-    // [stakePoolId] = await findStakePoolId(new BN(identifier));
-    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "human");
+    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "humans");
     console.log(`stakePoolId: ${stakePoolId}`);
     const [rewardDistributorId] = await findRewardDistributorId(stakePoolId);
     console.log(`rewardDistributorId: ${rewardDistributorId}`);
@@ -450,150 +457,6 @@ const FixedStaking = (props: any) => {
     console.log("Reward Distributor ATA Signature : ", gltch_ata);
   };
 
-  // const createStakePool = async (str: any) => {
-  //   console.log(str);
-  //   const transaction = new Transaction();
-  //   let wallet_t: any = wallet;
-  //   let params: any = {
-  //     overlayText: "",
-  //     imageUri:
-  //       "https://dgnvzn3x5fqusqpvst65sizekrfhwtklzokfk7usi64h7erzb7iq.arweave.net/GZtct3fpYUlB9ZT92SMkVEp7TUvLlFV-kke4f5I5D9E?ext=jpg",
-  //     requiresCollections: [],
-  //     requiresCreators: [],
-  //     requiresAuthorization: false,
-  //     authority: wallet_t.publicKey,
-  //     resetOnStake: false,
-  //     cooldownSeconds: null,
-  //     minStakeSeconds: null,
-  //     endDate: null,
-  //     rewardAmount: new BN(50000000),
-  //     rewardDurationSeconds: new BN(5),
-  //     supply: new BN(50000000),
-  //     kind: RewardDistributorKind.Treasury,
-  //     identifierName: "human",
-  //   };
-  //   const provider = new AnchorProvider(connection, wallet_t, {});
-  //   const stakePoolProgram = new Program<STAKE_POOL_TYPES.aplStakePool>(
-  //     STAKE_POOL_TYPES.IDL,
-  //     STAKE_POOL_ADDRESS,
-  //     provider
-  //   );
-  //   const rewardDistributorProgram =
-  //     new Program<REWARD_DISTRIBUTOR_TYPES.aplRewardDistributor>(
-  //       REWARD_DISTRIBUTOR_TYPES.IDL,
-  //       REWARD_DISTRIBUTOR_ADDRESS,
-  //       provider
-  //     );
-  //   let start_pool_instructions: any = [];
-  //   const [identifierId] = await findIdentifierId(wallet_t.publicKey);
-  //   let [stakePoolId]: any = [null];
-  //   // try {
-  //   //   const parsed: any = await stakePoolProgram.account.identifier.fetch(
-  //   //     identifierId
-  //   //   );
-  //   //   console.log(parsed);
-  //   //   const identifier = parsed?.count.toNumber();
-  //   //   if (identifier == 0) {
-  //   //     let identifier_instructions =
-  //   //       stakePoolProgram.instruction.initIdentifier({
-  //   //         accounts: {
-  //   //           identifier: identifierId,
-  //   //           payer: wallet_t.publicKey,
-  //   //           systemProgram: SystemProgram.programId,
-  //   //         },
-  //   //       });
-  //   //     start_pool_instructions.push(identifier_instructions);
-  //   //   }
-  //   //   [stakePoolId] = await findStakePoolId(new BN(identifier));
-  //   // } catch (error) {
-  //   //   const identifier = new anchor.BN(0);
-  //   //   let identifier_instructions = stakePoolProgram.instruction.initIdentifier(
-  //   //     {
-  //   //       accounts: {
-  //   //         identifier: identifierId,
-  //   //         payer: wallet_t.publicKey,
-  //   //         systemProgram: SystemProgram.programId,
-  //   //       },
-  //   //     }
-  //   //   );
-  //   //   [stakePoolId] = await findStakePoolId(identifier);
-  //   //   start_pool_instructions.push(identifier_instructions);
-  //   // }
-  //   [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "human");
-  //   console.log("stakePoolId : ", stakePoolId.toBase58());
-  //   console.log("identifierId : ", identifierId.toBase58());
-  //   let init_pool_instruction = stakePoolProgram.instruction.initPool(
-  //     {
-  //       overlayText: params.overlayText,
-  //       imageUri: params.imageUri,
-  //       requiresCollections: params.requiresCollections,
-  //       requiresCreators: params.requiresCreators,
-  //       requiresAuthorization: params.requiresAuthorization ?? false,
-  //       authority: params.authority,
-  //       resetOnStake: params.resetOnStake,
-  //       cooldownSeconds: params.cooldownSeconds ?? null,
-  //       minStakeSeconds: params.minStakeSeconds ?? null,
-  //       endDate: params.endDate ?? null,
-  //       idenitifierName: params.identifierName,
-  //     },
-  //     {
-  //       accounts: {
-  //         stakePool: stakePoolId,
-  //         // identifier: identifierId,
-  //         payer: wallet_t.publicKey,
-  //         systemProgram: SystemProgram.programId,
-  //       },
-  //     }
-  //   );
-  //   start_pool_instructions.push(init_pool_instruction);
-
-  //   const [rewardDistributorId] = await findRewardDistributorId(stakePoolId);
-  //   let remainingAccountsForKind = await withRemainingAccountsForKind(
-  //     transaction,
-  //     connection,
-  //     wallet_t,
-  //     rewardDistributorId,
-  //     params.kind,
-  //     REWARD_MINT_GLTCH
-  //   );
-  //   // remainingAccountsForKind = [];
-  //   console.log(remainingAccountsForKind);
-  //   let init_reward_distributor =
-  //     rewardDistributorProgram.instruction.initRewardDistributor(
-  //       {
-  //         rewardAmount: params.rewardAmount,
-  //         rewardDurationSeconds: params.rewardDurationSeconds,
-  //         maxSupply: params.maxSupply || null,
-  //         supply: params.supply || null,
-  //         kind: params.kind,
-  //         defaultMultiplier: params.defaultMultiplier || null,
-  //         multiplierDecimals: params.multiplierDecimals || null,
-  //         maxRewardSecondsReceived: params.maxRewardSecondsReceived || null,
-  //       },
-  //       {
-  //         accounts: {
-  //           rewardDistributor: rewardDistributorId,
-  //           stakePool: stakePoolId,
-  //           rewardMint: REWARD_MINT_GLTCH,
-  //           authority: wallet_t.publicKey,
-  //           payer: wallet_t.publicKey,
-  //           tokenProgram: TOKEN_PROGRAM_ID,
-  //           systemProgram: SystemProgram.programId,
-  //         },
-  //         remainingAccounts: remainingAccountsForKind,
-  //       }
-  //     );
-  //   start_pool_instructions.push(init_reward_distributor);
-
-  //   const start_pool_signature = await sendTransactions(
-  //     connection,
-  //     wallet,
-  //     [start_pool_instructions],
-  //     [[]]
-  //   );
-  //   console.log("Start Pool Signature : ", start_pool_signature);
-  // };
-
   const initializeRewardEntry = async () => {
     var selected_nft: any = nfts[0];
     let wallet_t: any = wallet;
@@ -612,39 +475,7 @@ const FixedStaking = (props: any) => {
     let init_reward_entry_instructions: any = [];
     const [identifierId] = await findIdentifierId(wallet_t.publicKey);
     let [stakePoolId]: any = [null];
-    // try {
-    //   const parsed: any = await stakePoolProgram.account.identifier.fetch(
-    //     identifierId
-    //   );
-    //   console.log(parsed);
-    //   const identifier = parsed?.count;
-    //   if (!identifier) {
-    //     let identifier_instructions =
-    //       stakePoolProgram.instruction.initIdentifier({
-    //         accounts: {
-    //           identifier: identifierId,
-    //           payer: wallet_t.publicKey,
-    //           systemProgram: SystemProgram.programId,
-    //         },
-    //       });
-    //     init_reward_entry_instructions.push(identifier_instructions);
-    //   }
-    //   [stakePoolId] = await findStakePoolId(identifier);
-    // } catch (error) {
-    //   const identifier = new anchor.BN(1);
-    //   let identifier_instructions = stakePoolProgram.instruction.initIdentifier(
-    //     {
-    //       accounts: {
-    //         identifier: identifierId,
-    //         payer: wallet_t.publicKey,
-    //         systemProgram: SystemProgram.programId,
-    //       },
-    //     }
-    //   );
-    //   [stakePoolId] = await findStakePoolId(identifier);
-    //   init_reward_entry_instructions.push(identifier_instructions);
-    // }
-    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "human");
+    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "humans");
     const remainingAccounts = await remainingAccountsForInitStakeEntry(
       stakePoolId,
       selected_nft.mint
@@ -712,7 +543,7 @@ const FixedStaking = (props: any) => {
 
   const completeStakeFn = async () => {
     const transaction = new Transaction();
-    let nft = nfts[0];
+    let nft = stakedNft;
     let wallet_t: any = wallet;
     const provider = new AnchorProvider(connection, wallet_t, {});
     const stakePoolProgram = new Program<STAKE_POOL_TYPES.aplStakePool>(
@@ -729,39 +560,36 @@ const FixedStaking = (props: any) => {
     let complete_stake_instructions: any = [];
     const [identifierId] = await findIdentifierId(wallet_t.publicKey);
     let [stakePoolId]: any = [null];
-    // try {
-    //   const parsed: any = await stakePoolProgram.account.identifier.fetch(
-    //     identifierId
-    //   );
-    //   console.log(parsed);
-    //   const identifier = parsed?.count.toNumber();
-    //   [stakePoolId] = await findStakePoolId(new BN(identifier));
-    // } catch (error) {
-    //   const identifier = new anchor.BN(0);
-    //   [stakePoolId] = await findStakePoolId(identifier);
-    // }
-    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "human");
+    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, nft.trait_type);
     console.log("stakePoolId : ", stakePoolId.toBase58());
     console.log("identifierId : ", identifierId.toBase58());
 
-    const [[stakeEntryId], originalMintMetadataId] = await Promise.all([
-      findStakeEntryIdFromMint(
-        connection,
-        wallet_t.publicKey,
-        stakePoolId,
-        rewardNft.mint,
-        true
-      ),
-      metaplex125.Metadata.getPDA(rewardNft.mint),
+    const [originalMintMetadataId] = await Promise.all([
+      metaplex125.Metadata.getPDA(nft.mint),
     ]);
+    console.log(stakePoolId.toBase58());
 
-    const stakeEntryData = await tryGetAccount(() =>
-      getStakeEntry(connection, stakeEntryId)
-    );
+    const [stakeEntryId] = await findStakeEntryIdPda(stakePoolId, nft.mint);
 
+    // const stakeEntryData = await tryGetAccount(() =>
+    //   getStakeEntry(connection, stakeEntryId)
+    // );
+    let stakeEntryData: any = null;
+    try {
+      const parsed = await stakePoolProgram.account.stakeEntry.fetch(
+        stakeEntryId
+      );
+
+      console.log(parsed);
+
+      stakeEntryData = {
+        parsed,
+        stakeEntryId,
+      };
+    } catch (error) {}
     const remainingAccounts = await remainingAccountsForInitStakeEntry(
       stakePoolId,
-      stakedNft.mint
+      nft.mint
     );
 
     let init_entry_instruction = stakePoolProgram.instruction.initEntry(
@@ -770,27 +598,58 @@ const FixedStaking = (props: any) => {
         accounts: {
           stakeEntry: stakeEntryId,
           stakePool: stakePoolId,
-          originalMint: stakedNft.mint,
+          originalMint: nft.mint,
           originalMintMetadata: originalMintMetadataId,
           payer: wallet_t.publicKey,
           systemProgram: SystemProgram.programId,
         },
-        remainingAccounts,
+        // remainingAccounts,
       }
     );
     if (!stakeEntryData) {
       complete_stake_instructions.push(init_entry_instruction);
     }
 
-    const stakeEntryOriginalMintTokenAccountId =
-      await withFindOrInitAssociatedTokenAccount(
-        transaction,
-        connection,
-        stakedNft.mint,
-        stakeEntryId,
-        wallet_n.publicKey,
-        true
+    const [rewardDistributorId] = await findRewardDistributorId(stakePoolId);
+    const [rewardEntryId] = await findRewardEntryId(
+      rewardDistributorId,
+      stakeEntryId
+    );
+    let init_reward_entry_instruction =
+      rewardDistributorProgram.instruction.initRewardEntry({
+        accounts: {
+          rewardEntry: rewardEntryId,
+          stakeEntry: stakeEntryId,
+          rewardDistributor: rewardDistributorId,
+          payer: wallet_t.publicKey,
+          systemProgram: SystemProgram.programId,
+        },
+      });
+
+    complete_stake_instructions.push(init_reward_entry_instruction);
+
+    const associatedAddress = await splToken.Token.getAssociatedTokenAddress(
+      splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+      splToken.TOKEN_PROGRAM_ID,
+      stakedNft.mint,
+      stakeEntryId,
+      true
+    );
+    const account = await connection.getAccountInfo(associatedAddress);
+
+    if (!account) {
+      complete_stake_instructions.push(
+        splToken.Token.createAssociatedTokenAccountInstruction(
+          splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+          splToken.TOKEN_PROGRAM_ID,
+          stakedNft.mint,
+          associatedAddress,
+          stakeEntryId,
+          wallet_t.publicKey
+        )
       );
+    }
+
     let userOriginalMintTokenAccountId = await findAta(
       stakedNft.mint,
       wallet_n.publicKey,
@@ -800,31 +659,54 @@ const FixedStaking = (props: any) => {
       accounts: {
         stakeEntry: stakeEntryId,
         stakePool: stakePoolId,
-        stakeEntryOriginalMintTokenAccount:
-          stakeEntryOriginalMintTokenAccountId,
+        stakeEntryOriginalMintTokenAccount: associatedAddress,
         originalMint: stakedNft.mint,
         user: wallet_n.publicKey,
         userOriginalMintTokenAccount: userOriginalMintTokenAccountId,
         tokenProgram: TOKEN_PROGRAM_ID,
       },
     });
-    complete_stake_instructions.push(init_entry_instruction);
+    complete_stake_instructions.push(stake_instruction);
 
     if (
       !stakeEntryData?.parsed ||
       stakeEntryData.parsed.amount.toNumber() === 0
     ) {
-      const tokenManagerReceiptMintTokenAccountId =
-        await withFindOrInitAssociatedTokenAccount(
-          transaction,
-          connection,
+      const associatedAddressReward =
+        await splToken.Token.getAssociatedTokenAddress(
+          splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+          splToken.TOKEN_PROGRAM_ID,
           stakedNft.mint,
           (
             await findTokenManagerAddress(stakedNft.mint)
           )[0],
-          wallet_n.publicKey,
           true
         );
+      const accountReward = await connection.getAccountInfo(associatedAddress);
+
+      if (!accountReward) {
+        complete_stake_instructions.push(
+          splToken.Token.createAssociatedTokenAccountInstruction(
+            splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+            splToken.TOKEN_PROGRAM_ID,
+            stakedNft.mint,
+            associatedAddressReward,
+            (await findTokenManagerAddress(stakedNft.mint))[0],
+            wallet_t.publicKey
+          )
+        );
+      }
+      // const tokenManagerReceiptMintTokenAccountId =
+      //   await withFindOrInitAssociatedTokenAccount(
+      //     transaction,
+      //     connection,
+      //     stakedNft.mint,
+      //     (
+      //       await findTokenManagerAddress(stakedNft.mint)
+      //     )[0],
+      //     wallet_n.publicKey,
+      //     true
+      //   );
 
       const [
         [tokenManagerId],
@@ -852,8 +734,7 @@ const FixedStaking = (props: any) => {
             userReceiptMintTokenAccount: userReceiptMintTokenAccountId,
             mintCounter: mintCounterId,
             tokenManager: tokenManagerId,
-            tokenManagerReceiptMintTokenAccount:
-              tokenManagerReceiptMintTokenAccountId,
+            tokenManagerReceiptMintTokenAccount: associatedAddressReward,
             tokenProgram: TOKEN_PROGRAM_ID,
             tokenManagerProgram: TOKEN_MANAGER_ADDRESS,
             systemProgram: SystemProgram.programId,
@@ -893,18 +774,10 @@ const FixedStaking = (props: any) => {
     let complete_unstake_instructions: any = [];
     const [identifierId] = await findIdentifierId(wallet_t.publicKey);
     let [stakePoolId]: any = [null];
-    // try {
-    //   const parsed: any = await stakePoolProgram.account.identifier.fetch(
-    //     identifierId
-    //   );
-    //   console.log(parsed);
-    //   const identifier = parsed?.count.toNumber();
-    //   [stakePoolId] = await findStakePoolId(new BN(identifier));
-    // } catch (error) {
-    //   const identifier = new anchor.BN(0);
-    //   [stakePoolId] = await findStakePoolId(identifier);
-    // }
-    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "human");
+    [stakePoolId] = await findStakePoolId(
+      wallet_t.publicKey,
+      unstakedNft.trait_type
+    );
     console.log("stakePoolId : ", stakePoolId.toBase58());
     console.log("identifierId : ", identifierId.toBase58());
 
@@ -1110,18 +983,7 @@ const FixedStaking = (props: any) => {
     let claim_rewards_instructions: any = [];
     const [identifierId] = await findIdentifierId(wallet_t.publicKey);
     let [stakePoolId]: any = [null];
-    // try {
-    //   const parsed: any = await stakePoolProgram.account.identifier.fetch(
-    //     identifierId
-    //   );
-    //   console.log(parsed);
-    //   const identifier = parsed?.count.toNumber();
-    //   [stakePoolId] = await findStakePoolId(new BN(identifier));
-    // } catch (error) {
-    //   const identifier = new anchor.BN(0);
-    //   [stakePoolId] = await findStakePoolId(identifier);
-    // }
-    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "human");
+    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, nft.trait_type);
     console.log("stakePoolId : ", stakePoolId.toBase58());
     console.log("identifierId : ", identifierId.toBase58());
 
@@ -1130,10 +992,10 @@ const FixedStaking = (props: any) => {
         connection,
         wallet_t.publicKey,
         stakePoolId,
-        rewardNft.mint,
+        nft.mint,
         true
       ),
-      metaplex125.Metadata.getPDA(rewardNft.mint),
+      metaplex125.Metadata.getPDA(nft.mint),
     ]);
 
     let update_total_seconds_instruction =

@@ -373,8 +373,12 @@ body {
   background-repeat: no-repeat;
   overflow-y: hidden;
   max-height: 100vh;
-  animation: fadeIn 0.8s;
+  /* animation: fadeIn 0.8s; */
   /* background-color: black; */
+}
+
+.w-33p {
+  width: 33.33%;
 }
 
 .raffle-cave {

@@ -32,7 +32,7 @@ export interface StartStakePoolArgs{
 // export const UPDATE_AUTHORITY_OF_TOKEN = new anchor.web3.PublicKey("TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq")
 export const UPDATE_AUTHORITY_OF_TOKEN = RYAN_ADDRESS
 export const UPDATE_AUTHORITY_OF_TOKEN_STRING  = "ryaNsMVq6FaS4oYT6gXxKsPEzGqryWmMb2PQKABsSRX"
-export const CREATOR_SECRET_ALPHA_DEV_COLLECTION = new anchor.web3.PublicKey("C5VUx4cjauGxVU3u9KEU6zuuLW5SDV4icbDRC51qZLwX")
+export const CREATOR_SECRET_ALPHA_DEV_COLLECTION = new anchor.web3.PublicKey("H4VtgkTU2puJdTwifruCyQKULFdPuPqHdBBRG8VgWVF4")
 export const CREATOR_SECRET_ALPHA_MAIN_COLLECTION = new anchor.web3.PublicKey("GYa915Qk8NiAjvEM3duzmXBskpbzCApVnbKtdj6Fykcy")
 export const farmConfigAlpha:FarmConfig = {
     minStakingPeriodSec: new BN(0),

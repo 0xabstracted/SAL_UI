@@ -7,7 +7,11 @@ import {
   SystemProgram,
   Transaction,
 } from "@solana/web3.js";
-import { ASSOCIATED_TOKEN_PROGRAM_ID, getAssociatedTokenAddress, TOKEN_PROGRAM_ID } from "solanaSPLToken036";
+import {
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+  getAssociatedTokenAddress,
+  TOKEN_PROGRAM_ID,
+} from "solanaSPLToken036";
 import { WalletDialogButton } from "@solana/wallet-adapter-material-ui";
 import LogoWhite from "../../assets/Logowhite.png";
 import User from "../../assets/user.png";
@@ -17,9 +21,7 @@ import Pencil from "../../assets/pencil.png";
 import DatePicker from "react-datepicker";
 import Modal from "react-modal";
 import * as anchor from "@project-serum/anchor";
-import {
-  REWARD_MINT_GLTCH,
-} from "../TokenCreation/AlphaTokenConfig";
+import { REWARD_MINT_GLTCH } from "../TokenCreation/AlphaTokenConfig";
 import { Metaplex } from "@metaplex-foundation/js";
 import {
   UPDATE_AUTHORITY_OF_TOKEN_STRING,
@@ -346,7 +348,7 @@ const AdminStaking = () => {
     // );
     // console.log(parsed);
     // const identifier = parsed?.count.toNumber();
-    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "human");
+    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "humans");
     console.log(`stakePoolId: ${stakePoolId}`);
     const [rewardDistributorId] = await findRewardDistributorId(stakePoolId);
     console.log(`rewardDistributorId: ${rewardDistributorId}`);
@@ -490,13 +492,38 @@ const AdminStaking = () => {
     console.log(str);
     const transaction = new Transaction();
     let wallet_t: any = wallet;
+    var rewardAmount: any;
+    var imageUrl;
+    switch (str) {
+      case "humans":
+        rewardAmount = new BN(5000000000);
+        imageUrl =
+          "https://susjknvw4ea2sgq7te4m5g3lftgwjovcnmcieqdah75thjqj3p4a.arweave.net/lSSVNrbhAakaH5k4zptrLM1kuqJrBIJAYD_7M6YJ2_g?ext=png";
+        break;
+      case "humanpets":
+        rewardAmount = new BN(10000000000);
+        imageUrl =
+          "https://susjknvw4ea2sgq7te4m5g3lftgwjovcnmcieqdah75thjqj3p4a.arweave.net/lSSVNrbhAakaH5k4zptrLM1kuqJrBIJAYD_7M6YJ2_g?ext=png";
+        break;
+      case "cyborg":
+        rewardAmount = new BN(15000000000);
+        imageUrl =
+          "https://susjknvw4ea2sgq7te4m5g3lftgwjovcnmcieqdah75thjqj3p4a.arweave.net/lSSVNrbhAakaH5k4zptrLM1kuqJrBIJAYD_7M6YJ2_g?ext=png";
+        break;
+      case "cyborgpets":
+        rewardAmount = new BN(20000000000);
+        imageUrl =
+          "https://susjknvw4ea2sgq7te4m5g3lftgwjovcnmcieqdah75thjqj3p4a.arweave.net/lSSVNrbhAakaH5k4zptrLM1kuqJrBIJAYD_7M6YJ2_g?ext=png";
+        break;
+      default:
+        break;
+    }
     let params: any = {
       overlayText: "",
-      imageUri:
-        "https://dgnvzn3x5fqusqpvst65sizekrfhwtklzokfk7usi64h7erzb7iq.arweave.net/GZtct3fpYUlB9ZT92SMkVEp7TUvLlFV-kke4f5I5D9E?ext=jpg",
+      imageUri: imageUrl,
       requiresCollections: [],
       requiresCreators: [
-        new PublicKey("C5VUx4cjauGxVU3u9KEU6zuuLW5SDV4icbDRC51qZLwX"),
+        new PublicKey("H4VtgkTU2puJdTwifruCyQKULFdPuPqHdBBRG8VgWVF4"),
       ],
       requiresAuthorization: false,
       authority: wallet_t.publicKey,
@@ -504,11 +531,11 @@ const AdminStaking = () => {
       cooldownSeconds: null,
       minStakeSeconds: null,
       endDate: null,
-      rewardAmount: new BN(5000000000),
+      rewardAmount: rewardAmount,
       rewardDurationSeconds: new BN(8640000),
-      supply: new BN(5000000000000000),
+      supply: new BN(8000000000000000),
       kind: RewardDistributorKind.Treasury,
-      identifierName: "human",
+      identifierName: str,
     };
     const provider = new AnchorProvider(connection, wallet_t, {});
     const stakePoolProgram = new Program<STAKE_POOL_TYPES.aplStakePool>(
@@ -525,39 +552,7 @@ const AdminStaking = () => {
     let start_pool_instructions: any = [];
     const [identifierId] = await findIdentifierId(wallet_t.publicKey);
     let [stakePoolId]: any = [null];
-    // try {
-    //   const parsed: any = await stakePoolProgram.account.identifier.fetch(
-    //     identifierId
-    //   );
-    //   console.log(parsed);
-    //   const identifier = parsed.count.toNumber();
-    //   if (identifier == 0) {
-    //     let identifier_instructions =
-    //       stakePoolProgram.instruction.initIdentifier({
-    //         accounts: {
-    //           identifier: identifierId,
-    //           payer: wallet_t.publicKey,
-    //           systemProgram: SystemProgram.programId,
-    //         },
-    //       });
-    //     start_pool_instructions.push(identifier_instructions);
-    //   }
-    //   [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "human");
-    // } catch (error) {
-    //   const identifier = new anchor.BN(0);
-    //   let identifier_instructions = stakePoolProgram.instruction.initIdentifier(
-    //     {
-    //       accounts: {
-    //         identifier: identifierId,
-    //         payer: wallet_t.publicKey,
-    //         systemProgram: SystemProgram.programId,
-    //       },
-    //     }
-    //   );
-    //   [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "human");
-    //   start_pool_instructions.push(identifier_instructions);
-    // }
-    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "human");
+    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, str);
     console.log("stakePoolId : ", stakePoolId.toBase58());
     console.log("identifierId : ", identifierId.toBase58());
     let init_pool_instruction = stakePoolProgram.instruction.initPool(
@@ -594,18 +589,19 @@ const AdminStaking = () => {
     //   params.kind,
     //   REWARD_MINT_GLTCH
     // );
-    const rewardDistributorRewardMintTokenAccountId =  await splToken.Token.getAssociatedTokenAddress(
-      splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
-      splToken.TOKEN_PROGRAM_ID,
-      REWARD_MINT_GLTCH,
-      rewardDistributorId,
-      true
-    );
-      const userRewardMintTokenAccountId = await findAta(
+    const rewardDistributorRewardMintTokenAccountId =
+      await splToken.Token.getAssociatedTokenAddress(
+        splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+        splToken.TOKEN_PROGRAM_ID,
         REWARD_MINT_GLTCH,
-        wallet_t.publicKey,
+        rewardDistributorId,
         true
       );
+    const userRewardMintTokenAccountId = await findAta(
+      REWARD_MINT_GLTCH,
+      wallet_t.publicKey,
+      true
+    );
     // remainingAccountsForKind = [];
     // console.log(remainingAccountsForKind);
     let init_reward_distributor =
@@ -625,7 +621,8 @@ const AdminStaking = () => {
             rewardDistributorTreasury: rewardDistributorId,
             stakePool: stakePoolId,
             rewardMint: REWARD_MINT_GLTCH,
-            rewardDistributorTreasuryTokenAccount:rewardDistributorRewardMintTokenAccountId,
+            rewardDistributorTreasuryTokenAccount:
+              rewardDistributorRewardMintTokenAccountId,
             authorityTokenAccount: userRewardMintTokenAccountId,
             authority: wallet_t.publicKey,
             payer: wallet_t.publicKey,
@@ -732,7 +729,7 @@ const AdminStaking = () => {
                 <div className="raffle-details-div">
                   <div className="pull-left full-width m-t-5 m-b-5">
                     <label className="sal-logo-text">Secret Alpha Labs</label>
-                    <div className="pull-left full-width m-t-10 m-b-10 text-center">
+                    <div className="pull-left w-33p m-t-10 m-b-10 text-center">
                       <button
                         className="create-raffle-button no-float"
                         onClick={() => createStakePool("humans")}
@@ -740,15 +737,15 @@ const AdminStaking = () => {
                         Create Humans Staking Pool
                       </button>
                     </div>
-                    <div className="pull-left full-width m-t-10 m-b-10 text-center">
+                    <div className="pull-left w-33p m-t-10 m-b-10 text-center">
                       <button
                         className="create-raffle-button no-float"
-                        onClick={() => createStakePool("human_pets")}
+                        onClick={() => createStakePool("humanpets")}
                       >
                         Create Human Pets Staking Pool
                       </button>
                     </div>
-                    <div className="pull-left full-width m-t-10 m-b-10 text-center">
+                    <div className="pull-left w-33p m-t-10 m-b-10 text-center">
                       <button
                         className="create-raffle-button no-float"
                         onClick={() => createStakePool("cyborg")}
@@ -756,15 +753,15 @@ const AdminStaking = () => {
                         Create Cyborgs Staking Pool
                       </button>
                     </div>
-                    <div className="pull-left full-width m-t-10 m-b-10 text-center">
+                    <div className="pull-left w-33p m-t-10 m-b-10 text-center">
                       <button
                         className="create-raffle-button no-float"
-                        onClick={() => createStakePool("cyborg_pets")}
+                        onClick={() => createStakePool("cyborgpets")}
                       >
                         Create Cyborg Pets Staking Pool
                       </button>
                     </div>
-                    <div className="pull-left full-width m-t-10 m-b-10 text-center">
+                    <div className="pull-left w-33p m-t-10 m-b-10 text-center">
                       <button
                         className="create-raffle-button no-float"
                         onClick={() => createGltchATA()}
@@ -772,7 +769,7 @@ const AdminStaking = () => {
                         Create Gltch ATA
                       </button>
                     </div>
-                    <div className="pull-left full-width m-t-10 m-b-10 text-center">
+                    <div className="pull-left w-33p m-t-10 m-b-10 text-center">
                       <button
                         className="create-raffle-button no-float"
                         onClick={() => readAllAccounts()}
