@@ -70,6 +70,7 @@ export const initStakePool = (
     cooldownSeconds?: number;
     minStakeSeconds?: number;
     endDate?: BN;
+    identifierName: "human";
   }
 ): TransactionInstruction => {
   const provider = new AnchorProvider(connection, wallet, {});
@@ -90,11 +91,12 @@ export const initStakePool = (
       cooldownSeconds: params.cooldownSeconds ?? null,
       minStakeSeconds: params.minStakeSeconds ?? null,
       endDate: params.endDate ?? null,
+      idenitifierName: params.identifierName,
     },
     {
       accounts: {
         stakePool: params.stakePoolId,
-        identifier: params.identifierId,
+        // identifier: params.identifierId,
         payer: wallet.publicKey,
         systemProgram: SystemProgram.programId,
       },

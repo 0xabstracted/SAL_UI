@@ -16,55 +16,55 @@ import type { RewardDistributorKind } from "./constants";
 import { REWARD_MANAGER } from "./constants";
 import { findRewardDistributorId, findRewardEntryId } from "./pda";
 
-export const initRewardDistributor = (
-  connection: Connection,
-  wallet: Wallet,
-  params: {
-    rewardDistributorId: PublicKey;
-    stakePoolId: PublicKey;
-    rewardMintId: PublicKey;
-    rewardAmount: BN;
-    rewardDurationSeconds: BN;
-    kind: RewardDistributorKind;
-    remainingAccountsForKind: AccountMeta[];
-    maxSupply?: BN;
-    supply?: BN;
-    defaultMultiplier?: BN;
-    multiplierDecimals?: number;
-    maxRewardSecondsReceived?: BN;
-  }
-): TransactionInstruction => {
-  const provider = new AnchorProvider(connection, wallet, {});
-  const rewardDistributorProgram = new Program<REWARD_DISTRIBUTOR_PROGRAM>(
-    REWARD_DISTRIBUTOR_IDL,
-    REWARD_DISTRIBUTOR_ADDRESS,
-    provider
-  );
-  return rewardDistributorProgram.instruction.initRewardDistributor(
-    {
-      rewardAmount: params.rewardAmount,
-      rewardDurationSeconds: params.rewardDurationSeconds,
-      maxSupply: params.maxSupply || null,
-      supply: params.supply || null,
-      kind: params.kind,
-      defaultMultiplier: params.defaultMultiplier || null,
-      multiplierDecimals: params.multiplierDecimals || null,
-      maxRewardSecondsReceived: params.maxRewardSecondsReceived || null,
-    },
-    {
-      accounts: {
-        rewardDistributor: params.rewardDistributorId,
-        stakePool: params.stakePoolId,
-        rewardMint: params.rewardMintId,
-        authority: wallet.publicKey,
-        payer: wallet.publicKey,
-        tokenProgram: TOKEN_PROGRAM_ID,
-        systemProgram: SystemProgram.programId,
-      },
-      remainingAccounts: params.remainingAccountsForKind,
-    }
-  );
-};
+// export const initRewardDistributor = (
+//   connection: Connection,
+//   wallet: Wallet,
+//   params: {
+//     rewardDistributorId: PublicKey;
+//     stakePoolId: PublicKey;
+//     rewardMintId: PublicKey;
+//     rewardAmount: BN;
+//     rewardDurationSeconds: BN;
+//     kind: RewardDistributorKind;
+//     remainingAccountsForKind: AccountMeta[];
+//     maxSupply?: BN;
+//     supply?: BN;
+//     defaultMultiplier?: BN;
+//     multiplierDecimals?: number;
+//     maxRewardSecondsReceived?: BN;
+//   }
+// ): TransactionInstruction => {
+//   const provider = new AnchorProvider(connection, wallet, {});
+//   const rewardDistributorProgram = new Program<REWARD_DISTRIBUTOR_PROGRAM>(
+//     REWARD_DISTRIBUTOR_IDL,
+//     REWARD_DISTRIBUTOR_ADDRESS,
+//     provider
+//   );
+//   return rewardDistributorProgram.instruction.initRewardDistributor(
+//     {
+//       rewardAmount: params.rewardAmount,
+//       rewardDurationSeconds: params.rewardDurationSeconds,
+//       maxSupply: params.maxSupply || null,
+//       supply: params.supply || null,
+//       kind: params.kind,
+//       defaultMultiplier: params.defaultMultiplier || null,
+//       multiplierDecimals: params.multiplierDecimals || null,
+//       maxRewardSecondsReceived: params.maxRewardSecondsReceived || null,
+//     },
+//     {
+//       accounts: {
+//         rewardDistributor: params.rewardDistributorId,
+//         stakePool: params.stakePoolId,
+//         rewardMint: params.rewardMintId,
+//         authority: wallet.publicKey,
+//         payer: wallet.publicKey,
+//         tokenProgram: TOKEN_PROGRAM_ID,
+//         systemProgram: SystemProgram.programId,
+//       },
+//       remainingAccounts: params.remainingAccountsForKind,
+//     }
+//   );
+// };
 
 export const initRewardEntry = (
   connection: Connection,

@@ -12,7 +12,8 @@ import { useMutation } from 'react-query'
 import { useStakePoolData } from '../hooks/useStakePoolData'
 import { getRewardDistributor } from '../programs/rewardDistributor/accounts'
 import { findRewardDistributorId } from '../programs/rewardDistributor/pda'
-import { withCloseRewardDistributor, withInitRewardDistributor, withUpdateRewardDistributor } from '../programs/rewardDistributor/transaction'
+import { withCloseRewardDistributor, withUpdateRewardDistributor } from '../programs/rewardDistributor/transaction'
+// import { withCloseRewardDistributor, withInitRewardDistributor, withUpdateRewardDistributor } from '../programs/rewardDistributor/transaction'
 import { withUpdateStakePool } from '../programs/stakePool/transaction'
 import { executeTransaction } from '../utils'
 
@@ -81,12 +82,12 @@ export const useHandleUpdatePool = () => {
               ? Number(values.multiplierDecimals)
               : undefined,
           }
-          await withInitRewardDistributor(
-            transaction,
-            connection,
-            wallet,
-            rewardDistributorKindParams
-          )
+          // await withInitRewardDistributor(
+          //   transaction,
+          //   connection,
+          //   wallet,
+          //   rewardDistributorKindParams
+          // )
           notify({
             message: 'Initializing reward distributor for pool',
             type: 'info',

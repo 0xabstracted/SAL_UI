@@ -14,7 +14,7 @@ import {
   claimRewards,
   closeRewardDistributor,
   closeRewardEntry,
-  initRewardDistributor,
+  // initRewardDistributor,
   initRewardEntry,
   reclaimFunds,
   updateRewardDistributor,
@@ -23,52 +23,52 @@ import {
 import { findRewardDistributorId, findRewardEntryId } from "./pda";
 import { withRemainingAccountsForKind } from "./utils";
 
-export const withInitRewardDistributor = async (
-  transaction: Transaction,
-  connection: Connection,
-  wallet: Wallet,
-  params: {
-    stakePoolId: PublicKey;
-    rewardMintId: PublicKey;
-    rewardAmount?: BN;
-    rewardDurationSeconds?: BN;
-    kind?: RewardDistributorKind;
-    maxSupply?: BN;
-    supply?: BN;
-    defaultMultiplier?: BN;
-    multiplierDecimals?: number;
-    maxRewardSecondsReceived?: BN;
-  }
-): Promise<[Transaction, web3.PublicKey]> => {
-  const [rewardDistributorId] = await findRewardDistributorId(
-    params.stakePoolId
-  );
-  const remainingAccountsForKind = await withRemainingAccountsForKind(
-    transaction,
-    connection,
-    wallet,
-    rewardDistributorId,
-    params.kind || RewardDistributorKind.Mint,
-    params.rewardMintId
-  );
-  transaction.add(
-    initRewardDistributor(connection, wallet, {
-      rewardDistributorId,
-      stakePoolId: params.stakePoolId,
-      rewardMintId: params.rewardMintId,
-      rewardAmount: params.rewardAmount || new BN(1),
-      rewardDurationSeconds: params.rewardDurationSeconds || new BN(1),
-      kind: params.kind || RewardDistributorKind.Mint,
-      remainingAccountsForKind,
-      maxSupply: params.maxSupply,
-      supply: params.supply,
-      defaultMultiplier: params.defaultMultiplier,
-      multiplierDecimals: params.multiplierDecimals,
-      maxRewardSecondsReceived: params.maxRewardSecondsReceived,
-    })
-  );
-  return [transaction, rewardDistributorId];
-};
+// export const withInitRewardDistributor = async (
+//   transaction: Transaction,
+//   connection: Connection,
+//   wallet: Wallet,
+//   params: {
+//     stakePoolId: PublicKey;
+//     rewardMintId: PublicKey;
+//     rewardAmount?: BN;
+//     rewardDurationSeconds?: BN;
+//     kind?: RewardDistributorKind;
+//     maxSupply?: BN;
+//     supply?: BN;
+//     defaultMultiplier?: BN;
+//     multiplierDecimals?: number;
+//     maxRewardSecondsReceived?: BN;
+//   }
+// ): Promise<[Transaction, web3.PublicKey]> => {
+//   const [rewardDistributorId] = await findRewardDistributorId(
+//     params.stakePoolId
+//   );
+//   const remainingAccountsForKind = await withRemainingAccountsForKind(
+//     transaction,
+//     connection,
+//     wallet,
+//     rewardDistributorId,
+//     params.kind || RewardDistributorKind.Mint,
+//     params.rewardMintId
+//   );
+//   transaction.add(
+//     initRewardDistributor(connection, wallet, {
+//       rewardDistributorId,
+//       stakePoolId: params.stakePoolId,
+//       rewardMintId: params.rewardMintId,
+//       rewardAmount: params.rewardAmount || new BN(1),
+//       rewardDurationSeconds: params.rewardDurationSeconds || new BN(1),
+//       kind: params.kind || RewardDistributorKind.Mint,
+//       remainingAccountsForKind,
+//       maxSupply: params.maxSupply,
+//       supply: params.supply,
+//       defaultMultiplier: params.defaultMultiplier,
+//       multiplierDecimals: params.multiplierDecimals,
+//       maxRewardSecondsReceived: params.maxRewardSecondsReceived,
+//     })
+//   );
+//   return [transaction, rewardDistributorId];
+// };
 
 export const withInitRewardEntry = async (
   transaction: Transaction,

@@ -89,6 +89,7 @@ export const withInitStakePool = async (
     cooldownSeconds?: number;
     minStakeSeconds?: number;
     endDate?: BN;
+    identifierName: "human";
   }
 ): Promise<[web3.Transaction, web3.PublicKey]> => {
   const [identifierId] = await findIdentifierId();
@@ -120,6 +121,7 @@ export const withInitStakePool = async (
       cooldownSeconds: params.cooldownSeconds,
       minStakeSeconds: params.minStakeSeconds,
       endDate: params.endDate,
+      identifierName: params.identifierName,
     })
   );
   return [transaction, stakePoolId];

@@ -8,7 +8,7 @@ import type { RewardDistributorKind } from "./programs/rewardDistributor";
 import { findRewardDistributorId } from "./programs/rewardDistributor/pda";
 import {
   withClaimRewards,
-  withInitRewardDistributor,
+  // withInitRewardDistributor,
   withInitRewardEntry,
   withUpdateRewardEntry,
 } from "./programs/rewardDistributor/transaction";
@@ -54,6 +54,7 @@ export const CreateStakePool = async (
     cooldownSeconds?: number;
     minStakeSeconds?: number;
     endDate?: BN;
+    identifierName: "human";
     rewardDistributor?: {
       rewardMintId: PublicKey;
       rewardAmount?: BN;
@@ -74,20 +75,20 @@ export const CreateStakePool = async (
   );
   let rewardDistributorId;
   if (params.rewardDistributor) {
-    [, rewardDistributorId] = await withInitRewardDistributor(
-      transaction,
-      connection,
-      wallet,
-      {
-        stakePoolId: stakePoolId,
-        rewardMintId: params.rewardDistributor.rewardMintId,
-        rewardAmount: params.rewardDistributor.rewardAmount,
-        rewardDurationSeconds: params.rewardDistributor.rewardDurationSeconds,
-        kind: params.rewardDistributor.rewardDistributorKind,
-        maxSupply: params.rewardDistributor.maxSupply,
-        supply: params.rewardDistributor.supply,
-      }
-    );
+    // [, rewardDistributorId] = await withInitRewardDistributor(
+    //   transaction,
+    //   connection,
+    //   wallet,
+    //   {
+    //     stakePoolId: stakePoolId,
+    //     rewardMintId: params.rewardDistributor.rewardMintId,
+    //     rewardAmount: params.rewardDistributor.rewardAmount,
+    //     rewardDurationSeconds: params.rewardDistributor.rewardDurationSeconds,
+    //     kind: params.rewardDistributor.rewardDistributorKind,
+    //     maxSupply: params.rewardDistributor.maxSupply,
+    //     supply: params.rewardDistributor.supply,
+    //   }
+    // );
   }
   return [transaction, stakePoolId, rewardDistributorId];
 };
@@ -105,20 +106,20 @@ export const CreateStakePool = async (
  * Stake owner should call this but no needed now as we are doing it above already
  * @returns
  */
-export const createRewardDistributor = async (
-  connection: Connection,
-  wallet: Wallet,
-  params: {
-    stakePoolId: PublicKey;
-    rewardMintId: PublicKey;
-    rewardAmount?: BN;
-    rewardDurationSeconds?: BN;
-    kind?: RewardDistributorKind;
-    maxSupply?: BN;
-    supply?: BN;
-  }
-): Promise<[Transaction, PublicKey]> =>
-  withInitRewardDistributor(new Transaction(), connection, wallet, params);
+// export const createRewardDistributor = async (
+//   connection: Connection,
+//   wallet: Wallet,
+//   params: {
+//     stakePoolId: PublicKey;
+//     rewardMintId: PublicKey;
+//     rewardAmount?: BN;
+//     rewardDurationSeconds?: BN;
+//     kind?: RewardDistributorKind;
+//     maxSupply?: BN;
+//     supply?: BN;
+//   }
+// ): Promise<[Transaction, PublicKey]> =>
+//   withInitRewardDistributor(new Transaction(), connection, wallet, params);
 
 /**
  * Convenience call to create a stake entry

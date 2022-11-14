@@ -3,52 +3,120 @@ export type aplRewardDistributor = {
   name: "apl_reward_distributor";
   instructions: [
     {
-      name: "initRewardDistributor";
+      name: "initRewardDistributorMint",
       accounts: [
         {
-          name: "rewardDistributor";
-          isMut: true;
-          isSigner: false;
+          name: "rewardDistributorMint",
+          isMut: true,
+          isSigner: false,
         },
         {
-          name: "stakePool";
-          isMut: false;
-          isSigner: false;
+          name: "stakePool",
+          isMut: false,
+          isSigner: false,
         },
         {
-          name: "rewardMint";
-          isMut: true;
-          isSigner: false;
+          name: "rewardMint",
+          isMut: true,
+          isSigner: false,
         },
         {
-          name: "authority";
-          isMut: true;
-          isSigner: true;
+          name: "authority",
+          isMut: true,
+          isSigner: true,
         },
         {
-          name: "payer";
-          isMut: true;
-          isSigner: true;
+          name: "payer",
+          isMut: true,
+          isSigner: true,
         },
         {
-          name: "tokenProgram";
-          isMut: false;
-          isSigner: false;
+          name: "tokenProgram",
+          isMut: false,
+          isSigner: false,
         },
         {
-          name: "systemProgram";
-          isMut: false;
-          isSigner: false;
-        }
-      ];
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
       args: [
         {
-          name: "ix";
+          name: "ix",
           type: {
-            defined: "InitRewardDistributorIx";
-          };
-        }
-      ];
+            defined: "InitRewardDistributorMintIx",
+          },
+        },
+      ],
+    },
+    {
+      name: "initRewardDistributorTreasury",
+      accounts: [
+        {
+          name: "rewardDistributorTreasury",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "stakePool",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "rewardMint",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "rewardDistributorTreasuryTokenAccount",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "authorityTokenAccount",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "authority",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "payer",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "tokenProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "associatedTokenProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "rent",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "ix",
+          type: {
+            defined: "InitRewardDistributorTreasuryIx",
+          },
+        },
+      ],
     },
     {
       name: "initRewardEntry";
@@ -368,8 +436,58 @@ export type aplRewardDistributor = {
     }
   ];
   types: [
+    // {
+    //   name: "InitRewardDistributorIx";
+    //   type: {
+    //     kind: "struct";
+    //     fields: [
+    //       {
+    //         name: "rewardAmount";
+    //         type: "u64";
+    //       },
+    //       {
+    //         name: "rewardDurationSeconds";
+    //         type: "u128";
+    //       },
+    //       {
+    //         name: "kind";
+    //         type: "u8";
+    //       },
+    //       {
+    //         name: "supply";
+    //         type: {
+    //           option: "u64";
+    //         };
+    //       },
+    //       {
+    //         name: "maxSupply";
+    //         type: {
+    //           option: "u64";
+    //         };
+    //       },
+    //       {
+    //         name: "defaultMultiplier";
+    //         type: {
+    //           option: "u64";
+    //         };
+    //       },
+    //       {
+    //         name: "multiplierDecimals";
+    //         type: {
+    //           option: "u8";
+    //         };
+    //       },
+    //       {
+    //         name: "maxRewardSecondsReceived";
+    //         type: {
+    //           option: "u128";
+    //         };
+    //       }
+    //     ];
+    //   };
+    // },
     {
-      name: "InitRewardDistributorIx";
+      name: "InitRewardDistributorMintIx";
       type: {
         kind: "struct";
         fields: [
@@ -382,8 +500,50 @@ export type aplRewardDistributor = {
             type: "u128";
           },
           {
-            name: "kind";
-            type: "u8";
+            name: "supply";
+            type: {
+              option: "u64";
+            };
+          },
+          {
+            name: "maxSupply";
+            type: {
+              option: "u64";
+            };
+          },
+          {
+            name: "defaultMultiplier";
+            type: {
+              option: "u64";
+            };
+          },
+          {
+            name: "multiplierDecimals";
+            type: {
+              option: "u8";
+            };
+          },
+          {
+            name: "maxRewardSecondsReceived";
+            type: {
+              option: "u128";
+            };
+          }
+        ];
+      };
+    },
+    {
+      name: "InitRewardDistributorTreasuryIx";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "rewardAmount";
+            type: "u64";
+          },
+          {
+            name: "rewardDurationSeconds";
+            type: "u128";
           },
           {
             name: "supply";
@@ -564,10 +724,10 @@ export const IDL: aplRewardDistributor = {
   name: "apl_reward_distributor",
   instructions: [
     {
-      name: "initRewardDistributor",
+      name: "initRewardDistributorMint",
       accounts: [
         {
-          name: "rewardDistributor",
+          name: "rewardDistributorMint",
           isMut: true,
           isSigner: false,
         },
@@ -606,7 +766,75 @@ export const IDL: aplRewardDistributor = {
         {
           name: "ix",
           type: {
-            defined: "InitRewardDistributorIx",
+            defined: "InitRewardDistributorMintIx",
+          },
+        },
+      ],
+    },
+    {
+      name: "initRewardDistributorTreasury",
+      accounts: [
+        {
+          name: "rewardDistributorTreasury",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "stakePool",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "rewardMint",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "rewardDistributorTreasuryTokenAccount",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "authorityTokenAccount",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "authority",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "payer",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "tokenProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "associatedTokenProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "rent",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "ix",
+          type: {
+            defined: "InitRewardDistributorTreasuryIx",
           },
         },
       ],
@@ -929,8 +1157,58 @@ export const IDL: aplRewardDistributor = {
     },
   ],
   types: [
+    // {
+    //   name: "InitRewardDistributorIx",
+    //   type: {
+    //     kind: "struct",
+    //     fields: [
+    //       {
+    //         name: "rewardAmount",
+    //         type: "u64",
+    //       },
+    //       {
+    //         name: "rewardDurationSeconds",
+    //         type: "u128",
+    //       },
+    //       {
+    //         name: "kind",
+    //         type: "u8",
+    //       },
+    //       {
+    //         name: "supply",
+    //         type: {
+    //           option: "u64",
+    //         },
+    //       },
+    //       {
+    //         name: "maxSupply",
+    //         type: {
+    //           option: "u64",
+    //         },
+    //       },
+    //       {
+    //         name: "defaultMultiplier",
+    //         type: {
+    //           option: "u64",
+    //         },
+    //       },
+    //       {
+    //         name: "multiplierDecimals",
+    //         type: {
+    //           option: "u8",
+    //         },
+    //       },
+    //       {
+    //         name: "maxRewardSecondsReceived",
+    //         type: {
+    //           option: "u128",
+    //         },
+    //       },
+    //     ],
+    //   },
+    // },
     {
-      name: "InitRewardDistributorIx",
+      name: "InitRewardDistributorMintIx",
       type: {
         kind: "struct",
         fields: [
@@ -941,10 +1219,6 @@ export const IDL: aplRewardDistributor = {
           {
             name: "rewardDurationSeconds",
             type: "u128",
-          },
-          {
-            name: "kind",
-            type: "u8",
           },
           {
             name: "supply",
@@ -975,10 +1249,57 @@ export const IDL: aplRewardDistributor = {
             type: {
               option: "u128",
             },
-          },
+          }
         ],
       },
     },
+    {
+      name: "InitRewardDistributorTreasuryIx",
+      type: {
+        kind: "struct",
+        fields: [
+          {
+            name: "rewardAmount",
+            type: "u64",
+          },
+          {
+            name: "rewardDurationSeconds",
+            type: "u128",
+          },
+          {
+            name: "supply",
+            type: {
+              option: "u64",
+            },
+          },
+          {
+            name: "maxSupply",
+            type: {
+              option: "u64",
+            },
+          },
+          {
+            name: "defaultMultiplier",
+            type: {
+              option: "u64",
+            },
+          },
+          {
+            name: "multiplierDecimals",
+            type: {
+              option: "u8",
+            },
+          },
+          {
+            name: "maxRewardSecondsReceived",
+            type: {
+              option: "u128",
+            },
+          }
+        ],
+      },
+    },
+    
     {
       name: "UpdateRewardDistributorIx",
       type: {
