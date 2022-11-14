@@ -136,10 +136,10 @@ const FixedStaking = (props: any) => {
 
   const wallet = useWallet();
 
-  const stakePoolId = useStakePoolId();
-  const stakedTokenDatas = useStakedTokenDatas();
-  const { data: stakePool } = useStakePoolData();
-  const rewardDistributorData = useRewardDistributorData();
+  // const stakePoolId = useStakePoolId();
+  // const stakedTokenDatas = useStakedTokenDatas();
+  // const { data: stakePool } = useStakePoolData();
+  // const rewardDistributorData = useRewardDistributorData();
 
   const anchorWallet = useMemo(() => {
     // wallet.connect();
@@ -181,11 +181,13 @@ const FixedStaking = (props: any) => {
     );
   };
 
-  const findStakePoolId = (identifier: BN) => {
+  const findStakePoolId = (identifier: PublicKey, str: any) => {
     return PublicKey.findProgramAddress(
       [
         anchor.utils.bytes.utf8.encode(STAKE_POOL_SEED),
-        identifier.toArrayLike(Buffer, "le", 8),
+        identifier.toBuffer(),
+        anchor.utils.bytes.utf8.encode(str),
+        // identifier.toArrayLike(Buffer, "le", 8),
       ],
       STAKE_POOL_ADDRESS
     );
@@ -411,12 +413,13 @@ const FixedStaking = (props: any) => {
       STAKE_POOL_ADDRESS,
       provider
     );
-    const parsed: any = await stakePoolProgram.account.identifier.fetch(
-      identifierId
-    );
-    console.log(parsed);
-    const identifier = parsed?.count.toNumber();
-    [stakePoolId] = await findStakePoolId(new BN(identifier));
+    // const parsed: any = await stakePoolProgram.account.identifier.fetch(
+    //   identifierId
+    // );
+    // console.log(parsed);
+    // const identifier = parsed?.count.toNumber();
+    // [stakePoolId] = await findStakePoolId(new BN(identifier));
+    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "human");
     console.log(`stakePoolId: ${stakePoolId}`);
     const [rewardDistributorId] = await findRewardDistributorId(stakePoolId);
     console.log(`rewardDistributorId: ${rewardDistributorId}`);
@@ -467,6 +470,7 @@ const FixedStaking = (props: any) => {
       rewardDurationSeconds: new BN(5),
       supply: new BN(50000000),
       kind: RewardDistributorKind.Treasury,
+      identifierName: "human",
     };
     const provider = new AnchorProvider(connection, wallet_t, {});
     const stakePoolProgram = new Program<STAKE_POOL_TYPES.aplStakePool>(
@@ -483,38 +487,39 @@ const FixedStaking = (props: any) => {
     let start_pool_instructions: any = [];
     const [identifierId] = await findIdentifierId(wallet_t.publicKey);
     let [stakePoolId]: any = [null];
-    try {
-      const parsed: any = await stakePoolProgram.account.identifier.fetch(
-        identifierId
-      );
-      console.log(parsed);
-      const identifier = parsed?.count.toNumber();
-      if (identifier == 0) {
-        let identifier_instructions =
-          stakePoolProgram.instruction.initIdentifier({
-            accounts: {
-              identifier: identifierId,
-              payer: wallet_t.publicKey,
-              systemProgram: SystemProgram.programId,
-            },
-          });
-        start_pool_instructions.push(identifier_instructions);
-      }
-      [stakePoolId] = await findStakePoolId(new BN(identifier));
-    } catch (error) {
-      const identifier = new anchor.BN(0);
-      let identifier_instructions = stakePoolProgram.instruction.initIdentifier(
-        {
-          accounts: {
-            identifier: identifierId,
-            payer: wallet_t.publicKey,
-            systemProgram: SystemProgram.programId,
-          },
-        }
-      );
-      [stakePoolId] = await findStakePoolId(identifier);
-      start_pool_instructions.push(identifier_instructions);
-    }
+    // try {
+    //   const parsed: any = await stakePoolProgram.account.identifier.fetch(
+    //     identifierId
+    //   );
+    //   console.log(parsed);
+    //   const identifier = parsed?.count.toNumber();
+    //   if (identifier == 0) {
+    //     let identifier_instructions =
+    //       stakePoolProgram.instruction.initIdentifier({
+    //         accounts: {
+    //           identifier: identifierId,
+    //           payer: wallet_t.publicKey,
+    //           systemProgram: SystemProgram.programId,
+    //         },
+    //       });
+    //     start_pool_instructions.push(identifier_instructions);
+    //   }
+    //   [stakePoolId] = await findStakePoolId(new BN(identifier));
+    // } catch (error) {
+    //   const identifier = new anchor.BN(0);
+    //   let identifier_instructions = stakePoolProgram.instruction.initIdentifier(
+    //     {
+    //       accounts: {
+    //         identifier: identifierId,
+    //         payer: wallet_t.publicKey,
+    //         systemProgram: SystemProgram.programId,
+    //       },
+    //     }
+    //   );
+    //   [stakePoolId] = await findStakePoolId(identifier);
+    //   start_pool_instructions.push(identifier_instructions);
+    // }
+    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "human");
     console.log("stakePoolId : ", stakePoolId.toBase58());
     console.log("identifierId : ", identifierId.toBase58());
     let init_pool_instruction = stakePoolProgram.instruction.initPool(
@@ -529,11 +534,12 @@ const FixedStaking = (props: any) => {
         cooldownSeconds: params.cooldownSeconds ?? null,
         minStakeSeconds: params.minStakeSeconds ?? null,
         endDate: params.endDate ?? null,
+        idenitifierName: params.identifierName,
       },
       {
         accounts: {
           stakePool: stakePoolId,
-          identifier: identifierId,
+          // identifier: identifierId,
           payer: wallet_t.publicKey,
           systemProgram: SystemProgram.programId,
         },
@@ -606,38 +612,39 @@ const FixedStaking = (props: any) => {
     let init_reward_entry_instructions: any = [];
     const [identifierId] = await findIdentifierId(wallet_t.publicKey);
     let [stakePoolId]: any = [null];
-    try {
-      const parsed: any = await stakePoolProgram.account.identifier.fetch(
-        identifierId
-      );
-      console.log(parsed);
-      const identifier = parsed?.count;
-      if (!identifier) {
-        let identifier_instructions =
-          stakePoolProgram.instruction.initIdentifier({
-            accounts: {
-              identifier: identifierId,
-              payer: wallet_t.publicKey,
-              systemProgram: SystemProgram.programId,
-            },
-          });
-        init_reward_entry_instructions.push(identifier_instructions);
-      }
-      [stakePoolId] = await findStakePoolId(identifier);
-    } catch (error) {
-      const identifier = new anchor.BN(1);
-      let identifier_instructions = stakePoolProgram.instruction.initIdentifier(
-        {
-          accounts: {
-            identifier: identifierId,
-            payer: wallet_t.publicKey,
-            systemProgram: SystemProgram.programId,
-          },
-        }
-      );
-      [stakePoolId] = await findStakePoolId(identifier);
-      init_reward_entry_instructions.push(identifier_instructions);
-    }
+    // try {
+    //   const parsed: any = await stakePoolProgram.account.identifier.fetch(
+    //     identifierId
+    //   );
+    //   console.log(parsed);
+    //   const identifier = parsed?.count;
+    //   if (!identifier) {
+    //     let identifier_instructions =
+    //       stakePoolProgram.instruction.initIdentifier({
+    //         accounts: {
+    //           identifier: identifierId,
+    //           payer: wallet_t.publicKey,
+    //           systemProgram: SystemProgram.programId,
+    //         },
+    //       });
+    //     init_reward_entry_instructions.push(identifier_instructions);
+    //   }
+    //   [stakePoolId] = await findStakePoolId(identifier);
+    // } catch (error) {
+    //   const identifier = new anchor.BN(1);
+    //   let identifier_instructions = stakePoolProgram.instruction.initIdentifier(
+    //     {
+    //       accounts: {
+    //         identifier: identifierId,
+    //         payer: wallet_t.publicKey,
+    //         systemProgram: SystemProgram.programId,
+    //       },
+    //     }
+    //   );
+    //   [stakePoolId] = await findStakePoolId(identifier);
+    //   init_reward_entry_instructions.push(identifier_instructions);
+    // }
+    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "human");
     const remainingAccounts = await remainingAccountsForInitStakeEntry(
       stakePoolId,
       selected_nft.mint
@@ -722,17 +729,18 @@ const FixedStaking = (props: any) => {
     let complete_stake_instructions: any = [];
     const [identifierId] = await findIdentifierId(wallet_t.publicKey);
     let [stakePoolId]: any = [null];
-    try {
-      const parsed: any = await stakePoolProgram.account.identifier.fetch(
-        identifierId
-      );
-      console.log(parsed);
-      const identifier = parsed?.count.toNumber();
-      [stakePoolId] = await findStakePoolId(new BN(identifier));
-    } catch (error) {
-      const identifier = new anchor.BN(0);
-      [stakePoolId] = await findStakePoolId(identifier);
-    }
+    // try {
+    //   const parsed: any = await stakePoolProgram.account.identifier.fetch(
+    //     identifierId
+    //   );
+    //   console.log(parsed);
+    //   const identifier = parsed?.count.toNumber();
+    //   [stakePoolId] = await findStakePoolId(new BN(identifier));
+    // } catch (error) {
+    //   const identifier = new anchor.BN(0);
+    //   [stakePoolId] = await findStakePoolId(identifier);
+    // }
+    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "human");
     console.log("stakePoolId : ", stakePoolId.toBase58());
     console.log("identifierId : ", identifierId.toBase58());
 
@@ -885,17 +893,18 @@ const FixedStaking = (props: any) => {
     let complete_unstake_instructions: any = [];
     const [identifierId] = await findIdentifierId(wallet_t.publicKey);
     let [stakePoolId]: any = [null];
-    try {
-      const parsed: any = await stakePoolProgram.account.identifier.fetch(
-        identifierId
-      );
-      console.log(parsed);
-      const identifier = parsed?.count.toNumber();
-      [stakePoolId] = await findStakePoolId(new BN(identifier));
-    } catch (error) {
-      const identifier = new anchor.BN(0);
-      [stakePoolId] = await findStakePoolId(identifier);
-    }
+    // try {
+    //   const parsed: any = await stakePoolProgram.account.identifier.fetch(
+    //     identifierId
+    //   );
+    //   console.log(parsed);
+    //   const identifier = parsed?.count.toNumber();
+    //   [stakePoolId] = await findStakePoolId(new BN(identifier));
+    // } catch (error) {
+    //   const identifier = new anchor.BN(0);
+    //   [stakePoolId] = await findStakePoolId(identifier);
+    // }
+    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "human");
     console.log("stakePoolId : ", stakePoolId.toBase58());
     console.log("identifierId : ", identifierId.toBase58());
 
@@ -1101,17 +1110,18 @@ const FixedStaking = (props: any) => {
     let claim_rewards_instructions: any = [];
     const [identifierId] = await findIdentifierId(wallet_t.publicKey);
     let [stakePoolId]: any = [null];
-    try {
-      const parsed: any = await stakePoolProgram.account.identifier.fetch(
-        identifierId
-      );
-      console.log(parsed);
-      const identifier = parsed?.count.toNumber();
-      [stakePoolId] = await findStakePoolId(new BN(identifier));
-    } catch (error) {
-      const identifier = new anchor.BN(0);
-      [stakePoolId] = await findStakePoolId(identifier);
-    }
+    // try {
+    //   const parsed: any = await stakePoolProgram.account.identifier.fetch(
+    //     identifierId
+    //   );
+    //   console.log(parsed);
+    //   const identifier = parsed?.count.toNumber();
+    //   [stakePoolId] = await findStakePoolId(new BN(identifier));
+    // } catch (error) {
+    //   const identifier = new anchor.BN(0);
+    //   [stakePoolId] = await findStakePoolId(identifier);
+    // }
+    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "human");
     console.log("stakePoolId : ", stakePoolId.toBase58());
     console.log("identifierId : ", identifierId.toBase58());
 
