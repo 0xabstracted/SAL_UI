@@ -30,7 +30,7 @@ export const  BurnNfts = () => {
         // console.log(nftsmetadata)
         if (wallet && wallet.connected && !gotNfts) {
           const connection = new Connection(clusterApiUrl("devnet"));
-          const metaplex = Metaplex.make(connection).use(keypairIdentity(Keypair.fromSecretKey(Uint8Array.from([226,84,109,183,178,49,93,228,217,194,195,206,42,195,162,254,12,248,218,80,182,131,7,226,22,151,61,181,147,17,155,152,12,205,110,2,170,230,101,124,126,173,54,203,222,98,78,185,252,138,10,116,253,1,208,27,132,249,249,180,150,213,105,34]))));
+          const metaplex = Metaplex.make(connection);
           const allNfts = await metaplex
                               .nfts()
                                 .findAllByOwner({ owner: wallet?.publicKey! })

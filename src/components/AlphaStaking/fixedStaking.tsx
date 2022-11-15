@@ -225,8 +225,12 @@ const FixedStaking = (props: any) => {
         .findAllByOwner({ owner: wallet?.publicKey! })
         .run();
       let temp_nfts: any = [];
+      console.log(allNfts);
       for (let index = 0; index < allNfts.length; index++) {
         const nft: any = allNfts[index];
+        const account_freeze = await connection.getAccountInfo(nft.mintAddress);
+        console.log("freeze authority account : ", account_freeze);
+
         var creators = nft.creators;
         var is_ours = false;
         if (
@@ -296,6 +300,21 @@ const FixedStaking = (props: any) => {
           xhr.send();
         }
       }
+      let wallet_t: any = wallet;
+      let [stakePoolIdF] = await findStakePoolId(wallet_t.publicKey, "humans");
+      let [stakePoolIdS] = await findStakePoolId(
+        wallet_t.publicKey,
+        "humanpets"
+      );
+      let [stakePoolIdT] = await findStakePoolId(wallet_t.publicKey, "cyborg");
+      let [stakePoolIdO] = await findStakePoolId(
+        wallet_t.publicKey,
+        "cyborgpets"
+      );
+      // const [stakeEntryIdF] = await findStakeEntryIdPda(stakePoolIdF, nft.mint);
+      // const [stakeEntryIdS] = await findStakeEntryIdPda(stakePoolIdS, nft.mint);
+      // const [stakeEntryIdT] = await findStakeEntryIdPda(stakePoolId, nft.mint);
+      // const [stakeEntryIdO] = await findStakeEntryIdPda(stakePoolId, nft.mint);
       setGotNfts(true);
     }
   };
