@@ -8,7 +8,11 @@ import {
   SystemProgram,
   Transaction,
 } from "@solana/web3.js";
-import { getAssociatedTokenAddress, TOKEN_PROGRAM_ID } from "solanaSPLToken036";
+import {
+  getAssociatedTokenAddress,
+  getMint,
+  TOKEN_PROGRAM_ID,
+} from "solanaSPLToken036";
 import { WalletDialogButton } from "@solana/wallet-adapter-material-ui";
 import { tokenManager } from "cardinalTokenManager179/dist/cjs/programs";
 import LogoWhite from "../../assets/Logowhite.png";
@@ -105,6 +109,8 @@ import {
   TokenManagerKind,
   TokenManagerState,
   TOKEN_MANAGER_ADDRESS,
+  TOKEN_MANAGER_IDL,
+  TOKEN_MANAGER_PROGRAM,
   withRemainingAccountsForReturn,
 } from "cardinalTokenManager179/dist/cjs/programs/tokenManager";
 import { SYSVAR_RENT_PUBKEY } from "../../config/config";
@@ -112,9 +118,9 @@ import { withRemainingAccountsForUnstake } from "../../programs/apl-staking/prog
 import { getStakePool } from "../../programs/apl-staking/programs/stakePool/accounts";
 
 const FixedStaking = (props: any) => {
-  console.log(props);
+  // console.log(props);
   const connection = new anchor.web3.Connection(
-    anchor.web3.clusterApiUrl("devnet")
+    "https://metaplex.devnet.rpcpool.com/"
   );
 
   const urlQueryParams = useParams();
@@ -131,6 +137,7 @@ const FixedStaking = (props: any) => {
   const [stakedNft, setStakedNft] = useState<any>(null);
   const [rewardNft, setRewardNft] = useState<any>(null);
   const [unstakedNft, setUnstakedNft] = useState<any>(null);
+  const [claimedNft, setClaimedNft] = useState<any>(null);
   const [stakedNfts, setStakedNfts] = useState<any>([]);
   const [nftsTab, setNftsTab] = useState(0);
 
@@ -217,21 +224,66 @@ const FixedStaking = (props: any) => {
   };
 
   const getNFTs = async () => {
-    if (wallet && wallet.connected && !gotNfts) {
-      const connection = new Connection(clusterApiUrl("devnet"));
+    if (wallet && wallet.connected && !gotNfts && (!nfts || nfts.length == 0)) {
+      const connection = new Connection("https://metaplex.devnet.rpcpool.com/");
       const metaplex = Metaplex.make(connection);
       const allNfts = await metaplex
         .nfts()
         .findAllByOwner({ owner: wallet?.publicKey! })
         .run();
       let temp_nfts: any = [];
+      let temp_staked_nfts: any = [];
+      let wallet_t: any = wallet;
+      console.log(allNfts);
+      let [stakePoolIdHumans] = await findStakePoolId(
+        wallet_t.publicKey,
+        "humans"
+      );
+      console.log("Stake Humans Pool : ", stakePoolIdHumans.toBase58());
+      let [stakePoolIdHumanPets] = await findStakePoolId(
+        wallet_t.publicKey,
+        "humanpets"
+      );
+      console.log("Stake Human Pets Pool : ", stakePoolIdHumanPets.toBase58());
+
+      let [stakePoolIdCyborg] = await findStakePoolId(
+        wallet_t.publicKey,
+        "cyborg"
+      );
+      console.log("Stake Cyborg Pool : ", stakePoolIdCyborg.toBase58());
+
+      let [stakePoolIdCyborgPets] = await findStakePoolId(
+        wallet_t.publicKey,
+        "cyborgpets"
+      );
+      console.log(
+        "Stake Cyborg Pets Pool : ",
+        stakePoolIdCyborgPets.toBase58()
+      );
+
       for (let index = 0; index < allNfts.length; index++) {
         const nft: any = allNfts[index];
+        const mint_info = await getMint(connection, nft.mintAddress);
+        // const account_freeze = await connection.getAccountInfo(nft.mintAddress);
+        console.log("Freeze Authority account : ", mint_info);
+        console.log(
+          "Mint Authority account : ",
+          mint_info.mintAuthority?.toBase58()
+        );
+        let is_staked = false;
+        if (
+          mint_info.freezeAuthority == stakePoolIdHumans ||
+          mint_info.freezeAuthority == stakePoolIdHumanPets ||
+          mint_info.freezeAuthority == stakePoolIdCyborg ||
+          mint_info.freezeAuthority == stakePoolIdCyborgPets
+        ) {
+          is_staked = true;
+        }
         var creators = nft.creators;
         var is_ours = false;
         if (
-          nft.updateAuthorityAddress.toBase58() ==
-          UPDATE_AUTHORITY_OF_TOKEN_STRING
+          creators[0].address.toBase58() ==
+          "H4VtgkTU2puJdTwifruCyQKULFdPuPqHdBBRG8VgWVF4"
         ) {
           is_ours = true;
           for (let iindex = 0; iindex < creators.length; iindex++) {
@@ -288,8 +340,13 @@ const FixedStaking = (props: any) => {
                 creator: nft.creators[0].address,
                 trait_type: trait_type,
               };
-              temp_nfts.push(obj);
-              setNFts(temp_nfts!);
+              if (is_staked) {
+                temp_staked_nfts.push(obj);
+                setStakedNfts(temp_staked_nfts!);
+              } else {
+                temp_nfts.push(obj);
+                setNFts(temp_nfts!);
+              }
             }
           });
           xhr.open("GET", nft.uri);
@@ -756,9 +813,10 @@ const FixedStaking = (props: any) => {
     console.log("Start Pool Signature : ", complete_stake_signature);
   };
 
-  const completeUnstakeFn = async () => {
+  const completeUnstakeFn = async (nft: any) => {
     const transaction = new Transaction();
     let wallet_t: any = wallet;
+    var nft = unstakedNft;
     const provider = new AnchorProvider(connection, wallet_t, {});
     const stakePoolProgram = new Program<STAKE_POOL_TYPES.aplStakePool>(
       STAKE_POOL_TYPES.IDL,
@@ -771,34 +829,67 @@ const FixedStaking = (props: any) => {
         REWARD_DISTRIBUTOR_ADDRESS,
         provider
       );
+
+    const tokenManagerProgram = new Program<TOKEN_MANAGER_PROGRAM>(
+      TOKEN_MANAGER_IDL,
+      TOKEN_MANAGER_ADDRESS,
+      provider
+    );
+
     let complete_unstake_instructions: any = [];
     const [identifierId] = await findIdentifierId(wallet_t.publicKey);
     let [stakePoolId]: any = [null];
-    [stakePoolId] = await findStakePoolId(
-      wallet_t.publicKey,
-      unstakedNft.trait_type
-    );
+    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, nft.trait_type);
     console.log("stakePoolId : ", stakePoolId.toBase58());
     console.log("identifierId : ", identifierId.toBase58());
 
-    const [[stakeEntryId], [rewardDistributorId]] = await Promise.all([
-      findStakeEntryIdFromMint(
-        connection,
-        wallet_n.publicKey,
+    const [rewardDistributorId] = await findRewardDistributorId(stakePoolId);
+    console.log(stakePoolId.toBase58());
+
+    const [stakeEntryId] = await findStakeEntryIdPda(stakePoolId, nft.mint);
+
+    let stakeEntryData: any = null;
+    try {
+      const parsed = await stakePoolProgram.account.stakeEntry.fetch(
+        stakeEntryId
+      );
+
+      console.log(parsed);
+
+      stakeEntryData = {
+        parsed,
+        stakeEntryId,
+      };
+    } catch (error) {}
+
+    let rewardDistributorData: any = null;
+    try {
+      const parsed =
+        await rewardDistributorProgram.account.rewardDistributor.fetch(
+          rewardDistributorId
+        );
+
+      console.log(parsed);
+
+      rewardDistributorData = {
+        parsed,
+        rewardDistributorId,
+      };
+    } catch (error) {}
+
+    let stakePoolData: any = null;
+    try {
+      const parsed = await stakePoolProgram.account.stakePool.fetch(
+        stakePoolId
+      );
+
+      console.log(parsed);
+
+      stakePoolData = {
+        parsed,
         stakePoolId,
-        unstakedNft.mint
-      ),
-      await findRewardDistributorId(stakePoolId),
-    ]);
-
-    const [stakeEntryData, rewardDistributorData] = await Promise.all([
-      tryGetAccount(() => getStakeEntry(connection, stakeEntryId)),
-      tryGetAccount(() =>
-        getRewardDistributor(connection, rewardDistributorId)
-      ),
-    ]);
-
-    const stakePoolData = await getStakePool(connection, stakePoolId);
+      };
+    } catch (error) {}
 
     if (
       (!stakePoolData.parsed.cooldownSeconds ||
@@ -817,36 +908,49 @@ const FixedStaking = (props: any) => {
     ) {
       const tokenManagerId = await tokenManagerAddressFromMint(
         connection,
-        unstakedNft.mint
+        nft.mint
       );
-      const tokenManagerData = await tryGetAccount(() =>
-        tokenManager.accounts.getTokenManager(connection, tokenManagerId)
-      );
+
+      let tokenManagerData: any = null;
+      try {
+        const parsed = await tokenManagerProgram.account.tokenManager.fetch(
+          tokenManagerId
+        );
+
+        console.log(parsed);
+
+        tokenManagerData = {
+          parsed,
+          tokenManagerId,
+        };
+      } catch (error) {}
+
+      // const tokenManagerData = await tryGetAccount(() =>
+      //   tokenManager.accounts.getTokenManager(connection, tokenManagerId)
+      // );
       const remainingAccountsForReturn = await withRemainingAccountsForReturn(
         transaction,
         connection,
         wallet_n,
         tokenManagerData!
       );
-      const [tokenManagerIdNew] = await findTokenManagerAddress(
-        unstakedNft.mint
-      );
+      const [tokenManagerIdNew] = await findTokenManagerAddress(nft.mint);
       const tokenManagerTokenAccountId = await findAta(
-        unstakedNft.mint,
+        nft.mint,
         (
-          await findTokenManagerAddress(unstakedNft.mint)
+          await findTokenManagerAddress(nft.mint)
         )[0],
         true
       );
 
       const userReceiptMintTokenAccount = await findAta(
-        unstakedNft.mint,
+        nft.mint,
         wallet_n.publicKey,
         true
       );
 
       const transferAccounts = await getRemainingAccountsForKind(
-        unstakedNft.mint,
+        nft.mint,
         tokenManagerData?.parsed.kind!
       );
 
@@ -854,7 +958,7 @@ const FixedStaking = (props: any) => {
         stakePoolProgram.instruction.returnReceiptMint({
           accounts: {
             stakeEntry: stakeEntryId,
-            receiptMint: unstakedNft.mint,
+            receiptMint: nft.mint,
             tokenManager: tokenManagerId,
             tokenManagerTokenAccount: tokenManagerTokenAccountId,
             userReceiptMintTokenAccount: userReceiptMintTokenAccount,
@@ -874,24 +978,74 @@ const FixedStaking = (props: any) => {
       complete_unstake_instructions.push(return_receipt_mint_inst);
     }
 
-    const stakeEntryOriginalMintTokenAccountId =
-      await withFindOrInitAssociatedTokenAccount(
-        transaction,
-        connection,
-        unstakedNft.mint,
+    const associatedAddressStakeEntry =
+      await splToken.Token.getAssociatedTokenAddress(
+        splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+        splToken.TOKEN_PROGRAM_ID,
+        stakedNft.mint,
         stakeEntryId,
-        wallet_n.publicKey,
         true
       );
+    const accountStakeEntry = await connection.getAccountInfo(
+      associatedAddressStakeEntry
+    );
 
-    const userOriginalMintTokenAccountId =
-      await withFindOrInitAssociatedTokenAccount(
-        transaction,
-        connection,
-        unstakedNft.mint,
-        wallet_n.publicKey,
-        wallet_n.publicKey
+    if (!accountStakeEntry) {
+      complete_unstake_instructions.push(
+        splToken.Token.createAssociatedTokenAccountInstruction(
+          splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+          splToken.TOKEN_PROGRAM_ID,
+          stakedNft.mint,
+          associatedAddressStakeEntry,
+          stakeEntryId,
+          wallet_t.publicKey
+        )
       );
+    }
+
+    const associatedAddressUserOriginal =
+      await splToken.Token.getAssociatedTokenAddress(
+        splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+        splToken.TOKEN_PROGRAM_ID,
+        nft.mint,
+        stakeEntryId,
+        true
+      );
+    const accountUserOriginal = await connection.getAccountInfo(
+      associatedAddressUserOriginal
+    );
+
+    if (!accountUserOriginal) {
+      complete_unstake_instructions.push(
+        splToken.Token.createAssociatedTokenAccountInstruction(
+          splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+          splToken.TOKEN_PROGRAM_ID,
+          nft.mint,
+          associatedAddressUserOriginal,
+          stakeEntryId,
+          wallet_t.publicKey
+        )
+      );
+    }
+
+    // const stakeEntryOriginalMintTokenAccountId =
+    //   await withFindOrInitAssociatedTokenAccount(
+    //     transaction,
+    //     connection,
+    //     nft.mint,
+    //     stakeEntryId,
+    //     wallet_n.publicKey,
+    //     true
+    //   );
+
+    // const userOriginalMintTokenAccountId =
+    //   await withFindOrInitAssociatedTokenAccount(
+    //     transaction,
+    //     connection,
+    //     nft.mint,
+    //     wallet_n.publicKey,
+    //     wallet_n.publicKey
+    //   );
 
     const remainingAccounts = await withRemainingAccountsForUnstake(
       transaction,
@@ -905,11 +1059,10 @@ const FixedStaking = (props: any) => {
       accounts: {
         stakePool: stakePoolId,
         stakeEntry: stakeEntryId,
-        originalMint: unstakedNft.mint,
-        stakeEntryOriginalMintTokenAccount:
-          stakeEntryOriginalMintTokenAccountId,
+        originalMint: nft.mint,
+        stakeEntryOriginalMintTokenAccount: associatedAddressStakeEntry,
         user: wallet_n.publicKey,
-        userOriginalMintTokenAccount: userOriginalMintTokenAccountId,
+        userOriginalMintTokenAccount: associatedAddressUserOriginal,
         tokenProgram: TOKEN_PROGRAM_ID,
       },
       remainingAccounts: remainingAccounts,
@@ -918,7 +1071,7 @@ const FixedStaking = (props: any) => {
 
     if (rewardDistributorData) {
       const [rewardEntryId] = await findRewardEntryId(
-        rewardDistributorData.pubkey,
+        rewardDistributorData.rewardDistributorId,
         stakeEntryId
       );
       const rewardMintTokenAccountId = await findAta(
@@ -964,9 +1117,8 @@ const FixedStaking = (props: any) => {
     console.log("Start Pool Signature : ", complete_unstake_signature);
   };
 
-  const claimRewardsFn = async () => {
+  const claimRewardsFn = async (nft: any) => {
     const transaction = new Transaction();
-    let nft = nfts[0];
     let wallet_t: any = wallet;
     const provider = new AnchorProvider(connection, wallet_t, {});
     const stakePoolProgram = new Program<STAKE_POOL_TYPES.aplStakePool>(
@@ -986,15 +1138,8 @@ const FixedStaking = (props: any) => {
     [stakePoolId] = await findStakePoolId(wallet_t.publicKey, nft.trait_type);
     console.log("stakePoolId : ", stakePoolId.toBase58());
     console.log("identifierId : ", identifierId.toBase58());
-
-    const [[stakeEntryId], originalMintMetadataId] = await Promise.all([
-      findStakeEntryIdFromMint(
-        connection,
-        wallet_t.publicKey,
-        stakePoolId,
-        nft.mint,
-        true
-      ),
+    const [stakeEntryId] = await findStakeEntryIdPda(stakePoolId, nft.mint);
+    const [originalMintMetadataId] = await Promise.all([
       metaplex125.Metadata.getPDA(nft.mint),
     ]);
 
@@ -1008,9 +1153,20 @@ const FixedStaking = (props: any) => {
     claim_rewards_instructions.push(update_total_seconds_instruction);
 
     const [rewardDistributorId] = await findRewardDistributorId(stakePoolId);
-    const rewardDistributorData = await tryGetAccount(() =>
-      getRewardDistributor(connection, rewardDistributorId)
-    );
+    let rewardDistributorData: any = null;
+    try {
+      const parsed =
+        await rewardDistributorProgram.account.rewardDistributor.fetch(
+          rewardDistributorId
+        );
+
+      console.log(parsed);
+
+      rewardDistributorData = {
+        parsed,
+        rewardDistributorId,
+      };
+    } catch (error) {}
 
     if (rewardDistributorData) {
       const rewardMintTokenAccountId = await findAta(
@@ -1030,18 +1186,26 @@ const FixedStaking = (props: any) => {
       );
 
       const [rewardEntryId] = await findRewardEntryId(
-        rewardDistributorData.pubkey,
+        rewardDistributorData.rewardDistributorId,
         stakeEntryId
       );
-      const rewardEntryData = await tryGetAccount(() =>
-        getRewardEntry(connection, rewardEntryId)
-      );
+      // const rewardEntryData = await tryGetAccount(() =>
+      //   getRewardEntry(connection, rewardEntryId)
+      // );
 
-      const rewardDistributorProgram = new Program<REWARD_DISTRIBUTOR_PROGRAM>(
-        REWARD_DISTRIBUTOR_IDL,
-        REWARD_DISTRIBUTOR_ADDRESS,
-        provider
-      );
+      let rewardEntryData: any = null;
+      try {
+        const parsed = await rewardDistributorProgram.account.rewardEntry.fetch(
+          rewardEntryId
+        );
+
+        console.log(parsed);
+
+        rewardEntryData = {
+          parsed,
+          rewardDistributorId,
+        };
+      } catch (error) {}
 
       if (!rewardEntryData) {
         let init_reward_entry_instruction =
@@ -1049,7 +1213,7 @@ const FixedStaking = (props: any) => {
             accounts: {
               rewardEntry: rewardEntryId,
               stakeEntry: stakeEntryId,
-              rewardDistributor: rewardDistributorData.pubkey,
+              rewardDistributor: rewardDistributorData.rewardDistributorId,
               payer: wallet_n.publicKey,
               systemProgram: SystemProgram.programId,
             },
@@ -1147,9 +1311,6 @@ const FixedStaking = (props: any) => {
                             alt=""
                           />
                         </li>
-                        <li className="pointer" onClick={claimRewardsFn}>
-                          Claim Tokens
-                        </li>
                       </ul>
                     </div>
                   )}
@@ -1215,6 +1376,22 @@ const FixedStaking = (props: any) => {
                                   onClick={() => setUnstakedNft(item)}
                                 >
                                   <img src={item.link} />
+                                  <div className="pull-left full-width text-center">
+                                    <button
+                                      className="nft-select-button"
+                                      onClick={() => completeUnstakeFn(item)}
+                                    >
+                                      Unstake Now
+                                    </button>
+                                  </div>
+                                  <div className="pull-left full-width text-center">
+                                    <button
+                                      className="nft-select-button"
+                                      onClick={() => claimRewardsFn(item)}
+                                    >
+                                      Claim Tokens
+                                    </button>
+                                  </div>
                                   {/* <label>{item.name}</label> */}
                                   {/* <label>{item.trait_type}</label> */}
                                 </div>
