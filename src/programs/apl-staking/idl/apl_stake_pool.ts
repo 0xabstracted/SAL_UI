@@ -1354,7 +1354,7 @@ export type aplStakePool = {
     }
   ],
   "metadata": {
-    "address": "ASPXjbyfki5TsXHu4eBmsqqhKNJLhPqJ4wj7gsgW18F6"
+    "address": "aspcC9JJWDxCC1yQSw4Pv2o95VyCEHP7ek4CvqKmBox"
   }
 };
 
@@ -2714,7 +2714,7 @@ export const IDL: aplStakePool = {
     }
   ],
   "metadata": {
-    "address": "ASPXjbyfki5TsXHu4eBmsqqhKNJLhPqJ4wj7gsgW18F6"
+    "address": "aspcC9JJWDxCC1yQSw4Pv2o95VyCEHP7ek4CvqKmBox"
   }
 };
 

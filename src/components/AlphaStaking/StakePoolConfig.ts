@@ -4,7 +4,7 @@ import { REWARD_MINT_GLTCH, SALT_ADDRESS } from "../TokenCreation/AlphaTokenConf
 import * as anchor from '@project-serum/anchor'
 import { PublicKey } from "@solana/web3.js"
 export const STAKE_POOL_ADDRESS = new PublicKey(
-    "ASPXjbyfki5TsXHu4eBmsqqhKNJLhPqJ4wj7gsgW18F6"
+    "aspcC9JJWDxCC1yQSw4Pv2o95VyCEHP7ek4CvqKmBox"
 );
 export enum RewardDistributorKind {
     Mint = 1,
@@ -13,7 +13,7 @@ export enum RewardDistributorKind {
 export const IDENTIFIER_SEED = "identifier";
 export const STAKE_POOL_SEED = "stake-pool";
 export const REWARD_DISTRIBUTOR_ADDRESS = new PublicKey(
-    "ARDCbrxKAMA2pCBAAa5TUSi5SYMvobfPnHB97mu44EMY"
+    "ardJ1zpGCk4RrBz3cNAbN2Kg2VubpR1HPu2RFXm3Y3E"
 );
 export const STAKE_AUTHORIZATION_SEED = "stake-authorization";
 export const REWARD_DISTRIBUTOR_SEED = "reward-distributor";

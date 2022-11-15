@@ -17,7 +17,7 @@ import { alphaTokenSwapPda,alphaPotPda } from "../../GrandProgramUtils/Associate
 function CreateTokenMetadata() {
     const wallet = useWallet()
 
-    const connection = new Connection(clusterApiUrl("mainnet-beta"), "confirmed");
+    const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
 
     const createTokenMetadata = async (args: CreateTokenMetadataArgs) => {
         if (wallet.publicKey) {

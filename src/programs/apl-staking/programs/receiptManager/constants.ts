@@ -4,7 +4,7 @@ import { PublicKey } from "@solana/web3.js";
 import * as RECEIPT_MANAGER_TYPES from "../../idl/apl_receipt_manager";
 
 export const RECEIPT_MANAGER_ADDRESS = new PublicKey(
-  "ARMm8GbQqVmq4jNw4tYZWSC2BMVdSD31PDVKd6tchJik"
+  "armaWk1KuccZpHdhky2x5Tkha6cP7s45fPa3ETcGX2e"
 );
 
 export const RECEIPT_MANAGER_SEED = "receipt-manager";
