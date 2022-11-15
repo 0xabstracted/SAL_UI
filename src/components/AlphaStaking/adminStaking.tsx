@@ -497,6 +497,8 @@ const AdminStaking = () => {
     switch (str) {
       case "humans":
         rewardAmount = new BN(5000000000);
+        // rewardAmount = new BN(60000);
+        // rewardAmount = new BN(57870);
         imageUrl =
           "https://susjknvw4ea2sgq7te4m5g3lftgwjovcnmcieqdah75thjqj3p4a.arweave.net/lSSVNrbhAakaH5k4zptrLM1kuqJrBIJAYD_7M6YJ2_g?ext=png";
         break;

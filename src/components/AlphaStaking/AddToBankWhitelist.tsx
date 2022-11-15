@@ -88,7 +88,6 @@ function AddToBankWhitelist() {
     arr: any
   ) => {
     // console.log(`farmId: ${farmId}`)
-    // const myKeypair = web3.Keypair.fromSecretKey(new Uint8Array([236,35,125,15,184,98,170,93,245,91,234,165,3,54,0,180,142,100,16,191,246,119,76,165,198,213,25,233,208,63,67,20,8,155,30,8,104,196,143,170,188,27,225,142,108,115,152,245,37,32,121,148,60,55,148,73,62,232,234,178,128,194,190,14]))
     const address_to_whitelist = new anchor.web3.PublicKey(mint);
     farmId = new anchor.web3.PublicKey(farmId);
     const stakeProgram = await getStakeProgram(wallet);

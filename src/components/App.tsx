@@ -29,7 +29,7 @@ import { ThemeProvider, createTheme } from "@material-ui/core";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { exact } from "prop-types";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { BurnNfts } from "./TokenCreation/BurnNfts";
+// import { BurnNfts } from "./TokenCreation/BurnNfts";
 
 const theme = createTheme({
   palette: {
@@ -160,19 +160,19 @@ const App = () => {
     );
   };
 
-  const BurnNftsParent = () => {
-    return (
-      <ThemeProvider theme={theme}>
-        <ConnectionProvider endpoint={endpoint}>
-          <WalletProvider wallets={wallets} autoConnect>
-            <WalletDialogProvider>
-              <BurnNfts />
-            </WalletDialogProvider>
-          </WalletProvider>
-        </ConnectionProvider>
-      </ThemeProvider>
-    );
-  };
+  // const BurnNftsParent = () => {
+  //   return (
+  //     <ThemeProvider theme={theme}>
+  //       <ConnectionProvider endpoint={endpoint}>
+  //         <WalletProvider wallets={wallets} autoConnect>
+  //           <WalletDialogProvider>
+  //             <BurnNfts />
+  //           </WalletDialogProvider>
+  //         </WalletProvider>
+  //       </ConnectionProvider>
+  //     </ThemeProvider>
+  //   );
+  // };
 
 
   const FixedStakingParent = () => {
@@ -201,7 +201,7 @@ const App = () => {
         <Route path="/admin-staking" element={<AdminStakingParent />} />
         <Route path="/buy-tickets/*" element={<SingleRaffleParent />} />
         <Route path="/create-raffle" element={<CreateRaffleParent />}/>
-        <Route path="/burn-nfts" element={<BurnNftsParent />}/>
+        {/* <Route path="/burn-nfts" element={<BurnNftsParent />}/> */}
       </Routes>
     </BrowserRouter>
   );

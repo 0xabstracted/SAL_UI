@@ -11,7 +11,7 @@ import {
   mintNewFungibleTokenArgs,
   REWARD_MINT_GLITCH,
   REWARD_MINT_GLTCH,
-  RYAN_ADDRESS,
+  SALT_ADDRESS,
 } from "./AlphaTokenConfig";
 import { AlphaTokenSwapArgs } from "./TokenInterface";
 import SwappingIcon from "../../assets/swapping_icon.png";
@@ -102,7 +102,7 @@ function AlphaTokenSwap() {
       let token_swap_instructions: any = [];
       let amount = new BN(glitchTokenVal);
       const [registry_pda] = await findRegistryPDA(
-        RYAN_ADDRESS,
+        SALT_ADDRESS,
         args.mintTokenIn,
         args.mintTokenOut
       );
