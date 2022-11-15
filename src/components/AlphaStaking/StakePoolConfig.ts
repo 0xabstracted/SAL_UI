@@ -31,7 +31,7 @@ export interface StartStakePoolArgs{
 
 // export const UPDATE_AUTHORITY_OF_TOKEN = new anchor.web3.PublicKey("TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq")
 export const UPDATE_AUTHORITY_OF_TOKEN = RYAN_ADDRESS
-export const UPDATE_AUTHORITY_OF_TOKEN_STRING  = "ryaNsMVq6FaS4oYT6gXxKsPEzGqryWmMb2PQKABsSRX"
+export const UPDATE_AUTHORITY_OF_TOKEN_STRING  = "SALThRKa8JFD3XoGbLshzg61kaBHFFCeggDH8ydNEaE"
 export const CREATOR_SECRET_ALPHA_DEV_COLLECTION = new anchor.web3.PublicKey("H4VtgkTU2puJdTwifruCyQKULFdPuPqHdBBRG8VgWVF4")
 export const CREATOR_SECRET_ALPHA_MAIN_COLLECTION = new anchor.web3.PublicKey("GYa915Qk8NiAjvEM3duzmXBskpbzCApVnbKtdj6Fykcy")
 export const farmConfigAlpha:FarmConfig = {
@@ -53,10 +53,10 @@ export const HUMANPETS_FARM_ID = new anchor.web3.PublicKey("GhnPxxng7AMtHmfvFqLw
 export const CYBORG_FARM_ID = new anchor.web3.PublicKey("8C2ZrB99SUu3yhzstuRMJ7LyMHy954VGZBkMRFeP5u4J");
 export const CYBORGPET_FARM_ID = new anchor.web3.PublicKey("GPZjNUaBFujrxCVC3qSRRMq4VrPGx4zbfB6MKT1foZqu");
 
-export const FUNDER_HUMANS_FARM = new anchor.web3.PublicKey('ryaNsMVq6FaS4oYT6gXxKsPEzGqryWmMb2PQKABsSRX');
-export const FUNDER_HUMANPETS_FARM = new anchor.web3.PublicKey('ryaNsMVq6FaS4oYT6gXxKsPEzGqryWmMb2PQKABsSRX');
-export const FUNDER_CYBORG_FARM = new anchor.web3.PublicKey('ryaNsMVq6FaS4oYT6gXxKsPEzGqryWmMb2PQKABsSRX');
-export const FUNDER_CYBORGPET_FARM = new anchor.web3.PublicKey('ryaNsMVq6FaS4oYT6gXxKsPEzGqryWmMb2PQKABsSRX');
+export const FUNDER_HUMANS_FARM = new anchor.web3.PublicKey('SALThRKa8JFD3XoGbLshzg61kaBHFFCeggDH8ydNEaE');
+export const FUNDER_HUMANPETS_FARM = new anchor.web3.PublicKey('SALThRKa8JFD3XoGbLshzg61kaBHFFCeggDH8ydNEaE');
+export const FUNDER_CYBORG_FARM = new anchor.web3.PublicKey('SALThRKa8JFD3XoGbLshzg61kaBHFFCeggDH8ydNEaE');
+export const FUNDER_CYBORGPET_FARM = new anchor.web3.PublicKey('SALThRKa8JFD3XoGbLshzg61kaBHFFCeggDH8ydNEaE');
 
 
 const fixedrateConfigHumans: FixedRateConfig = {
