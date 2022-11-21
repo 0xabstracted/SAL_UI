@@ -1165,6 +1165,11 @@ const FixedStaking = (props: any) => {
         wallet_n.publicKey,
         true
       );
+      console.log(
+        "rewardMintTokenAccountId : ",
+        rewardMintTokenAccountId.toBase58()
+      );
+
       const remainingAccountsForKind = await withRemainingAccountsForKind(
         transaction,
         connection,
@@ -1264,14 +1269,26 @@ const FixedStaking = (props: any) => {
         true
       );
 
-      const rewardDistributorRewardMintTokenAccountId = new PublicKey(
-        "FNYBie5kK9mjfbZ5FJGmTbyyMHwVaGcTQA2Q1tVEkx7J"
+      // const rewardDistributorRewardMintTokenAccountId = new PublicKey(
+      //   "FNYBie5kK9mjfbZ5FJGmTbyyMHwVaGcTQA2Q1tVEkx7J"
+      // );
+
+      const rewardDistributorRewardMintTokenAccountId = await findAta(
+        REWARD_MINT_GLTCH,
+        rewardDistributorId,
+        // wallet_n.publicKey,
+        true
       );
 
       const userRewardMintTokenAccountId = await findAta(
         rewardDistributorData.parsed.rewardMint,
         wallet_n.publicKey,
         true
+      );
+
+      console.log(
+        "rewardMintTokenAccountId : ",
+        userRewardMintTokenAccountId.toBase58()
       );
 
       const remainingAccountsForKind: any = [
