@@ -496,22 +496,23 @@ const AdminStaking = () => {
     var imageUrl;
     switch (str) {
       case "humans":
-        rewardAmount = new BN(5000000000);
+        rewardAmount = new BN(Math.ceil(5000000000 / 86400));
         imageUrl =
           "https://susjknvw4ea2sgq7te4m5g3lftgwjovcnmcieqdah75thjqj3p4a.arweave.net/lSSVNrbhAakaH5k4zptrLM1kuqJrBIJAYD_7M6YJ2_g?ext=png";
         break;
       case "humanpets":
-        rewardAmount = new BN(10000000000);
+        rewardAmount = new BN(Math.ceil(10000000000 / 86400));
         imageUrl =
           "https://susjknvw4ea2sgq7te4m5g3lftgwjovcnmcieqdah75thjqj3p4a.arweave.net/lSSVNrbhAakaH5k4zptrLM1kuqJrBIJAYD_7M6YJ2_g?ext=png";
         break;
       case "cyborg":
-        rewardAmount = new BN(15000000000);
+        rewardAmount = new BN(Math.ceil(15000000000 / 86400));
         imageUrl =
           "https://susjknvw4ea2sgq7te4m5g3lftgwjovcnmcieqdah75thjqj3p4a.arweave.net/lSSVNrbhAakaH5k4zptrLM1kuqJrBIJAYD_7M6YJ2_g?ext=png";
         break;
       case "cyborgpets":
-        rewardAmount = new BN(20000000000);
+        var k = 20000000000 / 86400;
+        rewardAmount = new BN(Math.ceil(k));
         imageUrl =
           "https://susjknvw4ea2sgq7te4m5g3lftgwjovcnmcieqdah75thjqj3p4a.arweave.net/lSSVNrbhAakaH5k4zptrLM1kuqJrBIJAYD_7M6YJ2_g?ext=png";
         break;
@@ -523,7 +524,7 @@ const AdminStaking = () => {
       imageUri: imageUrl,
       requiresCollections: [],
       requiresCreators: [
-        new PublicKey("H4VtgkTU2puJdTwifruCyQKULFdPuPqHdBBRG8VgWVF4"),
+        new PublicKey("1DDvKdBCW2RQ497u2XS6XYF8KvxrSKvDbk6mE6iXEvm"),
       ],
       requiresAuthorization: false,
       authority: wallet_t.publicKey,
@@ -533,7 +534,7 @@ const AdminStaking = () => {
       endDate: null,
       rewardAmount: rewardAmount,
       rewardDurationSeconds: new BN(8640000),
-      supply: new BN(8000000000000000),
+      supply: new BN(5000000000000000),
       kind: RewardDistributorKind.Treasury,
       identifierName: str,
     };

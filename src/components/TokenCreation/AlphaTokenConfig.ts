@@ -3,7 +3,7 @@ import * as anchor from '@project-serum/anchor';
 import { BN } from "@project-serum/anchor";
 export const REWARD_MINT_GLITCH = new anchor.web3.PublicKey('GLTChgv7uPRGoRpuQcW7B9tYSUmQmLzeWTjxF4FoEVbY');
 export const REWARD_MINT_GLITCH_MAINNET = new anchor.web3.PublicKey('GLTChgv7uPRGoRpuQcW7B9tYSUmQmLzeWTjxF4FoEVbY');
-export const REWARD_MINT_GLTCH = new anchor.web3.PublicKey('GLTCHuiXgb3u26WticSWmUSZ7PePpfANcswLV5QxBPpa');
+export const REWARD_MINT_GLTCH = new anchor.web3.PublicKey('GLtch7krBYgjyNFT7qdLevdnimLzGQFcJsHYgprD1PuP');
 export const REWARD_MINT_GLTCH_MAINET = new anchor.web3.PublicKey('GLTCHuiXgb3u26WticSWmUSZ7PePpfANcswLV5QxBPpa');
 // export const ALPHA_OWNER_ATA = new anchor.web3.PublicKey('7HL9xo4rA48cR6CYsxZ4dzJa3zt3FZgGGUaB26JRWwrS');
 export const RYAN_ADDRESS = new anchor.web3.PublicKey('SALThRKa8JFD3XoGbLshzg61kaBHFFCeggDH8ydNEaE')
