@@ -7,19 +7,25 @@ import { useEffect, useMemo, useState, useCallback } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import 'react-circular-progressbar/dist/styles.css';
+import "react-circular-progressbar/dist/styles.css";
 
 import * as anchor from "@project-serum/anchor";
 import { BN, Program } from "@project-serum/anchor";
 
-import { PublicKey, SystemProgram, Transaction, clusterApiUrl, Connection } from "@solana/web3.js";
+import {
+  PublicKey,
+  SystemProgram,
+  Transaction,
+  clusterApiUrl,
+  Connection,
+} from "@solana/web3.js";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletDialogButton } from "@solana/wallet-adapter-material-ui";
 
 import { Snackbar } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 
-import { Metaplex } from "@metaplex-foundation/js"
+import { Metaplex } from "@metaplex-foundation/js";
 
 import MobileMenu from "../assets/mobile_menu.png";
 import Twitter from "../assets/twitter_copy.png";
@@ -47,7 +53,7 @@ import SwappingIcon from "../assets/swapping_icon.png";
 import User from "../assets/user.png";
 import Refresh from "../assets/refresh.png";
 import ProgressBar from "./progress-bar";
-import 'react-circular-progressbar/dist/styles.css';
+import "react-circular-progressbar/dist/styles.css";
 import StakingMobile from "../assets/staking_mobile.png";
 import TokenSwapMobile from "../assets/token_swap_mobile.png";
 import RaffleCave from "../assets/raffle_cave_mobile.png";
@@ -66,7 +72,7 @@ import {
   COLLECTION_ID,
   REWARD_MINT,
   FEE_WALLET,
-  MAGIC_HAT_PROGRAM_V2_ID
+  MAGIC_HAT_PROGRAM_V2_ID,
 } from "../config/config";
 
 import { sendTransaction, sendTransactions } from "../config/connection";
@@ -83,32 +89,47 @@ import {
 
 import * as mpl from "@metaplex-foundation/mpl-token-metadata";
 
-import {
-  MagicHatAccount,
-  getMagicHatState,
-} from "../programs/candy-machine";
+import { MagicHatAccount, getMagicHatState } from "../programs/candy-machine";
 
 import idl from "../idl/magic_hat.json";
 
-
 import { findAssociatedTokenAddress } from "../GrandProgramUtils/AssociatedTokenAccountProgram/pda";
-import { MAGIC_STAKE_PROGRAM_ID, GEM_BANK_PROGRAM_ID, getBankProgram, getStakeProgram } from "../GrandProgramUtils/GemBank/GetProgramObjects";
+import {
+  MAGIC_STAKE_PROGRAM_ID,
+  GEM_BANK_PROGRAM_ID,
+  getBankProgram,
+  getStakeProgram,
+} from "../GrandProgramUtils/GemBank/GetProgramObjects";
 // import { FixedRateConfig, RarityConfig } from "../GrandProgramUtils/GemBank/interface";
-import { TOKEN_METADATA_PROGRAM_ID, SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID } from "../GrandProgramUtils/TokenMetadata/constants";
+import {
+  TOKEN_METADATA_PROGRAM_ID,
+  SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
+} from "../GrandProgramUtils/TokenMetadata/constants";
 
 import MenuContent from "./menu";
 import StartStakePool from "./AlphaStaking/StartStakePool";
 import AddToBankWhitelist from "./AlphaStaking/AddToBankWhitelist";
 import CreateFungibleToken from "./TokenCreation/CreateFungibleToken";
 
-import { CYBORGPET_FARM_ID, CYBORG_FARM_ID, HUMANPETS_FARM_ID, HUMANS_FARM_ID, UPDATE_AUTHORITY_OF_TOKEN_STRING } from "./AlphaStaking/StakePoolConfig";
-import { REWARD_MINT_GLITCH, REWARD_MINT_GLTCH } from "./TokenCreation/AlphaTokenConfig";
+import {
+  CYBORGPET_FARM_ID,
+  CYBORG_FARM_ID,
+  HUMANPETS_FARM_ID,
+  HUMANS_FARM_ID,
+  UPDATE_AUTHORITY_OF_TOKEN_STRING,
+} from "./AlphaStaking/StakePoolConfig";
+import {
+  REWARD_MINT_GLITCH,
+  REWARD_MINT_GLTCH,
+} from "./TokenCreation/AlphaTokenConfig";
 import AlphaTokenSwap from "./TokenCreation/AlphaTokenSwap";
 import { findFarmTreasuryTokenPDA } from "../GrandProgramUtils/GemBank/pda";
 import TransferOutTokensToPot from "./TokenCreation/TransferOutTokensToPot";
 import CreateSwapRegistry from "./TokenCreation/CreateSwapRegistry";
 import UpdateTokenMetadata from "./TokenCreation/UpdateTokenMetadata";
 import CreateTokenMetadata from "./TokenCreation/CreateTokenMetadata";
+import GetNftsbyOwnerAndCollection from "./TokenCreation/GetNftsbyOwnerAndCollection";
+import GetURIOfNFTs from "./TokenCreation/GetURIOfNFTs";
 
 const responsive = {
   superLargeDesktop: {
@@ -156,7 +177,6 @@ interface LpRateScheduleStake {
   lpDenominator: BN;
 }
 
-
 interface LpRateConfig {
   lpSchedule: LpRateScheduleStake;
   lpDurationSec: BN;
@@ -187,7 +207,9 @@ const Home = () => {
   //     window.location = loc;
   //   }
   // }
-  const connection = new anchor.web3.Connection(anchor.web3.clusterApiUrl('devnet'));
+  const connection = new anchor.web3.Connection(
+    anchor.web3.clusterApiUrl("devnet")
+  );
 
   const [magicHat, setMagicHat] = useState<MagicHatAccount>();
   const [alertState, setAlertState] = useState<AlertState>({
@@ -220,11 +242,21 @@ const Home = () => {
   const [showWhitelist, setShowWhitelist] = useState(false);
   const [showStakeCity, setShowStakeCity] = useState(false);
   const [showStaking, setShowStaking] = useState(false);
-  const [roomOneInfoClass, setRoomOneInfoClass] = useState("stake-room-info-one");
-  const [roomTwoInfoClass, setRoomTwoInfoClass] = useState("stake-room-info-one");
-  const [roomThreeInfoClass, setRoomThreeInfoClass] = useState("stake-room-info-one");
-  const [roomFourInfoClass, setRoomFourInfoClass] = useState("stake-room-info-one");
-  const [roomFiveInfoClass, setRoomFiveInfoClass] = useState("stake-room-info-one");
+  const [roomOneInfoClass, setRoomOneInfoClass] = useState(
+    "stake-room-info-one"
+  );
+  const [roomTwoInfoClass, setRoomTwoInfoClass] = useState(
+    "stake-room-info-one"
+  );
+  const [roomThreeInfoClass, setRoomThreeInfoClass] = useState(
+    "stake-room-info-one"
+  );
+  const [roomFourInfoClass, setRoomFourInfoClass] = useState(
+    "stake-room-info-one"
+  );
+  const [roomFiveInfoClass, setRoomFiveInfoClass] = useState(
+    "stake-room-info-one"
+  );
   const [createdWlCounts, setCreatedWlCounts] = useState(0);
   const [nftStakeStep, setNftStakeStep] = useState(0);
   const [currentStakeRoom, setCurrentStakeRoom] = useState(0);
@@ -317,8 +349,6 @@ const Home = () => {
   //   }
   // }, [anchorWallet, props.magicHatId, connection]);
 
-
-
   // const createVRFAccount = async () => {
   //   let payer = anchor.web3.Keypair.generate();
   //   const program = await loadSwitchboardProgram("devnet", undefined, payer);
@@ -367,8 +397,7 @@ const Home = () => {
 
   const openStaking = async () => {
     setShowStaking(true);
-  }
-
+  };
 
   let nftStakeStepCount = 0;
 
@@ -392,14 +421,14 @@ const Home = () => {
     //     setNftStakeStep(nftStakeStepCount);
     //   }
     // }
-  }
+  };
 
   const closeStaking = async () => {
     setNftStakeStep(0);
     setStakedNft(null);
     setStakedCity("");
     setShowStaking(false);
-  }
+  };
 
   const getWhitelistAccounts = async () => {
     if (
@@ -521,40 +550,50 @@ const Home = () => {
   };
 
   const findFarmAuthorityPDA = async (farm: PublicKey) => {
-    return PublicKey.findProgramAddress([farm.toBytes()], MAGIC_STAKE_PROGRAM_ID);
+    return PublicKey.findProgramAddress(
+      [farm.toBytes()],
+      MAGIC_STAKE_PROGRAM_ID
+    );
   };
 
   const findFarmTreasuryPDA = (farm: PublicKey) => {
     return PublicKey.findProgramAddress(
-      [Buffer.from('treasury'), farm.toBytes()],
+      [Buffer.from("treasury"), farm.toBytes()],
       MAGIC_STAKE_PROGRAM_ID
     );
   };
 
   const findRewardsPotPDA = (farm: PublicKey, rewardMint: PublicKey) => {
     return PublicKey.findProgramAddress(
-      [Buffer.from('reward_pot'), farm.toBytes(), rewardMint.toBytes()],
+      [Buffer.from("reward_pot"), farm.toBytes(), rewardMint.toBytes()],
       MAGIC_STAKE_PROGRAM_ID
     );
   };
 
-  const funderToAuthorizePDA = (farm: PublicKey, funder_to_authorize: PublicKey) => {
+  const funderToAuthorizePDA = (
+    farm: PublicKey,
+    funder_to_authorize: PublicKey
+  ) => {
     return PublicKey.findProgramAddress(
-      [Buffer.from('authorization'), farm.toBytes(), funder_to_authorize.toBytes()],
+      [
+        Buffer.from("authorization"),
+        farm.toBytes(),
+        funder_to_authorize.toBytes(),
+      ],
       MAGIC_STAKE_PROGRAM_ID
     );
   };
 
   const farmerPDA = (farm: PublicKey, farmer: PublicKey) => {
     return PublicKey.findProgramAddress(
-      [Buffer.from('farmer'), farm.toBytes(), farmer.toBytes()],
+      [Buffer.from("farmer"), farm.toBytes(), farmer.toBytes()],
       MAGIC_STAKE_PROGRAM_ID
     );
   };
 
   const farmerVaultPDA = (bank: PublicKey, creator: PublicKey) => {
     return PublicKey.findProgramAddress(
-      [Buffer.from('vault'), bank.toBytes(), creator.toBytes()],
+      [Buffer.from("vault"), bank.toBytes(), creator.toBytes()],
       GEM_BANK_PROGRAM_ID
     );
   };
@@ -562,7 +601,7 @@ const Home = () => {
   const farmerStakedMintPDA = (index: any, creator: PublicKey) => {
     console.log(index);
     return PublicKey.findProgramAddress(
-      [Buffer.from('farmer_staked_mints'), creator.toBytes()],
+      [Buffer.from("farmer_staked_mints"), creator.toBytes()],
       // [Buffer.from('farmer_staked_mints'), Uint8Array.of(index), creator.toBytes()],
       MAGIC_STAKE_PROGRAM_ID
     );
@@ -570,42 +609,50 @@ const Home = () => {
 
   const gemBoxPda = (vault: PublicKey, gem_mint: PublicKey) => {
     return PublicKey.findProgramAddress(
-      [Buffer.from('gem_box'), vault.toBytes(), gem_mint.toBytes()],
+      [Buffer.from("gem_box"), vault.toBytes(), gem_mint.toBytes()],
       GEM_BANK_PROGRAM_ID
     );
   };
 
   const gemDepositBoxPda = (vault: PublicKey, gem_mint: PublicKey) => {
     return PublicKey.findProgramAddress(
-      [Buffer.from('gem_deposit_receipt'), vault.toBytes(), gem_mint.toBytes()],
+      [Buffer.from("gem_deposit_receipt"), vault.toBytes(), gem_mint.toBytes()],
       GEM_BANK_PROGRAM_ID
     );
   };
 
   const gemBoxRarityPda = (bank: PublicKey, gem_mint: PublicKey) => {
     return PublicKey.findProgramAddress(
-      [Buffer.from('gem_rarity'), bank.toBytes(), gem_mint.toBytes()],
+      [Buffer.from("gem_rarity"), bank.toBytes(), gem_mint.toBytes()],
       GEM_BANK_PROGRAM_ID
     );
   };
-  
+
   const vaultAuthorityPda = (valut: PublicKey) => {
-    return PublicKey.findProgramAddress(
-      [valut.toBytes()],
-      GEM_BANK_PROGRAM_ID
-    );
+    return PublicKey.findProgramAddress([valut.toBytes()], GEM_BANK_PROGRAM_ID);
   };
-  
-  const whitelistProofPda = (bank: PublicKey, address_to_whitelist: PublicKey) => {
+
+  const whitelistProofPda = (
+    bank: PublicKey,
+    address_to_whitelist: PublicKey
+  ) => {
     return PublicKey.findProgramAddress(
-      [Buffer.from('whitelist'),bank.toBytes(), address_to_whitelist.toBytes()],
+      [
+        Buffer.from("whitelist"),
+        bank.toBytes(),
+        address_to_whitelist.toBytes(),
+      ],
       GEM_BANK_PROGRAM_ID
     );
   };
 
   const tokenMetadataPda = (mint: PublicKey) => {
     return PublicKey.findProgramAddress(
-      [Buffer.from('metadata'),TOKEN_METADATA_PROGRAM_ID.toBytes(), mint.toBytes()],
+      [
+        Buffer.from("metadata"),
+        TOKEN_METADATA_PROGRAM_ID.toBytes(),
+        mint.toBytes(),
+      ],
       TOKEN_METADATA_PROGRAM_ID
     );
   };
@@ -615,67 +662,70 @@ const Home = () => {
       const bankProgram = await getBankProgram(wallet);
       const stakeProgram = await getStakeProgram(wallet);
       try {
-        const humanFarm:any =
-          await stakeProgram.account.farm.fetch(HUMANS_FARM_ID);
-        console.log('farm with ' + HUMANS_FARM_ID.toBase58());
+        const humanFarm: any = await stakeProgram.account.farm.fetch(
+          HUMANS_FARM_ID
+        );
+        console.log("farm with " + HUMANS_FARM_ID.toBase58());
         const [farmerVaultHumanPda] = await farmerVaultPDA(
           humanFarm.bank,
           wallet.publicKey!
         );
-        const humanVaults:any = await bankProgram.account.vault.fetch(farmerVaultHumanPda);
+        const humanVaults: any = await bankProgram.account.vault.fetch(
+          farmerVaultHumanPda
+        );
         console.log("human vaults");
         console.log(humanVaults);
-      } catch (error) {
-        
-      }
-      
+      } catch (error) {}
+
       try {
-        const humanPetFarm:any =
-          await stakeProgram.account.farm.fetch(HUMANPETS_FARM_ID);
-        console.log('farm with ' + HUMANPETS_FARM_ID.toBase58());
+        const humanPetFarm: any = await stakeProgram.account.farm.fetch(
+          HUMANPETS_FARM_ID
+        );
+        console.log("farm with " + HUMANPETS_FARM_ID.toBase58());
         const [farmerVaultHumanPetPda] = await farmerVaultPDA(
           humanPetFarm.bank,
           wallet.publicKey!
         );
-        const humanPetVaults:any = await bankProgram.account.vault.fetch(farmerVaultHumanPetPda);
+        const humanPetVaults: any = await bankProgram.account.vault.fetch(
+          farmerVaultHumanPetPda
+        );
         console.log("human pet vaults");
         console.log(humanPetVaults);
-      } catch (error) {
-        
-      }
-      
+      } catch (error) {}
+
       try {
-        const cyborgFarm:any =
-          await stakeProgram.account.farm.fetch(CYBORG_FARM_ID);
-        console.log('farm with ' + CYBORG_FARM_ID.toBase58());
+        const cyborgFarm: any = await stakeProgram.account.farm.fetch(
+          CYBORG_FARM_ID
+        );
+        console.log("farm with " + CYBORG_FARM_ID.toBase58());
         const [farmerVaultCyborgPda] = await farmerVaultPDA(
           cyborgFarm.bank,
           wallet.publicKey!
         );
-        const cyborgVaults:any = await bankProgram.account.vault.fetch(farmerVaultCyborgPda);
+        const cyborgVaults: any = await bankProgram.account.vault.fetch(
+          farmerVaultCyborgPda
+        );
         console.log("cyborg vaults");
         console.log(cyborgVaults);
-      } catch (error) {
-        
-      }
-      
+      } catch (error) {}
+
       try {
-        const cyborgPetFarm:any =
-          await stakeProgram.account.farm.fetch(CYBORGPET_FARM_ID);
-        console.log('farm with ' + CYBORGPET_FARM_ID.toBase58());
+        const cyborgPetFarm: any = await stakeProgram.account.farm.fetch(
+          CYBORGPET_FARM_ID
+        );
+        console.log("farm with " + CYBORGPET_FARM_ID.toBase58());
         const [farmerVaultCyborgPetPda] = await farmerVaultPDA(
           cyborgPetFarm.bank,
           wallet.publicKey!
         );
-        const cyborgPetVaults:any = await bankProgram.account.vault.fetch(farmerVaultCyborgPetPda);
+        const cyborgPetVaults: any = await bankProgram.account.vault.fetch(
+          farmerVaultCyborgPetPda
+        );
         console.log("cyborg pet vaults");
         console.log(cyborgPetVaults);
-      } catch (error) {
-        
-      }
-      
+      } catch (error) {}
     }
-  }
+  };
 
   // const getStakedNfts = async () => {
   //   if (wallet && wallet.connected) {
@@ -718,42 +768,42 @@ const Home = () => {
     if (wallet && wallet.connected) {
       // WARNING: For POST requests, body is set to null by browsers.
       var data = JSON.stringify({
-        "owner": wallet.publicKey?.toBase58()
+        owner: wallet.publicKey?.toBase58(),
       });
 
       var xhr = new XMLHttpRequest();
       // xhr.withCredentials = true;
 
-      xhr.addEventListener("readystatechange", async function() {
-        if(this.readyState === 4) {
+      xhr.addEventListener("readystatechange", async function () {
+        if (this.readyState === 4) {
           console.log(this.responseText);
           try {
             var mints = JSON.parse(this.responseText).data;
-            var array:any = [];
+            var array: any = [];
             for (let index = 0; index < mints.length; index++) {
               const element = mints[index];
               const connection = new Connection(clusterApiUrl("devnet"));
               const metaplex = new Metaplex(connection);
               // console.log(element.account.gemMint.toBase58());
               var pk = new anchor.web3.PublicKey(element);
-              let nft:any = await metaplex.nfts().findByMint({ mintAddress: pk }).run();
+              let nft: any = await metaplex
+                .nfts()
+                .findByMint({ mintAddress: pk })
+                .run();
               console.log(nft);
-              var obj:any = {
+              var obj: any = {
                 mint: element,
                 name: nft.name,
                 link: nft.json.image,
-                auth: nft.updateAuthorityAddress.toBase58()
-              }
+                auth: nft.updateAuthorityAddress.toBase58(),
+              };
               array.push(obj);
             }
             if (array && array.length > 0) {
               console.log(array);
               setStakedNfts(array);
             }
-          } catch (error) {
-            
-          }
-          
+          } catch (error) {}
         }
       });
 
@@ -761,61 +811,65 @@ const Home = () => {
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.send(data);
     }
-  }
+  };
 
   // Farm Manager Should call this
 
   // Farm Manager Should call this
-
 
   const closeFarming = async () => {
     setShowFarming(false);
-    setFunderOne('');
-    setFunderTwo('');
-    setFunderThree('');
-    setFunderFour('');
-    setFunderFive('');
-  }
+    setFunderOne("");
+    setFunderTwo("");
+    setFunderThree("");
+    setFunderFour("");
+    setFunderFive("");
+  };
 
   // Farm Manager should call this
 
   const getFarmers = async () => {
-    if(wallet && wallet.connected) {
+    if (wallet && wallet.connected) {
       const stakeProgram = await getStakeProgram(wallet);
       try {
         const [humanFarmerVar] = await farmerPDA(
           HUMANS_FARM_ID,
           wallet.publicKey!
         );
-        const farmersHuman:any = await stakeProgram.account.farmer.fetch(humanFarmerVar);
+        const farmersHuman: any = await stakeProgram.account.farmer.fetch(
+          humanFarmerVar
+        );
         if (farmersHuman != null) {
-          console.log('Human Farmer ');
+          console.log("Human Farmer ");
           console.log(farmersHuman);
-          let [pda] = await farmerStakedMintPDA(
-            0,
-            humanFarmerVar
-          )
-          const nftsStakedCyborg:any = await stakeProgram.account.farmerStakedMints.fetch(pda);
-          console.log('Nfts Staked : ');
-          let arr:any = [];
+          let [pda] = await farmerStakedMintPDA(0, humanFarmerVar);
+          const nftsStakedCyborg: any =
+            await stakeProgram.account.farmerStakedMints.fetch(pda);
+          console.log("Nfts Staked : ");
+          let arr: any = [];
           console.log(nftsStakedCyborg);
           console.log(nftsStakedCyborg.farmerStakedMints[0]);
           console.log(nftsStakedCyborg.farmerStakedMints[0].toBase58());
           arr.push(nftsStakedCyborg.farmerStakedMints[0]);
-          let array:any = [];
+          let array: any = [];
           const connection = new Connection(clusterApiUrl("devnet"));
           const metaplex = new Metaplex(connection);
-          let nft:any = await metaplex.nfts().findByMint({ mintAddress: arr[0] }).run();
+          let nft: any = await metaplex
+            .nfts()
+            .findByMint({ mintAddress: arr[0] })
+            .run();
           console.log(nft);
-          var obj:any = {
+          var obj: any = {
             name: nft.name,
             link: nft.json.image,
-            auth: nft.updateAuthorityAddress.toBase58()
-          }
+            auth: nft.updateAuthorityAddress.toBase58(),
+          };
           array.push(obj);
           setStakedNfts(array);
           setFarmerHuman(farmersHuman);
-          setStakedBal(stakedBal + farmersHuman.rewardA.accruedReward.toNumber());
+          setStakedBal(
+            stakedBal + farmersHuman.rewardA.accruedReward.toNumber()
+          );
           // setStakedTokens(farmersHuman.gemsStaked!.toNumber());
           // setRespectEarned(farmersHuman.lpPoints.lpAccrued.toNumber());
           // setMultiplierLevel(farmersHuman.lpPoints.lpLevel.toNumber());
@@ -827,25 +881,27 @@ const Home = () => {
         setMultiplierLevel(0);
         setFarmerHuman(null);
       }
-      
+
       try {
         const [humanPetsFarmerVar] = await farmerPDA(
           HUMANPETS_FARM_ID,
           wallet.publicKey!
         );
-        const farmersHumanPets:any = await stakeProgram.account.farmer.fetch(humanPetsFarmerVar);
+        const farmersHumanPets: any = await stakeProgram.account.farmer.fetch(
+          humanPetsFarmerVar
+        );
         if (farmersHumanPets != null) {
-          console.log('Human Pet Farmer ');
+          console.log("Human Pet Farmer ");
           console.log(farmersHumanPets);
-          let [pda] = await farmerStakedMintPDA(
-            0,
-            humanPetsFarmerVar
-          )
-          const nftsStakedHumanPets = await stakeProgram.account.farmerStakedMints.fetch(pda);
-          console.log('Nfts Staked : ');
+          let [pda] = await farmerStakedMintPDA(0, humanPetsFarmerVar);
+          const nftsStakedHumanPets =
+            await stakeProgram.account.farmerStakedMints.fetch(pda);
+          console.log("Nfts Staked : ");
           console.log(nftsStakedHumanPets);
           setFarmerHumanPet(farmersHumanPets);
-          setStakedBal(stakedBal + farmersHumanPets.rewardA.accruedReward.toNumber());
+          setStakedBal(
+            stakedBal + farmersHumanPets.rewardA.accruedReward.toNumber()
+          );
           // setStakedTokens(farmersHumanPets.gemsStaked!.toNumber());
           // setRespectEarned(farmersHumanPets.lpPoints.lpAccrued.toNumber());
           // setMultiplierLevel(farmersHumanPets.lpPoints.lpLevel.toNumber());
@@ -862,36 +918,41 @@ const Home = () => {
           CYBORG_FARM_ID,
           wallet.publicKey!
         );
-        const farmersCyborg:any = await stakeProgram.account.farmer.fetch(cyborgFarmerVar);
+        const farmersCyborg: any = await stakeProgram.account.farmer.fetch(
+          cyborgFarmerVar
+        );
         if (farmersCyborg != null) {
-          console.log('Cyborg Farmer ');
+          console.log("Cyborg Farmer ");
           console.log(farmersCyborg);
-          let [pda] = await farmerStakedMintPDA(
-            0,
-            cyborgFarmerVar
-          )
-          const nftsStakedCyborg:any = await stakeProgram.account.farmerStakedMints.fetch(pda);
-          console.log('Nfts Staked : ');
-          let arr:any = [];
+          let [pda] = await farmerStakedMintPDA(0, cyborgFarmerVar);
+          const nftsStakedCyborg: any =
+            await stakeProgram.account.farmerStakedMints.fetch(pda);
+          console.log("Nfts Staked : ");
+          let arr: any = [];
           console.log(nftsStakedCyborg);
           console.log(nftsStakedCyborg.farmerStakedMints[0]);
           console.log(nftsStakedCyborg.farmerStakedMints[0].toBase58());
           arr.push(nftsStakedCyborg.farmerStakedMints[0]);
-          let array:any = [];
+          let array: any = [];
           const connection = new Connection(clusterApiUrl("devnet"));
           const metaplex = new Metaplex(connection);
-          let nft:any = await metaplex.nfts().findByMint({ mintAddress: arr[0] }).run();
+          let nft: any = await metaplex
+            .nfts()
+            .findByMint({ mintAddress: arr[0] })
+            .run();
           console.log(nft);
-          var obj1:any = {
+          var obj1: any = {
             name: nft.name,
             link: nft.json.image,
-            auth: nft.updateAuthorityAddress.toBase58()
-          }
+            auth: nft.updateAuthorityAddress.toBase58(),
+          };
           array.push(obj1);
           setStakedNfts(array);
           setFarmerCyborg(farmersCyborg);
           // setStakedTokens(farmersCyborg.gemsStaked!.toNumber());
-          setStakedBal(stakedBal + farmersCyborg.rewardA.accruedReward.toNumber());
+          setStakedBal(
+            stakedBal + farmersCyborg.rewardA.accruedReward.toNumber()
+          );
           // setRespectEarned(farmersCyborg.lpPoints.lpAccrued.toNumber());
           // setMultiplierLevel(farmersCyborg.lpPoints.lpLevel.toNumber());
         }
@@ -901,26 +962,28 @@ const Home = () => {
         setMultiplierLevel(0);
         setFarmerCyborg(null);
       }
-      
+
       try {
         const [cyborgPetFarmerVar] = await farmerPDA(
           CYBORGPET_FARM_ID,
           wallet.publicKey!
         );
-        const farmersCyborgPets:any = await stakeProgram.account.farmer.fetch(cyborgPetFarmerVar);
+        const farmersCyborgPets: any = await stakeProgram.account.farmer.fetch(
+          cyborgPetFarmerVar
+        );
         if (farmersCyborgPets != null) {
-          console.log('Cyborg Pet Farmer ');
+          console.log("Cyborg Pet Farmer ");
           console.log(farmersCyborgPets);
-          let [pda] = await farmerStakedMintPDA(
-            0,
-            cyborgPetFarmerVar
-          )
-          const nftsStakedCyborgpets = await stakeProgram.account.farmerStakedMints.fetch(pda);
-          console.log('Nfts Staked : ');
+          let [pda] = await farmerStakedMintPDA(0, cyborgPetFarmerVar);
+          const nftsStakedCyborgpets =
+            await stakeProgram.account.farmerStakedMints.fetch(pda);
+          console.log("Nfts Staked : ");
           console.log(nftsStakedCyborgpets);
           setFarmerCyborgPet(farmersCyborgPets);
           // setStakedTokens(farmersCyborgPets.gemsStaked!.toNumber());
-          setStakedBal(stakedBal + farmersCyborgPets.rewardA.accruedReward.toNumber());
+          setStakedBal(
+            stakedBal + farmersCyborgPets.rewardA.accruedReward.toNumber()
+          );
           // setRespectEarned(farmersCyborgPets.lpPoints.lpAccrued.toNumber());
           // setMultiplierLevel(farmersCyborgPets.lpPoints.lpLevel.toNumber());
         }
@@ -931,13 +994,15 @@ const Home = () => {
         setFarmerCyborgPet(null);
       }
     }
-  }
+  };
 
   const getFarms = async () => {
-    if(wallet && wallet.connected) {
+    if (wallet && wallet.connected) {
       const stakeProgram = await getStakeProgram(wallet);
       try {
-        const humanFarmVar:any = await stakeProgram.account.farm.fetch(HUMANS_FARM_ID);
+        const humanFarmVar: any = await stakeProgram.account.farm.fetch(
+          HUMANS_FARM_ID
+        );
         // console.log('Humans Farm');
         // console.log(humanFarmVar);
         setHumanFarm(humanFarmVar);
@@ -945,7 +1010,9 @@ const Home = () => {
         setHumanFarm(null);
       }
       try {
-        const humanPetsFarmVar:any = await stakeProgram.account.farm.fetch(HUMANPETS_FARM_ID);
+        const humanPetsFarmVar: any = await stakeProgram.account.farm.fetch(
+          HUMANPETS_FARM_ID
+        );
         // console.log('Human Pets Farm ');
         // console.log(humanPetsFarmVar);
         setHumanPetsFarm(humanPetsFarmVar);
@@ -953,7 +1020,9 @@ const Home = () => {
         setHumanPetsFarm(null);
       }
       try {
-        const cyborgFarmVar:any = await stakeProgram.account.farm.fetch(CYBORG_FARM_ID);
+        const cyborgFarmVar: any = await stakeProgram.account.farm.fetch(
+          CYBORG_FARM_ID
+        );
         // console.log('Cyborgs Farm ');
         // console.log(cyborgFarmVar);
         setCyborgFarm(cyborgFarmVar);
@@ -961,7 +1030,9 @@ const Home = () => {
         setCyborgFarm(null);
       }
       try {
-        const cyborgPetFarmVar:any = await stakeProgram.account.farm.fetch(CYBORGPET_FARM_ID);
+        const cyborgPetFarmVar: any = await stakeProgram.account.farm.fetch(
+          CYBORGPET_FARM_ID
+        );
         // console.log('Cyborg Pets Farm ');
         // console.log(cyborgPetFarmVar);
         setCyborgPetFarm(cyborgPetFarmVar);
@@ -969,7 +1040,7 @@ const Home = () => {
         setCyborgPetFarm(null);
       }
     }
-  }
+  };
 
   const getNFTs = async () => {
     // const connectionMetaplex = new Connection(
@@ -1001,88 +1072,96 @@ const Home = () => {
         setAlphaTokenVal(parseInt(tokenAmount.value.amount));
         console.log(`amount: ${tokenAmount.value.amount}`);
         console.log(`decimals: ${tokenAmount.value.decimals}`);
-        
       } catch (error) {
         setGlitchTokenVal(0);
         setAlphaTokenVal(0);
       }
       const metaplex = Metaplex.make(connection);
       const allNfts = await metaplex
-                          .nfts()
-                            .findAllByOwner({ owner: wallet?.publicKey! })
-                            .run();
-      let temp_nfts:any = [];
+        .nfts()
+        .findAllByOwner({ owner: wallet?.publicKey! })
+        .run();
+      let temp_nfts: any = [];
       // console.log(allNfts);
       for (let index = 0; index < allNfts.length; index++) {
-          const nft:any = allNfts[index];
-          var creators = nft.creators;
-          var is_ours = false;
-          // console.log(nft.updateAuthorityAddress.toBase58(), nft.name);
-          if (nft.updateAuthorityAddress.toBase58() == UPDATE_AUTHORITY_OF_TOKEN_STRING) {
-            is_ours = true;
-            for (let iindex = 0; iindex < creators.length; iindex++) {
-              const element = creators[iindex];
-              if (element.share == 0) {
-                // setCollectionId(element.address);
-              }
+        const nft: any = allNfts[index];
+        var creators = nft.creators;
+        var is_ours = false;
+        // console.log(nft.updateAuthorityAddress.toBase58(), nft.name);
+        if (
+          nft.updateAuthorityAddress.toBase58() ==
+          UPDATE_AUTHORITY_OF_TOKEN_STRING
+        ) {
+          is_ours = true;
+          for (let iindex = 0; iindex < creators.length; iindex++) {
+            const element = creators[iindex];
+            if (element.share == 0) {
+              // setCollectionId(element.address);
             }
           }
-          if (is_ours) {
-            var xhr = new XMLHttpRequest();
-            xhr.addEventListener("readystatechange", function() {
-              if(this.readyState === 4) {
-                // console.log(this.responseText);
-                var attributes = JSON.parse(this.responseText).attributes;
-                var is_human;
-                var is_cyborg;
-                var is_pet;
-                var trait_type;
-                for (let index = 0; index < attributes.length; index++) {
-                  const element = attributes[index];
-                  if (element.trait_type == 'BaseBody' && element.value == 'Human') {
-                    is_human = true;
-                  }
-                  else if (element.trait_type == 'BaseBody' && element.value == 'Cyborg') {
-                    is_cyborg = true;
-                  }
-                  if (element.trait_type == 'Pets' && element.value && element.value.length > 0) {
-                    is_pet = true;
-                  }
+        }
+        if (is_ours) {
+          var xhr = new XMLHttpRequest();
+          xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+              // console.log(this.responseText);
+              var attributes = JSON.parse(this.responseText).attributes;
+              var is_human;
+              var is_cyborg;
+              var is_pet;
+              var trait_type;
+              for (let index = 0; index < attributes.length; index++) {
+                const element = attributes[index];
+                if (
+                  element.trait_type == "BaseBody" &&
+                  element.value == "Human"
+                ) {
+                  is_human = true;
+                } else if (
+                  element.trait_type == "BaseBody" &&
+                  element.value == "Cyborg"
+                ) {
+                  is_cyborg = true;
                 }
-                if (is_human && is_pet) {
-                  trait_type = 'Human Pet';
+                if (
+                  element.trait_type == "Pets" &&
+                  element.value &&
+                  element.value.length > 0
+                ) {
+                  is_pet = true;
                 }
-                else if (is_human && !is_pet) {
-                  trait_type = 'Human';
-                }
-                else if (is_cyborg && is_pet) {
-                  trait_type = 'Cyborg Pet';
-                }
-                else if (is_cyborg && !is_pet) {
-                  trait_type = 'Cyborg';
-                }
-                var obj:any = {
-                  id:temp_nfts.length,
-                  name: nft.name,
-                  link: JSON.parse(this.responseText).image,
-                  mint: nft.mintAddress,
-                  updateAuthority: nft.updateAuthority,
-                  creator: nft.creators[0].address,
-                  trait_type: trait_type
-                }
-                temp_nfts.push(obj);
-                setNFts(temp_nfts!);
-                // console.log(allNfts);
               }
-            });
-            xhr.open("GET", nft.uri);
-            xhr.send();
-          }
+              if (is_human && is_pet) {
+                trait_type = "Human Pet";
+              } else if (is_human && !is_pet) {
+                trait_type = "Human";
+              } else if (is_cyborg && is_pet) {
+                trait_type = "Cyborg Pet";
+              } else if (is_cyborg && !is_pet) {
+                trait_type = "Cyborg";
+              }
+              var obj: any = {
+                id: temp_nfts.length,
+                name: nft.name,
+                link: JSON.parse(this.responseText).image,
+                mint: nft.mintAddress,
+                updateAuthority: nft.updateAuthority,
+                creator: nft.creators[0].address,
+                trait_type: trait_type,
+              };
+              temp_nfts.push(obj);
+              setNFts(temp_nfts!);
+              // console.log(allNfts);
+            }
+          });
+          xhr.open("GET", nft.uri);
+          xhr.send();
+        }
       }
-        // console.log(temp_nfts);
+      // console.log(temp_nfts);
       setGotNfts(true);
     }
-  }
+  };
 
   // // Farmer should call this
   // const initFixedFarmerInst = async (id:any,stake_instructions:any, stakeProgram:any) => {
@@ -1155,37 +1234,32 @@ const Home = () => {
   // }
 
   //Farmer should call this
-  const initFixedFarmerAlpha = async (id:any,stake_instructions:any, stakeProgram:any) => {
-    let farm_id:any;
+  const initFixedFarmerAlpha = async (
+    id: any,
+    stake_instructions: any,
+    stakeProgram: any
+  ) => {
+    let farm_id: any;
     if (id == 1) {
       farm_id = HUMANS_FARM_ID;
-    }
-    else if (id == 2) {
+    } else if (id == 2) {
       farm_id = HUMANPETS_FARM_ID;
-    }
-    else if (id == 3) {
+    } else if (id == 3) {
       farm_id = CYBORG_FARM_ID;
-    }
-    else if (id == 4) {
+    } else if (id == 4) {
       farm_id = CYBORGPET_FARM_ID;
     }
-    const [farmerPda] = await farmerPDA(
-      farm_id,
-      wallet.publicKey!
-    );
-    const farms:any =
-      await stakeProgram.account.farm.fetch(farm_id);
-    console.log('farm with ' + farm_id.toBase58());
+    const [farmerPda] = await farmerPDA(farm_id, wallet.publicKey!);
+    const farms: any = await stakeProgram.account.farm.fetch(farm_id);
+    console.log("farm with " + farm_id.toBase58());
     const [farmerVaultPda] = await farmerVaultPDA(
       farms.bank,
       wallet.publicKey!
     );
-    const [farmerStakedMintVarPDA, farmerStakedMintBump] = await farmerStakedMintPDA(
-      0,
-      farmerPda
-    );
-    stake_instructions.push(stakeProgram.instruction.initFixedFarmer(new BN(0),
-      {
+    const [farmerStakedMintVarPDA, farmerStakedMintBump] =
+      await farmerStakedMintPDA(0, farmerPda);
+    stake_instructions.push(
+      stakeProgram.instruction.initFixedFarmer(new BN(0), {
         accounts: {
           farm: farm_id,
           farmer: farmerPda,
@@ -1196,15 +1270,15 @@ const Home = () => {
           gemBank: GEM_BANK_PROGRAM_ID,
           payer: wallet.publicKey,
           systemProgram: SystemProgram.programId,
-        }
-      }
-    ));
+        },
+      })
+    );
     return stake_instructions;
-  }
+  };
 
-  const claimReward =async () => {
+  const claimReward = async () => {
     const stakeProgram = await getStakeProgram(wallet);
-    const claim_instructions:any = [];
+    const claim_instructions: any = [];
     let userNewTokenAccountPDA = await getAssociatedTokenAddress(
       REWARD_MINT_GLTCH, // mint
       wallet.publicKey! // owner
@@ -1214,24 +1288,33 @@ const Home = () => {
         HUMANS_FARM_ID,
         wallet.publicKey!
       );
-      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(HUMANS_FARM_ID);
-      const farmsH:any = await stakeProgram.account.farm.fetch(HUMANS_FARM_ID);
-      let [rewardAPot, rewardAPotBump] = await findRewardsPotPDA(HUMANS_FARM_ID, REWARD_MINT_GLTCH);
-      let inst = await stakeProgram.instruction.claim(farmAuthBump,farmerBump,rewardAPotBump,rewardAPotBump,
+      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(
+        HUMANS_FARM_ID
+      );
+      const farmsH: any = await stakeProgram.account.farm.fetch(HUMANS_FARM_ID);
+      let [rewardAPot, rewardAPotBump] = await findRewardsPotPDA(
+        HUMANS_FARM_ID,
+        REWARD_MINT_GLTCH
+      );
+      let inst = await stakeProgram.instruction.claim(
+        farmAuthBump,
+        farmerBump,
+        rewardAPotBump,
+        rewardAPotBump,
         {
           accounts: {
             farm: HUMANS_FARM_ID,
             farmAuthority: farmAuth,
             farmer: farmerPda,
             identity: wallet.publicKey,
-            rewardAPot:rewardAPot,
+            rewardAPot: rewardAPot,
             rewardAMint: REWARD_MINT_GLTCH,
             rewardADestination: userNewTokenAccountPDA,
             tokenProgram: TOKEN_PROGRAM_ID,
-            associatedTokenProgram:SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
+            associatedTokenProgram: SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
             systemProgram: SystemProgram.programId,
             rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-          }
+          },
         }
       );
       claim_instructions.push(inst);
@@ -1241,24 +1324,35 @@ const Home = () => {
         HUMANPETS_FARM_ID,
         wallet.publicKey!
       );
-      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(HUMANPETS_FARM_ID);
-      const farmsHP:any = await stakeProgram.account.farm.fetch(HUMANPETS_FARM_ID);
-      let [rewardAPot, rewardAPotBump] = await findRewardsPotPDA(HUMANPETS_FARM_ID, REWARD_MINT_GLTCH);
-      let inst = await stakeProgram.instruction.claim(farmAuthBump,farmerBumpHP,rewardAPotBump,rewardAPotBump,
+      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(
+        HUMANPETS_FARM_ID
+      );
+      const farmsHP: any = await stakeProgram.account.farm.fetch(
+        HUMANPETS_FARM_ID
+      );
+      let [rewardAPot, rewardAPotBump] = await findRewardsPotPDA(
+        HUMANPETS_FARM_ID,
+        REWARD_MINT_GLTCH
+      );
+      let inst = await stakeProgram.instruction.claim(
+        farmAuthBump,
+        farmerBumpHP,
+        rewardAPotBump,
+        rewardAPotBump,
         {
           accounts: {
             farm: HUMANPETS_FARM_ID,
             farmAuthority: farmsHP.farmAuthority,
             farmer: farmerHPPda,
             identity: wallet.publicKey,
-            rewardAPot:rewardAPot,
+            rewardAPot: rewardAPot,
             rewardAMint: REWARD_MINT_GLTCH,
             rewardADestination: userNewTokenAccountPDA,
             tokenProgram: TOKEN_PROGRAM_ID,
-            associatedTokenProgram:SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
+            associatedTokenProgram: SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
             systemProgram: SystemProgram.programId,
             rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-          }
+          },
         }
       );
       claim_instructions.push(inst);
@@ -1268,24 +1362,33 @@ const Home = () => {
         CYBORG_FARM_ID,
         wallet.publicKey!
       );
-      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(CYBORG_FARM_ID);
-      const farmsC:any = await stakeProgram.account.farm.fetch(CYBORG_FARM_ID);
-      let [rewardAPot, rewardAPotBump] = await findRewardsPotPDA(CYBORG_FARM_ID, REWARD_MINT_GLTCH);
-      let inst = await stakeProgram.instruction.claim(farmAuthBump,farmerBumpC,rewardAPotBump,rewardAPotBump,
+      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(
+        CYBORG_FARM_ID
+      );
+      const farmsC: any = await stakeProgram.account.farm.fetch(CYBORG_FARM_ID);
+      let [rewardAPot, rewardAPotBump] = await findRewardsPotPDA(
+        CYBORG_FARM_ID,
+        REWARD_MINT_GLTCH
+      );
+      let inst = await stakeProgram.instruction.claim(
+        farmAuthBump,
+        farmerBumpC,
+        rewardAPotBump,
+        rewardAPotBump,
         {
           accounts: {
             farm: CYBORG_FARM_ID,
             farmAuthority: farmsC.farmAuthority,
             farmer: farmerCPda,
             identity: wallet.publicKey,
-            rewardAPot:rewardAPot,
+            rewardAPot: rewardAPot,
             rewardAMint: REWARD_MINT_GLTCH,
             rewardADestination: userNewTokenAccountPDA,
             tokenProgram: TOKEN_PROGRAM_ID,
-            associatedTokenProgram:SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
+            associatedTokenProgram: SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
             systemProgram: SystemProgram.programId,
             rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-          }
+          },
         }
       );
       claim_instructions.push(inst);
@@ -1295,24 +1398,35 @@ const Home = () => {
         CYBORGPET_FARM_ID,
         wallet.publicKey!
       );
-      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(CYBORGPET_FARM_ID);
-      const farmsCP:any = await stakeProgram.account.farm.fetch(CYBORGPET_FARM_ID);
-      let [rewardAPot, rewardAPotBump] = await findRewardsPotPDA(CYBORGPET_FARM_ID, REWARD_MINT_GLTCH);
-      let inst = await stakeProgram.instruction.claim(farmAuthBump,farmerBumpCP,rewardAPotBump,rewardAPotBump,
+      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(
+        CYBORGPET_FARM_ID
+      );
+      const farmsCP: any = await stakeProgram.account.farm.fetch(
+        CYBORGPET_FARM_ID
+      );
+      let [rewardAPot, rewardAPotBump] = await findRewardsPotPDA(
+        CYBORGPET_FARM_ID,
+        REWARD_MINT_GLTCH
+      );
+      let inst = await stakeProgram.instruction.claim(
+        farmAuthBump,
+        farmerBumpCP,
+        rewardAPotBump,
+        rewardAPotBump,
         {
           accounts: {
             farm: CYBORGPET_FARM_ID,
             farmAuthority: farmsCP.farmAuthority,
             farmer: farmerCPPda,
             identity: wallet.publicKey,
-            rewardAPot:rewardAPot,
+            rewardAPot: rewardAPot,
             rewardAMint: REWARD_MINT_GLTCH,
             rewardADestination: userNewTokenAccountPDA,
             tokenProgram: TOKEN_PROGRAM_ID,
-            associatedTokenProgram:SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
+            associatedTokenProgram: SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
             systemProgram: SystemProgram.programId,
             rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-          }
+          },
         }
       );
       claim_instructions.push(inst);
@@ -1323,9 +1437,9 @@ const Home = () => {
       wallet,
       [claim_instructions],
       [[]]
-    )
+    );
     console.log(claim_farmer_sig);
-  }
+  };
 
   // Farmer should call this
   const refreshFarmers = async () => {
@@ -1343,15 +1457,18 @@ const Home = () => {
           HUMANS_FARM_ID,
           wallet.publicKey!
         );
-        const farms:any = await stakeProgram.account.farm.fetch(HUMANS_FARM_ID);
-        console.log('farm with ' + HUMANS_FARM_ID.toBase58());
-        const wallet_create = await stakeProgram.instruction.refreshFarmer(farmerBump,
+        const farms: any = await stakeProgram.account.farm.fetch(
+          HUMANS_FARM_ID
+        );
+        console.log("farm with " + HUMANS_FARM_ID.toBase58());
+        const wallet_create = await stakeProgram.instruction.refreshFarmer(
+          farmerBump,
           {
             accounts: {
               farm: HUMANS_FARM_ID,
               farmer: farmerPda,
-              identity: wallet.publicKey
-            }
+              identity: wallet.publicKey,
+            },
           }
         );
         fresh_instructions.push(wallet_create);
@@ -1365,21 +1482,22 @@ const Home = () => {
           HUMANPETS_FARM_ID,
           wallet.publicKey!
         );
-        const farms:any = await stakeProgram.account.farm.fetch(HUMANPETS_FARM_ID);
-        console.log('farm with ' + HUMANPETS_FARM_ID.toBase58());
-        const wallet_create_o = await stakeProgram.instruction.refreshFarmer(farmerBumpO,
+        const farms: any = await stakeProgram.account.farm.fetch(
+          HUMANPETS_FARM_ID
+        );
+        console.log("farm with " + HUMANPETS_FARM_ID.toBase58());
+        const wallet_create_o = await stakeProgram.instruction.refreshFarmer(
+          farmerBumpO,
           {
             accounts: {
               farm: HUMANPETS_FARM_ID,
               farmer: farmerPdaO,
-              identity: wallet.publicKey
-            }
+              identity: wallet.publicKey,
+            },
           }
         );
         fresh_instructions.push(wallet_create_o);
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     }
     if (farmerCyborg != null) {
       try {
@@ -1387,15 +1505,18 @@ const Home = () => {
           CYBORG_FARM_ID,
           wallet.publicKey!
         );
-        const farms:any = await stakeProgram.account.farm.fetch(CYBORG_FARM_ID);
-        console.log('farm with ' + CYBORG_FARM_ID.toBase58());
-        const wallet_create_t = await stakeProgram.instruction.refreshFarmer(farmerBumpT,
+        const farms: any = await stakeProgram.account.farm.fetch(
+          CYBORG_FARM_ID
+        );
+        console.log("farm with " + CYBORG_FARM_ID.toBase58());
+        const wallet_create_t = await stakeProgram.instruction.refreshFarmer(
+          farmerBumpT,
           {
             accounts: {
               farm: CYBORG_FARM_ID,
               farmer: farmerPdaT,
-              identity: wallet.publicKey
-            }
+              identity: wallet.publicKey,
+            },
           }
         );
         fresh_instructions.push(wallet_create_t);
@@ -1409,15 +1530,18 @@ const Home = () => {
           CYBORGPET_FARM_ID,
           wallet.publicKey!
         );
-        const farms:any = await stakeProgram.account.farm.fetch(CYBORGPET_FARM_ID);
-        console.log('farm with ' + CYBORGPET_FARM_ID.toBase58());
-        const wallet_create_f = await stakeProgram.instruction.refreshFarmer(farmerBumpF,
+        const farms: any = await stakeProgram.account.farm.fetch(
+          CYBORGPET_FARM_ID
+        );
+        console.log("farm with " + CYBORGPET_FARM_ID.toBase58());
+        const wallet_create_f = await stakeProgram.instruction.refreshFarmer(
+          farmerBumpF,
           {
             accounts: {
               farm: CYBORGPET_FARM_ID,
               farmer: farmerPdaF,
-              identity: wallet.publicKey
-            }
+              identity: wallet.publicKey,
+            },
           }
         );
         fresh_instructions.push(wallet_create_f);
@@ -1431,9 +1555,9 @@ const Home = () => {
       wallet,
       [fresh_instructions],
       [[]]
-    )
+    );
     console.log(refresh_farmer_sig);
-  }
+  };
 
   // Farmer should call this
   const refreshFarmerSigned = async () => {
@@ -1445,24 +1569,25 @@ const Home = () => {
         FARM_ID,
         wallet.publicKey!
       );
-      const farms:any =
-        await stakeProgram.account.farm.fetch(FARM_ID);
-      console.log('farm with ' + FARM_ID.toBase58());
-      const wallet_create = await stakeProgram.rpc.refreshFarmerSigned(farmerBump,true,
+      const farms: any = await stakeProgram.account.farm.fetch(FARM_ID);
+      console.log("farm with " + FARM_ID.toBase58());
+      const wallet_create = await stakeProgram.rpc.refreshFarmerSigned(
+        farmerBump,
+        true,
         {
           accounts: {
             farm: FARM_ID,
             farmer: farmerPda,
-            identity: wallet.publicKey
-          }
+            identity: wallet.publicKey,
+          },
         }
       );
       getFarmers();
-      console.log('refresh farmer signed signature : ' + wallet_create);
+      console.log("refresh farmer signed signature : " + wallet_create);
     } catch (error) {
       console.log("Transaction error: ", error);
     }
-  }
+  };
 
   // Complete Staking NFT
   const completeStake = async () => {
@@ -1473,121 +1598,142 @@ const Home = () => {
     var add_init_cyborg_pets = true;
     if (farmerHuman != null) {
       add_init_human = false;
-    }
-    else if (farmerHumanPet != null) {
+    } else if (farmerHumanPet != null) {
       add_init_human_pets = false;
-    }
-    else if (farmerCyborg != null) {
+    } else if (farmerCyborg != null) {
       add_init_cyborg = false;
-    }
-    else if (farmerCyborgPet != null) {
+    } else if (farmerCyborgPet != null) {
       add_init_cyborg_pets = false;
     }
     if (stakedNft) {
-      let farm_id:any;
-        if (stakedNft.trait_type == 'Human') {
-          farm_id = HUMANS_FARM_ID;
-        }
-        else if (stakedNft.trait_type == 'Human Pet') {
-          farm_id = HUMANPETS_FARM_ID;
-        }
-        else if (stakedNft.trait_type == 'Cyborg') {
-          farm_id = CYBORG_FARM_ID;
-        }
-        else if (stakedNft.trait_type == 'Cyborg Pet') {
-          farm_id = CYBORGPET_FARM_ID;
-        }
-        let stake_instructions:any = [];
-        const stakeProgram:any = await getStakeProgram(wallet);
-        const bankProgram = await getBankProgram(wallet);
-        // let tokens = await getTokensByOwner(wallet.publicKey!);
-        console.log(stakedNft);
-        // const farmers = await stakeProgram.account.farmer.all();
-        if (add_init_human && stakedNft.trait_type == 'Human') {
-          stake_instructions = await initFixedFarmerAlpha(1,stake_instructions,stakeProgram);
-        }
-        else if (add_init_human_pets && stakedNft.trait_type == 'Human Pet') {
-          stake_instructions = await initFixedFarmerAlpha(2,stake_instructions,stakeProgram);
-        }
-        else if (add_init_cyborg && stakedNft.trait_type == 'Cyborg') {
-          stake_instructions = await initFixedFarmerAlpha(3,stake_instructions,stakeProgram);
-        }
-        else if (add_init_cyborg_pets && stakedNft.trait_type == 'Cyborg Pet') {
-          stake_instructions = await initFixedFarmerAlpha(4,stake_instructions,stakeProgram);
-        }
-        const [farmerPda, farmerBump] = await farmerPDA(
-          farm_id,
-          wallet.publicKey!
+      let farm_id: any;
+      if (stakedNft.trait_type == "Human") {
+        farm_id = HUMANS_FARM_ID;
+      } else if (stakedNft.trait_type == "Human Pet") {
+        farm_id = HUMANPETS_FARM_ID;
+      } else if (stakedNft.trait_type == "Cyborg") {
+        farm_id = CYBORG_FARM_ID;
+      } else if (stakedNft.trait_type == "Cyborg Pet") {
+        farm_id = CYBORGPET_FARM_ID;
+      }
+      let stake_instructions: any = [];
+      const stakeProgram: any = await getStakeProgram(wallet);
+      const bankProgram = await getBankProgram(wallet);
+      // let tokens = await getTokensByOwner(wallet.publicKey!);
+      console.log(stakedNft);
+      // const farmers = await stakeProgram.account.farmer.all();
+      if (add_init_human && stakedNft.trait_type == "Human") {
+        stake_instructions = await initFixedFarmerAlpha(
+          1,
+          stake_instructions,
+          stakeProgram
         );
-        const farms:any = await stakeProgram.account.farm.fetch(farm_id);
-        const [farmerVaultPda, farmerVaultBump] = await farmerVaultPDA(
-          farms.bank,
-          wallet.publicKey!
+      } else if (add_init_human_pets && stakedNft.trait_type == "Human Pet") {
+        stake_instructions = await initFixedFarmerAlpha(
+          2,
+          stake_instructions,
+          stakeProgram
         );
-        let nft;
-        if (stakedNft) {
-          nft = stakedNft;
-        }
-        else {
-          nft = nfts[0];
-        }
-        const vaults = await bankProgram.account.vault.all();
-        // console.log(vaults[0].account.authoritySeed.toBase58());
-        const [gemBoxPdaVal] = await gemBoxPda(
-          farmerVaultPda,
-          new anchor.web3.PublicKey(nft.mint)
+      } else if (add_init_cyborg && stakedNft.trait_type == "Cyborg") {
+        stake_instructions = await initFixedFarmerAlpha(
+          3,
+          stake_instructions,
+          stakeProgram
         );
-        const [gemDepositBoxPdaVal] = await gemDepositBoxPda(
-          farmerVaultPda,
-          new anchor.web3.PublicKey(nft.mint)
+      } else if (add_init_cyborg_pets && stakedNft.trait_type == "Cyborg Pet") {
+        stake_instructions = await initFixedFarmerAlpha(
+          4,
+          stake_instructions,
+          stakeProgram
         );
-        const [gemBoxRarityPdaVal, gemBoxrarityBump] = await gemBoxRarityPda(
-          farms.bank,
-          new anchor.web3.PublicKey(nft.mint)
-        );
-        const [vaultAuthorityPdaVal, vaultAuthorityBump] = await vaultAuthorityPda(
-          farmerVaultPda
-        );
-        const gem_mint = new anchor.web3.PublicKey(nft.mint);
-        // const address_to_whitelist = new anchor.web3.PublicKey(collectionId);
-        // const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
-        const [mintWhitelistProofPdaVal] = await whitelistProofPda(farms.bank,new anchor.web3.PublicKey(nft.mint));
-        const [creatorWhitelistProofPdaVal] = await whitelistProofPda(farms.bank,new anchor.web3.PublicKey(nft.creator));
-        const gem_source_old = await findAssociatedTokenAddress(wallet.publicKey!,new anchor.web3.PublicKey(nft.mint));
-        const gem_source_obj = await connection.getParsedTokenAccountsByOwner(wallet.publicKey!, {
+      }
+      const [farmerPda, farmerBump] = await farmerPDA(
+        farm_id,
+        wallet.publicKey!
+      );
+      const farms: any = await stakeProgram.account.farm.fetch(farm_id);
+      const [farmerVaultPda, farmerVaultBump] = await farmerVaultPDA(
+        farms.bank,
+        wallet.publicKey!
+      );
+      let nft;
+      if (stakedNft) {
+        nft = stakedNft;
+      } else {
+        nft = nfts[0];
+      }
+      const vaults = await bankProgram.account.vault.all();
+      // console.log(vaults[0].account.authoritySeed.toBase58());
+      const [gemBoxPdaVal] = await gemBoxPda(
+        farmerVaultPda,
+        new anchor.web3.PublicKey(nft.mint)
+      );
+      const [gemDepositBoxPdaVal] = await gemDepositBoxPda(
+        farmerVaultPda,
+        new anchor.web3.PublicKey(nft.mint)
+      );
+      const [gemBoxRarityPdaVal, gemBoxrarityBump] = await gemBoxRarityPda(
+        farms.bank,
+        new anchor.web3.PublicKey(nft.mint)
+      );
+      const [vaultAuthorityPdaVal, vaultAuthorityBump] =
+        await vaultAuthorityPda(farmerVaultPda);
+      const gem_mint = new anchor.web3.PublicKey(nft.mint);
+      // const address_to_whitelist = new anchor.web3.PublicKey(collectionId);
+      // const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
+      const [mintWhitelistProofPdaVal] = await whitelistProofPda(
+        farms.bank,
+        new anchor.web3.PublicKey(nft.mint)
+      );
+      const [creatorWhitelistProofPdaVal] = await whitelistProofPda(
+        farms.bank,
+        new anchor.web3.PublicKey(nft.creator)
+      );
+      const gem_source_old = await findAssociatedTokenAddress(
+        wallet.publicKey!,
+        new anchor.web3.PublicKey(nft.mint)
+      );
+      const gem_source_obj = await connection.getParsedTokenAccountsByOwner(
+        wallet.publicKey!,
+        {
           mint: new anchor.web3.PublicKey(nft.mint),
-        });
-        const gem_source = gem_source_obj.value[0].pubkey;
-        const [gem_metadata] = await tokenMetadataPda(gem_mint);
-        const remainingAccounts = [];
-        if (mintWhitelistProofPdaVal)
+        }
+      );
+      const gem_source = gem_source_obj.value[0].pubkey;
+      const [gem_metadata] = await tokenMetadataPda(gem_mint);
+      const remainingAccounts = [];
+      if (mintWhitelistProofPdaVal)
         remainingAccounts.push({
           pubkey: mintWhitelistProofPdaVal,
           isWritable: false,
           isSigner: false,
         });
-        if (gem_metadata)
+      if (gem_metadata)
         remainingAccounts.push({
           pubkey: gem_metadata,
           isWritable: false,
           isSigner: false,
         });
-        console.log(nft.creator);
-        // console.log(whitelistProofPdaVal.toBase58());
-        if (creatorWhitelistProofPdaVal) {
-          remainingAccounts.push({
-            pubkey: creatorWhitelistProofPdaVal,
-            isWritable: false,
-            isSigner: false,
-          });
-        }
-        console.log(stake_instructions);
+      console.log(nft.creator);
+      // console.log(whitelistProofPdaVal.toBase58());
+      if (creatorWhitelistProofPdaVal) {
+        remainingAccounts.push({
+          pubkey: creatorWhitelistProofPdaVal,
+          isWritable: false,
+          isSigner: false,
+        });
+      }
+      console.log(stake_instructions);
       // const farmerId:any = await stakeProgram.account.farm.fetch(farmerPda)!;
-      const [farmerStakedMintVarPDA, farmerStakedMintBump] = await farmerStakedMintPDA(
-          0,
-          farmerPda
-        );
-        stake_instructions.push(await stakeProgram.instruction.flashDeposit(farmerBump, vaultAuthorityBump,gemBoxrarityBump,new BN(0), new BN(1), 
+      const [farmerStakedMintVarPDA, farmerStakedMintBump] =
+        await farmerStakedMintPDA(0, farmerPda);
+      stake_instructions.push(
+        await stakeProgram.instruction.flashDeposit(
+          farmerBump,
+          vaultAuthorityBump,
+          gemBoxrarityBump,
+          new BN(0),
+          new BN(1),
           {
             accounts: {
               farm: farm_id,
@@ -1607,75 +1753,78 @@ const Home = () => {
               tokenProgram: TOKEN_PROGRAM_ID,
               systemProgram: SystemProgram.programId,
               rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-              gemBank: GEM_BANK_PROGRAM_ID
-            },
-            remainingAccounts
-          }
-        ));
-        const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(farm_id);
-        const address_to_whitelist = new anchor.web3.PublicKey(collectionId);
-        const [whitelistProofPdaVal] = await whitelistProofPda(farms.bank,address_to_whitelist);
-        stake_instructions.push(stakeProgram.instruction.stake(farmAuthBump, farmerBump, 
-          {
-            accounts: {
-              farm: farm_id,
-              farmAuthority: farms.farmAuthority,
-              farmer: farmerPda,
-              identity: wallet.publicKey,
-              bank: farms.bank,
-              vault: farmerVaultPda,
               gemBank: GEM_BANK_PROGRAM_ID,
-              systemProgram: SystemProgram.programId,
-            }
+            },
+            remainingAccounts,
           }
-        ));
-        let tr = new Transaction();
-        tr.add(stake_instructions);
-        const complete_stake = await sendTransactions(
-          connection,
-          wallet,
-          [stake_instructions],
-          [[]]
         )
-        console.log('complete stake signature ',complete_stake);
-        nftStakeStepCount = nftStakeStepCount + 1;
-        setNftStakeStep(nftStakeStepCount);
-        var arr = stakedNfts;
-        var temp_arr = nfts.slice(0,nfts.indexOf(nft));
-        setNFts(temp_arr);
-        // var data = JSON.stringify({
-        //   "owner": wallet.publicKey?.toBase58(),
-        //   "mint": nft.mint
-        // });
+      );
+      const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(farm_id);
+      const address_to_whitelist = new anchor.web3.PublicKey(collectionId);
+      const [whitelistProofPdaVal] = await whitelistProofPda(
+        farms.bank,
+        address_to_whitelist
+      );
+      stake_instructions.push(
+        stakeProgram.instruction.stake(farmAuthBump, farmerBump, {
+          accounts: {
+            farm: farm_id,
+            farmAuthority: farms.farmAuthority,
+            farmer: farmerPda,
+            identity: wallet.publicKey,
+            bank: farms.bank,
+            vault: farmerVaultPda,
+            gemBank: GEM_BANK_PROGRAM_ID,
+            systemProgram: SystemProgram.programId,
+          },
+        })
+      );
+      let tr = new Transaction();
+      tr.add(stake_instructions);
+      const complete_stake = await sendTransactions(
+        connection,
+        wallet,
+        [stake_instructions],
+        [[]]
+      );
+      console.log("complete stake signature ", complete_stake);
+      nftStakeStepCount = nftStakeStepCount + 1;
+      setNftStakeStep(nftStakeStepCount);
+      var arr = stakedNfts;
+      var temp_arr = nfts.slice(0, nfts.indexOf(nft));
+      setNFts(temp_arr);
+      // var data = JSON.stringify({
+      //   "owner": wallet.publicKey?.toBase58(),
+      //   "mint": nft.mint
+      // });
 
-        // var xhr = new XMLHttpRequest();
-        // // xhr.withCredentials = true;
+      // var xhr = new XMLHttpRequest();
+      // // xhr.withCredentials = true;
 
-        // xhr.addEventListener("readystatechange", function() {
-        //   if(this.readyState === 4) {
-        //     console.log(this.responseText);
-        //   }
-        // });
+      // xhr.addEventListener("readystatechange", function() {
+      //   if(this.readyState === 4) {
+      //     console.log(this.responseText);
+      //   }
+      // });
 
-        // xhr.open("POST", "http://34.198.111.186:8000/stakeNft");
-        // xhr.setRequestHeader("Content-Type", "application/json");
+      // xhr.open("POST", "http://34.198.111.186:8000/stakeNft");
+      // xhr.setRequestHeader("Content-Type", "application/json");
 
-        // xhr.send(data);
-        // arr.push(nft);
-        // setStakedNfts(arr);
-        getStakedNfts();
-        // setStakedTokens(stakedNfts.length * 100);
-        // setRespectEarned(stakedNfts.length * 100);
-        // setMultiplierLevel(stakedNfts.length);
-    }
-    else {
+      // xhr.send(data);
+      // arr.push(nft);
+      // setStakedNfts(arr);
+      getStakedNfts();
+      // setStakedTokens(stakedNfts.length * 100);
+      // setRespectEarned(stakedNfts.length * 100);
+      // setMultiplierLevel(stakedNfts.length);
+    } else {
       setAlertState({
         open: true,
         message: "Select an NFT to stake",
         severity: "error",
       });
     }
-  }
+  };
 
   // Farmer should call this
 
@@ -1694,25 +1843,20 @@ const Home = () => {
       let nft;
       if (unstakedNft) {
         nft = unstakedNft;
-      }
-      else {
+      } else {
         nft = nfts[0];
       }
       console.log(nft);
       let farm_id: anchor.web3.PublicKey;
-      if (nft.trait_type == 'Human') {
+      if (nft.trait_type == "Human") {
         farm_id = HUMANS_FARM_ID;
-      }
-      else if (nft.trait_type == 'Human Pet') {
+      } else if (nft.trait_type == "Human Pet") {
         farm_id = HUMANPETS_FARM_ID;
-      }
-      else if (nft.trait_type == 'Cyborg') {
+      } else if (nft.trait_type == "Cyborg") {
         farm_id = CYBORG_FARM_ID;
-      }
-      else if (nft.trait_type == 'Cyborg Pet') {
+      } else if (nft.trait_type == "Cyborg Pet") {
         farm_id = CYBORGPET_FARM_ID;
-      }
-      else {
+      } else {
         farm_id = HUMANS_FARM_ID;
       }
       const [farmerPda, farmerBump] = await farmerPDA(
@@ -1720,7 +1864,7 @@ const Home = () => {
         wallet.publicKey!
       );
       const [farmAuth, farmAuthBump] = await findFarmAuthorityPDA(farm_id!);
-      const farms:any = await stakeProgram.account.farm.fetch(farm_id)!;
+      const farms: any = await stakeProgram.account.farm.fetch(farm_id)!;
       const [farmerVaultPda, farmerVaultBump] = await farmerVaultPDA(
         farms.bank,
         wallet.publicKey!
@@ -1728,39 +1872,50 @@ const Home = () => {
       // const [farmTreasury, farmTreasuryBump] = await findFarmTreasuryPDA(
       //   farm_id!
       // );
-      const [farmerStakedMintVarPDA, farmerStakedMintBump] = await farmerStakedMintPDA(
-        0,
-        farmerPda
-      );
+      const [farmerStakedMintVarPDA, farmerStakedMintBump] =
+        await farmerStakedMintPDA(0, farmerPda);
       // const vaults = await bankProgram.account.vault.all();
-        // console.log(vaults[0].account.authoritySeed.toBase58());
-      let nftMintPublicKey = new anchor.web3.PublicKey(nft.mint)
+      // console.log(vaults[0].account.authoritySeed.toBase58());
+      let nftMintPublicKey = new anchor.web3.PublicKey(nft.mint);
 
       const [gemBoxPdaVal, gemBoxBump] = await gemBoxPda(
         farmerVaultPda,
         nftMintPublicKey
         // new anchor.web3.PublicKey(nft.mint)
       );
-      const [gemDepositBoxPdaVal, gemDepositReceiptBump] = await gemDepositBoxPda(
-        farmerVaultPda,
-        nftMintPublicKey
-        // new anchor.web3.PublicKey(nft.mint)
-      );
+      const [gemDepositBoxPdaVal, gemDepositReceiptBump] =
+        await gemDepositBoxPda(
+          farmerVaultPda,
+          nftMintPublicKey
+          // new anchor.web3.PublicKey(nft.mint)
+        );
       const [gemBoxRarityPdaVal, gemBoxrarityBump] = await gemBoxRarityPda(
         farms.bank,
         nftMintPublicKey
         // new anchor.web3.PublicKey(nft.mint)
       );
-      const [vaultAuthorityPdaVal, vaultAuthorityBump] = await vaultAuthorityPda(
-        farmerVaultPda
-      );
+      const [vaultAuthorityPdaVal, vaultAuthorityBump] =
+        await vaultAuthorityPda(farmerVaultPda);
       const gem_mint = new anchor.web3.PublicKey(nft.mint);
-      const [farmTreasuryToken, farmTreasuryTokenBump] = await findFarmTreasuryTokenPDA(farm_id);
-      const gem_source_obj = await connection.getParsedTokenAccountsByOwner(wallet.publicKey!, {
-        mint: new anchor.web3.PublicKey(nft.mint),
-      });
+      const [farmTreasuryToken, farmTreasuryTokenBump] =
+        await findFarmTreasuryTokenPDA(farm_id);
+      const gem_source_obj = await connection.getParsedTokenAccountsByOwner(
+        wallet.publicKey!,
+        {
+          mint: new anchor.web3.PublicKey(nft.mint),
+        }
+      );
       const gem_destination = gem_source_obj.value[0].pubkey;
-      const wallet_create = await stakeProgram.rpc.unstake(farmAuthBump, farmTreasuryTokenBump, farmerBump, gemBoxBump, gemDepositReceiptBump, gemBoxrarityBump, new BN(1), new BN(0), false,
+      const wallet_create = await stakeProgram.rpc.unstake(
+        farmAuthBump,
+        farmTreasuryTokenBump,
+        farmerBump,
+        gemBoxBump,
+        gemDepositReceiptBump,
+        gemBoxrarityBump,
+        new BN(1),
+        new BN(0),
+        false,
         {
           accounts: {
             farm: farm_id,
@@ -1779,17 +1934,17 @@ const Home = () => {
             gemRarity: gemBoxRarityPdaVal,
             gemBank: GEM_BANK_PROGRAM_ID,
             tokenProgram: TOKEN_PROGRAM_ID,
-            associatedTokenProgram:SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
+            associatedTokenProgram: SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
             rent: anchor.web3.SYSVAR_RENT_PUBKEY,
             systemProgram: SystemProgram.programId,
-          }
+          },
         }
       );
-      console.log('unstake signature : ' + wallet_create);
+      console.log("unstake signature : " + wallet_create);
     } catch (error) {
       console.log("Transaction error: ", error);
     }
-  }
+  };
 
   const showTeamInfoHover = async (id: any) => {
     setShowTeamInfo(true);
@@ -1881,12 +2036,12 @@ const Home = () => {
     setMenuOpen(true);
   };
 
-  const openStakeRoom = async (id:any) => {
+  const openStakeRoom = async (id: any) => {
     setCurrentStakeRoom(id);
     setShowStakeCity(true);
   };
 
-  const closeTokenSwapping =async () => {
+  const closeTokenSwapping = async () => {
     setClassNameState("alphazen-room");
     setLogoAlphaLoading(false);
     setShowAlphaRoom(false);
@@ -1894,13 +2049,13 @@ const Home = () => {
     setShowStakeRoom(true);
     setShowMobileDoor(false);
     setShowTokenSwapping(false);
-  }
+  };
 
-  const openTokenSwapping =async (params:any) => {
+  const openTokenSwapping = async (params: any) => {
     setClassNameState("main-bg-after-door-open black-bg");
     setLogoAlphaLoading(true);
     setTimeout(function () {
-    setLogoAlphaLoading(false);
+      setLogoAlphaLoading(false);
       setClassNameState("token-swapping-room");
       setShowTeamRoom(false);
       setShowAlphaRoom(false);
@@ -1908,9 +2063,9 @@ const Home = () => {
       setShowMobileDoor(false);
       setShowTokenSwapping(true);
     }, 600);
-  }
+  };
 
-  const openAlphaRoom = async (key:string) => {
+  const openAlphaRoom = async (key: string) => {
     if (isMobile) {
       if (mobileDoor === "ALPHA") {
         setClassNameState("main-bg-after-door-open black-bg");
@@ -1923,8 +2078,7 @@ const Home = () => {
           setShowStakeRoom(false);
           setShowMobileDoor(false);
         }, 600);
-      } 
-      else if (mobileDoor === "ALPHAZEX") {
+      } else if (mobileDoor === "ALPHAZEX") {
         setClassNameState("main-bg-after-door-open black-bg");
         setLogoAlphaLoading(true);
         setTimeout(function () {
@@ -1935,8 +2089,7 @@ const Home = () => {
           setShowStakeRoom(true);
           setShowMobileDoor(false);
         }, 600);
-      }
-      else {
+      } else {
         var arr = [
           "Patience is key",
           "Shh...",
@@ -1953,7 +2106,7 @@ const Home = () => {
         }, 900);
       }
     } else {
-      if (key == 'alpha') {
+      if (key == "alpha") {
         setClassNameState("main-bg-after-door-open black-bg");
         setLogoAlphaLoading(true);
         setTimeout(function () {
@@ -1963,8 +2116,7 @@ const Home = () => {
           setShowStakeRoom(false);
           setShowMobileDoor(false);
         }, 600);
-      }
-      else if (key == 'ALPHAZEX') {
+      } else if (key == "ALPHAZEX") {
         setClassNameState("main-bg-after-door-open black-bg");
         setLogoAlphaLoading(true);
         setTimeout(function () {
@@ -1975,40 +2127,34 @@ const Home = () => {
           setShowStakeRoom(true);
           setShowMobileDoor(false);
         }, 600);
-        setTimeout(function() {
+        setTimeout(function () {
           if (roomOneInfoClass == "stake-room-info-one") {
             setRoomOneInfoClass("stake-room-info-one flip");
-          }
-          else {
+          } else {
             setRoomOneInfoClass("stake-room-info-one");
           }
           if (roomTwoInfoClass == "stake-room-info-one") {
             setRoomTwoInfoClass("stake-room-info-one flip");
-          }
-          else {
+          } else {
             setRoomTwoInfoClass("stake-room-info-one");
           }
           if (roomThreeInfoClass == "stake-room-info-one") {
             setRoomThreeInfoClass("stake-room-info-one flip");
-          }
-          else {
+          } else {
             setRoomThreeInfoClass("stake-room-info-one");
           }
           if (roomFourInfoClass == "stake-room-info-one") {
             setRoomFourInfoClass("stake-room-info-one flip");
-          }
-          else {
+          } else {
             setRoomFourInfoClass("stake-room-info-one");
           }
           if (roomFiveInfoClass == "stake-room-info-one") {
             setRoomFiveInfoClass("stake-room-info-one flip");
-          }
-          else {
+          } else {
             setRoomFiveInfoClass("stake-room-info-one");
           }
-        },3000) 
-      }
-      else {
+        }, 3000);
+      } else {
         var arr1 = [
           "Patience is key",
           "Shh...",
@@ -2032,7 +2178,6 @@ const Home = () => {
     setTeamInfoMember(null);
   };
 
-
   const scrollStory = async () => {
     var elem: HTMLElement | null = document.getElementById("alpha-scroll");
     elem!.scrollTop = elem!.scrollTop + 180;
@@ -2049,482 +2194,558 @@ const Home = () => {
 
   return (
     <div id="main" className={classNameState}>
-      {wallet && wallet.connected && 
+      {wallet && wallet.connected && (
         <div className="pull-left full-width">
           <div id="wrapper">
-          {isMobile && (
-            <div></div>
-          )}
-          {logoLoading && !logoAlphaLoading && (
-            <div className="logo-loader-parent">
-              <img alt="Alpha-logo" src={LogoWhite} className="pulse-animation" />
-            </div>
-          )}
-          {!logoLoading &&
-            !showAlphaRoom &&
-            !showStakeRoom &&
-            !showTeamRoom &&
-            !logoAlphaLoading &&
-            !showTokenSwapping &&
-            !isMobile && (
-              <div
-                onClick={() => openAlphaRoom('ALPHAZEX')}
-                // onClick={() => refreshFarmer()}
-                // onClick={() => refreshFarmerSigned()}
-                className="stake-room-div"
-              ></div>
-            )}
-          {!logoLoading && isMobile && !logoAlphaLoading && !menuOpen && (
-            <div className="hamburger-menu">
-              <img alt="Menu" onClick={openMenu} src={MobileMenu} />
-            </div>
-          )}
-          {!logoLoading && isMobile && !logoAlphaLoading && (
-            <div className="alpha-home-logo" onClick={handleMobileHome}>
-              <img alt="Alpha-Logo-Cropped" src={LogoWhiteCropped} />
-            </div>
-          )}
-          {!logoLoading &&
-            isMobile &&
-            !logoAlphaLoading &&
-            showTeamRoom &&
-            !showMobileDoor && (
-              <div className="team-room-header" onClick={handleMobileHome}>
-                <h2>TEAM</h2>
+            {isMobile && <div></div>}
+            {logoLoading && !logoAlphaLoading && (
+              <div className="logo-loader-parent">
+                <img
+                  alt="Alpha-logo"
+                  src={LogoWhite}
+                  className="pulse-animation"
+                />
               </div>
             )}
-          {!logoLoading && isMobile && showMobileDoor && !logoAlphaLoading && (
-            <div className="mobile-room-div" onClick={() => openAlphaRoom('')}></div>
-          )}
-          {!logoLoading &&
-            !showAlphaRoom &&
-            !showStakeRoom &&
-            !showTeamRoom &&
-            !logoAlphaLoading &&
-            !showTokenSwapping &&
-            !isMobile && (
-              <div
-                // onClick={() => showToaster(5)}
-                onClick={() =>setShowFarming(true)}
-                className="vault-room-div"
-              ></div>
-            )}
-          {!logoLoading &&
-            !showAlphaRoom &&
-            !showTeamRoom &&
-            !showStakeRoom &&
-            !logoAlphaLoading &&
-            !showTokenSwapping &&
-            !isMobile && (
-              <div
-                onClick={() => openAlphaRoom('alpha')}
-                className="alpha-room-div"
-              ></div>
-            )}
-          {!logoLoading &&
-            !showAlphaRoom &&
-            !showStakeRoom &&
-            !showTeamRoom &&
-            !logoAlphaLoading &&
-            !showTokenSwapping &&
-            !isMobile && (
-              <div onClick={() => openAlphaRoom('team')} className="team-room-div"></div>
-              // <a href="/create-raffle" className="team-room-div"></a>
-            )}
-          {!logoLoading && showMessage && (
-            <div className="mesage-container">
-              <label>{messageText}</label>
-            </div>
-          )}
-          {!logoLoading &&
-            !showAlphaRoom &&
-            !showStakeRoom &&
-            !showTeamRoom &&
-            !showTokenSwapping &&
-            !logoAlphaLoading &&
-            !isMobile && (
-              <div className="social-media-links">
-                <a
-                  href="https://twitter.com/SecretAlphaLabs"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img alt="Twitter" className="social-icons" src={Twitter} />
-                </a>
-                <a
-                  href="https://discord.com/invite/SecretAlpha"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img alt="Discord" className="social-icons" src={Discord} />
-                </a>
+            {!logoLoading &&
+              !showAlphaRoom &&
+              !showStakeRoom &&
+              !showTeamRoom &&
+              !logoAlphaLoading &&
+              !showTokenSwapping &&
+              !isMobile && (
+                <div
+                  onClick={() => openAlphaRoom("ALPHAZEX")}
+                  // onClick={() => refreshFarmer()}
+                  // onClick={() => refreshFarmerSigned()}
+                  className="stake-room-div"
+                ></div>
+              )}
+            {!logoLoading && isMobile && !logoAlphaLoading && !menuOpen && (
+              <div className="hamburger-menu">
+                <img alt="Menu" onClick={openMenu} src={MobileMenu} />
               </div>
             )}
-          {showAlphaRoom &&
-            !logoAlphaLoading &&
-            !logoLoading &&
-            !showMobileDoor &&
-            !showTokenSwapping &&
-            !isMobile && (
-              <div className="close-alpha-room" onClick={closeAlphaRoom}>
-                <img alt="close" src={CloseAlpha} />
+            {!logoLoading && isMobile && !logoAlphaLoading && (
+              <div className="alpha-home-logo" onClick={handleMobileHome}>
+                <img alt="Alpha-Logo-Cropped" src={LogoWhiteCropped} />
               </div>
             )}
-          {showStakeRoom &&
-            !showStakeCity &&
-            !showStaking &&
-            !showStakeDashboard &&
-            !logoAlphaLoading &&
-            !logoLoading &&
-            !showMobileDoor &&
-            !showTokenSwapping &&
-            !isMobile && (
-              <div className="close-stake-room" onClick={closeAlphaRoom}>
-                <img alt="close" src={CloseAlpha} />
+            {!logoLoading &&
+              isMobile &&
+              !logoAlphaLoading &&
+              showTeamRoom &&
+              !showMobileDoor && (
+                <div className="team-room-header" onClick={handleMobileHome}>
+                  <h2>TEAM</h2>
+                </div>
+              )}
+            {!logoLoading &&
+              isMobile &&
+              showMobileDoor &&
+              !logoAlphaLoading && (
+                <div
+                  className="mobile-room-div"
+                  onClick={() => openAlphaRoom("")}
+                ></div>
+              )}
+            {!logoLoading &&
+              !showAlphaRoom &&
+              !showStakeRoom &&
+              !showTeamRoom &&
+              !logoAlphaLoading &&
+              !showTokenSwapping &&
+              !isMobile && (
+                <div
+                  // onClick={() => showToaster(5)}
+                  onClick={() => setShowFarming(true)}
+                  className="vault-room-div"
+                ></div>
+              )}
+            {!logoLoading &&
+              !showAlphaRoom &&
+              !showTeamRoom &&
+              !showStakeRoom &&
+              !logoAlphaLoading &&
+              !showTokenSwapping &&
+              !isMobile && (
+                <div
+                  onClick={() => openAlphaRoom("alpha")}
+                  className="alpha-room-div"
+                ></div>
+              )}
+            {!logoLoading &&
+              !showAlphaRoom &&
+              !showStakeRoom &&
+              !showTeamRoom &&
+              !logoAlphaLoading &&
+              !showTokenSwapping &&
+              !isMobile && (
+                <div
+                  onClick={() => openAlphaRoom("team")}
+                  className="team-room-div"
+                ></div>
+                // <a href="/create-raffle" className="team-room-div"></a>
+              )}
+            {!logoLoading && showMessage && (
+              <div className="mesage-container">
+                <label>{messageText}</label>
               </div>
             )}
-          {showTeamRoom &&
-            !logoAlphaLoading &&
-            !logoLoading &&
-            !showMobileDoor &&
-            !showTokenSwapping &&
-            !isMobile && (
-              <div className="close-team-room" onClick={closeAlphaRoom}>
-                <img alt="close" src={CloseAlpha} />
+            {!logoLoading &&
+              !showAlphaRoom &&
+              !showStakeRoom &&
+              !showTeamRoom &&
+              !showTokenSwapping &&
+              !logoAlphaLoading &&
+              !isMobile && (
+                <div className="social-media-links">
+                  <a
+                    href="https://twitter.com/SecretAlphaLabs"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <img alt="Twitter" className="social-icons" src={Twitter} />
+                  </a>
+                  <a
+                    href="https://discord.com/invite/SecretAlpha"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <img alt="Discord" className="social-icons" src={Discord} />
+                  </a>
+                </div>
+              )}
+            {showAlphaRoom &&
+              !logoAlphaLoading &&
+              !logoLoading &&
+              !showMobileDoor &&
+              !showTokenSwapping &&
+              !isMobile && (
+                <div className="close-alpha-room" onClick={closeAlphaRoom}>
+                  <img alt="close" src={CloseAlpha} />
+                </div>
+              )}
+            {showStakeRoom &&
+              !showStakeCity &&
+              !showStaking &&
+              !showStakeDashboard &&
+              !logoAlphaLoading &&
+              !logoLoading &&
+              !showMobileDoor &&
+              !showTokenSwapping &&
+              !isMobile && (
+                <div className="close-stake-room" onClick={closeAlphaRoom}>
+                  <img alt="close" src={CloseAlpha} />
+                </div>
+              )}
+            {showTeamRoom &&
+              !logoAlphaLoading &&
+              !logoLoading &&
+              !showMobileDoor &&
+              !showTokenSwapping &&
+              !isMobile && (
+                <div className="close-team-room" onClick={closeAlphaRoom}>
+                  <img alt="close" src={CloseAlpha} />
+                </div>
+              )}
+            {showTeamRoom && !isMobile && (
+              <div>
+                <div
+                  onMouseLeave={hideTeamInfo}
+                  onMouseOver={() => showTeamInfoHover(1)}
+                  className="first-team-member"
+                ></div>
+                <div
+                  onMouseLeave={hideTeamInfo}
+                  onMouseOver={() => showTeamInfoHover(2)}
+                  className="second-team-member"
+                ></div>
+                <div
+                  onMouseLeave={hideTeamInfo}
+                  onMouseOver={() => showTeamInfoHover(3)}
+                  className="third-team-member"
+                ></div>
+                <div
+                  onMouseLeave={hideTeamInfo}
+                  onMouseOver={() => showTeamInfoHover(4)}
+                  className="fourth-team-member"
+                ></div>
+                <div
+                  onMouseLeave={hideTeamInfo}
+                  onMouseOver={() => showTeamInfoHover(5)}
+                  className="fifth-team-member"
+                ></div>
+                <div
+                  onMouseLeave={hideTeamInfo}
+                  onMouseOver={() => showTeamInfoHover(6)}
+                  className="sixth-team-member"
+                ></div>
+                <div
+                  onMouseLeave={hideTeamInfo}
+                  onMouseOver={() => showTeamInfoHover(7)}
+                  className="seventh-team-member"
+                ></div>
+                <div
+                  onMouseLeave={hideTeamInfo}
+                  onMouseOver={() => showTeamInfoHover(8)}
+                  className="eigth-team-member"
+                ></div>
               </div>
             )}
-          {showTeamRoom && !isMobile && (
-            <div>
-              <div
-                onMouseLeave={hideTeamInfo}
-                onMouseOver={() => showTeamInfoHover(1)}
-                className="first-team-member"
-              ></div>
-              <div
-                onMouseLeave={hideTeamInfo}
-                onMouseOver={() => showTeamInfoHover(2)}
-                className="second-team-member"
-              ></div>
-              <div
-                onMouseLeave={hideTeamInfo}
-                onMouseOver={() => showTeamInfoHover(3)}
-                className="third-team-member"
-              ></div>
-              <div
-                onMouseLeave={hideTeamInfo}
-                onMouseOver={() => showTeamInfoHover(4)}
-                className="fourth-team-member"
-              ></div>
-              <div
-                onMouseLeave={hideTeamInfo}
-                onMouseOver={() => showTeamInfoHover(5)}
-                className="fifth-team-member"
-              ></div>
-              <div
-                onMouseLeave={hideTeamInfo}
-                onMouseOver={() => showTeamInfoHover(6)}
-                className="sixth-team-member"
-              ></div>
-              <div
-                onMouseLeave={hideTeamInfo}
-                onMouseOver={() => showTeamInfoHover(7)}
-                className="seventh-team-member"
-              ></div>
-              <div
-                onMouseLeave={hideTeamInfo}
-                onMouseOver={() => showTeamInfoHover(8)}
-                className="eigth-team-member"
-              ></div>
-            </div>
-          )}
-          {isMobile && menuOpen && (
-            <div className="cheeseburger-menu">
-              <MenuContent closeCallback={closeMenu} />
-            </div>
-          )}
-          {showTeamRoom && showTeamInfo && teamInfoMember === 1 && (
-            <div className="mesage-container-team">
-              <label className="message-container-label-small">
-                <b>Gabriel</b>
-                <br />
-                <i>NFT artist</i>
-                <br />
-                Artist Extraordinaire. Delicately detailed.
-              </label>
-            </div>
-          )}
-          {showTeamRoom && showTeamInfo && teamInfoMember === 2 && (
-            <div className="mesage-container-team">
-              <label className="message-container-label-small">
-                <b>Yogantar</b>
-                <br />
-                <i>Artist</i>
-                <br />
-                He sees, He makes, He thinks, He creates. No world is too far.
-              </label>
-            </div>
-          )}
-          {showTeamRoom && showTeamInfo && teamInfoMember === 3 && (
-            <div className="mesage-container-team">
-              <label className="message-container-label-small">
-                <b>Wallace</b>
-                <br />
-                <i>Collab Chief</i>
-                <br />
-                Master Negotiator, One handshake is all it takes.
-              </label>
-            </div>
-          )}
-          {showTeamRoom && showTeamInfo && teamInfoMember === 4 && (
-            <div className="mesage-container-team">
-              <label className="message-container-label-small">
-                <b>Vamshi</b>
-                <br />
-                <i>Front-end Dev</i>
-                <br />
-                Skillful savant. Code is art.
-              </label>
-            </div>
-          )}
-          {showTeamRoom && showTeamInfo && teamInfoMember === 5 && (
-            <div className="mesage-container-team">
-              <label className="message-container-label-small">
-                <b>Bhargav</b>
-                <br />
-                <i>Back-end Dev</i>
-                <br />
-                Code Whizz. The magic happens at the back.
-              </label>
-            </div>
-          )}
-          {showTeamRoom && showTeamInfo && teamInfoMember === 6 && (
-            <div className="mesage-container-team">
-              <label className="message-container-label-small">
-                <b>Walter</b>
-                <br />
-                <i>CEO</i>
-                <br />
-                Eyes all around. <span className="strikethrough">Sex</span> Genius
-                Sells.
-              </label>
-            </div>
-          )}
-          {showTeamRoom && showTeamInfo && teamInfoMember === 7 && (
-            <div className="mesage-container-team">
-              <label className="message-container-label-small">
-                <b>Kaizer</b>
-                <br />
-                <i>CMO</i>
-                <br />
-                The one holding all the cards. Shh…
-              </label>
-            </div>
-          )}
-          {showTeamRoom && showTeamInfo && teamInfoMember === 8 && (
-            <div className="mesage-container-team">
-              <label className="message-container-label-small">
-                <b>Sashi</b>
-                <br />
-                <i>COO</i>
-                <br />
-                King of discord. No bullshit, only work.
-              </label>
-            </div>
-          )}
-          {showTeamRoom && isMobile && !showMobileDoor && (
-            <div className="team-member-div">
-              <Carousel responsive={responsive}>
-                <div className="team-member-image">
-                  <label className="team-member-info-top">
-                    Walter <span className="text-right">CEO</span>
-                  </label>
-                  <img alt="Walter" src={Walter} />
-                  <label className="team-member-info-bottom">
-                    <q>
-                      Eyes all around. <span className="strikethrough">Sex</span>{" "}
-                      Genius Sells.
-                    </q>
-                  </label>
-                </div>
-                <div className="team-member-image">
-                  <label className="team-member-info-top">
-                    Kaizer <span className="text-right">CMO</span>
-                  </label>
-                  <img alt="kaizer" src={Kaizer} />
-                  <label className="team-member-info-bottom">
-                    <q>The one holding all the cards. Shh…</q>
-                  </label>
-                </div>
-                <div className="team-member-image">
-                  <label className="team-member-info-top">
-                    Sashi <span className="text-right">COO</span>
-                  </label>
-                  <img alt="Sashi" src={Sashi} />
-                  <label className="team-member-info-bottom">
-                    <q>King of discord. No bullshit, only work.</q>
-                  </label>
-                </div>
-                <div className="team-member-image">
-                  <label className="team-member-info-top">
-                    Gabriel <span className="text-right">NFT artist</span>
-                  </label>
-                  <img alt="Gabriel" src={Gabriel} />
-                  <label className="team-member-info-bottom">
-                    <q>Artist Extraordinaire. Delicately detailed.</q>
-                  </label>
-                </div>
-                <div className="team-member-image">
-                  <label className="team-member-info-top">
-                    Yogantar <span className="text-right">Artist</span>
-                  </label>
-                  <img alt="Yogantar" src={Yogantar} />
-                  <label className="team-member-info-bottom">
-                    <q>
-                      He sees, He makes, He thinks, He creates. No world is too
-                      far.
-                    </q>
-                  </label>
-                </div>
-                <div className="team-member-image">
-                  <label className="team-member-info-top">
-                    Wallace <span className="text-right">Collab Chief</span>
-                  </label>
-                  <img alt="Wallace" src={Wallace} />
-                  <label className="team-member-info-bottom">
-                    <q>Master Negotiator, One handshake is all it takes.</q>
-                  </label>
-                </div>
-                <div className="team-member-image">
-                  <label className="team-member-info-top">
-                    Vamshi <span className="text-right">Front-end Dev</span>
-                  </label>
-                  <img alt="Dev1" src={Dev1} />
-                  <label className="team-member-info-bottom">
-                    <q>Skillful savant. Code is art.</q>
-                  </label>
-                </div>
-                <div className="team-member-image">
-                  <label className="team-member-info-top">
-                    Bhargav <span className="text-right">Back-end Dev</span>
-                  </label>
-                  <img alt="Dev2" src={Dev2} />
-                  <label className="team-member-info-bottom">
-                    <q>Code Whizz. The magic happens at the back.</q>
-                  </label>
-                </div>
-              </Carousel>
-            </div>
-          )}
-          {showAlphaRoom && !showTeamRoom && !showStakeRoom && !logoAlphaLoading && !logoLoading && !showMobileDoor && (
-            <div className="Backdrop-other">
-              <div
-                className="alpha-room-phil-one"
-                onClick={openFirstPhilAlphaRoom}
-              >
-                <div className="smaller-alpha-updates">
-                  <label className="typing-text story-line">The Story</label>
-                </div>
+            {isMobile && menuOpen && (
+              <div className="cheeseburger-menu">
+                <MenuContent closeCallback={closeMenu} />
               </div>
-            </div>
-          )}
-          {!showAlphaRoom && !showTeamRoom && showStakeRoom && !logoAlphaLoading && !logoLoading && !showMobileDoor && (
-            <div className="">
-              {!isMobile && <a href="/raffles" className="raffle-cave"></a>}
-              {!isMobile && <div className="token-swapping" onClick={openTokenSwapping}></div>}
-              {!isMobile && 
-              <div className="staking-portal">
-                <div className="staking-portal-parent"></div>
-                <div className="adventure-staking-div"></div>
-                <a href="/fixed-staking" className="fixed-staking-div"></a>
+            )}
+            {showTeamRoom && showTeamInfo && teamInfoMember === 1 && (
+              <div className="mesage-container-team">
+                <label className="message-container-label-small">
+                  <b>Gabriel</b>
+                  <br />
+                  <i>NFT artist</i>
+                  <br />
+                  Artist Extraordinaire. Delicately detailed.
+                </label>
               </div>
-              }
-              {isMobile && 
-              <div className="pull-left full-width">
+            )}
+            {showTeamRoom && showTeamInfo && teamInfoMember === 2 && (
+              <div className="mesage-container-team">
+                <label className="message-container-label-small">
+                  <b>Yogantar</b>
+                  <br />
+                  <i>Artist</i>
+                  <br />
+                  He sees, He makes, He thinks, He creates. No world is too far.
+                </label>
+              </div>
+            )}
+            {showTeamRoom && showTeamInfo && teamInfoMember === 3 && (
+              <div className="mesage-container-team">
+                <label className="message-container-label-small">
+                  <b>Wallace</b>
+                  <br />
+                  <i>Collab Chief</i>
+                  <br />
+                  Master Negotiator, One handshake is all it takes.
+                </label>
+              </div>
+            )}
+            {showTeamRoom && showTeamInfo && teamInfoMember === 4 && (
+              <div className="mesage-container-team">
+                <label className="message-container-label-small">
+                  <b>Vamshi</b>
+                  <br />
+                  <i>Front-end Dev</i>
+                  <br />
+                  Skillful savant. Code is art.
+                </label>
+              </div>
+            )}
+            {showTeamRoom && showTeamInfo && teamInfoMember === 5 && (
+              <div className="mesage-container-team">
+                <label className="message-container-label-small">
+                  <b>Bhargav</b>
+                  <br />
+                  <i>Back-end Dev</i>
+                  <br />
+                  Code Whizz. The magic happens at the back.
+                </label>
+              </div>
+            )}
+            {showTeamRoom && showTeamInfo && teamInfoMember === 6 && (
+              <div className="mesage-container-team">
+                <label className="message-container-label-small">
+                  <b>Walter</b>
+                  <br />
+                  <i>CEO</i>
+                  <br />
+                  Eyes all around. <span className="strikethrough">
+                    Sex
+                  </span>{" "}
+                  Genius Sells.
+                </label>
+              </div>
+            )}
+            {showTeamRoom && showTeamInfo && teamInfoMember === 7 && (
+              <div className="mesage-container-team">
+                <label className="message-container-label-small">
+                  <b>Kaizer</b>
+                  <br />
+                  <i>CMO</i>
+                  <br />
+                  The one holding all the cards. Shh…
+                </label>
+              </div>
+            )}
+            {showTeamRoom && showTeamInfo && teamInfoMember === 8 && (
+              <div className="mesage-container-team">
+                <label className="message-container-label-small">
+                  <b>Sashi</b>
+                  <br />
+                  <i>COO</i>
+                  <br />
+                  King of discord. No bullshit, only work.
+                </label>
+              </div>
+            )}
+            {showTeamRoom && isMobile && !showMobileDoor && (
+              <div className="team-member-div">
                 <Carousel responsive={responsive}>
                   <div className="team-member-image">
-                    <img alt="Walter" src={TokenSwapMobile} />
-                    <div onClick={openTokenSwapping} className="opening-feature-room-token-swap-mobile"></div>
+                    <label className="team-member-info-top">
+                      Walter <span className="text-right">CEO</span>
+                    </label>
+                    <img alt="Walter" src={Walter} />
+                    <label className="team-member-info-bottom">
+                      <q>
+                        Eyes all around.{" "}
+                        <span className="strikethrough">Sex</span> Genius Sells.
+                      </q>
+                    </label>
                   </div>
                   <div className="team-member-image">
-                    <img alt="kaizer" src={StakingMobile} />
-                    <div className="opening-feature-room-staking-mobile"></div>
+                    <label className="team-member-info-top">
+                      Kaizer <span className="text-right">CMO</span>
+                    </label>
+                    <img alt="kaizer" src={Kaizer} />
+                    <label className="team-member-info-bottom">
+                      <q>The one holding all the cards. Shh…</q>
+                    </label>
                   </div>
                   <div className="team-member-image">
-                    <img alt="Sashi" src={RaffleCave} />
-                    <div className="opening-feature-room-raffle-cave-mobile"></div>
+                    <label className="team-member-info-top">
+                      Sashi <span className="text-right">COO</span>
+                    </label>
+                    <img alt="Sashi" src={Sashi} />
+                    <label className="team-member-info-bottom">
+                      <q>King of discord. No bullshit, only work.</q>
+                    </label>
+                  </div>
+                  <div className="team-member-image">
+                    <label className="team-member-info-top">
+                      Gabriel <span className="text-right">NFT artist</span>
+                    </label>
+                    <img alt="Gabriel" src={Gabriel} />
+                    <label className="team-member-info-bottom">
+                      <q>Artist Extraordinaire. Delicately detailed.</q>
+                    </label>
+                  </div>
+                  <div className="team-member-image">
+                    <label className="team-member-info-top">
+                      Yogantar <span className="text-right">Artist</span>
+                    </label>
+                    <img alt="Yogantar" src={Yogantar} />
+                    <label className="team-member-info-bottom">
+                      <q>
+                        He sees, He makes, He thinks, He creates. No world is
+                        too far.
+                      </q>
+                    </label>
+                  </div>
+                  <div className="team-member-image">
+                    <label className="team-member-info-top">
+                      Wallace <span className="text-right">Collab Chief</span>
+                    </label>
+                    <img alt="Wallace" src={Wallace} />
+                    <label className="team-member-info-bottom">
+                      <q>Master Negotiator, One handshake is all it takes.</q>
+                    </label>
+                  </div>
+                  <div className="team-member-image">
+                    <label className="team-member-info-top">
+                      Vamshi <span className="text-right">Front-end Dev</span>
+                    </label>
+                    <img alt="Dev1" src={Dev1} />
+                    <label className="team-member-info-bottom">
+                      <q>Skillful savant. Code is art.</q>
+                    </label>
+                  </div>
+                  <div className="team-member-image">
+                    <label className="team-member-info-top">
+                      Bhargav <span className="text-right">Back-end Dev</span>
+                    </label>
+                    <img alt="Dev2" src={Dev2} />
+                    <label className="team-member-info-bottom">
+                      <q>Code Whizz. The magic happens at the back.</q>
+                    </label>
                   </div>
                 </Carousel>
               </div>
-              }
-              {!wallet.connected &&
-              <div className="staking-room-six">
-                <WalletDialogButton className="Connect-Wallet-btn" onClick={() => openAlphaRoom('stake')}>
-                  Connect Wallet
-                </WalletDialogButton>
-              </div> 
-              }
-            </div>
-          )}
-          {showTokenSwapping && (
-            <div className="Backdrop-other">
-              <div className="fixed-staking-main-bg">
-                <div className="pull-left full-width">
-                  {!isMobile && <img src={CloseAlpha} onClick={closeTokenSwapping} className="swap-close-logo" alt="" />}
-                  <div className="swapping-process-parent">
-                    <AlphaTokenSwap></AlphaTokenSwap>
+            )}
+            {showAlphaRoom &&
+              !showTeamRoom &&
+              !showStakeRoom &&
+              !logoAlphaLoading &&
+              !logoLoading &&
+              !showMobileDoor && (
+                <div className="Backdrop-other">
+                  <div
+                    className="alpha-room-phil-one"
+                    onClick={openFirstPhilAlphaRoom}
+                  >
+                    <div className="smaller-alpha-updates">
+                      <label className="typing-text story-line">
+                        The Story
+                      </label>
+                    </div>
                   </div>
-                </div> 
-              </div>
-            </div>
-          )}
-          {showStaking && (
-            <div className="Backdrop-other-mint">
-              <OutsideClickHandler onOutsideClick={closeStaking}>
-                <div className="stake-room-opened">
-                  <img className="stake-close-image" onClick={closeStaking} src={Close} />
-                  {nftStakeStep == 0 && 
-                  <div className="pull-left full-width full-height">
-                      <div className="stake-room-header">
-                        <h2>NFT Selection</h2>
-                      </div>
-                      <div className="nft-parent-div">
-                        {nfts && nfts.length > 0 && nfts.map(function (item:any, i:any) {
-                          return (
-                            <div className="nft-div" style={{borderColor: stakedNft == item ? "white": "transparent"}} onClick={() => setStakedNft(item)}>
-                              <img src={item.link} />
-                              {/* <label>{item.name}</label> */}
-                            </div>
-                          );
-                        })}
-                      </div>
-                      {stakedNft && 
-                      <div className="stake-button-div"> 
-                        <button className="nft-select-button" onClick={nextStepStake}>Next</button>
-                      </div>
-                      }
-                  </div>
-                  }
-                  {nftStakeStep == 1 && 
-                  <div className="pull-left full-width full-height">
-                      <div className="nft-deal-div">
-                        <h2 className="deal-finalizing-text">Finalizing the Deal</h2>
-                      </div>
-                  </div>
-                  }
-                  {nftStakeStep == 2 && 
-                  <div className="pull-left full-width full-height">
-                      <div className="nft-parent-div">
-                        <h2 className="stake-congrats-header">Congratulations !!!</h2>
-                        <label className="stake-congrats-text">Your {stakedNft.name} has been<br/>successfully staked in<br/>{stakedCity}</label>
-                      </div>
-                  </div>
-                  }
                 </div>
-              </OutsideClickHandler>
-            </div>
-          )}
-          
-          {/* {showStakeDashboard && (
+              )}
+            {!showAlphaRoom &&
+              !showTeamRoom &&
+              showStakeRoom &&
+              !logoAlphaLoading &&
+              !logoLoading &&
+              !showMobileDoor && (
+                <div className="">
+                  {!isMobile && <a href="/raffles" className="raffle-cave"></a>}
+                  {!isMobile && (
+                    <div
+                      className="token-swapping"
+                      onClick={openTokenSwapping}
+                    ></div>
+                  )}
+                  {!isMobile && (
+                    <div className="staking-portal">
+                      <div className="staking-portal-parent"></div>
+                      <div className="adventure-staking-div"></div>
+                      <a
+                        href="/fixed-staking"
+                        className="fixed-staking-div"
+                      ></a>
+                    </div>
+                  )}
+                  {isMobile && (
+                    <div className="pull-left full-width">
+                      <Carousel responsive={responsive}>
+                        <div className="team-member-image">
+                          <img alt="Walter" src={TokenSwapMobile} />
+                          <div
+                            onClick={openTokenSwapping}
+                            className="opening-feature-room-token-swap-mobile"
+                          ></div>
+                        </div>
+                        <div className="team-member-image">
+                          <img alt="kaizer" src={StakingMobile} />
+                          <div className="opening-feature-room-staking-mobile"></div>
+                        </div>
+                        <div className="team-member-image">
+                          <img alt="Sashi" src={RaffleCave} />
+                          <div className="opening-feature-room-raffle-cave-mobile"></div>
+                        </div>
+                      </Carousel>
+                    </div>
+                  )}
+                  {!wallet.connected && (
+                    <div className="staking-room-six">
+                      <WalletDialogButton
+                        className="Connect-Wallet-btn"
+                        onClick={() => openAlphaRoom("stake")}
+                      >
+                        Connect Wallet
+                      </WalletDialogButton>
+                    </div>
+                  )}
+                </div>
+              )}
+            {showTokenSwapping && (
+              <div className="Backdrop-other">
+                <div className="fixed-staking-main-bg">
+                  <div className="pull-left full-width">
+                    {!isMobile && (
+                      <img
+                        src={CloseAlpha}
+                        onClick={closeTokenSwapping}
+                        className="swap-close-logo"
+                        alt=""
+                      />
+                    )}
+                    <div className="swapping-process-parent">
+                      <AlphaTokenSwap></AlphaTokenSwap>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            {showStaking && (
+              <div className="Backdrop-other-mint">
+                <OutsideClickHandler onOutsideClick={closeStaking}>
+                  <div className="stake-room-opened">
+                    <img
+                      className="stake-close-image"
+                      onClick={closeStaking}
+                      src={Close}
+                    />
+                    {nftStakeStep == 0 && (
+                      <div className="pull-left full-width full-height">
+                        <div className="stake-room-header">
+                          <h2>NFT Selection</h2>
+                        </div>
+                        <div className="nft-parent-div">
+                          {nfts &&
+                            nfts.length > 0 &&
+                            nfts.map(function (item: any, i: any) {
+                              return (
+                                <div
+                                  className="nft-div"
+                                  style={{
+                                    borderColor:
+                                      stakedNft == item
+                                        ? "white"
+                                        : "transparent",
+                                  }}
+                                  onClick={() => setStakedNft(item)}
+                                >
+                                  <img src={item.link} />
+                                  {/* <label>{item.name}</label> */}
+                                </div>
+                              );
+                            })}
+                        </div>
+                        {stakedNft && (
+                          <div className="stake-button-div">
+                            <button
+                              className="nft-select-button"
+                              onClick={nextStepStake}
+                            >
+                              Next
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    {nftStakeStep == 1 && (
+                      <div className="pull-left full-width full-height">
+                        <div className="nft-deal-div">
+                          <h2 className="deal-finalizing-text">
+                            Finalizing the Deal
+                          </h2>
+                        </div>
+                      </div>
+                    )}
+                    {nftStakeStep == 2 && (
+                      <div className="pull-left full-width full-height">
+                        <div className="nft-parent-div">
+                          <h2 className="stake-congrats-header">
+                            Congratulations !!!
+                          </h2>
+                          <label className="stake-congrats-text">
+                            Your {stakedNft.name} has been
+                            <br />
+                            successfully staked in
+                            <br />
+                            {stakedCity}
+                          </label>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </OutsideClickHandler>
+              </div>
+            )}
+
+            {/* {showStakeDashboard && (
             <div className="Backdrop-other-mint">
               <OutsideClickHandler onOutsideClick={() => setShowStakeDashboard(false)}>
                 <div className="stake-room-opened">
@@ -2603,48 +2824,50 @@ const Home = () => {
               </OutsideClickHandler>
             </div>
           )} */}
-          {showFirstPhil && (
-            <div className="Backdrop-other">
-              <OutsideClickHandler onOutsideClick={closeAlphaUpdates}>
-                <div className="alpha-holo">
-                  <div className="alpha-holo-updates" id="alpha-scroll">
-                    <img
-                      alt="Story-background"
-                      src={AlphaScroll}
-                      className="alpha-scroll-icon"
-                      onClick={scrollStory}
-                    />
-                    <label className="typing-text">
-                      In the year 6969, a gang of 4 kids, led by their leader
-                      Jesse, venture out into the wild post-apocalyptic cyberpunk
-                      world of Alphazex, traveling through various cities,
-                      meandering through multiple adventures, just to answer a
-                      single question...
-                    </label>
-                    <label className="typing-text m-t-15">
-                      Throughout the world of Alphazex, there is only one
-                      safeplace, one haven for Jesse and his friends. It's the
-                      Alpha hood.{" "}
-                    </label>
-                    <label className="typing-text m-t-15">
-                      Originally, what was one of the biggest laboratories in the
-                      world for AI research, Alpha Labs was destroyed in the world
-                      wars that kept on occurring, The not-so-okay wars, the Creck
-                      wars, the cult vs tribe wars, and the once grand building of
-                      Alpha Labs was destroyed, or that's what people thought.
-                    </label>
-                    <label className="typing-text m-t-15">
-                      Goverments and rulers came and went, and even though the
-                      existence of autonomous organizations was banned, one group
-                      thrived in the ruins of the same building that was thought
-                      to not exist. This organisation was, Secret Alpha.
-                    </label>
+            {showFirstPhil && (
+              <div className="Backdrop-other">
+                <OutsideClickHandler onOutsideClick={closeAlphaUpdates}>
+                  <div className="alpha-holo">
+                    <div className="alpha-holo-updates" id="alpha-scroll">
+                      <img
+                        alt="Story-background"
+                        src={AlphaScroll}
+                        className="alpha-scroll-icon"
+                        onClick={scrollStory}
+                      />
+                      <label className="typing-text">
+                        In the year 6969, a gang of 4 kids, led by their leader
+                        Jesse, venture out into the wild post-apocalyptic
+                        cyberpunk world of Alphazex, traveling through various
+                        cities, meandering through multiple adventures, just to
+                        answer a single question...
+                      </label>
+                      <label className="typing-text m-t-15">
+                        Throughout the world of Alphazex, there is only one
+                        safeplace, one haven for Jesse and his friends. It's the
+                        Alpha hood.{" "}
+                      </label>
+                      <label className="typing-text m-t-15">
+                        Originally, what was one of the biggest laboratories in
+                        the world for AI research, Alpha Labs was destroyed in
+                        the world wars that kept on occurring, The not-so-okay
+                        wars, the Creck wars, the cult vs tribe wars, and the
+                        once grand building of Alpha Labs was destroyed, or
+                        that's what people thought.
+                      </label>
+                      <label className="typing-text m-t-15">
+                        Goverments and rulers came and went, and even though the
+                        existence of autonomous organizations was banned, one
+                        group thrived in the ruins of the same building that was
+                        thought to not exist. This organisation was, Secret
+                        Alpha.
+                      </label>
+                    </div>
                   </div>
-                </div>
-              </OutsideClickHandler>
-            </div>
-          )}
-          {/* {showWhitelist && 
+                </OutsideClickHandler>
+              </div>
+            )}
+            {/* {showWhitelist && 
           <div>
             <div className="Backdrop-other-mint">
               <OutsideClickHandler onOutsideClick={closeUpdates}>
@@ -2669,21 +2892,23 @@ const Home = () => {
               </OutsideClickHandler>
             </div>
           </div>} */}
-          {showFarming && (
-            <div className="Backdrop-other-mint">
-              <OutsideClickHandler onOutsideClick={() =>closeFarming()}>
-                {wallet.connected && 
-                <div className="bigger-holo">
-                  <div className="stake-room-farm">
-                    <div className="gen-dashboard-scroller">
-                      {/* <CreateFungibleToken/> */}
-                      {/* <UpdateTokenMetadata/> */}
-                      {/* <CreateTokenMetadata/> */}
-                      {/* <CreateSwapRegistry/> */}
-                      {/* <TransferOutTokensToPot/> */}
-                      <StartStakePool/>
-                      <AddToBankWhitelist/>
-                      {/* <div className="gen-farm-stats">
+            {showFarming && (
+              <div className="Backdrop-other-mint">
+                <OutsideClickHandler onOutsideClick={() => closeFarming()}>
+                  {wallet.connected && (
+                    <div className="bigger-holo">
+                      <div className="stake-room-farm">
+                        <div className="gen-dashboard-scroller">
+                          {/* <CreateFungibleToken/> */}
+                          {/* <UpdateTokenMetadata/> */}
+                          {/* <CreateTokenMetadata/> */}
+                          {/* <CreateSwapRegistry/> */}
+                          {/* <TransferOutTokensToPot/> */}
+                          {/* <GetNftsbyOwnerAndCollection /> */}
+                          <GetURIOfNFTs />
+                          <StartStakePool />
+                          <AddToBankWhitelist />
+                          {/* <div className="gen-farm-stats">
                         <div className="gen-farm-stats-left">
                           <input className="authorize-funder-reward-input" placeholder="NFT Mint" value={nftMint} onChange={event => setNftMint(event.target.value)} />
                         </div>
@@ -2691,51 +2916,58 @@ const Home = () => {
                           <button className="Inside-Farm-btn" onClick={addRaritiesToBank}>Add Rarities to Bank</button>
                         </div> 
                       </div>*/}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                }
-                {!wallet.connected &&
-                <div className="bigger-holo">
-                  <div className="holo-updates">
-                    <div className="mint-inside-div">
-                      <WalletDialogButton className="Connect-Wallet-btn">
-                        Connect Wallet
-                      </WalletDialogButton>
+                  )}
+                  {!wallet.connected && (
+                    <div className="bigger-holo">
+                      <div className="holo-updates">
+                        <div className="mint-inside-div">
+                          <WalletDialogButton className="Connect-Wallet-btn">
+                            Connect Wallet
+                          </WalletDialogButton>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                }
-              </OutsideClickHandler>
-            </div>
-          )}
-          {!logoLoading && logoAlphaLoading && (
-            <div className="logo-loader-parent-alpha">
-              <img alt="Alpha-logo" src={LogoWhite} className="pulse-animation" />
-            </div>
-          )}
-        </div>
-        <Snackbar
-          className="snack-bar"
-          open={alertState.open}
-          autoHideDuration={6000}
-          onClose={() => setAlertState({ ...alertState, open: false })}
-        >
-          <Alert
-            className="bold"
+                  )}
+                </OutsideClickHandler>
+              </div>
+            )}
+            {!logoLoading && logoAlphaLoading && (
+              <div className="logo-loader-parent-alpha">
+                <img
+                  alt="Alpha-logo"
+                  src={LogoWhite}
+                  className="pulse-animation"
+                />
+              </div>
+            )}
+          </div>
+          <Snackbar
+            className="snack-bar"
+            open={alertState.open}
+            autoHideDuration={6000}
             onClose={() => setAlertState({ ...alertState, open: false })}
-            severity={alertState.severity}
           >
-            {alertState.message}
-          </Alert>
-        </Snackbar>
+            <Alert
+              className="bold"
+              onClose={() => setAlertState({ ...alertState, open: false })}
+              severity={alertState.severity}
+            >
+              {alertState.message}
+            </Alert>
+          </Snackbar>
         </div>
-      }
-      {(!wallet || !wallet.connected) &&  
-        <WalletDialogButton className="Connect-Wallet-btn" onClick={() => openAlphaRoom('stake')}>
+      )}
+      {(!wallet || !wallet.connected) && (
+        <WalletDialogButton
+          className="Connect-Wallet-btn"
+          onClick={() => openAlphaRoom("stake")}
+        >
           Connect Wallet
         </WalletDialogButton>
-      }
+      )}
     </div>
   );
 };

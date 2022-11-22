@@ -1,0 +1,1998 @@
+[
+  {
+    "mintAddress": "HPKcDq3HmkwH1Rc1GYXuUvkhiWZYqbqAwoz11WWv3LtR",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/302.json"
+  },
+  {
+    "mintAddress": "D8RMvrET8awtF3ZStFewKQSMGVcAMHq35mEx7Nsk42vR",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "Aut3M4Ztg23f4td7tPrJjEiDTHA6C3GrZ82oGBRunk66",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/455.json"
+  },
+  {
+    "mintAddress": "2FUn7ud6aXwGqZUX1Ny7TbXCQ6sp64HDNR1iP78Q2VP8",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "3PevRUAUNFacZ3Uy3cyRtPnbMw6rt1sATHt1eidGiZkE",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/33.json"
+  },
+  {
+    "mintAddress": "ErbWpG3yG6QxbXakBfke6B5Ndgv6Hg4nsn4ZX4ZcHAAC",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "6uA8dxeyzWe4kLgt4q73hCgQLCSDb44rffoPDHK63rkR",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/339.json"
+  },
+  {
+    "mintAddress": "DpGPfXYVUj6t8t57Ukhr7Mhhynv1tH8xMGMS2eNnmqp8",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "6mfjFQFMDuHMWSEyhJCkkaPoTGfN2bxLiRihcGp7UhDB",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/332.json"
+  },
+  {
+    "mintAddress": "8NCuqDocP2RrA7NzDkEovhyNSweRAWHyf3jJ7fRhCwGB",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/92.json"
+  },
+  {
+    "mintAddress": "94rQRfpHmKturJuQzhM6PgJpqK1p877cJ2iKwjUYk3x3",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "ARotUkzPNmPDrC3UonJG9V19wD7EzeNBjg5kKFNYMCK",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "Dq2LGS2oqqsHssRdeqFGDZXaJdASJNEek7A8zNnisrLx",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "DVXECBgGqimYRDW1ifCHP2d4WA5PyKhKBPRYxoirAGwp",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/340.json"
+  },
+  {
+    "mintAddress": "BHrPahwsi3n4TVtFYzFoGwrZ1pEse8kPo9pNodvBiWJ4",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "CPQDhYQw6EKVrXBWqmoPDX2hbLaeiLrgo8zpEW8u52oV",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/474.json"
+  },
+  {
+    "mintAddress": "APGS5qf3CHFWYBk8kECKn6n5JaT2yaFpWgy6VrPBi3Qw",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/388.json"
+  },
+  {
+    "mintAddress": "9enUeB99MAxxU2xKaHY33SZvaL5ALCMYnVWxEaCw8qTz",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "EcU2hbn1EfiNN8aE714X9b5aC44crbdJGWhUVyWeYhwC",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "BP8M1hPrnk6T173z1DdNczSJz7YMcn6r1UuCyTPJzgkB",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "C8vyZjSTX1t21SRekYkrw36DCbtDkWBWLN1o7DyrJwNn",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/56.json"
+  },
+  {
+    "mintAddress": "Gp1TqkZA4Y5A91z6RjrrVXcQCkQAsg7J6Mhmv9jYR12S",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/280.json"
+  },
+  {
+    "mintAddress": "F2yL2jGCLroeaDeS9tHsUBA1yDqtguKbf86NUQ5SraJ6",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/279.json"
+  },
+  {
+    "mintAddress": "8z1XoQZfVk984CDBi6EAKoJDJTvUWAYDzE7jrEV62vae",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/436.json"
+  },
+  {
+    "mintAddress": "8mHmuaJYiYT95M7DJiauhWgh7VWm7bB7Ns9UXozVBZv5",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "A4aWT4XgfYZ3L3bdTjNy8u132k2Hx8ZSngtfM5D2ggpF",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "3L56u43MRgKtsvzohm4n6cdDgQkfwTXFzDFHz1Gjeq3L",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/72.json"
+  },
+  {
+    "mintAddress": "98t3C1mZ6Gum2oJFvgoRJpgnhgUN4aydrqfpRd2wxXT6",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/177.json"
+  },
+  {
+    "mintAddress": "HW65Nq2hpg1jX3sXEqjKbhMH2UNZRHhqfFDjiE8MkXqn",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/87.json"
+  },
+  {
+    "mintAddress": "GBwQ5HE7G9PmrFT5bV7jFF8ZW8ps1RRVJN2dnatp5MCy",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/23.json"
+  },
+  {
+    "mintAddress": "9obbPuaX9Vif4nZcXAE72yvu2mYaay8onrEyHjdxmv96",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/488.json"
+  },
+  {
+    "mintAddress": "FQxMcbKEcXLyvxw6h3L1miMDZRv4xLJDhsxUPRsxAbdL",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/333.json"
+  },
+  {
+    "mintAddress": "7fd468nuJcyK2vyj8qr1F9a5Rv98wpifEUrbgt2Dcow7",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/369.json"
+  },
+  {
+    "mintAddress": "GFnrsxYfcAbeAmAHjJ4sybFNwx1HgAWxwg9Zr4TM6JVE",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "FezgepBrZxLxYms9HnFgjYTNcA8SjSFYsvsSarnsTbW8",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "Dtz7MrPL7sH9mdBPRMxTdXraJgHXgEpHVZASLdfYMjX2",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "9P3B1S32Xg3mtp4bA9Vy8nknsLbZuxeK3vPviFpVAkTZ",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/329.json"
+  },
+  {
+    "mintAddress": "ChUnKXZy8ZRjQN7gHArbBwqu4jk8DCUi8R97VjqnmLDG",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/288.json"
+  },
+  {
+    "mintAddress": "A1LHoGRJ1h5inU1FedmWLbUoVnWV6iapNRoQSb8Y65oi",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/74.json"
+  },
+  {
+    "mintAddress": "FkKSt51EqFRxrBWqw2u76UtDem1cFVc5icowPDCsV1ZV",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/289.json"
+  },
+  {
+    "mintAddress": "2TofbLQjuDvAq1S7xcckpz36QRyiX3B6xHXLBz7YrCS5",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/475.json"
+  },
+  {
+    "mintAddress": "G98F1CWBhdUyhtkAD6xqDs5qnbGARxgxrgmZx31ajJH7",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/53.json"
+  },
+  {
+    "mintAddress": "A5pX6swVHN41dtxTEepAg6v3CA6JdF4gGWT1mLmMDC6h",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/252.json"
+  },
+  {
+    "mintAddress": "25t4JhTXfVsxNst7GwQa6AZ14L1TgBc77qBRSsvrT6Ti",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/273.json"
+  },
+  {
+    "mintAddress": "FYCf3f7ZvcDaQag6D1QhskKnp9iKyn5MBdBJdSQxXAGT",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/409.json"
+  },
+  {
+    "mintAddress": "6TpciAmwhRTHKHZUzapKNQFRzv1H8XwgjwGD2KgdQ3LF",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "6vmTLHDsii8kEss58TpArZ1CY6zwB89bwMq3Nv6xpxHS",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/456.json"
+  },
+  {
+    "mintAddress": "4XUaHVAN91TUJUb7XSjh4NLJkf8Cj7VGt7YAZrCvp7wX",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/223.json"
+  },
+  {
+    "mintAddress": "5Hia3J88citTsZzyzYn1VYWWe2rTJWLBtHZDxPytseaB",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "9ewcuYck8UMaMmse4aCYbhP4QBzRvNWy18uAPdtSCmSm",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "8cH9A5Dp3NHF2T4Xzpb3Z3JuuHV57ztQhc7MMNJBCrWX",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/40.json"
+  },
+  {
+    "mintAddress": "3HWYiEdgwY6KwPYb3XiNeQSqp5qvftsH4TP9obKF848M",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/28.json"
+  },
+  {
+    "mintAddress": "8cNBLY8Y2pbRbsK6v3TKqSHxnVkiqMrKgPedE1JFSmg9",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/443.json"
+  },
+  {
+    "mintAddress": "G3iRAnA2izi7VTG923JZvvxhoSoUnCgYcoLgjUPq4xX8",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/79.json"
+  },
+  {
+    "mintAddress": "456wJrBY2vRY5YCzChhnriMM6YjiSJLMnEyKMvcBqjC5",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "51jHNCRuCV1SXWc94fgpB6btKda7CCgJbE5ipBYZPGWZ",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/343.json"
+  },
+  {
+    "mintAddress": "HfP8gHzagQEFCiyVWyBP1rm2irDm9dcVkddAw287QcY1",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "FkvPKHtaXy4dBAEDNndfE2TxzXXTC2VPwxj9GvRgH2L7",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/356.json"
+  },
+  {
+    "mintAddress": "3A8vAnBQHjZjeFpEJpHZUtvf4qiZiw8zFF7WgsYqpMPx",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/94.json"
+  },
+  {
+    "mintAddress": "Hcf2X4JUbfGL9jhdawrYxvbVEo7JXPMb7U7GMEJqu6HY",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/18.json"
+  },
+  {
+    "mintAddress": "CZWSzHUehomvFn3u21dhFXyboHSCdUo4zNQz7nXDqkLo",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "5rvfL34WyL6hSREA6Y5X8maA3Urgz6gYXyBCG45Xsbfg",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/430.json"
+  },
+  {
+    "mintAddress": "AK7udZFQJdBUaJ6XeF1Qo8TacdhXuQvyNNsVGjfeg9ZQ",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/11.json"
+  },
+  {
+    "mintAddress": "4FzEESN5eC7x7qPhtDySd3xgTcjhKqPv5Rkz3f2x7wNs",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/233.json"
+  },
+  {
+    "mintAddress": "NuC9mYE9EuFswKqdVRYXSBaMdvfzx6h7GtcaepHA9JP",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/290.json"
+  },
+  {
+    "mintAddress": "GUPcKxqfgpJK9R3mk7rYB2jpTYXrAm2LSYvouePNyJeQ",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "BmmUqQ4CVZYCnPdZ41aMdvFGAiKQ2rQZN2dga5TwJnUa",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/476.json"
+  },
+  {
+    "mintAddress": "AgAeCd4AcgeXvbr1Tb7XQ2PytTjVAMtMtURzaCVAkj3W",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "7oDR8A2ag1ycH6p1SqWMbT6KAAW63WcA1qfhVnZuKd8x",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/125.json"
+  },
+  {
+    "mintAddress": "35mPwrwnjsvPSqEKkavkmSXy9ajsoYv6ALsHrqALrhzn",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/187.json"
+  },
+  {
+    "mintAddress": "HrRQVFW7f5t3GjBMcGPwh3o99z3TTMFwnktFveb8iW7e",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/390.json"
+  },
+  {
+    "mintAddress": "Cj26AGHn4KUa3jaFK9k6EGJAdaCqohe5j8v82zB1P16Y",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/305.json"
+  },
+  {
+    "mintAddress": "9kvjLDprLwUmxsHbHomTLfcS1zZD8LT4vMoLD1ezrBfv",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "ArqcZYeydXYgBoZPobGoZZPqDprh8Be6gJ6CQcsBqWtB",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/264.json"
+  },
+  {
+    "mintAddress": "AvD3XJF5tPX76HPshqwGfHAeqbnKAGL22j2DunVaSWiM",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "4QBZFyhHZ6uoE7XejF3j3zCv9CSd2ueTMjno45aejFsT",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/481.json"
+  },
+  {
+    "mintAddress": "HZH3dAvKBfu65icRb8EWgvUJwjsLcktT9BsR6J88b8FV",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "EKTSEdukWEkWaffEGvP1CfH2tHJjij6uvghAPXNWpi94",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/268.json"
+  },
+  {
+    "mintAddress": "8HnmV8K6g9poL6H4N55oWABEjDk8M7whjdSsWSxyXtjo",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "G31xNPFhNe4zswL8YBmtgXKJfKm1nmCrzDG17kMr2YQW",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/282.json"
+  },
+  {
+    "mintAddress": "6WEu581TedguN2q68WXDHDycnpFup8nvSJBhV8emAzQW",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/230.json"
+  },
+  {
+    "mintAddress": "6M4ds6t8zaDGGvVwXKW4w4CfrPzh4LNxwBLZHdHW2X7e",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/311.json"
+  },
+  {
+    "mintAddress": "9WL8r55sA4RU2kSiGE5WGeNif6fayL84RSQCCaRsLAA3",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/344.json"
+  },
+  {
+    "mintAddress": "B4nttxiC3v1XedxEQX8ue5S2Y5WLDnu5k2t98ZGhHG7F",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/180.json"
+  },
+  {
+    "mintAddress": "6L6JuYF9EtaX8yX4HQGifeE6uthKCh62E92PW452k7MJ",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "9C4HAnfbp8jRb2j7gjTHAtc3udKfMp89dErDzN7n6NJp",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/25.json"
+  },
+  {
+    "mintAddress": "2R1pXxe2JmCrN9ezZqX7PoEGtRtSU1yUBAyXzoRT7n2H",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/0.json"
+  },
+  {
+    "mintAddress": "7iAVgHSedGWPvEyLruuj9dwGsuNPax3QJ52iFhodBv1w",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "G18dersppCQ6nDx1iP5pyWFt6SXxHabqw8pCxwB9hr4Y",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "9fz7FcegTk6Y9PoXBqza8uW1ckgc9G6tQdvjtY8fwyUx",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/293.json"
+  },
+  {
+    "mintAddress": "FxY9Kwa6oTYr5ApCnXkjMZ5AuSnwCQK9NGsqWnYoP4sg",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/263.json"
+  },
+  {
+    "mintAddress": "BzcigfFAofsVSLFTj9agRDfSSj8g38LiwAzgJMDs6bcm",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/312.json"
+  },
+  {
+    "mintAddress": "7zganSyUgNDWLpLhBgCvKt8EK4iivap6WNhRgBbQt9eC",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/128.json"
+  },
+  {
+    "mintAddress": "3SjxPULxtWm8FFGYdvQyCFQ1ZnCSEyrPSLC8g712WimV",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "47p6XAex9qYf4G87rGJuqPgRy7hMK8kQgA4bRpruM9jp",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/49.json"
+  },
+  {
+    "mintAddress": "7EpCzSjwLWZxgMXtJqsme4JApXtxwKdFtC5iLqWMcCGQ",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "8dDuDtXDCf8mJaWfShXRgqxenoAccWccUE6hhEiCYNYB",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/91.json"
+  },
+  {
+    "mintAddress": "GHh8v37WvAp9oEgi5JqHo2e1iqe7UduYMnCj3u1SnC73",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/227.json"
+  },
+  {
+    "mintAddress": "6e3kkqryXtpwLtT9f3eJ2NBEoUWKT8cSrAmG1pAMjpLp",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/486.json"
+  },
+  {
+    "mintAddress": "F9Gsod5GX4UzK2eEepSD4E9qRo4feYuQtSGhVZMimPVf",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/188.json"
+  },
+  {
+    "mintAddress": "6JgUnTCUybzQ2e52NvGnrgagqX3UK1Xug5MvdD1VHEWW",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/307.json"
+  },
+  {
+    "mintAddress": "EBujtoKutBYhgwY7zLcf1kDHsBqs9qM9CCJR9hVMRnDv",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/175.json"
+  },
+  {
+    "mintAddress": "Gk8469mfC2iW19DXL4FzXKj9NemCNCzd54LfCt9yQNa2",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "3JnpXVyBqyFZF2zJ95W9kRNkKxrSUs1AoAWs636nJ16T",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/215.json"
+  },
+  {
+    "mintAddress": "4CkzaewdpU6UCt1SnP7PhkRSa2Ks7272Wm8igAT9YWcL",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/102.json"
+  },
+  {
+    "mintAddress": "Go8esYWm5HcqvKwXfbV8V6ghkXy5DMBSnUkUJPwtQbKx",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/174.json"
+  },
+  {
+    "mintAddress": "CnVU4w3Vj9QWgfbecC8q5FySmT95cBg6TimUxRLuoo8S",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/191.json"
+  },
+  {
+    "mintAddress": "CiTJwvzGg5m6vNGMGcrjLDHR3sNFrm2K3FDZTC3exjfR",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/366.json"
+  },
+  {
+    "mintAddress": "9uaN9kvSLm5BiVV1EcfspT9gr79hXLdbjLUX6ujhW6tG",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "2GnLmSL52KRodrCAz95fG5aqvUSkGS7SHRYsS52mdNKW",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "C2Ko9FrtboT4q354CrDzB96NeQ1LqUnvdR3QvBv4jvLw",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/387.json"
+  },
+  {
+    "mintAddress": "4S9TzN6ZfSpJwFYKkGKtxegFnJpormUEamuVQrxSzbQ9",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/244.json"
+  },
+  {
+    "mintAddress": "JgyXQqGRcWZFCZAmrr5DohZfBxUtRQBGFp2Pedqs8bs",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/472.json"
+  },
+  {
+    "mintAddress": "9YmHKi1NJG4axSbCxaVvviptoRJYkeBGoPphQfnyEwXp",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/382.json"
+  },
+  {
+    "mintAddress": "exo7PoJF18SnrBHgEgAQ2gB7c1EBDzCCGbVoYbrqgV9",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/39.json"
+  },
+  {
+    "mintAddress": "6uVxLMSz5gct9CapJzRL9uQdKAVLPJSbKg4TQxmM3tUC",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "7nRJLBqcLpGCESh6oEQhkx7HdUpgLoLo3CL2bozuP1Zp",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/272.json"
+  },
+  {
+    "mintAddress": "6GJjmQfyvQf8RAK2HjEa4HtKh9YQN5iC15sE1yDbr9FB",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/242.json"
+  },
+  {
+    "mintAddress": "2txA3nqMi2BQyorVt3623gkq7G5wgynymJebzsyefiwM",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "8j42fQZk7SSpeZycMpDfHyaxmDjRZHLLPvo9tWJKHAtU",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/359.json"
+  },
+  {
+    "mintAddress": "G9oFrjcTwydWhgGuR8ZswhUEoU6ZSqj916kTjdfJKFoc",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/236.json"
+  },
+  {
+    "mintAddress": "4my67JX9csq4RQ5UN6ogMAz85BokiDVPMzEwp2AGnpWT",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/70.json"
+  },
+  {
+    "mintAddress": "D9cXTQecSxsYVbPaMcEekqVUa4B5h1Zyi6FVBqxFQidp",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "Ebq3REQyVVD1qux8qaPKoqZ2jQkFmtvevb6cw7AAcKca",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/208.json"
+  },
+  {
+    "mintAddress": "3ZdF1LLpfjNg3twR7nvqkHngMMCFF2RiA5ukaA9c67TS",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/26.json"
+  },
+  {
+    "mintAddress": "8SfFncVj5Ty7ENVX1tbk4WRju9sWartzP12LHfFchrQc",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/458.json"
+  },
+  {
+    "mintAddress": "13gp5K6uEmYbymX7n2AXydv12RcK57qdHMcC4xqvJp9K",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "2bYXhX3NhsBsa88B9xJt1WiPGRQzhpur4mfjVTjoS7zv",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "51KyTJmd4upLcqzGRzFtkgkHXPvxDiBjyFjA2JjLRgEs",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "8LCigw2mKAtByXqcWAc9XM49ASFvSJP6t6uFa8N1hHhj",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/150.json"
+  },
+  {
+    "mintAddress": "EEiQhEhrrYJTdJsGmuc6dB7vcpPH1fvEB85EnDLawfZi",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/483.json"
+  },
+  {
+    "mintAddress": "4QTrf4G6yVp8Q6BYzpxhGDad8XxRq13mmhbywtCEWa6j",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "8i3oXDnTuAJ7YTVaRpjvGv4GDgLtSamDfJjBcDKYofFo",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/493.json"
+  },
+  {
+    "mintAddress": "4q7YYRxcyvkZBFaQPeXoDfGk8H2rca28MwaYgc2kxAhn",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/211.json"
+  },
+  {
+    "mintAddress": "4GQBFKTwwsDTyoHmUVSmLqV5dv4v5WKH7nQXn6pNfR6z",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/248.json"
+  },
+  {
+    "mintAddress": "D1EFHgL7syyX96VboQB4Vnsn4rEK7xA7MxbPyP5BQCBu",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/432.json"
+  },
+  {
+    "mintAddress": "Fmg91EaJAZjkb6S7XSBoiu52DXAPGAXgHw3YxiLYVGf7",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/372.json"
+  },
+  {
+    "mintAddress": "ET1e8j7u7E37NgGaEwvwSU78FPKDWVcA5gN1n1QX7aYx",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/402.json"
+  },
+  {
+    "mintAddress": "5Svfvh1RuCu8qDJr4Yxp1A8mT4dWeF2cmUH5jLM4UCaM",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/107.json"
+  },
+  {
+    "mintAddress": "GvfRRdX5VFGFtoCXvdgtNxDeNnjjyGbLMNRG8KavPU5J",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "22FZZc1ParRZRxjWZSxs5w27HDTCWZN3jVTYJVBdJEro",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/57.json"
+  },
+  {
+    "mintAddress": "2FJtjd3bZTGEFJu6rWPHP4bcirSFPKjGFb6kaJ7Svj8z",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "ETZWk5eHYo6zyELBr52JXQ4UHbWWeb4szsM7TyH5CG5n",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/59.json"
+  },
+  {
+    "mintAddress": "H8FrGWBAGf4YCDr1MrGE8qecpYVaTXpDrM2BexSwwfMK",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/250.json"
+  },
+  {
+    "mintAddress": "35R93TPkWzy4jspkpWqyaa9PwBJ8ZrsTf5vhBaHVG9db",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/346.json"
+  },
+  {
+    "mintAddress": "CEJUkSe9wxuxdMHmvFQU3ZJvySh3AN6i2iBFTdE5qxsy",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/370.json"
+  },
+  {
+    "mintAddress": "8H9SmfCt75EtmKdabEaqGFGXMUFpCjDAKoTfRsSrX5pB",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/228.json"
+  },
+  {
+    "mintAddress": "9UVkyR6DUHe3WGCP57Z7kFRDFeP2JtfZpEQgezKGMvcu",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/110.json"
+  },
+  {
+    "mintAddress": "26WEmUMwJDeCZJN4Pddgtz3HJqindo5XH3vHadPHyoBA",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "JAecJm5ScSCKEqwpYjCu6WShCe2Af4s7QPK1D3AfBLUH",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/330.json"
+  },
+  {
+    "mintAddress": "Fy6JJWtdK34nz7yfkYrG46zS21NdfTpuStj6QvRbooZj",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/190.json"
+  },
+  {
+    "mintAddress": "HSKKkFmpTZfsvkhj34Eod1z5QKKK8MWPsbKAwjG8YhT6",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/364.json"
+  },
+  {
+    "mintAddress": "FZ8a9hhBdgLDwwg7dHWezQBGiMg92EVfuQtGM6iNbCDk",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "9j29TSjgHNL718BEF5T3pHVLvaHzyh5FHJDQ84qTfin4",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/204.json"
+  },
+  {
+    "mintAddress": "7E6uLc9ffzwxJKzSqvVsQuUzUvjX5S1iv3P71ZMb377A",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/496.json"
+  },
+  {
+    "mintAddress": "F2t5xEAivPkC331uBauHKoe4DAQoK8tdLCLGTaBu2dfU",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/301.json"
+  },
+  {
+    "mintAddress": "47zNa6dHiVMuwqyTLfrNqbEs1fWgsL41aWWjRnuZbLzo",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "5mGDwnTmngDvgskV2MMrNrwhKi7hCzWLHMiCa3QavAN5",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/303.json"
+  },
+  {
+    "mintAddress": "5sMhyqxNcxgsC8DBkwZX4Hi31asHG6sQsWfHcu9EuWtY",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/29.json"
+  },
+  {
+    "mintAddress": "3pwSLTqkGNoPAGawWHg1Qx1T4eLc7fM5rMe7qrdR967L",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/1.json"
+  },
+  {
+    "mintAddress": "7p2RqoFfTm1PAHvhcFPb3w4qG911ux33XLovbF85PyNQ",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "Eh3MatV9WheixMvUs8i1zhDN1cZK9oJcBkiTJS16Gjgb",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/479.json"
+  },
+  {
+    "mintAddress": "F3XD6AnamCVGVvdiEbg2QxWgL34Ernv7HvNuTbV91Pn5",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/6.json"
+  },
+  {
+    "mintAddress": "GBBmusLgh9afgFfC9J24t5hKHwMJq51F7sQBb4iGC9YE",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/106.json"
+  },
+  {
+    "mintAddress": "9KTyetP8euwzyGpeiJojyZ55zeTnu1uFF8m5wz9ugcX1",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/16.json"
+  },
+  {
+    "mintAddress": "CTvxWf333J9W66YYkrZTj9yEAugEfu4WrUik9NgXmKnM",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/109.json"
+  },
+  {
+    "mintAddress": "Td4coWjCj2RFwGdmichoVcEQud8o1bvuxG31RQxQ3yb",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "F24f9QeTXdJgni7BVZTdhPqupxmHC9ARzy2zcj7vLgxo",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/158.json"
+  },
+  {
+    "mintAddress": "EQU2ZjwAaWhbC3ut46hJERTYweHmBhCJb7Qo4HdRckRJ",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/328.json"
+  },
+  {
+    "mintAddress": "D8v914CqNEhrYcm8jzeXcYa3RjHWC5LCUwGVwH6jbYEx",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/464.json"
+  },
+  {
+    "mintAddress": "BSFF5M11nrydWKXh8ZWm115XDhEvu2mugyZPUh9QWWQX",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "A2He2TFi8B4uhJzQokLhKEiDPSUVP73242udWuJQeyUQ",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/231.json"
+  },
+  {
+    "mintAddress": "GydzQsGb5VeEgbaqpdp1P4TJQKrYZVfMvCPNg1pyxaN",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/398.json"
+  },
+  {
+    "mintAddress": "2V5ywuDGneMMbNd73E9xaHGBidro7NWMjCHc6efv1C7C",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/487.json"
+  },
+  {
+    "mintAddress": "4tYFPdbdf2WDzsaWihMUsY9y1f81shUC9rau9qUh4D8q",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/203.json"
+  },
+  {
+    "mintAddress": "CafwJwzbTTCMz4aV9TMsqtNVk5e9bAT8yv7x4pCp2vVE",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/433.json"
+  },
+  {
+    "mintAddress": "3ErLDV2BNDpST56HNZcpo7W9fLYcnAqMxfc6Uz1Pb8gz",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/127.json"
+  },
+  {
+    "mintAddress": "ESZH1zckCSW3inVxgbKAEWd9o2aXN4rcJXi9NS5ZyMNW",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/246.json"
+  },
+  {
+    "mintAddress": "EnDUUH9S8bUBnSAnT393LiwsxDEAH63sqfbFEhgKnQoT",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/239.json"
+  },
+  {
+    "mintAddress": "6VpXLXNkLEfwbB5KEA7vPVGRWNNBTccxfbU7sVH9xuPd",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/198.json"
+  },
+  {
+    "mintAddress": "An64fyQfTKsjrRYVtUbLRdSU1AAJPKZR8haywsnhAGzB",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/283.json"
+  },
+  {
+    "mintAddress": "93qSd7gfGQWCuB7YbftswUHzhvn98YbE34vpbdkai1rH",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/357.json"
+  },
+  {
+    "mintAddress": "FXGoTBro2naszn5nmdkhrLgS973mT9qaN8nmJBpo2qfn",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/445.json"
+  },
+  {
+    "mintAddress": "7regsQNkbqHGDWqiSoQvB3DiuDtV7rJm7fHJpHHDfZTh",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/435.json"
+  },
+  {
+    "mintAddress": "HosKZWTeipsijEXouK9C91NJqwu3cwQzwaj4TTFf1JUb",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/151.json"
+  },
+  {
+    "mintAddress": "4rt3rcafijsbGkrCfXZtNcE5Ac14FZ9Bd6FHT7RpE5zY",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/360.json"
+  },
+  {
+    "mintAddress": "ErLZy7XnAqMPk7piYwkqfhxk6JToYwyjwTf7MFp9TXA5",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/89.json"
+  },
+  {
+    "mintAddress": "HVERPYPXCRx9SM2k496Kn8Hf7Q47ttcBHxefHcbrUrP2",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "A3cMJdK2t1qVvwYkyKU5TW4jPMH7pPQRmTD8n5Uih6x7",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/338.json"
+  },
+  {
+    "mintAddress": "94XJJiGnj9u6SGDa1wPw6hs9XavZNN9Gbvt9UK9ABJ2p",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/67.json"
+  },
+  {
+    "mintAddress": "H6skKiZaRanHvDqXoiKGrSLcz3GHZXLaCk475F3iXFWx",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "2copZTawZMWu6MHimui1SdaZA5JiwQKw9MWVab5K3goB",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/347.json"
+  },
+  {
+    "mintAddress": "9UTe2CwuxNJVeZQeiFNWHEcKQd4GZ132EccabaddyP15",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/363.json"
+  },
+  {
+    "mintAddress": "EcKADMqabhZus21NKgVozM1QMNF7iaywVQNd6bHkR4U8",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "4kutuGHjJbWCPzZ2dBEYdMt1zDY7BeZEUH1yG4RNKdTn",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "H5w7HVCTSufuJS6nuDkiL6PHBUeKzsivKJvu3WmERN7p",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/427.json"
+  },
+  {
+    "mintAddress": "3WvBkBQSfZdxWyuY3qURdwjREQGREkGX6JZij1mJjuF8",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/84.json"
+  },
+  {
+    "mintAddress": "8Fq1ymTjK2tXQjBBns5bJmXhdJ3bE3WiXxBD4QHYki3F",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "7diKUfsKDMkBqddZrXWYTwDkwUk7aTPVK45CK3BKFCi3",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "EuWKv9K6RriQEVtdww9nvqM8pnJy8devNR384BDj1xM8",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "3tggy85Ek4p2KFwsPCpf6nS2kkEgrFHcJwHNkMvBTjrm",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/60.json"
+  },
+  {
+    "mintAddress": "5agVtCgvy4T3CtpcuH9p5W8nQXicrd5E9MSp2cL44vc9",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/407.json"
+  },
+  {
+    "mintAddress": "A48ghNAS68a1d1TnpDavn9kKiqZD46eCT7CkH5P1NpbQ",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/225.json"
+  },
+  {
+    "mintAddress": "8kpKLACrYeLk9CX6aKKPFqsVEuUNoBuSPb59D1CDSR4N",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/229.json"
+  },
+  {
+    "mintAddress": "62wGRnCEVNn7pMXJkjrxvVvoKyqfDwTEkEvG51CNwDJp",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/320.json"
+  },
+  {
+    "mintAddress": "4RwJ6kT8acjJFx8Vb1kiRJAuS9bDb79zD33xHBCwMDkD",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/237.json"
+  },
+  {
+    "mintAddress": "6CVxsUmJKJXnFJzgSZKa4KvQ7VPTa4ttm1cwCHCwi7eE",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/489.json"
+  },
+  {
+    "mintAddress": "4LGTrwVNHhxe9MJCUqgC85hi2dmH3hv56sxHFEbm9rAY",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/112.json"
+  },
+  {
+    "mintAddress": "EHjmA9jW4vNURW1uXr9e4ckAv7MQt2bvmxda8PT6Q6B7",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "Cj6G2tjx9fZ5Kb279Wzud3Tmdg7gxpVAoEEcWSLqKQi1",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/171.json"
+  },
+  {
+    "mintAddress": "FNfTF6gd1Geo4ioSLCNGmTDT3HVTjR4X5ZiZejW1G96a",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/471.json"
+  },
+  {
+    "mintAddress": "Hsiiomq27t8q9Kw6mnsVhzFNJGG3JMzyeseR4LBy8NYq",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "Gppt3rN26M11rGfheA9g2VoYF6FE9ybNC4gXaPhChf7f",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/367.json"
+  },
+  {
+    "mintAddress": "J6ewRiPXEZAWvj7uBWvn2cWV9Qg1XtSY9P2Ci1LGqc16",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/379.json"
+  },
+  {
+    "mintAddress": "BtYGjUaWsJ4vzpBrrTHsVr2LddJDZTFo8g6gGJdfrb42",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/15.json"
+  },
+  {
+    "mintAddress": "72ZAhqyzLKsHAiXvyJwyoCPytKpyBe2ZNaLYiFDdiJks",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/378.json"
+  },
+  {
+    "mintAddress": "HNENuVrvbhjXTcPxCym9JshGcHanaaAr9FAAYzEf1dHw",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "3jQqBGXBmC87nF5GvefV5jAv7aJMhGz7fKZvWGA7DQdv",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/465.json"
+  },
+  {
+    "mintAddress": "7SVg3YwMZyemTuosVQ3WbxLG4vWXTUTnu7s5A2W3tFAA",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "EDBEwQEtZ1hF9cwvV9kmP5FtuRyan9A86vUu43LLF6ee",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "5fm1KmrcabYyzZQQDYj7RFkQmCv1ZbbUFMmepwJAQvLc",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "5YkrrXFP6qJ8PjGLo36bzgpvJHArkyHhiRLMxz5uNZmG",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/47.json"
+  },
+  {
+    "mintAddress": "5JbTvH71xFXJCV9SpzPUpPkqiiGfMWGJj5Ks2ghh8ddQ",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "JDJGn5KfHceNszP3qoxAZjUFTouHQEGRLN3tEU6sCsy7",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/374.json"
+  },
+  {
+    "mintAddress": "9oPQ5HCQRqxh366f6z6QMCp7c9uwY9UozxtJoq7LoNcw",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/310.json"
+  },
+  {
+    "mintAddress": "AU6LVk5jwH7gYCLwdfQPaUcotogSRY2KbD9NTmNmR9Bc",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "J2khTrNBVZHd1BXhq6sPhGCJ9P56wu5ybMZpfj2WYk4Z",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/352.json"
+  },
+  {
+    "mintAddress": "E2guyDh7t7fcMY8m3og6MBLenYgwWCRkuQFki59gkCFN",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/259.json"
+  },
+  {
+    "mintAddress": "ATryfYFCxy9pA8ypVnrB79pW5rVNvUWUjGjCxy5RqpTm",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "Dtmm33rY1AY5bM15Z31BS43j1Ffx6KwmQSGPnWZrpvqn",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/358.json"
+  },
+  {
+    "mintAddress": "4G2DLTWdgRZLtdQTz4PTR7pgtWtj4oUPEg9qpvzL6c6s",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "A3dgc84wqs1gDrnWyDupA7x1uHNVocEZ9eJBNfrwUUBk",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/287.json"
+  },
+  {
+    "mintAddress": "26Y7YN5eURVgJQosGbe4bS1suDgqCF6bSzsntcdq91TG",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/381.json"
+  },
+  {
+    "mintAddress": "4GnFYUwe3cwnaiKZkkR5CXc3XrTp81WdoCVwYkvRkk2x",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/395.json"
+  },
+  {
+    "mintAddress": "2bQ2U67hDhKLtWWG5HQzG1ZzJfeQnHN2j3KKq14epLKa",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/260.json"
+  },
+  {
+    "mintAddress": "6a6uMrt6hcZbhPbaRe9dPkCQik6eJE1EHua2g81DAhXH",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "7GfmvHJ64qjT6tZbTEmHSu1mud3hw8NWtLUWR6WzAG3q",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/315.json"
+  },
+  {
+    "mintAddress": "38uoSKzuz1pCJrQVoJSn4g7D89Yn3HCc8KJ17K1TboEb",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/86.json"
+  },
+  {
+    "mintAddress": "FecuaKMKf9XqSu5xW7RfQHBsJLsZPQkwVsuuRT2AfQ8H",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "4UZZvexJPyMNjni94suHN3HD2R1nDk6XVCb6EQw8ddvv",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/470.json"
+  },
+  {
+    "mintAddress": "HyKBQScJwz7EY9EM7qbZ21MpSeU39N91p2x444vkiWB1",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/451.json"
+  },
+  {
+    "mintAddress": "9KGNyG98PV1ZTEkeYTZFiUqYWGyQVKoXkCkFK6phCZUQ",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/281.json"
+  },
+  {
+    "mintAddress": "2whKdyLsyjCUqwvKuZ29W8kQzPeirNZMpyKa4SrDREb2",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/251.json"
+  },
+  {
+    "mintAddress": "DSeK7r87NpyVeL4kxNoKq4HTEhCAXjkV1cCQJAoTWkm3",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "DoWTExipmdyXABtRRppoGsTm9n9KbgiwngKbMDhdRih7",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/341.json"
+  },
+  {
+    "mintAddress": "5sszs7ugB8skUxvTrMirJWujTipsXW4arUyJskiLphET",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/345.json"
+  },
+  {
+    "mintAddress": "ArvBo3KZ1M8hDsEJtpjsnJoEXH1s8ytmVPE5MsbiYTx5",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/480.json"
+  },
+  {
+    "mintAddress": "2gjoJcuDcvfZXGeLRkw1ywX2ibWExQYDpJoyVF6Rv5Ym",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "39LVgafQfusXEanm5Uy7ux4wVruD8LDLSaQX8ZQPcPvV",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "9YDtUhmHcdwo6ShbQrS43GiGvLz7bzMXAYNQRrwUadLG",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/145.json"
+  },
+  {
+    "mintAddress": "83bc4GUneaHdoTThUVWxcbGkP9rqSsvapt3HCpTWKa4S",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/383.json"
+  },
+  {
+    "mintAddress": "E2h8GLSRbcpgnefMcDjSTz3rwuJu3qQLzzxpzUgL3jQv",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/183.json"
+  },
+  {
+    "mintAddress": "3eDogw6NqK6JyiGufyQBvHCoKcrEo6Zva5sfcdRDxKwA",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "ExpfADP6Bma22o7D5KZVm88kfU6egdtebcFChxAstmyU",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/337.json"
+  },
+  {
+    "mintAddress": "5v2nYubCKoreBnD168Zb2GT1bjoGAsFyCH9puX13RJ43",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/232.json"
+  },
+  {
+    "mintAddress": "2KtSYtDo85UdfennhkWZLQxGEDUVVxvDpJejx4Eu86iF",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/469.json"
+  },
+  {
+    "mintAddress": "Ejn3FkDeBHU8YWCfKvXjy2A1Gq1Feo3jHzaj85Yiqc7e",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "5wsxrJEVQGY62792gVmnGgRmsee256sfPFZg5f9rDWVz",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/166.json"
+  },
+  {
+    "mintAddress": "Fj41J9s946k6BCDoyjEJLRNvYWKt3cK2auxSo7Ubyc8s",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/393.json"
+  },
+  {
+    "mintAddress": "28JzULGWm7nr6yLY2j9uWg2HG2L6MdNQonLLTLsrLa4g",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/495.json"
+  },
+  {
+    "mintAddress": "CLQ4Nw1D329z12vd2oAtfjBre5ZJzNUC4DAByCusBeu1",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/173.json"
+  },
+  {
+    "mintAddress": "ELAAf3pg7BHaGFrN3Lcwjr6h21UyEDCVW7D3Nhfvybts",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/463.json"
+  },
+  {
+    "mintAddress": "2NFWCrguboksUQrc5H5KB2HXXWTTa7MNDWcmBqQhST6n",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "6dke8nrh2RCuQTQmr98A6UBgj7jqBEmsrX5xXj65ne5m",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/218.json"
+  },
+  {
+    "mintAddress": "FjfnwaAkctup3HCno5giUCgFAKrR2WzotcsQpKK6Ayd5",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/216.json"
+  },
+  {
+    "mintAddress": "5xpyMbbN6yoGg3mPLpasY1svdsLfoNiyzHqTtjUurmsw",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/300.json"
+  },
+  {
+    "mintAddress": "4uBSDhaMmM2JhhZojX2KtQp2ttGiLyDAqiMtSV6fe28J",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/168.json"
+  },
+  {
+    "mintAddress": "5UvhRiYtufrsahz9cmFpXyGTUcFBzZeH2JMHGTbLX4JB",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/222.json"
+  },
+  {
+    "mintAddress": "FNkpwU3MRQEVLM77D18nxceCLHK2NqvC7R4jB51ufYrf",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/202.json"
+  },
+  {
+    "mintAddress": "79sTPS42dTAqoZeQhbKwWobMX2dEPeAXnbL6PRr1o8sG",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/492.json"
+  },
+  {
+    "mintAddress": "93GLm3e5Duk25ByhmbqijaqeTeWtaDmoJN3qqZ1NYVJh",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/219.json"
+  },
+  {
+    "mintAddress": "7syoGeh13FhyCnza4ECaRDB1wfBeLBN2LqdvP7YajNnA",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "8Nq29UuX78wAUQ4fbkpA6A2LPobxhFnZFBNBKeucGzdi",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/27.json"
+  },
+  {
+    "mintAddress": "Gx8TunLPJBSEoZYKqrmXqqZ9e7WmHFKyE6Tqse1etoNF",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/63.json"
+  },
+  {
+    "mintAddress": "7CjcqxCiQRLc9D7d6vDC62KkTVq61vBKPkQ1W4knX3Tr",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "63me524DcscMme3ndsEK3GoLH2CgAgrnkYbUPUvknTwT",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "Gcdap7gJTbn8E2LhJtxyAHgZBCAJjEYi9rULCZXVGF2E",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/206.json"
+  },
+  {
+    "mintAddress": "8r4cG3CjScm5CKpJTRLSBkpiZQ121e36zv4yHhLuDZvh",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "GzebPznzCzS46Nhg4difecuBKZxnykH4nZSf21kmZSpz",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "3hTMTScgL1CtUmDVdu6CMQPr2ufoZaWzertUyd58wXqn",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/277.json"
+  },
+  {
+    "mintAddress": "9M8i9zCcjd8T8q4eTTL8HYbER4eCxexRerqeE3D5N3RM",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "5KCsUss1YcoSPrhQ765t6pEDVqvEjJzUiwWadKDdUKVb",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/255.json"
+  },
+  {
+    "mintAddress": "4QL9MNU9SCTgf3UHgqHUPgJvzQkfgE5gqSi5JDygviMj",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/446.json"
+  },
+  {
+    "mintAddress": "4qMoPxs435Q67UHy9SRrAn2EKjMQtadqtoZ3AioALKmj",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/81.json"
+  },
+  {
+    "mintAddress": "6FVXd7uxtkQ9Q8bDWda9gLAG6Fy8wSzrUrT3Gv7AEVvV",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/482.json"
+  },
+  {
+    "mintAddress": "7CZvTxeCbgr68pZFSFm8CqJBC98WMtb1UuPaUqbYRguu",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "G5V41wfqtwAjmUEB58Gqk2uCF6oWap3M5HpuaA4AmpQT",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/68.json"
+  },
+  {
+    "mintAddress": "85gYuw8RyPC8zhRLjCZWo84y5jJrcxnoYwMPmouyRWvD",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/4.json"
+  },
+  {
+    "mintAddress": "4Hb8pycWLknBauHPmCfA5HbkWfoHdgcWHpLcuFsXVERh",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/258.json"
+  },
+  {
+    "mintAddress": "6SFUU1sVsLCGTcT62axMSyL6C27XYCM7ypnwPFGBzQHc",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "634LzSzbbCnWBUGxd7m97rukpM73GaN3MC1G536Daws3",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "7BkDPa7qK6jc8tMBJC9Ku9rM37GSKxxbh9BFyMkWhM7J",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/453.json"
+  },
+  {
+    "mintAddress": "BsxGa3XbybVxCbeZWq17NNHsJzVWZsyeRuDRFsRnoE9C",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/189.json"
+  },
+  {
+    "mintAddress": "3HwHrw3ZHThyu8uxPpjPZyR14LqvHkJriojVfJAr2JAB",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/160.json"
+  },
+  {
+    "mintAddress": "Cod4R9GqyWv7oAvEhpGREieyNjnDk4my8DfTrRfBN4Gj",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/144.json"
+  },
+  {
+    "mintAddress": "HFQ5gatGmBEcQ3cuYbuA7zHZg55D1LW1DvtxYwv6MSGG",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "t6FZiiw1nocY6Z4oc7CzAu2sLGQmWXn9a2aHJkpr4Db",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/82.json"
+  },
+  {
+    "mintAddress": "5H2uE7t2X1iiajVoAkVexYx5S3bqmfEn6QeCNL8ky6pc",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/210.json"
+  },
+  {
+    "mintAddress": "4W5AeZQd9N9MXwd5UrTmpDjUJzKaz1uv4LyPQBQCvs5H",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "ADN5UQEsuLjt35UBHKusCT8TRJC7Z2G4xx6epu2Z5oEs",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/444.json"
+  },
+  {
+    "mintAddress": "3vqEbNivri44nsUrBYgVe5mjaxHvhyDx1s5YwDFHUXr6",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "J4GeBJai6xtVEKEB9MgB8aon3QrGNqhBBnELWX15FXuB",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/238.json"
+  },
+  {
+    "mintAddress": "GEHTY3PJcr7yTBuCQpNfLA9evTwNMpKjT3HXWY826bif",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/137.json"
+  },
+  {
+    "mintAddress": "G8sjbAAtQ2zuGWpphDQWJRC4CXfEW34AJGk2K3rGcWp",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/468.json"
+  },
+  {
+    "mintAddress": "C6p3dRtSebi2y3zXAkGTCdQjbKZGTiM3MDcxiVBJY4fh",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/8.json"
+  },
+  {
+    "mintAddress": "ADMrBSj3LHioZjcGgeKXuWFGzSaFg7m9A5s5xBSNPFXD",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "8a7ribyX1Ci12jjQS6G8coi2YPXS8nDySwcbXiBJgD37",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/10.json"
+  },
+  {
+    "mintAddress": "GLSEP16rRx1bNK2SBLCmNs5RJgF7GvPGpXFyaVRSKvZC",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "5h24dXhzRqboNjVA5AriPfxJgYLn6sqgwEMTXRcUUBY1",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/234.json"
+  },
+  {
+    "mintAddress": "9RhCehPGfeLY72Q8GVxpf5iod26PLUBcq3KFGCGW2U4u",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/405.json"
+  },
+  {
+    "mintAddress": "BsBNPMwKu61Q6oEiKUZWwzJmQT9Jyi8HK893hG6xx7pD",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/113.json"
+  },
+  {
+    "mintAddress": "3mfPjsKREXqHC1fcaYC4mKJN1YKR9wodXULXLCoND2xN",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/306.json"
+  },
+  {
+    "mintAddress": "J7Bnsah6TQqRj5m73WbdnseWp5oJWC15GErbjtni3pmz",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/439.json"
+  },
+  {
+    "mintAddress": "AUH859hC4qjJNxCT5AMcF43Ah5FWSpAa2jsARunE74uJ",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/429.json"
+  },
+  {
+    "mintAddress": "DbXbrfddQKtvNWzMux5pZwbHAJ7hbWS2uqxnzd3VCPy6",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "PF3XUfKSc6HKVqySjA91FmZSxqw6pos5g4mQRSzkQq3",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/414.json"
+  },
+  {
+    "mintAddress": "HgPXe8Pi6pQbqJQsEdu9DuaNhVNPnqq4sWtvHMgqAWA1",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/334.json"
+  },
+  {
+    "mintAddress": "6HZPesrfb3EUUn6wyBFa8RYCu5XSCYLf3x9Lca894egz",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "5gzhqCCwWYQHJeEF8BuznZne39igsrJCU5KkafLUkgU1",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/294.json"
+  },
+  {
+    "mintAddress": "JAphsV5t8jAF6hia4WyHzEPL4WnNr4WbtusmH6HREzd",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/491.json"
+  },
+  {
+    "mintAddress": "EPjbrghmcVDQLMvm5okGXaStRqRvtpJ7yFKfAhMgpv7R",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "xjVx36L1gURvE5HVhejse9ezCMVrEXwbAVhgFSFSqp3",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/419.json"
+  },
+  {
+    "mintAddress": "DN7v44fBy5LaEyLnyPCgWj9hNvjvKLEKUa85Hhh9bWMJ",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/117.json"
+  },
+  {
+    "mintAddress": "3MJNZZ99SogZeWsKodPS7gUDrPXCHWtm8UN6DR2MFwDF",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/457.json"
+  },
+  {
+    "mintAddress": "Hbw1LDGvkcM2Lt3BX7Un4Fe37fxgU7Rv8iB9tBTk94GM",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/193.json"
+  },
+  {
+    "mintAddress": "3SfkDZyotZ38TPWvSN9LEwsg3Hz2kmqCncm3HKnF2x7j",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/362.json"
+  },
+  {
+    "mintAddress": "8cUgibpTo1mUaqDtVvDNFUhLk1y2cSUNKKNpMeZ5VLwd",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/75.json"
+  },
+  {
+    "mintAddress": "B1NoFGUndTaL799N7fkV8feUsx9Pz4JqLqpoUm9ceWN1",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/45.json"
+  },
+  {
+    "mintAddress": "95yYSUMG5xPtEtaxhoobY4R38eCZJK5dYrPEPPWE1faq",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "DeTq9yPCKuzoWQdigke26CUe83Vu5S6BcWQZykuB1paT",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/249.json"
+  },
+  {
+    "mintAddress": "JDzc4gL7kxMBVj9mT9bqMxkn6QPn4Tb92JTrveVL3ABY",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/185.json"
+  },
+  {
+    "mintAddress": "8LnJsQgePeERrHr8PAd1cAuEDfAk4vSQ5fwF36kDTehC",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/319.json"
+  },
+  {
+    "mintAddress": "BqABaNYzNktf64svLEdS7i3bv4CWSsruxnWRQKrRnEUv",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "53jvGi7KqR9PRiq3hndA2vNaZnGNwjKprHrkgqwTqtUX",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/394.json"
+  },
+  {
+    "mintAddress": "Be7aowUG3QMm5taSo3UMGoj4gXs8bNuSrAVtwoyrdRAp",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/410.json"
+  },
+  {
+    "mintAddress": "56mTzarmpNiD4zf2NQWoJCVDrzTP3enpU8eznXq93s4q",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/327.json"
+  },
+  {
+    "mintAddress": "Enu2AiMhuMFwJZqJu6H6WtcctTxHv5QCbZEZCJ7op8po",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/316.json"
+  },
+  {
+    "mintAddress": "85J65mNiUsBQwMFAuUVvw4oJyyWqeGrmxjLNzaEzkno7",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/245.json"
+  },
+  {
+    "mintAddress": "6vC52HRRqg8XXaUN5TZydYcFq1X6bn88KRtL5sXVk9r2",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/452.json"
+  },
+  {
+    "mintAddress": "6XkXchcXiMLhfv8jng3pBUeoch5zTvu1pZLmtyZaEdAr",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/442.json"
+  },
+  {
+    "mintAddress": "i3oFe9v4q2Mv1XT6VaJtjXbjt27BGMZMkZuaCnuahot",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/448.json"
+  },
+  {
+    "mintAddress": "ELRp1J16PWrQbKx2Ts6qnMcWD3iE2r2KitqEXRZtvUJq",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/291.json"
+  },
+  {
+    "mintAddress": "GPVb4WfnEkX2ix74uRnBgU9LhiDEJ7HG67o4kfzKVeur",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/184.json"
+  },
+  {
+    "mintAddress": "8EHMrFPrJtqkqh23RuB22bsQ8pksNGkbAv6itnaPJNXm",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/304.json"
+  },
+  {
+    "mintAddress": "ATkVGG8iHAGVWutBKGNtqj4V8XRst6czxYckaB49jQvr",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/412.json"
+  },
+  {
+    "mintAddress": "HZ2piMVyzxoCXFsL9fXtKYFnVFrXitiQQTAPUKCLgjHj",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "GKVvZBTrZJ3z4hzFmU7d828QdwxaYhtPREvizTvUfbFV",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/422.json"
+  },
+  {
+    "mintAddress": "ETAX4Dyrp1kg1gB1zbsCoDDVziw7QCAWuajiVV2E5RHF",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/276.json"
+  },
+  {
+    "mintAddress": "3yr4BhVADZwNrdsB3TH5FZXzn8ng1S8x5BWxJ4FkLFBN",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/324.json"
+  },
+  {
+    "mintAddress": "DPV7AQwEny2NFhuCe8FgPkF5FknG9j9jezvRGrSdnYXM",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "DpjYXGb7Wk9TrBwBCmWxDBUchdeLLUNLds94TJReK2Do",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/2.json"
+  },
+  {
+    "mintAddress": "EdQqQVidcZar32SDYBBqR9sZ4i5QLGqh3JUehTSvuCbg",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "DmmY1JsXYCLQ4m5Aa1Nn7VBFKVsXVZWjNooi2eBPa6L7",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/323.json"
+  },
+  {
+    "mintAddress": "5XgqBfx3JUnv1wvfEVMa8DKkx8oVhMLaCbivEmLCF4qh",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/354.json"
+  },
+  {
+    "mintAddress": "AsrgiwJCfzS3ov8Cb95sXGkETKNLbvjLM7LWzmh511sm",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/331.json"
+  },
+  {
+    "mintAddress": "7z177ogjg9W6rmdZBb7TAowAQiBKXswSrzuAXG9vtFZX",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "AQJdQNQeDnoCzaRCjkL5SGNkd2YgraNjWuw3p9S2tsjK",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/336.json"
+  },
+  {
+    "mintAddress": "2iwmjXzJbjXoUFNzpsVdmn3jkNtG5dbQ1AwzF21QsCFL",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/224.json"
+  },
+  {
+    "mintAddress": "UKbMpNFC19huioHKVBBA8gzPkFdrhMuBPgYtQYyDNLm",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/269.json"
+  },
+  {
+    "mintAddress": "6kQ4vxRPo8fpMRXi8yoN6zyxt1mT2kSKszxLnF2NejcK",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/267.json"
+  },
+  {
+    "mintAddress": "4GdoWZWYwTkyJM8Ka1BQbPk2u2PUgk1gFrHUaenZFSQX",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/163.json"
+  },
+  {
+    "mintAddress": "7yvyEV3RcrgGhwsxYmzFGS78pu9Z59PQT28b5aUM5uWF",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/353.json"
+  },
+  {
+    "mintAddress": "HUor5N71ZDGMR5DkHdZho6pGKh1EhHGrTGk9NnrdzPY5",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/220.json"
+  },
+  {
+    "mintAddress": "DLMd3293GdpQebXWVy2HzcTUMwxzTX5ZSsDcrermsgNF",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/355.json"
+  },
+  {
+    "mintAddress": "FGmJ7KwtzcLLPpDrchbwSpxmD7xkRv9SN6vmD6qSPCa1",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/416.json"
+  },
+  {
+    "mintAddress": "8KwqGTrJR9ssXjw6GVTe23v3YLK27LXxu1XCHPstY29f",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/172.json"
+  },
+  {
+    "mintAddress": "HZxUtJTMpbejtpBUT1rMxcLGN2q5QoJWsFhv5WD1wdLg",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/243.json"
+  },
+  {
+    "mintAddress": "FSugP87fW4kKqkQXVdg8wWo6T2bHcevJGwSpVkfovrZJ",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "8Fort3vQXxMvGjAMxXWCeuqTgcxXYACLPi3YUbgoHAwk",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "EpBQxXScDa6qYue6u4scwfDePh6cTnRXU6pHG8RPXZsK",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "Hkt7gFYpRiYBD5Yiu81Ysvkh6vqroGcvjXrLg1HvuhTX",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "FPPaKbCffaSAkBCr6BDH4EC1Hq1UrMJd9GJcJjNAfJYF",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/209.json"
+  },
+  {
+    "mintAddress": "9Q32r2CuStcZarcqX651HSedLkgRgjCG74jjhHTAt6hM",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/392.json"
+  },
+  {
+    "mintAddress": "Cm6Kk4LCrKhnjbxRCiu9oVRs2dH3kbuNS1Aadb6S9WQo",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/425.json"
+  },
+  {
+    "mintAddress": "H7DQbwAADxZueZMQArH8CS5okC8wXzR2aLgrD7Y6XwYc",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "FwDhrp5MpqXYGgiasxGJWswRgiGqu6DGT7JjYQYXha3n",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "7SH2xTcDF56XErnG7U5fcCApVdWqStVKQrWdEP35AipM",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/247.json"
+  },
+  {
+    "mintAddress": "7cHwHijuqzufMLzE8Lmzh1c4YD357d79BvdEhacpfMgf",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/214.json"
+  },
+  {
+    "mintAddress": "7568YdLttwFHfuFHXYhzvRYo1s4qKnk34iR6ftf7ns7p",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/32.json"
+  },
+  {
+    "mintAddress": "4zh4Eg1HAT9pVQc16Spy19fKS3Uw9sTHxHvKfcxTziXP",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/473.json"
+  },
+  {
+    "mintAddress": "FQ6H5rxzYg8oiPvpa4ckdSaBcXswY3NpniefD2jpDa7N",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/365.json"
+  },
+  {
+    "mintAddress": "Gicu3MD15VDU6qQHf2ALzGzJ4NmNUoon43JVSiKRuMdL",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/494.json"
+  },
+  {
+    "mintAddress": "4u8pEvqmYdvhe7iCBf4m812XqAfmioTt9pVULYtrL8YN",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/34.json"
+  },
+  {
+    "mintAddress": "EqARnXBU8R1gwkf31UzNxp2EvMQiRM34HgjpneqwNagF",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/371.json"
+  },
+  {
+    "mintAddress": "8aXLpBfmZTkR4JS4HspxtFr764SXPVTNhfBDHboQihqB",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/148.json"
+  },
+  {
+    "mintAddress": "CJd9iwKpPsMZVH6HhA5RugfBpKswRdUKMaRU2XsTFBHj",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "DcWrUkhJ6uvJKFjEX8ewxw1WhBsSAY6QtEN3e9gVT4a",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/101.json"
+  },
+  {
+    "mintAddress": "Benppk5hk2SG4gF2pABTEV21D6ifEDiXXCyzeVdRUKc4",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/99.json"
+  },
+  {
+    "mintAddress": "D5hxugzXgwgbkGmeRBEDPhsvLGom1emR6GvTSdBo666Y",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/162.json"
+  },
+  {
+    "mintAddress": "6YiFK8nzyrVpzipLUHTZ2jDQi2UYTcrmrm2vrnXpTGMk",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/205.json"
+  },
+  {
+    "mintAddress": "HjxrAVdGxecuD8Xi5eimuArm3kQgaPgHe4mxNJgdhVrE",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/178.json"
+  },
+  {
+    "mintAddress": "GYfvHKVehpZ248ESEhyHrGnSBH4RdmKJRbfG7nnVJHUA",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "89oKQppp8UGU5FTXwmF3LLFEaFwby9H7oPojNzjfnx4u",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/217.json"
+  },
+  {
+    "mintAddress": "5ErThDY8R1RNfs49A4715ThVugJH3W7rK66kM4M7Wovg",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/484.json"
+  },
+  {
+    "mintAddress": "7qgh3mciFw5CCUSVVu1BYaQxbhhRZUpV4h4Hrr21cQ5z",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "DfH97Kj9EX1si9ppB3yaiZzaZNWPfVX5NPDaTTtHT7p",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/159.json"
+  },
+  {
+    "mintAddress": "9CjBvaLshmCkRVQe9YWgM6R9bBoScTm8SccdoWLQ1oHU",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/485.json"
+  },
+  {
+    "mintAddress": "GiojR7wZt8nzvkv6ENaxHL795ULhnPSCDnfSVvAMuT98",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/200.json"
+  },
+  {
+    "mintAddress": "CwXWWWjXSJd9Ra3SDGukHJdzn38zgzV7FKTgur4KBo6r",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "2R8jAJPSx7kgpejoHfXu24eZbNyiQJuUF6eYhSctzYF4",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/335.json"
+  },
+  {
+    "mintAddress": "BeH9wXt9XpEP14qJrpKKnXm3a8j1Uvr9awXxFsd9hsaQ",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "AEKKohqzd2ET2GLZyn9JM7RBbXd3YgEqUc1XHPTWVst8",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "CRTXkj1pxjuw3c5YaGqXs9nY6Gpmwf3odSWEmTEDXiMd",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/434.json"
+  },
+  {
+    "mintAddress": "ACiEQdVXDjhw6XkmMidhfSaqAw6DS2eRTwzSMWeVHzEZ",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/431.json"
+  },
+  {
+    "mintAddress": "5NrgtCKeAfydiB5NZ5yEjjNWsNmphVRkydErejeeNVXb",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "2y92vUZMqCKkwsexkEkqq6mFxPKKvd9fCXWsKyoQ5m7Q",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/375.json"
+  },
+  {
+    "mintAddress": "22sKqTrJaj45BNKTac2eN7BqMBou8tBDjUP7fBPzgbkD",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "2xSYjn18MqEbYJ9nWSrdFr2B58DyFGT2NuuH8rGL9abn",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "C1QS35hixrgzWs2DWj51iJzcX6TiUDTB12eEqhx6BgLb",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/380.json"
+  },
+  {
+    "mintAddress": "96UDWoekeBbbZwmYcbBoXCPHh4h4RUhMRmAhovNZwrNV",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/270.json"
+  },
+  {
+    "mintAddress": "5ogKRT4dAQpANHN3wq7xKbxzh7csBa1kK4zFgmsGRX47",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/207.json"
+  },
+  {
+    "mintAddress": "B3ztBYXuzXPBArq9WFgSu2rcJBxQwVTKQ198oNDbTfde",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/440.json"
+  },
+  {
+    "mintAddress": "FWX39SZ5TQNKUDqScudZ9sXkQyRgR9M72RgBxpzh5h2x",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/154.json"
+  },
+  {
+    "mintAddress": "AJkGtpFLLeYEL9MkcR1wZo7DDQMdmhVpAS6X1vpFSspr",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/157.json"
+  },
+  {
+    "mintAddress": "5tRsiAnB2UQPs98HZEEb2sAdBi6tdgqVdNpoy9z8wHJX",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/103.json"
+  },
+  {
+    "mintAddress": "8vXGrTKuFkDvz3MhzYntCbuxRenyciqHHsKBvqms1brh",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/31.json"
+  },
+  {
+    "mintAddress": "DxieptHpMizwcMh7JW5GUDi37VqvtNTKTaisS9nCv1DB",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/96.json"
+  },
+  {
+    "mintAddress": "6cd7wiCUN1cGhuRVupN4PVZqaxGuoh97eooU8Y4QrL94",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/477.json"
+  },
+  {
+    "mintAddress": "Ado5D141Hvb512YEm21Z6BP8aKMQ1oUKfgXXLfZMa5BY",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "BdUNXtzAY3HsLLj1HZEfbJJipt9Qq3KjadquEs41nzMd",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "EwZbPtK3NdiKTumqLKCQUJMMwbfAFN7qjfBH1oKhUU6h",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/438.json"
+  },
+  {
+    "mintAddress": "sej4aZFH9paGsCcHSBwf34ymQEnzEqpPkK8YowQk5eT",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/413.json"
+  },
+  {
+    "mintAddress": "5dtbzc4oSbEEBK3ezLfm9Wkqfjyi8q3oSDDxP11CFqw8",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/298.json"
+  },
+  {
+    "mintAddress": "27jt69S6u6LvXn7CZwWecUSzm6Rzd6Rgvs7tiLWAJAr8",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/368.json"
+  },
+  {
+    "mintAddress": "EsD387X3XBJsCh42hjohrGkZg1MDLuT7P1utS48yMBHa",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/76.json"
+  },
+  {
+    "mintAddress": "G6KTEDBLVyY4fxzoueRBP9CSEeuaxp9AMBz9QJWccCbA",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "GqN7oEuBJ133buQoykvWxMnAeruFXaBfVf8SNmKVzVmk",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/146.json"
+  },
+  {
+    "mintAddress": "HocqnZeJAB4NZyyufqUL7EvTErL6xpz5183iLVDdhRNs",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/254.json"
+  },
+  {
+    "mintAddress": "Pt6zNPKe1ChSjmvEgwEMyag3J2LEbdUNCjMCmf6ZTzu",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "8JbsKXZc9SSHUgpK4YzaD4aP9ozQ34xHhwEkpmFUqVge",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/83.json"
+  },
+  {
+    "mintAddress": "9o8BVcttx8W5hQyEvFjuc58FybSPgd4pazARgvw5gtXc",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/441.json"
+  },
+  {
+    "mintAddress": "DBtVwJrAt7Bq5xW87SgdQMQ2E2SWCs1D4rJ6txrN2DSs",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/420.json"
+  },
+  {
+    "mintAddress": "HGxrKxv68cZqdgFy7QbotwozW2xs8Xtbo1iFp1zahasQ",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/61.json"
+  },
+  {
+    "mintAddress": "E9DctonUFg7JK62eXFdhjvqU1qXdm3Vp2Tar1AKPerxx",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "ER86M5vhfeG3LWCXTs2XkemANm5yedT6g6c98zGM3i8j",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "HZT8CrZaj1e8MgWR3Cx4dzNkuSE7XazezTPYmerkD3p6",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/241.json"
+  },
+  {
+    "mintAddress": "4sFdbcs5ZdNuwEwX8fmi3RSvzpxjoCB8gNaSzTb5oPNR",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/478.json"
+  },
+  {
+    "mintAddress": "64tumwJiBjcLP69x22swrME2z6cfBavVivX112m4B47a",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/169.json"
+  },
+  {
+    "mintAddress": "FDGhj4yJBLkpnzxVD7TNyZExgoGNFZeFyS4yyAdRb4RR",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/265.json"
+  },
+  {
+    "mintAddress": "66JHCiySGBW1iLyZx8powRwBZMkh4x6GmeCTGDiD4iZb",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/490.json"
+  },
+  {
+    "mintAddress": "5gsSMATbV5rDbmJJsazb4ZVzGD3XcMgiiC35X5Sw1HkH",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/186.json"
+  },
+  {
+    "mintAddress": "CxVm57d16EJxZVwCATVezjWTEFYLvhLvNojK6pLSHPMP",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/93.json"
+  },
+  {
+    "mintAddress": "76XA6eUuCHKURi17P7aCKoyV4tw2Uk52XUHJ7kqdc2Uh",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/313.json"
+  },
+  {
+    "mintAddress": "HfxiDAijt58fJBgeVMXVEAzqtcGG8Ji9rUQd5LfiH8zQ",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/256.json"
+  },
+  {
+    "mintAddress": "vrWjM3kYu4hag1HAE42rr3gZ8yfwSGKFJPzknnZkNvM",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/447.json"
+  },
+  {
+    "mintAddress": "E6kpopHmWGaCy2hEYmvrnLn6DDY4vhPr1JtpkgtkHuyt",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/73.json"
+  },
+  {
+    "mintAddress": "6iwZoRoyZWYZJiEZZLHsKR3hnX9MJQvhphXcJwzcThGK",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "EWKfocYtcEjZLMR7p42jJzeYyWGCXSPVfbgXz7pKD7Pv",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/100.json"
+  },
+  {
+    "mintAddress": "GsPXSLUpPSA7AH1kqAQ488jYwJsiBTni8NdxZ94sNr3K",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/13.json"
+  },
+  {
+    "mintAddress": "57TSAqVkWayJUndzWdVSXgkooFyKbMK7Mo95thcWMWjS",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/318.json"
+  },
+  {
+    "mintAddress": "DG9S7t1rBUSMxH8cFWiR3oQ4hTnqGgw7XEL1ofBGrAF1",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/308.json"
+  },
+  {
+    "mintAddress": "FqhbDxQ1CQMWPaZLTPvPjBXfVxgqQMf8WFowFPgJsjRM",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "Cjjd8x4xHe8dWTt4azgUT1mSAtXjqQCFGnSHDLrhdaea",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/44.json"
+  },
+  {
+    "mintAddress": "5F4FNuUD3cT9ojfRwyEdPeMYgxQLB4kmbzaQFFrKJk4Z",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "Buu1hU8i1Xqb8EqCuH4m2SwhRp1DJ3zbWDWJdBF5X4cM",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/342.json"
+  },
+  {
+    "mintAddress": "HrFzJWKzFsn79KhSMvXiMvvg1AeUfaLNFpQHuud4w4M9",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/437.json"
+  },
+  {
+    "mintAddress": "6LHMfKsWbHLvNhX6WWN1otwRkAVkyCMqKdPJxjzVokJP",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/235.json"
+  },
+  {
+    "mintAddress": "G1RXKab7UbfnNbkzytP3tbEgt9viTWqRy6nceeyUkyCZ",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "6GL8KXo6jV1zH6vdCxJtFKSRV9khZA3woSnaFxYJQKB",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/274.json"
+  },
+  {
+    "mintAddress": "EkXHGFLA7gCpBsMYtAXJEbzazyKFq6b4A3UWANivQExn",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "3LHtMap2D9k4khu9bndgRwot12ZWdfyFCvuhMZiA1cTG",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/95.json"
+  },
+  {
+    "mintAddress": "5YFXfj3p2nFeNSe8rYS9Gf8jHzR1mYxJ6FEKkrBehmEg",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/181.json"
+  },
+  {
+    "mintAddress": "3NZm8W6kMDkgtXTVy2qkuV8W56mspwstZHYjT2T2t9yP",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/396.json"
+  },
+  {
+    "mintAddress": "jrAzQTvqchotmMswDtRH7xzMkcebahqLeJop4K8gHMP",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/275.json"
+  },
+  {
+    "mintAddress": "EJGXD9kwLmSeLtzF7FnBVq6BQHLdGVwKg1S4YvahoNeK",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/284.json"
+  },
+  {
+    "mintAddress": "3DevxGH8k2AF3qKLNRBaJFEq8VuBfR36fGXUZRmGTYf3",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "Gn2vxe2dJWbcN1EyB6paQj6Y2J2L3BJv92tBp97QFntt",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/124.json"
+  },
+  {
+    "mintAddress": "AYXxz3mxZvdnG9zk7XyhJm4QkFNYdARHcmsew1YDEnLH",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/201.json"
+  },
+  {
+    "mintAddress": "3Fxuw3nquNWBjME9w3vc4uKaGLjCB7u9d6ESJA99xksK",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/197.json"
+  },
+  {
+    "mintAddress": "CjZPXTNr6XvkUn9gQ1vGVY7yc2Rej1P17a7hrSQ33ek2",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/292.json"
+  },
+  {
+    "mintAddress": "DJ7jz52k6EaCJKe1NuW29CWWYQjgrHGTc3BtRP6i9v1c",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/226.json"
+  },
+  {
+    "mintAddress": "H77snfsP132V7uGAYuVAJymjKfZ8iBWXfUJU37yyQfdz",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/85.json"
+  },
+  {
+    "mintAddress": "2LKFzrk35MvakSAZS8ctywhmvTanaWzaNigUBMETH6pd",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/77.json"
+  },
+  {
+    "mintAddress": "4m2CJRsEkqrekmT49rjMHw9cZZqVyxF4uRPZRYTaBEqN",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/296.json"
+  },
+  {
+    "mintAddress": "2yecrGuUj6ezr9epX39NHpXydxLRhjtofdLAax1gYvVY",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/30.json"
+  },
+  {
+    "mintAddress": "DvSFYGh6gxuRGpP3mpunFnZeUawHzGrAuchtDznGsDPX",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/321.json"
+  },
+  {
+    "mintAddress": "4tD2vjiogFyqFyndgTntM6p1A9eDYKcsZWbiYBVgQBGM",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "F74b1und1m3E9xyDA23qLfCsapMEZioaBy6xRptjF3Ap",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/97.json"
+  },
+  {
+    "mintAddress": "2sCFUufFUXtBM8gAuT2TStQyrDjSv81WEV5H9FQZ6zFt",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/297.json"
+  },
+  {
+    "mintAddress": "7VAo7f5gjGSrx3YAEZvb3kGe2NwuhQHgwLV8jS1jtk9g",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/55.json"
+  },
+  {
+    "mintAddress": "72He9E3PABUyabVcBpjbam9sZHWcbU7VCxuwHXpEcnpw",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/153.json"
+  },
+  {
+    "mintAddress": "7Ht1F54E7Tj49C69vTjEgL88b67EJT2AWRNPeSHQx3Ux",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/78.json"
+  },
+  {
+    "mintAddress": "D8tSmBKF7VLqNt4Adc5z3mURKZAjSbiyqUtYnMcRFALu",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/408.json"
+  },
+  {
+    "mintAddress": "EcFkkBR83cJRYazEp1Z9F57e3RJVM8M7k9UsPPFDHa64",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/286.json"
+  },
+  {
+    "mintAddress": "9A1kHahixSBWooG2cNfjkQWNjUGXuBVVvGQt4Zu9hFZU",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/261.json"
+  },
+  {
+    "mintAddress": "5pF86FuxSni8pe1nEUGLxxrUe5z1SDa86nWERqUDdAb6",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "8o2D2cjFUqgsk8TtHbDt5SRXx9pGvdLfXD73roZJK7Fu",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/213.json"
+  },
+  {
+    "mintAddress": "5Dqa51C5m72tNL4ud2PcMRgJd5rqyBdL6D3igm4tH19B",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/309.json"
+  },
+  {
+    "mintAddress": "8hEove14xCLTm6oK7sP9CZ8HoLofGeF9TRdzauQPWuTV",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/41.json"
+  },
+  {
+    "mintAddress": "BTHRDdB337Dj1ekh8qeBCXTSPdV9hxGmiphWL38coykR",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/361.json"
+  },
+  {
+    "mintAddress": "GXY99XNA1y588joPU3dtJjDnvjg8K6GFzH7HtHWcbHH3",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "3EozerJEJFLmBiwdyXCHZNWccjKhz76n7sSX1LqwrpnC",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/295.json"
+  },
+  {
+    "mintAddress": "9EoebUDevKcMqC6baTLjJbnndUoUksSFoZj8aq3j5eJy",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/462.json"
+  },
+  {
+    "mintAddress": "27aD1zofnrPPMcpAGGFxLZ73FSMsQjKJdppNwcnsdwXo",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/271.json"
+  },
+  {
+    "mintAddress": "3FXdSmvd3GXYhme5DtuqweaqbJwziYuCGTSzqGE54mfD",
+    "uri": "https://shdw-drive.genesysgo.net/G3yrhqrpEXzt7mKaEoNRSeFSsxxBjS1a7BGYzg4VpkGz/invalid.json"
+  },
+  {
+    "mintAddress": "HBW9NLpxSFtmvJ3ECzSEA5DosfQJXXyUfqeU7ZzAZho7",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/199.json"
+  },
+  {
+    "mintAddress": "9DoFwDXTAg66eKkzqR4sTCJDkXWA3o4HoAKz19xtsnRL",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/240.json"
+  },
+  {
+    "mintAddress": "CkSaJxju9L9YMC3TdUr7Ke3TcQB52v4xrdrHcd9FiB9E",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/37.json"
+  },
+  {
+    "mintAddress": "7Qvh8VLNd2Rz9qfbWkbDMjLxtMuPxJtcLxBpiBT12Syw",
+    "uri": "https://shdw-drive.genesysgo.net/8fgVbRSTj8DqidjZ6ahwJktRVjDxKfJSJn5RUupLydSp/253.json"
+  }
+]

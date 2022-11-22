@@ -4588,6 +4588,26 @@ form .button {
   padding-right: 15px;
 }
 
+.unstake-nft-btn {
+  border-width: 0;
+  border-radius: 4px;
+  background-color: #78eefc;
+  cursor: pointer;
+  color: #438482;
+  font-weight: 600;
+  font-size: 12px;
+  margin: 0;
+  font-family: "Ubuntu Mono", monospace;
+  padding: 0;
+  display: inline-block;
+  margin-top: 8px;
+  padding: 6px 10px;
+  /* float: right; */
+  height: 36px;
+  line-height: 22px;
+  box-sizing: border-box;
+}
+
 .nft-select-button {
   border-width: 0;
   border-radius: 4px;

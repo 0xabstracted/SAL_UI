@@ -1,0 +1,3 @@
+metaboss collections migrate  -L missingURI/newSenshiMintList.json --mint-address WEr7RsgmY5ZPX2TMBhmMe3AmWx18sMjNxEfHSh5Ue9
+metaboss mint list --external-metadata-uris missingURI/senshiIdMissingArray.json --receiver SALThRKa8JFD3XoGbLshzg61kaBHFFCeggDH8ydNEaE  --primary-sale-happened
+metaboss mint one --external-metadata-uri https://shdw-drive.genesysgo.net/2GNQauoUQUZRT6vgJSqqFkVe6Bd76P1ZjNxvjcany98V/5.json --receiver SALThRKa8JFD3XoGbLshzg61kaBHFFCeggDH8ydNEaE  --primary-sale-happened
