@@ -903,7 +903,7 @@ const FixedStaking = (props: any) => {
 
   const completeUnstakeFn = async (nft: any) => {
     const transaction = new Transaction();
-    // let wallet_n: any = wallet;
+    let wallet_t: any = wallet;
     // var nft = unstakedNft;
     const provider = new AnchorProvider(connection, wallet_n, {});
     const stakePoolProgram = new Program<STAKE_POOL_TYPES.aplStakePool>(
@@ -1054,7 +1054,7 @@ const FixedStaking = (props: any) => {
             mint,
             claimApprover,
             claimApprover,
-            wallet_n.publicKey
+            wallet_t.publicKey
           )
         );
         // const claimApproverTokenAccountId =
@@ -1126,7 +1126,7 @@ const FixedStaking = (props: any) => {
                 mint,
                 associatedAddressInitAssoc,
                 receiptTokenAccount.owner,
-                wallet_n.publicKey
+                wallet_t.publicKey
               )
             );
           }
@@ -1171,7 +1171,7 @@ const FixedStaking = (props: any) => {
                 mint,
                 associatedAddressIssuerToken,
                 issuer,
-                wallet_n.publicKey
+                wallet_t.publicKey
               )
             );
           }
@@ -1231,7 +1231,7 @@ const FixedStaking = (props: any) => {
             ...remainingAccountsForReturn,
           ],
         });
-      complete_unstake_instructions.push(return_receipt_mint_inst);
+      // complete_unstake_instructions.push(return_receipt_mint_inst);
     }
 
     const associatedAddressStakeEntry =
@@ -1254,7 +1254,7 @@ const FixedStaking = (props: any) => {
           new PublicKey(nft.mint),
           associatedAddressStakeEntry,
           stakeEntryId,
-          wallet_n.publicKey
+          wallet_t.publicKey
         )
       );
     }
@@ -1264,7 +1264,7 @@ const FixedStaking = (props: any) => {
         splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
         splToken.TOKEN_PROGRAM_ID,
         new PublicKey(nft.mint),
-        stakeEntryId,
+        wallet_n.publicKey,
         true
       );
     const accountUserOriginal = await connection.getAccountInfo(
@@ -1278,7 +1278,7 @@ const FixedStaking = (props: any) => {
           splToken.TOKEN_PROGRAM_ID,
           new PublicKey(nft.mint),
           associatedAddressUserOriginal,
-          stakeEntryId,
+          wallet_n.publicKey,
           wallet_n.publicKey
         )
       );
@@ -1316,25 +1316,25 @@ const FixedStaking = (props: any) => {
       );
     }
 
-    const remainingAccounts = [
-      {
-        pubkey: associatedAddressUnstake,
-        isSigner: false,
-        isWritable: false,
-      },
-    ];
+    // const remainingAccounts = [
+    //   {
+    //     pubkey: associatedAddressUnstake,
+    //     isSigner: false,
+    //     isWritable: false,
+    //   },
+    // ];
 
     let unstake_instruction = stakePoolProgram.instruction.unstake({
       accounts: {
         stakePool: stakePoolId,
         stakeEntry: stakeEntryId,
-        originalMint: new PublicKey(nft.mint),
+        originalMint: nft.mint,
         stakeEntryOriginalMintTokenAccount: associatedAddressStakeEntry,
         user: wallet_n.publicKey,
         userOriginalMintTokenAccount: associatedAddressUserOriginal,
         tokenProgram: TOKEN_PROGRAM_ID,
       },
-      remainingAccounts: remainingAccounts,
+      // remainingAccounts: remainingAccounts,
     });
     complete_unstake_instructions.push(unstake_instruction);
 
