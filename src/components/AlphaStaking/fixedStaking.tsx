@@ -3,6 +3,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import {
   clusterApiUrl,
   Connection,
+  Keypair,
   PublicKey,
   Signer,
   SystemProgram,
@@ -108,6 +109,7 @@ import {
 import {
   CRANK_KEY,
   getRemainingAccountsForKind,
+  InvalidationType,
   TokenManagerKind,
   TokenManagerState,
   TOKEN_MANAGER_ADDRESS,
@@ -901,9 +903,9 @@ const FixedStaking = (props: any) => {
 
   const completeUnstakeFn = async (nft: any) => {
     const transaction = new Transaction();
-    let wallet_t: any = wallet;
-    var nft = unstakedNft;
-    const provider = new AnchorProvider(connection, wallet_t, {});
+    // let wallet_n: any = wallet;
+    // var nft = unstakedNft;
+    const provider = new AnchorProvider(connection, wallet_n, {});
     const stakePoolProgram = new Program<STAKE_POOL_TYPES.aplStakePool>(
       STAKE_POOL_TYPES.IDL,
       STAKE_POOL_ADDRESS,
@@ -923,16 +925,19 @@ const FixedStaking = (props: any) => {
     );
 
     let complete_unstake_instructions: any = [];
-    const [identifierId] = await findIdentifierId(wallet_t.publicKey);
+    const [identifierId] = await findIdentifierId(wallet_n.publicKey);
     let [stakePoolId]: any = [null];
-    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, nft.trait_type);
+    [stakePoolId] = await findStakePoolId(wallet_n.publicKey, nft.trait_type);
     console.log("stakePoolId : ", stakePoolId.toBase58());
     console.log("identifierId : ", identifierId.toBase58());
 
     const [rewardDistributorId] = await findRewardDistributorId(stakePoolId);
     console.log(stakePoolId.toBase58());
 
-    const [stakeEntryId] = await findStakeEntryIdPda(stakePoolId, nft.mint);
+    const [stakeEntryId] = await findStakeEntryIdPda(
+      stakePoolId,
+      new PublicKey(nft.mint)
+    );
 
     let stakeEntryData: any = null;
     try {
@@ -994,7 +999,7 @@ const FixedStaking = (props: any) => {
     ) {
       const tokenManagerId = await tokenManagerAddressFromMint(
         connection,
-        nft.mint
+        new PublicKey(nft.mint)
       );
 
       let tokenManagerData: any = null;
@@ -1014,29 +1019,194 @@ const FixedStaking = (props: any) => {
       // const tokenManagerData = await tryGetAccount(() =>
       //   tokenManager.accounts.getTokenManager(connection, tokenManagerId)
       // );
-      const remainingAccountsForReturn = await withRemainingAccountsForReturn(
-        transaction,
-        connection,
-        wallet_n,
-        tokenManagerData!
+      let remainingAccountsForReturn: any;
+      const {
+        issuer,
+        mint,
+        claimApprover,
+        invalidationType,
+        receiptMint,
+        state,
+      } = tokenManagerData.parsed;
+      console.log("Issuer Public Key : ", issuer.toBase58());
+
+      if (
+        invalidationType === InvalidationType.Vest &&
+        state === TokenManagerState.Issued
+      ) {
+        if (!claimApprover) throw "Claim approver must be set";
+
+        const associatedAddressClaimApprove =
+          await splToken.Token.getAssociatedTokenAddress(
+            splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+            TOKEN_PROGRAM_ID,
+            mint,
+            wallet_n.publicKey,
+            true
+          );
+        const accountClaimApprove = await connection.getAccountInfo(
+          associatedAddressClaimApprove
+        );
+        complete_unstake_instructions.push(
+          splToken.Token.createAssociatedTokenAccountInstruction(
+            splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+            TOKEN_PROGRAM_ID,
+            mint,
+            claimApprover,
+            claimApprover,
+            wallet_n.publicKey
+          )
+        );
+        // const claimApproverTokenAccountId =
+        //   await withFindOrInitAssociatedTokenAccount(
+        //     transaction,
+        //     connection,
+        //     mint,
+        //     claimApprover,
+        //     wallet_n.publicKey,
+        //     true
+        //   );
+        remainingAccountsForReturn = [
+          {
+            pubkey: accountClaimApprove,
+            isSigner: false,
+            isWritable: true,
+          },
+        ];
+      } else if (
+        invalidationType === InvalidationType.Return ||
+        state === TokenManagerState.Issued
+      ) {
+        if (receiptMint) {
+          const receiptMintLargestAccount =
+            await connection.getTokenLargestAccounts(receiptMint);
+
+          // get holder of receipt mint
+          const receiptTokenAccountId =
+            receiptMintLargestAccount.value[0]?.address;
+          if (!receiptTokenAccountId)
+            throw new Error("No token accounts found");
+          const receiptMintToken = new splToken.Token(
+            connection,
+            receiptMint,
+            TOKEN_PROGRAM_ID,
+            Keypair.generate()
+          );
+          const receiptTokenAccount = await receiptMintToken.getAccountInfo(
+            receiptTokenAccountId
+          );
+
+          // get ATA for this mint of receipt mint holder
+
+          const associatedAddressInitAssoc =
+            await splToken.Token.getAssociatedTokenAddress(
+              splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+              splToken.TOKEN_PROGRAM_ID,
+              mint,
+              receiptTokenAccount.owner,
+              true
+            );
+          const accountInitAssoc = await connection.getAccountInfo(
+            associatedAddressInitAssoc
+          );
+          console.log(
+            "withFindOrInitAssociatedTokenAccount associatedAddress:",
+            associatedAddressInitAssoc
+          );
+          console.log(
+            "withFindOrInitAssociatedTokenAccount account:",
+            accountInitAssoc
+          );
+
+          if (!accountInitAssoc) {
+            complete_unstake_instructions.push(
+              splToken.Token.createAssociatedTokenAccountInstruction(
+                splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+                splToken.TOKEN_PROGRAM_ID,
+                mint,
+                associatedAddressInitAssoc,
+                receiptTokenAccount.owner,
+                wallet_n.publicKey
+              )
+            );
+          }
+
+          remainingAccountsForReturn = [
+            {
+              pubkey: associatedAddressInitAssoc,
+              isSigner: false,
+              isWritable: true,
+            },
+            {
+              pubkey: receiptTokenAccountId,
+              isSigner: false,
+              isWritable: true,
+            },
+          ];
+        } else {
+          const associatedAddressIssuerToken =
+            await splToken.Token.getAssociatedTokenAddress(
+              splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+              splToken.TOKEN_PROGRAM_ID,
+              mint,
+              issuer,
+              true
+            );
+          const accountIssuerToken = await connection.getAccountInfo(
+            associatedAddressIssuerToken
+          );
+          console.log(
+            "withFindOrInitAssociatedTokenAccount associatedAddress:",
+            associatedAddressIssuerToken
+          );
+          console.log(
+            "withFindOrInitAssociatedTokenAccount account:",
+            accountIssuerToken
+          );
+          if (!accountIssuerToken) {
+            complete_unstake_instructions.push(
+              splToken.Token.createAssociatedTokenAccountInstruction(
+                splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+                splToken.TOKEN_PROGRAM_ID,
+                mint,
+                associatedAddressIssuerToken,
+                issuer,
+                wallet_n.publicKey
+              )
+            );
+          }
+
+          remainingAccountsForReturn = [
+            {
+              pubkey: accountIssuerToken,
+              isSigner: false,
+              isWritable: true,
+            },
+          ];
+        }
+      } else {
+        remainingAccountsForReturn = [];
+      }
+
+      const [tokenManagerIdNew] = await findTokenManagerAddress(
+        new PublicKey(nft.mint)
       );
-      const [tokenManagerIdNew] = await findTokenManagerAddress(nft.mint);
       const tokenManagerTokenAccountId = await findAta(
-        nft.mint,
+        new PublicKey(nft.mint),
         (
-          await findTokenManagerAddress(nft.mint)
+          await findTokenManagerAddress(new PublicKey(nft.mint))
         )[0],
         true
       );
 
       const userReceiptMintTokenAccount = await findAta(
-        nft.mint,
+        new PublicKey(nft.mint),
         wallet_n.publicKey,
         true
       );
 
       const transferAccounts = await getRemainingAccountsForKind(
-        nft.mint,
+        new PublicKey(nft.mint),
         tokenManagerData?.parsed.kind!
       );
 
@@ -1044,7 +1214,7 @@ const FixedStaking = (props: any) => {
         stakePoolProgram.instruction.returnReceiptMint({
           accounts: {
             stakeEntry: stakeEntryId,
-            receiptMint: nft.mint,
+            receiptMint: new PublicKey(nft.mint),
             tokenManager: tokenManagerId,
             tokenManagerTokenAccount: tokenManagerTokenAccountId,
             userReceiptMintTokenAccount: userReceiptMintTokenAccount,
@@ -1068,7 +1238,7 @@ const FixedStaking = (props: any) => {
       await splToken.Token.getAssociatedTokenAddress(
         splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
         splToken.TOKEN_PROGRAM_ID,
-        stakedNft.mint,
+        new PublicKey(nft.mint),
         stakeEntryId,
         true
       );
@@ -1081,10 +1251,10 @@ const FixedStaking = (props: any) => {
         splToken.Token.createAssociatedTokenAccountInstruction(
           splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
           splToken.TOKEN_PROGRAM_ID,
-          stakedNft.mint,
+          new PublicKey(nft.mint),
           associatedAddressStakeEntry,
           stakeEntryId,
-          wallet_t.publicKey
+          wallet_n.publicKey
         )
       );
     }
@@ -1093,7 +1263,7 @@ const FixedStaking = (props: any) => {
       await splToken.Token.getAssociatedTokenAddress(
         splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
         splToken.TOKEN_PROGRAM_ID,
-        nft.mint,
+        new PublicKey(nft.mint),
         stakeEntryId,
         true
       );
@@ -1106,46 +1276,59 @@ const FixedStaking = (props: any) => {
         splToken.Token.createAssociatedTokenAccountInstruction(
           splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
           splToken.TOKEN_PROGRAM_ID,
-          nft.mint,
+          new PublicKey(nft.mint),
           associatedAddressUserOriginal,
           stakeEntryId,
-          wallet_t.publicKey
+          wallet_n.publicKey
         )
       );
     }
 
-    // const stakeEntryOriginalMintTokenAccountId =
-    //   await withFindOrInitAssociatedTokenAccount(
-    //     transaction,
-    //     connection,
-    //     nft.mint,
-    //     stakeEntryId,
-    //     wallet_n.publicKey,
-    //     true
-    //   );
-
-    // const userOriginalMintTokenAccountId =
-    //   await withFindOrInitAssociatedTokenAccount(
-    //     transaction,
-    //     connection,
-    //     nft.mint,
-    //     wallet_n.publicKey,
-    //     wallet_n.publicKey
-    //   );
-
-    const remainingAccounts = await withRemainingAccountsForUnstake(
-      transaction,
-      connection,
-      wallet_n,
-      stakeEntryId,
-      stakeEntryData?.parsed.stakeMint
+    const associatedAddressUnstake =
+      await splToken.Token.getAssociatedTokenAddress(
+        splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+        splToken.TOKEN_PROGRAM_ID,
+        new PublicKey(nft.mint),
+        stakeEntryId,
+        true
+      );
+    const accountUnstake = await connection.getAccountInfo(
+      associatedAddressUnstake
     );
+    console.log(
+      "withFindOrInitAssociatedTokenAccount associatedAddress:",
+      associatedAddressUnstake
+    );
+    console.log(
+      "withFindOrInitAssociatedTokenAccount account:",
+      accountUnstake
+    );
+    if (!accountUnstake) {
+      complete_unstake_instructions.push(
+        splToken.Token.createAssociatedTokenAccountInstruction(
+          splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+          splToken.TOKEN_PROGRAM_ID,
+          stakeEntryData?.parsed.stakeMint,
+          associatedAddressUnstake,
+          stakeEntryId,
+          wallet_n.publicKey
+        )
+      );
+    }
+
+    const remainingAccounts = [
+      {
+        pubkey: associatedAddressUnstake,
+        isSigner: false,
+        isWritable: false,
+      },
+    ];
 
     let unstake_instruction = stakePoolProgram.instruction.unstake({
       accounts: {
         stakePool: stakePoolId,
         stakeEntry: stakeEntryId,
-        originalMint: nft.mint,
+        originalMint: new PublicKey(nft.mint),
         stakeEntryOriginalMintTokenAccount: associatedAddressStakeEntry,
         user: wallet_n.publicKey,
         userOriginalMintTokenAccount: associatedAddressUserOriginal,
@@ -1161,7 +1344,7 @@ const FixedStaking = (props: any) => {
         stakeEntryId
       );
       const rewardMintTokenAccountId = await findAta(
-        rewardDistributorData.parsed.rewardMint,
+        REWARD_MINT_GLTCH,
         wallet_n.publicKey,
         true
       );
@@ -1170,15 +1353,41 @@ const FixedStaking = (props: any) => {
         rewardMintTokenAccountId.toBase58()
       );
 
-      const remainingAccountsForKind = await withRemainingAccountsForKind(
-        transaction,
-        connection,
-        wallet_n,
+      const rewardDistributorRewardMintTokenAccountId = await findAta(
+        REWARD_MINT_GLTCH,
         rewardDistributorId,
-        rewardDistributorData.parsed.kind,
-        rewardDistributorData.parsed.rewardMint,
+        // wallet_n.publicKey,
         true
       );
+
+      const userRewardMintTokenAccountId = await findAta(
+        rewardDistributorData.parsed.rewardMint,
+        wallet_n.publicKey,
+        true
+      );
+
+      const remainingAccountsForKind: any = [
+        {
+          pubkey: rewardDistributorRewardMintTokenAccountId,
+          isSigner: false,
+          isWritable: true,
+        },
+        {
+          pubkey: userRewardMintTokenAccountId,
+          isSigner: false,
+          isWritable: true,
+        },
+      ];
+
+      // const remainingAccountsForKind = await withRemainingAccountsForKind(
+      //   transaction,
+      //   connection,
+      //   wallet_n,
+      //   rewardDistributorId,
+      //   rewardDistributorData.parsed.kind,
+      //   rewardDistributorData.parsed.rewardMint,
+      //   true
+      // );
       let claim_reward_inst = rewardDistributorProgram.instruction.claimRewards(
         {
           accounts: {
