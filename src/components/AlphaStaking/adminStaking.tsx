@@ -34,6 +34,7 @@ import {
   STAKE_AUTHORIZATION_SEED,
   STAKE_ENTRY_SEED,
   REWARD_ENTRY_SEED,
+  CREATOR_ADDRESS_STRING,
 } from "../AlphaStaking/StakePoolConfig";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -59,7 +60,7 @@ import { SAL_DEVNET_4200 } from "./ATBW_SAL_Devnet_4200";
 
 const AdminStaking = () => {
   const connection = new anchor.web3.Connection(
-    anchor.web3.clusterApiUrl("devnet")
+    "https://metaplex.devnet.rpcpool.com/"
   );
 
   const urlQueryParams = useParams();
@@ -135,7 +136,7 @@ const AdminStaking = () => {
 
   const getNFTs = async () => {
     if (wallet && wallet.connected && !gotNfts) {
-      const connection = new Connection(clusterApiUrl("devnet"));
+      const connection = new Connection("https://metaplex.devnet.rpcpool.com/");
       const metaplex = Metaplex.make(connection);
       const allNfts = await metaplex
         .nfts()
@@ -175,7 +176,7 @@ const AdminStaking = () => {
                   is_human = true;
                 } else if (
                   element.trait_type == "BaseBody" &&
-                  element.value == "Cyborg"
+                  element.value == "cyborgs_dev"
                 ) {
                   is_cyborg = true;
                 }
@@ -194,7 +195,7 @@ const AdminStaking = () => {
               } else if (is_cyborg && is_pet) {
                 trait_type = "Cyborg Pet";
               } else if (is_cyborg && !is_pet) {
-                trait_type = "Cyborg";
+                trait_type = "cyborgs_dev";
               }
               var obj: any = {
                 id: temp_nfts.length,
@@ -348,7 +349,7 @@ const AdminStaking = () => {
     // );
     // console.log(parsed);
     // const identifier = parsed?.count.toNumber();
-    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "humans");
+    [stakePoolId] = await findStakePoolId(wallet_t.publicKey, "humans_dev");
     console.log(`stakePoolId: ${stakePoolId}`);
     const [rewardDistributorId] = await findRewardDistributorId(stakePoolId);
     console.log(`rewardDistributorId: ${rewardDistributorId}`);
@@ -495,22 +496,22 @@ const AdminStaking = () => {
     var rewardAmount: any;
     var imageUrl;
     switch (str) {
-      case "humans":
+      case "humans_dev":
         rewardAmount = new BN(Math.ceil(5000000000 / 86400));
         imageUrl =
           "https://susjknvw4ea2sgq7te4m5g3lftgwjovcnmcieqdah75thjqj3p4a.arweave.net/lSSVNrbhAakaH5k4zptrLM1kuqJrBIJAYD_7M6YJ2_g?ext=png";
         break;
-      case "humanpets":
+      case "humanpets_dev":
         rewardAmount = new BN(Math.ceil(10000000000 / 86400));
         imageUrl =
           "https://susjknvw4ea2sgq7te4m5g3lftgwjovcnmcieqdah75thjqj3p4a.arweave.net/lSSVNrbhAakaH5k4zptrLM1kuqJrBIJAYD_7M6YJ2_g?ext=png";
         break;
-      case "cyborg":
+      case "cyborgs_dev":
         rewardAmount = new BN(Math.ceil(15000000000 / 86400));
         imageUrl =
           "https://susjknvw4ea2sgq7te4m5g3lftgwjovcnmcieqdah75thjqj3p4a.arweave.net/lSSVNrbhAakaH5k4zptrLM1kuqJrBIJAYD_7M6YJ2_g?ext=png";
         break;
-      case "cyborgpets":
+      case "cyborgpets_dev":
         var k = 20000000000 / 86400;
         rewardAmount = new BN(Math.ceil(k));
         imageUrl =
@@ -523,9 +524,7 @@ const AdminStaking = () => {
       overlayText: "",
       imageUri: imageUrl,
       requiresCollections: [],
-      requiresCreators: [
-        new PublicKey("1DDvKdBCW2RQ497u2XS6XYF8KvxrSKvDbk6mE6iXEvm"),
-      ],
+      requiresCreators: [new PublicKey(CREATOR_ADDRESS_STRING)],
       requiresAuthorization: false,
       authority: wallet_t.publicKey,
       resetOnStake: true,
@@ -533,7 +532,7 @@ const AdminStaking = () => {
       minStakeSeconds: null,
       endDate: null,
       rewardAmount: rewardAmount,
-      rewardDurationSeconds: new BN(8640000),
+      rewardDurationSeconds: new BN(1),
       supply: new BN(5000000000000000),
       kind: RewardDistributorKind.Treasury,
       identifierName: str,
@@ -688,7 +687,7 @@ const AdminStaking = () => {
   };
 
   const parseArrayToAuthorizeStake = async () => {
-    const connection = new Connection(clusterApiUrl("devnet"));
+    const connection = new Connection("https://metaplex.devnet.rpcpool.com/");
     let authorize_stake_instruction: any = [];
     console.log(stack_opener);
     for (let index = stack_opener; index < stack_opener + 7; index++) {
@@ -733,7 +732,7 @@ const AdminStaking = () => {
                     <div className="pull-left w-33p m-t-10 m-b-10 text-center">
                       <button
                         className="create-raffle-button no-float"
-                        onClick={() => createStakePool("humans")}
+                        onClick={() => createStakePool("humans_dev")}
                       >
                         Create Humans Staking Pool
                       </button>
@@ -741,7 +740,7 @@ const AdminStaking = () => {
                     <div className="pull-left w-33p m-t-10 m-b-10 text-center">
                       <button
                         className="create-raffle-button no-float"
-                        onClick={() => createStakePool("humanpets")}
+                        onClick={() => createStakePool("humanpets_dev")}
                       >
                         Create Human Pets Staking Pool
                       </button>
@@ -749,7 +748,7 @@ const AdminStaking = () => {
                     <div className="pull-left w-33p m-t-10 m-b-10 text-center">
                       <button
                         className="create-raffle-button no-float"
-                        onClick={() => createStakePool("cyborg")}
+                        onClick={() => createStakePool("cyborgs_dev")}
                       >
                         Create Cyborgs Staking Pool
                       </button>
@@ -757,7 +756,7 @@ const AdminStaking = () => {
                     <div className="pull-left w-33p m-t-10 m-b-10 text-center">
                       <button
                         className="create-raffle-button no-float"
-                        onClick={() => createStakePool("cyborgpets")}
+                        onClick={() => createStakePool("cyborgpets_dev")}
                       >
                         Create Cyborg Pets Staking Pool
                       </button>

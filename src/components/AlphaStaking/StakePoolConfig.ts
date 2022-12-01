@@ -31,7 +31,8 @@ export interface StartStakePoolArgs{
 
 // export const UPDATE_AUTHORITY_OF_TOKEN = new anchor.web3.PublicKey("TnCyU9sKGpStvmPkGDMxfSSyjTnE7Ad6eNDcUdGyxoq")
 export const UPDATE_AUTHORITY_OF_TOKEN = RYAN_ADDRESS
-export const UPDATE_AUTHORITY_OF_TOKEN_STRING  = "SALThRKa8JFD3XoGbLshzg61kaBHFFCeggDH8ydNEaE"
+export const UPDATE_AUTHORITY_OF_TOKEN_STRING  = "SALThRKa8JFD3XoGbLshzg61kaBHFFCeggDH8ydNEaE";
+export const CREATOR_ADDRESS_STRING = "1DDvKdBCW2RQ497u2XS6XYF8KvxrSKvDbk6mE6iXEvm";
 export const CREATOR_SECRET_ALPHA_DEV_COLLECTION = new anchor.web3.PublicKey("1DDvKdBCW2RQ497u2XS6XYF8KvxrSKvDbk6mE6iXEvm")
 export const CREATOR_SECRET_ALPHA_MAIN_COLLECTION = new anchor.web3.PublicKey("GYa915Qk8NiAjvEM3duzmXBskpbzCApVnbKtdj6Fykcy")
 export const farmConfigAlpha:FarmConfig = {
