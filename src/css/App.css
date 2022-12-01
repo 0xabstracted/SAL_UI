@@ -4616,13 +4616,15 @@ form .button {
   color: #438482;
   font-weight: 600;
   font-size: 16px;
-  margin: 0;
+  /* margin: 0; */
   font-family: "Ubuntu Mono", monospace;
   padding: 0;
   display: inline-block;
   margin-top: 8px;
   padding: 8px 15px;
   float: right;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .deal-finalizing-text {
