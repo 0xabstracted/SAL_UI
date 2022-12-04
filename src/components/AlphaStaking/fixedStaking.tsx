@@ -309,73 +309,136 @@ const FixedStaking = (props: any) => {
           }
         }
         if (is_ours) {
-          var xhr = new XMLHttpRequest();
-          xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
-              var attributes = JSON.parse(this.responseText).attributes;
-              var is_human;
-              var is_cyborg;
-              var is_pet;
-              var trait_type;
-              for (let index = 0; index < attributes.length; index++) {
-                const element = attributes[index];
-                if (
-                  element.trait_type == "BaseBody" &&
-                  element.value == "Human"
-                ) {
-                  is_human = true;
-                } else if (
-                  element.trait_type == "BaseBody" &&
-                  element.value == "Cyborg"
-                ) {
-                  is_cyborg = true;
-                }
-                if (
-                  element.trait_type == "Pets" &&
-                  element.value &&
-                  element.value.length > 0
-                ) {
-                  is_pet = true;
-                }
+          if (nft.json && nft.json != null) {
+            var attributes = nft.json.attributes;
+            var is_human;
+            var is_cyborg;
+            var is_pet;
+            var trait_type;
+            for (let index = 0; index < attributes.length; index++) {
+              const element = attributes[index];
+              if (
+                element.trait_type == "BaseBody" &&
+                element.value == "Human"
+              ) {
+                is_human = true;
+              } else if (
+                element.trait_type == "BaseBody" &&
+                element.value == "Cyborg"
+              ) {
+                is_cyborg = true;
               }
-              if (is_human && is_pet) {
-                trait_type = "humanpets_dev";
-              } else if (is_human && !is_pet) {
-                trait_type = "humans_dev";
-              } else if (is_cyborg && is_pet) {
-                trait_type = "cyborgpets_dev";
-              } else if (is_cyborg && !is_pet) {
-                trait_type = "cyborgs_dev";
-              }
-              var obj: any = {
-                id: temp_nfts.length,
-                name: nft.name,
-                link: JSON.parse(this.responseText).image,
-                mint: nft.mintAddress,
-                updateAuthority: nft.updateAuthority,
-                creator: nft.creators[0].address,
-                trait_type: trait_type,
-              };
-              if (is_staked) {
-                temp_staked_nfts.push(obj);
-                // setStakedNfts(temp_staked_nfts!);
-              } else {
-                var l;
-                for (let ii = 0; ii < stakedNfts.length; ii++) {
-                  const element = stakedNfts[ii];
-                  if (element.mint == obj.mint.toBase58()) {
-                    l = true;
-                  }
-                }
-                if (!l) {
-                  temp_nfts.push(obj);
-                  setNFts(temp_nfts!);
-                }
+              if (
+                element.trait_type == "Pets" &&
+                element.value &&
+                element.value.length > 0
+              ) {
+                is_pet = true;
               }
             }
-          });
-          xhr.open("GET", nft.uri);
-          xhr.send();
+            if (is_human && is_pet) {
+              trait_type = "humanpets_dev";
+            } else if (is_human && !is_pet) {
+              trait_type = "humans_dev";
+            } else if (is_cyborg && is_pet) {
+              trait_type = "cyborgpets_dev";
+            } else if (is_cyborg && !is_pet) {
+              trait_type = "cyborgs_dev";
+            }
+            var obj: any = {
+              id: temp_nfts.length,
+              name: nft.name,
+              link: nft.json.image,
+              mint: nft.mintAddress,
+              updateAuthority: nft.updateAuthority,
+              creator: nft.creators[0].address,
+              trait_type: trait_type,
+            };
+            if (is_staked) {
+              temp_staked_nfts.push(obj);
+              // setStakedNfts(temp_staked_nfts!);
+            } else {
+              var l;
+              for (let ii = 0; ii < stakedNfts.length; ii++) {
+                const element = stakedNfts[ii];
+                if (element.mint == obj.mint.toBase58()) {
+                  l = true;
+                }
+              }
+              if (!l) {
+                temp_nfts.push(obj);
+                setNFts(temp_nfts!);
+              }
+            }
+          } else {
+            var xhr = new XMLHttpRequest();
+            xhr.addEventListener("readystatechange", function () {
+              if (this.readyState === 4) {
+                var attributes = JSON.parse(this.responseText).attributes;
+                var is_human;
+                var is_cyborg;
+                var is_pet;
+                var trait_type;
+                for (let index = 0; index < attributes.length; index++) {
+                  const element = attributes[index];
+                  if (
+                    element.trait_type == "BaseBody" &&
+                    element.value == "Human"
+                  ) {
+                    is_human = true;
+                  } else if (
+                    element.trait_type == "BaseBody" &&
+                    element.value == "Cyborg"
+                  ) {
+                    is_cyborg = true;
+                  }
+                  if (
+                    element.trait_type == "Pets" &&
+                    element.value &&
+                    element.value.length > 0
+                  ) {
+                    is_pet = true;
+                  }
+                }
+                if (is_human && is_pet) {
+                  trait_type = "humanpets_dev";
+                } else if (is_human && !is_pet) {
+                  trait_type = "humans_dev";
+                } else if (is_cyborg && is_pet) {
+                  trait_type = "cyborgpets_dev";
+                } else if (is_cyborg && !is_pet) {
+                  trait_type = "cyborgs_dev";
+                }
+                var obj: any = {
+                  id: temp_nfts.length,
+                  name: nft.name,
+                  link: JSON.parse(this.responseText).image,
+                  mint: nft.mintAddress,
+                  updateAuthority: nft.updateAuthority,
+                  creator: nft.creators[0].address,
+                  trait_type: trait_type,
+                };
+                if (is_staked) {
+                  temp_staked_nfts.push(obj);
+                  // setStakedNfts(temp_staked_nfts!);
+                } else {
+                  var l;
+                  for (let ii = 0; ii < stakedNfts.length; ii++) {
+                    const element = stakedNfts[ii];
+                    if (element.mint == obj.mint.toBase58()) {
+                      l = true;
+                    }
+                  }
+                  if (!l) {
+                    temp_nfts.push(obj);
+                    setNFts(temp_nfts!);
+                  }
+                }
+              }
+            });
+            xhr.open("GET", nft.uri);
+            xhr.send();
+          }
         }
       }
       setGotNfts(true);
@@ -400,7 +463,9 @@ const FixedStaking = (props: any) => {
             var array: any = [];
             for (let index = 0; index < mints.length; index++) {
               const element = mints[index];
-              const connection = new Connection(clusterApiUrl("devnet"));
+              const connection = new Connection(
+                "https://metaplex.devnet.rpcpool.com/"
+              );
               const metaplex = new Metaplex(connection);
               // console.log(element.account.gemMint.toBase58());
               var pk = new anchor.web3.PublicKey(element.mint);
@@ -2531,6 +2596,10 @@ const FixedStaking = (props: any) => {
             });
           claim_rewards_instructions.push(claim_reward_inst);
         }
+        for (let ki = 0; ki < claim_rewards_instructions.length; ki++) {
+          transaction.add(claim_rewards_instructions[ki]);
+        }
+        unsignedTxns.push(transaction);
       }
     }
     let signersSet: any = [];
