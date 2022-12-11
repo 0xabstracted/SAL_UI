@@ -854,7 +854,7 @@ const FixedStaking = (props: any) => {
 
   const completeAllNftsStakeFn = async () => {
     let unsignedTxns: any = [];
-    for (let index = 10; index < 13; index++) {
+    for (let index = 0; index < nfts.length; index++) {
       const transaction = new Transaction();
       let complete_stake_instructions: any = [];
       let nft = nfts[index];
@@ -1109,27 +1109,28 @@ const FixedStaking = (props: any) => {
     // );
     // console.log("Start Pool Signature : ", complete_stake_signature);
     if (complete_stake_signature != null) {
-      // for (let index = 0; index < nfts.length; index++) {
-      //   let nft = nfts[index];
-      //   if (complete_stake_signature) {
-      //     var data = JSON.stringify({
-      //       owner: wallet_n.publicKey.toBase58(),
-      //       mint: nft.mint,
-      //       trait_type: nft.trait_type,
-      //     });
-      //     var xhr = new XMLHttpRequest();
-      //     // xhr.withCredentials = true;
-      //     xhr.addEventListener("readystatechange", function () {
-      //       if (this.readyState === 4) {
-      //         console.log(this.responseText);
-      //         getStakedNfts();
-      //       }
-      //     });
-      //     xhr.open("POST", "http://34.198.111.186:8000/stakeNft");
-      //     xhr.setRequestHeader("Content-Type", "application/json");
-      //     xhr.send(data);
-      //   }
-      // }
+      var data: any = {
+        owner: wallet_n.publicKey.toBase58(),
+        mints: [],
+      };
+      for (let index = 0; index < nfts.length; index++) {
+        let nft = nfts[index];
+        data.mints.push({
+          mint: nft.mint,
+          trait_type: nft.trait_type,
+        });
+      }
+      var xhr = new XMLHttpRequest();
+      // xhr.withCredentials = true;
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+          console.log(this.responseText);
+          getStakedNfts();
+        }
+      });
+      xhr.open("POST", "http://34.198.111.186:8000/stakeNft");
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.send(data);
     }
   };
 
@@ -1683,7 +1684,7 @@ const FixedStaking = (props: any) => {
       xhr.open("POST", "http://34.198.111.186:8000/unStakeNft");
       xhr.setRequestHeader("Content-Type", "application/json");
 
-      xhr.send(data);
+      xhr.send(JSON.stringify(data));
     }
   };
 
@@ -2229,20 +2230,26 @@ const FixedStaking = (props: any) => {
     console.log("Start Pool Signature : ", complete_unstake_signature);
 
     if (complete_unstake_signature != null) {
-      // var data = JSON.stringify({
-      //   owner: wallet.publicKey?.toBase58(),
-      //   mint: nft.mint,
-      // });
-      // var xhr = new XMLHttpRequest();
-      // xhr.addEventListener("readystatechange", function () {
-      //   if (this.readyState === 4) {
-      //     console.log(this.responseText);
-      //     getNFTs(1);
-      //   }
-      // });
-      // xhr.open("POST", "http://34.198.111.186:8000/unStakeNft");
-      // xhr.setRequestHeader("Content-Type", "application/json");
-      // xhr.send(data);
+      var data: any = {
+        owner: wallet.publicKey?.toBase58(),
+        mints: [],
+      };
+      for (let index_nft = 0; index_nft < stakedNfts.length; index_nft++) {
+        const element_nft = stakedNfts[index_nft];
+        data.mints.push({
+          mint: element_nft.mint,
+        });
+      }
+      var xhr = new XMLHttpRequest();
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+          console.log(this.responseText);
+          getNFTs(1);
+        }
+      });
+      xhr.open("POST", "http://34.198.111.186:8000/unStakeNft");
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.send(JSON.stringify(data));
     }
   };
 
